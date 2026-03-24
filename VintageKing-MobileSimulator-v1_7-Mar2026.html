@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage King — Mobile Simulator v1.5</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── SIMULATOR SHELL ── */
+.logo-tube{width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+:root{--vk-red:#C0392B;--vk-red-dk:#922B21;--near-black:#1A1A18;--charcoal:#2C2C2A;--warm-white:#FDFCFB;--off-white:#F7F5F2;--pale-grey:#EDEDE9;--light-grey:#D8D6D2;--mid-grey:#6B6B68;--amber:#D4860A;--amber-bg:#F5E6C8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;background:#111110;display:flex;flex-direction:column;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+
+.sim-header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
+.sim-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;}
+.sim-sub{font-size:10px;color:rgba(255,255,255,0.28);margin-top:2px;}
+.file-switcher{display:flex;border:1.5px solid rgba(255,255,255,0.15);border-radius:5px;overflow:hidden;}
+.file-btn{font-size:10px;font-weight:700;letter-spacing:0.06em;color:rgba(255,255,255,0.4);background:transparent;border:none;padding:8px 14px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.file-btn.active{background:var(--vk-red);color:#fff;}
+
+.sim-layout{display:flex;align-items:flex-start;flex:1;}
+
+/* PHONE COLUMN */
+.phone-col{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px 40px;background:#111110;min-height:calc(100vh - 65px);}
+.phone-frame{width:375px;background:#181818;border-radius:50px;padding:10px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 32px 64px rgba(0,0,0,0.9);}
+.phone-statusbar{display:flex;align-items:center;justify-content:space-between;padding:5px 22px 3px 26px;}
+.s-time{font-size:12px;font-weight:700;color:rgba(255,255,255,0.85);}
+.s-icons{display:flex;align-items:center;gap:5px;opacity:0.8;}
+.phone-island{width:106px;height:26px;background:#181818;border-radius:0 0 16px 16px;margin:-2px auto 0;position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:7px;}
+.island-cam{width:9px;height:9px;background:#0a0a0a;border-radius:50%;border:1px solid rgba(255,255,255,0.06);}
+.island-sen{width:3.5px;height:3.5px;background:#222;border-radius:50%;}
+.phone-screen{width:355px;height:740px;border-radius:40px;overflow:hidden;background:var(--warm-white);position:relative;}
+.phone-homebar{width:120px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin:7px auto 0;}
+
+/* Page nav tabs (below phone, 4-page mode) */
+.page-nav{display:none;width:355px;}
+.page-tabs{display:flex;gap:5px;justify-content:center;}
+.page-tab{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:3px;padding:5px 11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.page-tab.active{color:#fff;background:rgba(192,57,43,0.5);border-color:var(--vk-red);}
+
+/* SIDEBAR */
+.sidebar{flex:1;min-width:280px;max-width:380px;background:#fff;border-left:1px solid #E8E6E3;overflow-y:auto;position:sticky;top:0;max-height:100vh;}
+.panel{border-bottom:1px solid #E8E6E3;}
+.panel-head{font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9B9B98;padding:16px 20px 0;display:flex;align-items:center;gap:8px;}
+.panel-head::after{content:'';flex:1;height:1px;background:#E8E6E3;}
+.panel-body{padding:10px 20px 18px;}
+.step{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:4px;cursor:pointer;background:#FAFAF9;border:1px solid #E8E6E3;margin-bottom:5px;}
+.step:hover{border-color:rgba(192,57,43,0.35);background:#FEF3F2;}
+.step.active{border-color:var(--vk-red);background:#FEF3F2;}
+.step-n{width:20px;height:20px;border-radius:50%;flex-shrink:0;background:#FDECEA;color:var(--vk-red);font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.step.active .step-n{background:var(--vk-red);color:#fff;}
+.step-t{font-size:11.5px;font-weight:600;color:#1A1A18;margin-bottom:2px;}
+.step-d{font-size:10.5px;color:#6B6B68;line-height:1.45;}
+.step-action{display:inline-block;margin-top:5px;font-size:8px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:3px;cursor:pointer;border:none;}
+.act-red{background:rgba(192,57,43,0.12);color:#C0392B;}
+.act-dark{background:rgba(0,0,0,0.06);color:#6B6B68;}
+.act-amber{background:rgba(212,134,10,0.12);color:#D4860A;}
+.act-green{background:rgba(74,222,128,0.12);color:#16A34A;}
+.msg-rows{display:flex;flex-direction:column;}
+.msg-row{display:flex;align-items:center;gap:9px;padding:6px 4px;border-bottom:1px solid #F0EFEC;}
+.msg-p{font-size:9px;font-weight:700;color:var(--vk-red);width:24px;flex-shrink:0;}
+.msg-t{font-size:10.5px;color:#2C2C2A;flex:1;line-height:1.3;}
+.msg-b{font-size:7.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;padding:2px 6px;border-radius:3px;flex-shrink:0;white-space:nowrap;}
+.bp-active{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:4px;margin-bottom:8px;border:1px solid #D1FAE5;background:#F0FDF4;}
+.bp-active-lbl{font-size:10.5px;color:#065F46;font-weight:500;}
+.bp-other{display:flex;align-items:center;gap:9px;padding:6px 12px;border-radius:4px;border:1px solid #E8E6E3;background:#FAFAF9;margin-bottom:4px;}
+.bp-other-dot{width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,0.18);flex-shrink:0;}
+.bp-other-lbl{font-size:10.5px;font-weight:500;color:#2C2C2A;min-width:54px;}
+.bp-other-desc{font-size:10.5px;color:#9B9B98;}
+.warn-box{margin-top:10px;padding:9px 11px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:4px;}
+.warn-title{font-size:9.5px;font-weight:700;color:#16A34A;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;}
+.warn-body{font-size:10.5px;color:#374151;line-height:1.5;}
+.sim-footer{padding:14px 32px;font-size:10px;color:rgba(255,255,255,0.15);text-align:center;background:#111110;}
+
+/* ── VK SITE STYLES (inside phone) ── */
+.vk-app{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;background:var(--warm-white);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;color:var(--near-black);-webkit-overflow-scrolling:touch;}
+.vk-app *{box-sizing:border-box;margin:0;padding:0;}
+.vk-app a{text-decoration:none;color:inherit;}
+.vk-page{display:none;}
+.vk-page.active{display:block;}
+
+/* NAV */
+.vk-nav{position:sticky;top:0;z-index:100;background:var(--warm-white);border-bottom:1px solid var(--light-grey);}
+.vk-nav-row1{height:52px;display:flex;align-items:center;padding:0 14px;justify-content:space-between;}
+.vk-logo{display:flex;align-items:center;gap:8px;}
+.vk-logo-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--near-black);}
+.vk-logo-tag{font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:#A8A5A0;margin-top:2px;}
+.vk-nav-actions{display:flex;align-items:center;gap:10px;}
+.vk-nav-icon{background:none;border:none;cursor:pointer;color:var(--charcoal);display:flex;align-items:center;padding:3px;}
+.vk-cart-count{position:absolute;top:-2px;right:-2px;background:var(--vk-red);color:#fff;font-size:7px;font-weight:700;width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.vk-expert-btn{display:flex;align-items:center;gap:5px;background:var(--vk-red);color:#fff;border:none;cursor:pointer;padding:6px 10px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;border-radius:2px;}
+.vk-hamburger{background:none;border:none;cursor:pointer;color:var(--charcoal);display:flex;align-items:center;padding:4px;}
+.pulse-dot{width:6px;height:6px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.85)}}
+/* Nav line 2 */
+.vk-nav-line2{display:flex;align-items:center;padding:5px 14px 6px;border-top:1px solid var(--pale-grey);}
+.vk-nav-phone{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:500;color:var(--charcoal);text-decoration:none;}
+.vk-nav-phone svg{color:var(--vk-red);flex-shrink:0;}
+
+/* DRAWER */
+.vk-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,0.55);z-index:200;opacity:0;transition:opacity 0.28s ease;}
+.vk-overlay.open{opacity:1;}
+.vk-drawer{position:absolute;top:0;left:0;bottom:0;width:min(88%,320px);background:var(--warm-white);z-index:201;display:flex;flex-direction:column;transform:translateX(-100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);overflow:hidden;}
+.vk-drawer.open{transform:translateX(0);}
+.vk-drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #EEEDE9;background:#fff;flex-shrink:0;}
+.vk-drawer-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--near-black);}
+.vk-drawer-tag{font-size:7px;letter-spacing:0.18em;text-transform:uppercase;color:#B0AEA9;margin-top:2px;}
+.vk-drawer-close{background:none;border:none;cursor:pointer;color:var(--mid-grey);display:flex;align-items:center;}
+.vk-drawer-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px;}
+.vk-drawer-search{display:flex;align-items:center;gap:7px;margin:12px 16px 6px;background:#F5F4F1;border-radius:4px;padding:10px 12px;}
+.vk-drawer-search input{border:none;background:none;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--charcoal);outline:none;width:100%;}
+.vk-drawer-search input::placeholder{color:var(--mid-grey);}
+.vk-acc{border-bottom:1px solid #EEEDE9;}
+.vk-acc-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:400;color:var(--near-black);text-align:left;transition:color 0.15s;}
+.vk-acc-btn:hover{color:var(--vk-red);}
+.vk-acc-btn.vintage{color:var(--amber);font-weight:500;}
+.vk-acc-chevron{width:13px;height:13px;flex-shrink:0;transition:transform 0.22s ease;color:var(--mid-grey);}
+.vk-acc.open .vk-acc-chevron{transform:rotate(180deg);}
+.vk-acc-content{display:none;background:#FAFAF8;border-top:1px solid #EEEDE9;}
+.vk-acc.open .vk-acc-content{display:block;}
+.vk-sub-links{padding:7px 0 4px;}
+.vk-sub-links a{display:block;padding:8px 28px;font-size:12px;color:#6B6B68;transition:color 0.12s;}
+.vk-sub-links a:hover{color:var(--vk-red);}
+.vk-sub-links a.bold{font-weight:600;color:#1A1A18;}
+.vk-sub-view-all{display:block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);margin:6px 28px 14px;}
+.vk-plain-link{display:block;padding:14px 18px;font-size:13.5px;font-weight:400;color:var(--vk-red);border-bottom:1px solid #EEEDE9;}
+.vk-drawer-util{display:flex;flex-direction:column;gap:0;border-top:1px solid #EEEDE9;padding:4px 0 8px;}
+.vk-drawer-util a{display:block;padding:9px 18px;font-size:12.5px;color:#9B9B98;}
+.vk-drawer-sticky{flex-shrink:0;border-top:1px solid var(--light-grey);background:var(--warm-white);}
+.vk-sticky-expert{display:flex;align-items:center;gap:9px;background:var(--vk-red);padding:13px 16px;cursor:pointer;text-decoration:none;}
+.vk-sticky-expert-text{flex:1;}
+.vk-sticky-expert-title{font-size:12.5px;font-weight:600;color:#fff;}
+.vk-sticky-expert-sub{font-size:9.5px;color:rgba(255,255,255,0.65);margin-top:1px;}
+.vk-sticky-meta{display:flex;align-items:center;justify-content:center;padding:8px 14px;gap:4px;}
+.vk-sticky-meta-item{display:flex;align-items:center;justify-content:center;gap:4px;font-size:10px;color:var(--mid-grey);white-space:nowrap;}
+.vk-sticky-meta-sep{width:1px;height:13px;background:var(--light-grey);flex-shrink:0;}
+
+/* HOMEPAGE */
+.vk-hero{background:var(--off-white);position:relative;overflow:hidden;cursor:pointer;border-bottom:1px solid var(--light-grey);}
+.vk-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(192,57,43,0.06) 0%,transparent 65%);pointer-events:none;}
+.vk-hero-coop-label{position:absolute;top:12px;left:12px;background:var(--vk-red);color:#fff;font-size:7.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;z-index:2;}
+.vk-hero-img{height:200px;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;}
+.vk-hero-body{padding:14px 16px 18px;position:relative;z-index:1;}
+.vk-hero-sponsor{font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:4px;}
+.vk-hero-name{font-family:'Playfair Display',serif;font-size:20px;color:var(--near-black);line-height:1.2;margin-bottom:4px;}
+.vk-hero-price{font-size:15px;font-weight:600;color:var(--charcoal);margin-bottom:14px;}
+.vk-hero-cta{display:inline-flex;align-items:center;gap:6px;background:var(--vk-red);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:9px 16px;border-radius:2px;}
+.vk-brand-tier{display:flex;align-items:center;background:#F7F5F2;border-top:1px solid #E8E6E3;border-bottom:1px solid #E8E6E3;padding:8px 14px;}
+.vk-brand-tier-label{font-size:7px;letter-spacing:0.16em;text-transform:uppercase;color:#9B9B98;white-space:nowrap;margin-right:10px;flex-shrink:0;}
+.vk-brand-logos{display:flex;align-items:center;gap:0;flex:1;}
+.vk-brand-logo{flex:1;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6B6B68;padding:3px 6px;border-left:1px solid #E0DED9;white-space:nowrap;}
+.vk-brand-logo:first-child{border-left:none;}
+.vk-brand-sponsored{font-size:6.5px;letter-spacing:0.1em;text-transform:uppercase;color:#B0AEA9;padding-left:8px;border-left:1px solid #E0DED9;flex-shrink:0;}
+.vk-section{padding:0 0 20px;}
+.vk-section-header{padding:16px 14px 12px;display:flex;align-items:baseline;justify-content:space-between;}
+.vk-section-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:500;color:var(--near-black);}
+.vk-section-link{font-size:9.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--mid-grey);}
+.vk-cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 14px;}
+.vk-cat-tile{background:var(--off-white);border-radius:3px;overflow:hidden;cursor:pointer;}
+.vk-cat-img{height:108px;display:flex;align-items:center;justify-content:center;}
+.vk-cat-img.dark{background:var(--near-black);}
+.vk-cat-img.mid{background:#3A3A38;}
+.vk-cat-img.lt{background:#E8E4DE;}
+.vk-cat-body{padding:8px 10px 10px;}
+.vk-cat-name{font-size:11.5px;font-weight:600;color:var(--near-black);margin-bottom:1px;}
+.vk-cat-count{font-size:10px;color:var(--mid-grey);}
+.vk-product-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 14px;}
+.vk-pcard{background:var(--off-white);border-radius:3px;overflow:hidden;cursor:pointer;}
+.vk-pcard-img{height:150px;display:flex;align-items:center;justify-content:center;position:relative;background:#F0EDEA;}
+.vk-pbadge{position:absolute;top:8px;left:8px;font-size:7.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
+.vk-pbadge.new{background:var(--near-black);color:#fff;}
+.vk-pbadge.used{background:var(--amber-bg);color:var(--amber);}
+.vk-pbadge.sale{background:#fde8e6;color:var(--vk-red);}
+.vk-pcard-body{padding:9px 10px 12px;}
+.vk-pcard-name{font-size:11.5px;font-weight:600;color:var(--near-black);line-height:1.3;margin-bottom:2px;}
+.vk-pcard-brand{font-size:10px;color:var(--mid-grey);margin-bottom:5px;}
+.vk-pcard-price{font-size:12.5px;font-weight:700;color:var(--near-black);}
+.vk-pcard-price .was{font-size:10px;color:var(--mid-grey);text-decoration:line-through;font-weight:400;margin-left:4px;}
+.vk-mym{padding:0 14px 20px;}
+.vk-mym-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
+.vk-mym-scroll::-webkit-scrollbar{display:none;}
+.vk-mym-card{flex-shrink:0;width:140px;background:var(--near-black);border-radius:3px;overflow:hidden;cursor:pointer;}
+.vk-mym-thumb{height:62px;display:flex;align-items:center;justify-content:center;background:var(--charcoal);position:relative;}
+.vk-mym-play{width:24px;height:24px;border-radius:50%;background:rgba(192,57,43,0.85);display:flex;align-items:center;justify-content:center;}
+.vk-mym-dur{position:absolute;bottom:4px;right:6px;font-size:8.5px;color:rgba(255,255,255,0.5);background:rgba(0,0,0,0.5);padding:1px 4px;border-radius:2px;}
+.vk-mym-meta{padding:7px 9px;}
+.vk-mym-meta-title{font-family:'Playfair Display',serif;font-style:italic;font-size:10.5px;color:rgba(255,255,255,0.8);line-height:1.3;}
+.vk-vintage{background:#1C1A10;position:relative;overflow:hidden;margin-bottom:20px;}
+.vk-vintage::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(212,134,10,0.18) 0%,transparent 65%);pointer-events:none;}
+.vk-vintage-inner{padding:24px 14px;position:relative;z-index:1;}
+.vk-vintage-label{font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:10px;}
+.vk-vintage h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:#fff;line-height:1.15;margin-bottom:8px;}
+.vk-vintage p{font-size:11.5px;color:rgba(255,255,255,0.5);line-height:1.65;margin-bottom:16px;max-width:260px;}
+.btn-amber{display:inline-flex;align-items:center;gap:5px;background:var(--amber);color:#fff;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:8px 14px;border-radius:2px;}
+
+/* CATEGORY PAGE */
+.vk-breadcrumb{padding:9px 14px;font-size:10.5px;color:var(--mid-grey);display:flex;align-items:center;gap:5px;border-bottom:1px solid var(--pale-grey);}
+.vk-cat-header{padding:16px 14px 14px;}
+.vk-cat-header h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;margin-bottom:2px;}
+.vk-cat-header p{font-size:10.5px;color:var(--mid-grey);}
+.vk-filter-bar{overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--pale-grey);}
+.vk-filter-bar::-webkit-scrollbar{display:none;}
+.vk-filter-inner{display:flex;align-items:center;gap:6px;padding:9px 14px;white-space:nowrap;}
+.vk-filter-chip{font-size:10.5px;color:var(--charcoal);padding:5px 11px;border:1px solid var(--light-grey);border-radius:20px;cursor:pointer;background:var(--warm-white);flex-shrink:0;}
+.vk-filter-chip.red{background:var(--vk-red);color:#fff;border-color:var(--vk-red);}
+.vk-coop-card{margin:12px 14px 10px;background:#1E1D1A;border-radius:4px;overflow:hidden;display:flex;align-items:center;cursor:pointer;position:relative;}
+.vk-coop-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(192,57,43,0.2) 0%,transparent 70%);pointer-events:none;}
+.vk-coop-img{width:60px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:10px 7px;}
+.vk-coop-info{flex:1;padding:11px 12px 11px 4px;}
+.vk-coop-sponsor{font-size:7px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:3px;}
+.vk-coop-name{font-family:'Playfair Display',serif;font-size:12.5px;color:#fff;line-height:1.25;margin-bottom:3px;}
+.vk-coop-price{font-size:10.5px;color:rgba(255,255,255,0.55);margin-bottom:6px;}
+.vk-coop-btn{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:var(--vk-red);border-radius:2px;padding:4px 8px;}
+.vk-buying-guide{margin:12px 14px;background:var(--off-white);border:1px solid var(--pale-grey);border-radius:3px;padding:12px;display:flex;gap:10px;align-items:center;}
+.vk-bg-title{font-size:11.5px;font-weight:700;color:var(--near-black);margin-bottom:2px;}
+.vk-bg-sub{font-size:10px;color:var(--mid-grey);line-height:1.4;}
+.vk-bg-link{font-size:9.5px;color:var(--vk-red);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-top:5px;}
+.vk-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 14px 20px;}
+.vk-gc{cursor:pointer;}
+.vk-gc-img{height:180px;background:#F0EDEA;border-radius:3px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;position:relative;overflow:hidden;}
+.vk-gc-badge{position:absolute;top:7px;left:7px;font-size:7.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
+.vk-gc-badge.new{background:var(--near-black);color:#fff;}
+.vk-gc-badge.used{background:var(--amber-bg);color:var(--amber);}
+.vk-gc-badge.sale{background:#fde8e6;color:var(--vk-red);}
+.vk-gc-name{font-size:11.5px;font-weight:600;color:var(--near-black);line-height:1.3;margin-bottom:2px;}
+.vk-gc-brand{font-size:10px;color:var(--mid-grey);margin-bottom:4px;}
+.vk-gc-price{font-size:12.5px;font-weight:700;color:var(--near-black);}
+.vk-gc-price .was{font-size:10px;color:var(--mid-grey);text-decoration:line-through;font-weight:400;margin-left:3px;}
+.vk-expert-strip{margin:0 14px 20px;background:var(--vk-red);border-radius:3px;padding:14px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.vk-expert-strip-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px;}
+.vk-expert-strip-sub{font-size:10px;color:rgba(255,255,255,0.65);}
+
+/* PRODUCT PAGE */
+.vk-prod-img{height:260px;background:#F0EDEA;display:flex;align-items:center;justify-content:center;position:relative;}
+.vk-prod-img::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 30%,rgba(192,57,43,0.06) 0%,transparent 65%);}
+.vk-prod-thumbs{display:flex;gap:5px;padding:9px 14px;background:var(--off-white);}
+.vk-thumb{width:52px;height:52px;background:var(--pale-grey);border-radius:2px;border:2px solid transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.vk-thumb.active{border-color:var(--near-black);}
+.vk-prod-detail{padding:18px 14px;}
+.vk-prod-brand{font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:5px;}
+.vk-prod-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--near-black);line-height:1.2;margin-bottom:14px;}
+.vk-prod-rating{display:flex;align-items:center;gap:7px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--pale-grey);}
+.vk-stars{color:var(--amber);font-size:12px;}
+.vk-rating-ct{font-size:10.5px;color:var(--mid-grey);}
+.vk-price-row{display:flex;align-items:baseline;gap:7px;margin-bottom:12px;}
+.vk-price{font-size:24px;font-weight:700;color:var(--near-black);}
+.vk-financing{background:var(--off-white);border-radius:3px;padding:10px 12px;display:flex;align-items:center;gap:9px;font-size:11.5px;color:var(--charcoal);margin-bottom:16px;}
+.vk-specs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:16px;}
+.vk-spec{background:var(--off-white);border-radius:3px;padding:8px 10px;}
+.vk-spec span{display:block;font-size:8.5px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px;}
+.vk-spec strong{font-size:11px;font-weight:600;color:var(--charcoal);}
+.vk-condition{display:flex;gap:6px;margin-bottom:16px;}
+.vk-cond-opt{flex:1;padding:8px 5px;border:1px solid var(--light-grey);border-radius:3px;text-align:center;cursor:pointer;}
+.vk-cond-opt.sel{border-color:var(--near-black);background:var(--near-black);}
+.vk-cond-label{font-size:10.5px;font-weight:600;color:var(--charcoal);}
+.vk-cond-opt.sel .vk-cond-label{color:#fff;}
+.vk-cond-price{font-size:9.5px;color:var(--mid-grey);margin-top:2px;}
+.vk-cond-opt.sel .vk-cond-price{color:rgba(255,255,255,0.55);}
+.vk-atc{width:100%;background:var(--vk-red);color:#fff;border:none;padding:14px;font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border-radius:3px;margin-bottom:9px;}
+.vk-wl{width:100%;background:none;color:var(--charcoal);border:1px solid var(--light-grey);padding:11px;font-family:'DM Sans',sans-serif;font-size:11.5px;cursor:pointer;border-radius:3px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:5px;}
+.vk-meta{border-top:1px solid var(--pale-grey);padding-top:14px;display:flex;flex-direction:column;gap:9px;}
+.vk-meta-row{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--charcoal);}
+.vk-meta-row svg{color:var(--vk-red);flex-shrink:0;}
+.vk-tabs{border-top:1px solid var(--light-grey);margin-top:24px;}
+.vk-tab-nav{display:flex;border-bottom:1px solid var(--light-grey);overflow-x:auto;scrollbar-width:none;}
+.vk-tab-nav::-webkit-scrollbar{display:none;}
+.vk-tab-btn{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;color:var(--mid-grey);background:none;border:none;padding:12px 16px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.vk-tab-btn.active{color:var(--near-black);border-bottom-color:var(--vk-red);}
+.vk-tab-panel{display:none;padding:18px 14px;}
+.vk-tab-panel.active{display:block;}
+.vk-tab-panel p{font-size:12.5px;color:var(--charcoal);line-height:1.8;margin-bottom:12px;}
+.vk-specs-tbl{width:100%;border-collapse:collapse;}
+.vk-specs-tbl tr{border-bottom:1px solid var(--pale-grey);}
+.vk-specs-tbl td{padding:9px 0;font-size:11.5px;}
+.vk-specs-tbl td:first-child{color:var(--mid-grey);width:48%;}
+.vk-specs-tbl td:last-child{color:var(--charcoal);font-weight:600;}
+.vk-sticky-atc{position:sticky;bottom:0;background:var(--warm-white);border-top:1px solid var(--light-grey);padding:10px 14px;display:flex;align-items:center;gap:10px;z-index:50;}
+.vk-sticky-info{flex:1;}
+.vk-sticky-name{font-size:10px;font-weight:600;color:var(--near-black);}
+.vk-sticky-price{font-size:12.5px;font-weight:700;color:var(--near-black);}
+.vk-sticky-btn{background:var(--vk-red);color:#fff;border:none;padding:9px 16px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;border-radius:2px;cursor:pointer;white-space:nowrap;}
+
+/* FAQ */
+.vk-faq-hero{background:var(--off-white);padding:36px 14px 28px;border-bottom:1px solid var(--light-grey);}
+.vk-faq-eyebrow{font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--vk-red);font-weight:700;margin-bottom:10px;}
+.vk-faq-title{font-family:'DM Sans',sans-serif;font-size:24px;font-weight:700;color:var(--near-black);margin-bottom:8px;}
+.vk-faq-sub{font-size:11.5px;color:var(--mid-grey);line-height:1.65;margin-bottom:18px;}
+.vk-faq-search{position:relative;}
+.vk-faq-search input{width:100%;padding:11px 38px 11px 13px;background:#fff;border:1px solid var(--light-grey);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--near-black);outline:none;}
+.vk-faq-search input::placeholder{color:var(--mid-grey);}
+.vk-faq-search-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--mid-grey);}
+.vk-faq-section-title{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--mid-grey);padding:16px 14px 10px;border-bottom:1px solid var(--pale-grey);margin:0 14px;}
+.vk-faq-item{border-bottom:1px solid var(--pale-grey);}
+.vk-faq-q{width:100%;background:none;border:none;display:flex;align-items:center;justify-content:space-between;padding:13px 14px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:500;color:var(--near-black);text-align:left;gap:10px;}
+.vk-faq-q.open{color:var(--vk-red);}
+.vk-faq-icon{width:17px;height:17px;border:1px solid var(--light-grey);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--mid-grey);flex-shrink:0;transition:all 0.2s;}
+.vk-faq-q.open .vk-faq-icon{background:var(--vk-red);border-color:var(--vk-red);color:#fff;transform:rotate(45deg);}
+.vk-faq-a{display:none;padding:0 14px 14px;font-size:12px;color:var(--mid-grey);line-height:1.75;}
+.vk-faq-a.open{display:block;}
+.vk-contact-strip{background:var(--off-white);border-top:1px solid var(--light-grey);padding:24px 14px;}
+.vk-contact-title{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:3px;}
+.vk-contact-sub{font-size:11px;color:var(--mid-grey);margin-bottom:16px;}
+.vk-contact-cards{display:flex;flex-direction:column;gap:8px;}
+.vk-contact-card{background:var(--warm-white);border:1px solid var(--light-grey);border-radius:3px;padding:14px;display:flex;align-items:flex-start;gap:12px;}
+.vk-contact-icon{width:32px;height:32px;background:#fde8e6;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--vk-red);flex-shrink:0;}
+.vk-contact-card-title{font-size:12px;font-weight:700;color:var(--near-black);margin-bottom:2px;}
+.vk-contact-card-sub{font-size:10.5px;color:var(--mid-grey);line-height:1.5;}
+.vk-contact-action{font-size:10.5px;color:var(--vk-red);font-weight:700;margin-top:4px;display:block;}
+
+/* FOOTER */
+.vk-footer{background:#2C2C2A;padding:24px 14px 32px;}
+.vk-footer-name{font-family:'Playfair Display',serif;font-size:15px;color:#fff;margin-bottom:8px;}
+.vk-footer-desc{font-size:10.5px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:20px;}
+.vk-footer-col-title{font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:10px;}
+.vk-footer-links{list-style:none;margin-bottom:20px;}
+.vk-footer-links li{margin-bottom:7px;}
+.vk-footer-links a{font-size:11.5px;color:rgba(255,255,255,0.5);}
+.vk-footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;font-size:10px;color:rgba(255,255,255,0.25);}
+
+/* Accordion conversion pills */
+.acc-pill{display:flex;align-items:center;gap:8px;margin:4px 18px 12px;background:#FEF3F2;border-radius:20px;padding:6px 13px;width:fit-content;}
+.acc-pill span{font-size:11px;font-weight:500;color:#2C2C2A;}
+.acc-pill-amber{background:#FBF5E8;}
+.acc-pill-amber span{color:#92400E;}
+
+@media(max-width:820px){.sim-layout{flex-direction:column;}.phone-col{min-height:auto;padding:28px 20px;}.sidebar{max-width:100%;max-height:none;border-left:none;border-top:1px solid #E8E6E3;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="sim-header">
+  <div>
+    <div class="sim-title">Vintage King · Mobile Simulator</div>
+    <div class="sim-sub">v1.5 · March 2026 · Confidential</div>
+  </div>
+  <div class="file-switcher">
+    <button class="file-btn active" id="btn-mega" onclick="switchView('mega')">☰ Mobile Nav</button>
+    <button class="file-btn" id="btn-redesign" onclick="switchView('redesign')">⊞ 4-Page Site</button>
+  </div>
+</div>
+
+<div class="sim-layout">
+
+  <!-- PHONE -->
+  <div class="phone-col">
+    <div class="phone-frame">
+      <div class="phone-statusbar">
+        <span class="s-time">9:41</span>
+        <div class="s-icons">
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="rgba(255,255,255,0.85)"><rect x="0" y="4.5" width="2.5" height="6.5" rx="0.4"/><rect x="4" y="2.5" width="2.5" height="8.5" rx="0.4"/><rect x="8" y="0.5" width="2.5" height="10.5" rx="0.4"/><rect x="12" y="0" width="3" height="11" rx="0.4" opacity="0.25"/></svg>
+          <svg width="14" height="10" viewBox="0 0 24 18" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" stroke-linecap="round"><path d="M1.5 6C5.5 2.5 18.5 2.5 22.5 6M5.5 10C8.5 7.5 15.5 7.5 18.5 10M9.5 13.5c1.2-1 4-1 5 0"/><circle cx="12" cy="17" r="1" fill="rgba(255,255,255,0.85)" stroke="none"/></svg>
+          <svg width="23" height="11" viewBox="0 0 23 11" fill="none"><rect x="0.5" y="0.5" width="19" height="10" rx="2.5" stroke="rgba(255,255,255,0.85)" stroke-width="1"/><rect x="2" y="2" width="14" height="7" rx="1.5" fill="rgba(255,255,255,0.85)"/><path d="M21 3.5v4a2 2 0 000-4z" fill="rgba(255,255,255,0.4)"/></svg>
+        </div>
+      </div>
+      <div class="phone-island"><div class="island-sen"></div><div class="island-cam"></div></div>
+
+      <div class="phone-screen" id="phone-screen">
+        <!-- OVERLAY -->
+        <div class="vk-overlay" id="vk-overlay" onclick="closeDrawer()"></div>
+
+        <!-- DRAWER -->
+        <div class="vk-drawer" id="vk-drawer">
+          <div class="vk-drawer-header">
+            <div class="vk-logo">
+              <img src="data:image/jpeg;base64,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" class="logo-tube" style="width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="VK">
+              <div><div class="vk-drawer-name">VINTAGE KING</div><div class="vk-drawer-tag">New · Used · Vintage · Pro Audio</div></div>
+            </div>
+            <button class="vk-drawer-close" onclick="closeDrawer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <div class="vk-drawer-body" id="vk-drawer-body">
+            <!-- Trust pills -->
+            <div style="display:flex;gap:5px;padding:8px 16px 6px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid #EEEDE9;">
+              <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;background:#fff;border:1px solid #E8E6E3;border-radius:20px;padding:4px 10px;font-size:10px;color:#2C2C2A;white-space:nowrap;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><strong>Free shipping</strong>&nbsp;$99+</div>
+              <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;background:#fff;border:1px solid #E8E6E3;border-radius:20px;padding:4px 10px;font-size:10px;color:#2C2C2A;white-space:nowrap;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><strong>0% financing</strong>&nbsp;48 mo.</div>
+              <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;background:#fff;border:1px solid #E8E6E3;border-radius:20px;padding:4px 10px;font-size:10px;color:#2C2C2A;white-space:nowrap;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><strong>Free 1-yr</strong>&nbsp;warranty</div>
+              <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;background:#fff;border:1px solid #E8E6E3;border-radius:20px;padding:4px 10px;font-size:10px;color:#2C2C2A;white-space:nowrap;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg><strong>Same-day</strong>&nbsp;ship</div>
+            </div>
+            <!-- Search -->
+            <div class="vk-drawer-search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6B68" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Search 50,000+ products…"></div>
+
+            <!-- MICROPHONES -->
+            <div class="vk-acc" id="acc-mics">
+              <button class="vk-acc-btn" onclick="toggleAcc('acc-mics')">Microphones<svg class="vk-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <div class="vk-acc-content"><div class="vk-sub-links">
+                <a href="#" class="bold">All Microphones</a><a href="#">Condenser</a><a href="#">Dynamic</a><a href="#">Ribbon</a><a href="#">Tube</a><a href="#">Stereo</a><a href="#">USB</a>
+                <a href="#" class="vk-sub-view-all">Shop All →</a>
+              </div>
+              <div class="acc-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span><strong style="color:var(--vk-red);">0% financing</strong> · as low as $75/mo</span></div>
+              </div>
+            </div>
+
+            <!-- OUTBOARD -->
+            <div class="vk-acc" id="acc-out">
+              <button class="vk-acc-btn" onclick="toggleAcc('acc-out')">Outboard<svg class="vk-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <div class="vk-acc-content"><div class="vk-sub-links">
+                <a href="#" class="bold">All Outboard</a><a href="#">Compressors & Limiters</a><a href="#">Preamps</a><a href="#">EQ</a><a href="#">Reverb & Delay</a><a href="#">500 Series</a>
+                <a href="#" class="vk-sub-view-all">Shop All →</a>
+              </div>
+              <div class="acc-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span><strong style="color:var(--vk-red);">Free 1-year warranty</strong> on every piece</span></div>
+              </div>
+            </div>
+
+            <!-- CONSOLES -->
+            <div class="vk-acc" id="acc-con">
+              <button class="vk-acc-btn" onclick="toggleAcc('acc-con')">Consoles<svg class="vk-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <div class="vk-acc-content"><div class="vk-sub-links">
+                <a href="#" class="bold">All Consoles</a><a href="#">Analog Mixing</a><a href="#">Recording Consoles</a><a href="#">Small Format</a><a href="#">Summing Mixers</a>
+                <a href="#" class="vk-sub-view-all">Shop All →</a>
+              </div>
+              <div class="acc-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span><strong style="color:var(--vk-red);">Free consultation</strong> · talk to an expert</span></div>
+              </div>
+            </div>
+
+            <!-- MONITORING -->
+            <div class="vk-acc" id="acc-mon">
+              <button class="vk-acc-btn" onclick="toggleAcc('acc-mon')">Monitoring<svg class="vk-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <div class="vk-acc-content"><div class="vk-sub-links">
+                <a href="#" class="bold">All Monitors</a><a href="#">Nearfield</a><a href="#">Midfield</a><a href="#">Reference Headphones</a><a href="#">Subwoofers</a>
+                <a href="#" class="vk-sub-view-all">Shop All →</a>
+              </div>
+              <div class="acc-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span><strong style="color:var(--vk-red);">Same-day shipping</strong> on in-stock items</span></div>
+              </div>
+            </div>
+
+            <!-- VINTAGE -->
+            <div class="vk-acc" id="acc-vin">
+              <button class="vk-acc-btn vintage" onclick="toggleAcc('acc-vin')">Vintage ✦<svg class="vk-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <div class="vk-acc-content" style="background:#FFFDF7;border-top:1px solid #F0E6C8;"><div class="vk-sub-links">
+                <a href="#" class="bold" style="color:var(--amber)">All Vintage</a><a href="#">Vintage Microphones</a><a href="#">Vintage Preamps</a><a href="#">Vintage Compressors</a><a href="#">Vintage Consoles</a><a href="#">Sell or Trade</a>
+                <a href="#" class="vk-sub-view-all" style="color:var(--amber)">Shop All Vintage →</a>
+              </div>
+              <div class="acc-pill acc-pill-amber"><span style="font-size:12px;line-height:1;flex-shrink:0;">🛡</span><span><strong style="color:#92400E;">Authenticity guaranteed</strong> · inspected in-house</span></div>
+              </div>
+            </div>
+
+            <!-- STUDIO DESIGN -->
+            <div class="vk-acc" id="acc-std">
+              <button class="vk-acc-btn" onclick="toggleAcc('acc-std')">Studio Design<svg class="vk-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+              <div class="vk-acc-content"><div class="vk-sub-links">
+                <a href="#" class="bold">Studio Design Overview</a><a href="#">Acoustic Treatment</a><a href="#">Equipment Integration</a><a href="#">Control Room Design</a><a href="#">Free Consultation</a>
+                <a href="#" class="vk-sub-view-all">Explore Services →</a>
+              </div>
+              <div class="acc-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg><span><strong style="color:var(--vk-red);">Free consultation</strong> · get started today</span></div>
+              </div>
+            </div>
+
+            <a href="#" class="vk-plain-link">Deals 🔥</a>
+
+            <!-- EXPLORE -->
+            <div style="padding:14px 18px 6px;border-top:1px solid #EEEDE9;">
+              <div style="font-size:7.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#B0AEA9;margin-bottom:8px;">Explore</div>
+              <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F4F3F0;text-decoration:none;"><div style="width:30px;height:30px;background:#1A1A18;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="9" height="11" viewBox="0 0 24 24" fill="#C0392B"><polygon points="5,3 19,12 5,21"/></svg></div><span style="font-size:13px;font-weight:500;color:#1A1A18;">Make Your Mark</span></a>
+              <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F4F3F0;text-decoration:none;"><div style="width:30px;height:30px;background:#F7F5F2;border:1px solid #E8E6E3;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;">📖</div><span style="font-size:13px;font-weight:500;color:#1A1A18;">PLAYBACK Magazine</span></a>
+              <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F4F3F0;text-decoration:none;"><div style="width:30px;height:30px;background:#F7F5F2;border:1px solid #E8E6E3;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6B68" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><span style="font-size:13px;font-weight:500;color:#1A1A18;">Studio Integration</span></a>
+              <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F4F3F0;text-decoration:none;"><div style="width:30px;height:30px;background:#F7F5F2;border:1px solid #E8E6E3;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6B68" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><span style="font-size:13px;font-weight:500;color:#1A1A18;">Gear Restoration</span></a>
+              <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F4F3F0;text-decoration:none;"><div style="width:30px;height:30px;background:#F7F5F2;border:1px solid #E8E6E3;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6B68" stroke-width="1.5"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></div><span style="font-size:13px;font-weight:500;color:#1A1A18;">Sell or Trade</span></a>
+              <a href="#" style="display:flex;align-items:center;gap:12px;padding:10px 0;text-decoration:none;"><div style="width:30px;height:30px;background:#FEF3F2;border:1px solid #FECACA;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div><span style="font-size:13px;font-weight:500;color:#C0392B;">0% Financing</span><span style="margin-left:auto;font-size:10px;font-weight:600;color:#C0392B;">48 mo.</span></a>
+            </div>
+            <div style="display:flex;gap:0;padding:10px 18px 20px;border-top:1px solid #F4F3F0;">
+              <a href="#" style="font-size:11px;color:#B0AEA9;margin-right:16px;text-decoration:none;">Sign In</a>
+              <a href="#" style="font-size:11px;color:#B0AEA9;margin-right:16px;text-decoration:none;">My Account</a>
+              <a href="#" style="font-size:11px;color:#B0AEA9;text-decoration:none;">Order Status</a>
+            </div>
+          </div><!-- /drawer-body -->
+
+          <!-- STICKY EXPERT -->
+          <div class="vk-drawer-sticky">
+            <a href="#" class="vk-sticky-expert"><div class="pulse-dot"></div><div class="vk-sticky-expert-text"><div class="vk-sticky-expert-title">Ask an Expert</div><div class="vk-sticky-expert-sub">Live now · Free consultation</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <div class="vk-sticky-meta"><div class="vk-sticky-meta-item">📞 888.653.1184</div><div class="vk-sticky-meta-sep"></div><div class="vk-sticky-meta-item">Mon–Sat 9:30AM–9PM ET</div></div>
+          </div>
+        </div><!-- /drawer -->
+
+        <!-- MEGA VIEW -->
+        <div class="vk-app" id="view-mega">
+          <nav class="vk-nav">
+            <div class="vk-nav-row1">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button class="vk-hamburger" onclick="openDrawer()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+                <div class="vk-logo"><img src="data:image/jpeg;base64,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" class="logo-tube" style="width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="VK"><div><div class="vk-logo-name">VINTAGE KING</div><div class="vk-logo-tag">New · Used · Vintage · Pro Audio</div></div></div>
+              </div>
+              <div class="vk-nav-actions">
+                
+                <button class="vk-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+                <button class="vk-nav-icon" style="position:relative;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="vk-cart-count">2</span></button>
+              </div>
+            </div>
+            <div class="vk-nav-line2">
+              <a href="tel:8886531184" class="vk-nav-phone"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.61 4.83 2 2 0 0 1 3.58 2.63h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>888.653.1184 &nbsp;&middot;&nbsp; Mon–Sat 9:30AM–9PM ET</a>
+            </div>
+          </nav>
+          <!-- INTRO CARD -->
+          <div style="padding:28px 16px;text-align:center;">
+            <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--near-black);margin-bottom:10px;">Mobile Navigation v4.1</div>
+            <p style="font-size:12px;color:var(--mid-grey);line-height:1.7;margin-bottom:20px;">Full messaging parity. All 9 zones built. Tap the hamburger above or the walkthrough buttons on the right to explore.</p>
+            <button onclick="openDrawer()" style="display:inline-flex;align-items:center;gap:7px;background:var(--vk-red);color:#fff;border:none;cursor:pointer;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;border-radius:2px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>Open Mobile Drawer
+            </button>
+          </div>
+          <!-- MESSAGING ZONES -->
+          <div style="padding:0 14px 24px;">
+            <div style="font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:12px;display:flex;align-items:center;gap:7px;">Messaging Zones Built<span style="flex:1;height:1px;background:var(--pale-grey);display:block"></span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <div style="background:var(--off-white);border-radius:3px;padding:10px 11px;"><div style="font-size:10px;font-weight:700;color:var(--near-black);margin-bottom:2px;">P1 · Expert CTA</div><div style="font-size:9.5px;color:var(--mid-grey);">Sticky bar, always visible</div></div>
+              <div style="background:var(--off-white);border-radius:3px;padding:10px 11px;"><div style="font-size:10px;font-weight:700;color:var(--near-black);margin-bottom:2px;">P2–5 · Trust Strip</div><div style="font-size:9.5px;color:var(--mid-grey);">Shipping, financing, warranty</div></div>
+              <div style="background:var(--off-white);border-radius:3px;padding:10px 11px;"><div style="font-size:10px;font-weight:700;color:var(--near-black);margin-bottom:2px;">P8 · Tier 1 Co-op</div><div style="font-size:9.5px;color:var(--mid-grey);">Dark card per category</div></div>
+              <div style="background:var(--off-white);border-radius:3px;padding:10px 11px;"><div style="font-size:10px;font-weight:700;color:var(--near-black);margin-bottom:2px;">P9 · Tier 2 Logos</div><div style="font-size:9.5px;color:var(--mid-grey);">4 brand slots, sponsored</div></div>
+              <div style="background:var(--off-white);border-radius:3px;padding:10px 11px;"><div style="font-size:10px;font-weight:700;color:var(--near-black);margin-bottom:2px;">P7 · Section 179</div><div style="font-size:9.5px;color:var(--mid-grey);">Promoted callout card</div></div>
+              <div style="background:var(--off-white);border-radius:3px;padding:10px 11px;"><div style="font-size:10px;font-weight:700;color:var(--near-black);margin-bottom:2px;">P10 · MYM Strip</div><div style="font-size:9.5px;color:var(--mid-grey);">4 video cards, horiz. scroll</div></div>
+              <div style="background:#FBF5E8;border:1px solid #E8D99A;border-radius:3px;padding:10px 11px;"><div style="font-size:10px;font-weight:700;color:var(--amber);margin-bottom:2px;">P12 · Authenticity</div><div style="font-size:9.5px;color:var(--mid-grey);">Vintage accordion callout</div></div>
+            </div>
+          </div>
+        </div><!-- /view-mega -->
+
+        <!-- 4-PAGE VIEW -->
+        <div class="vk-app" id="view-redesign" style="display:none;">
+
+          <!-- NAV (shared across all pages via JS) -->
+          <nav class="vk-nav" id="redesign-nav">
+            <div class="vk-nav-row1">
+              <div class="vk-logo"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAggKCggICAgKCAgICAgICAgICAgICAoICggICAgLCAgICAgICAgLCAgICAoICgoKCgsKCAgLDQsKDQgIDQgBAwQEBgUGCgYGChAOCw0QDxIQEBAQEhEQEBAQDw8PDxAQEBAQEBISDhANDQ8PDw8QEA8QEA8NEA8QDw8NEBAPEP/AABEIAKAAoAMBEQACEQEDEQH/xAAdAAACAgIDAQAAAAAAAAAAAAAACAYHAgUDBAkB/8QASxAAAgECBAQCBQYJCgQHAAAAAQIDBBEABRIhBggTMQdhFCJBUXEyM0JScpEjJEOBkqGxs8EVNDVEYnWDk6K0GFOy1CVUVXOClNL/xAAcAQACAgMBAQAAAAAAAAAAAAAABgUHAwQIAQL/xABIEQABAgMEBgYGBgkEAgMBAAABAAIDBBEFEiExBkFRYXGRIjJSgaGxBxNCYnLBMzSSstHwFCMkNYKis8LSFlNz4RfiQ1RjFf/aAAwDAQACEQMRAD8A9U8CEYEIwIRgQjAhdTNc2ihRpZ5EhiQXeSV1jRR72diFA+Jx8Pe2G0ueQAMycAs0GDEjvEOE0uccgBUngAqE4751ctg1JRxyV8guNSfgaa/nNIpdh7mjidT78Lkxb0FmEIF55N5nzAKsmzdAJ6Yo6acITdh6T/sjAcHOadyozirnIzqbUIWhokPboRCWUDzkqOojfERJiAjW3NROqQ0bhU8zUeAViyegdlwKGKHRT7zqDk2h/mKrXOPFXNJjqmzKsbyFVNGn+VE6Rf6cRUSajxDV0R32iPAEDwTZAsaz4Auw5aGP4Gk83AnxWhqM0lbd5ZHPveR2P3sTjCXuOZJ71JMgQ2dRoHAAeSKfNJV3SWRD70kdT96kYA9wyJHeh0GG/rNB4gHzW+yfxUzSE6ocyrF8jVTSJ/lSu8X+nGaHNR4Zq2I77RPgajwUbHsaz44uxJaGf4Gg82gHxVlcK85GdQ6RM0Nag79eIRykey0lP0kX4mJ/z4lYNtzUOl4hw3ih5ig8ClOd0DsuYqYQdCPuuqOTqn+YK8uBOdXLZ9KVkclBIbDU34emufdNGodR72kiRR9bE/L29BfhFBYebeY8yAq7tH0fz0vV0q4RW7B0X/ZOB4NcTuV+ZVm8UyLLBKk0Ti6SROsiMPerKSpHwOGJkRsRocwgg5EYhVtGgRIDzDitLXDMEUI4grt4yLAjAhGBCMCEYEIwIRgQjAhGBCoLxp5tKWiL01GFraxbq1m/FoWvYiWRd5JAb3hj3BBDvGbXXJ62YcAmHC6TvAcTt3DvIVlWBoTMWgBHmiYcI5YdNw90HIHtHiA5Jpx14i1tfJ1a6oecg3SM+rBH3+ahW0aEA6ddjIwtqdrXwjx5iLMG9GdXyHAfPPaSr5s6y5SzYfq5SGGjWc3O+J2ZyrTIHIBRzGupVGBCMCEYEIwIRgQjAhGBCkXA3iJW0EnVoqh4CTd0B1QydvnoWvG9wAuuwkUX0ut742IExFl3XoLqeR4j8nYQou0bLlLSh+rm4YcNRyc34XZjOtMicwU5Xgtza0taUpq0LRVjWVSW/FpmJsBFI28chNrQyHckBHkN7O8jbMOORDii67+U8DqO49xKoa39CZiQBjypMSEM+20bwMx7w2VIar/wyKtEYEIwIRgQjAhGBCwmmCgsxCqoJZiQAABckk7AAbk48JpiV9NaXEACpKSvmD5rpKgyUWVyGOkF0lq0JWSf2MIGFjHT+zqCzy/RKpvMh2lbDoxMKXNGa3DN3A6m78zqoM7+0Y0LZKhs1aDaxc2sOTPiGt/u5N11d1VqRANgLAdgO2FkCmAVsk1xK+4F4jAhGBCMCF2sqyuSaSOCFGlmmcRxRoLsznsAPhdiTYKoZiQFJH01pe4NaKk4Afn868lhjRmQIbosVwaxoqScgPzgNZOAxKM1yqWGSSCaNopoXMcsbizK47gj3WsVYXVlKspIYEjmljixwoRgRs/P/eSIMaHHhtjQnBzHCoIyI/OYzBwNCF1cfKzIwIRgQjAhfGUHYi4OxB7YCK4Feg0xCZPl85rZKYx0WaSGSkNkiq3JaWn9iidjdpKf2dQ3eL2lk+ZZrNtgwaQpg1Zqcc28TrbvzGuoyqfSfQtk0HTVntpFzcwYB/w7H7snaqO6zrQzBgGUhlYAqwIIIIuCCNiCNwcPgNcQqAc0tJBFCFnj1fKMCEYEIwISU81/MGah5MropLUsZKVkqH5+QGzRKw/q6EESW+ccFfkI3WQ7YtL1pMvCPQHWO07OA17ThkMb/wBC9GBKsbaE039Y7GGD7AOTqds+z2Rj1iLq1YWFbKMCEYEIwIXxmA3OwHtOAkDEr0CuAVmeGvLvmmYFWigMFObXqqkNHHp23iQjqz7bqVXpm1jIuJOVs2YmcWto3tOwHcMz5HalG1tKbPswFsR9+IPYZie85N31NR2SnR8HOX6hytdUYM9Wy6ZKuUDqEGxKxKLiGK4HqLdmsutnKgh6kbNhSgqMXa3HPgNg/JqqDt7Sebtd11/RhA4MGXEn2nbzgKmgAK++MfL/AEOaLqlBgq1XTHVxAdQAG4WVTZZork+o1it20MhYnBPWbCm8XYO1OGfA7Ru5UXlhaTTdkOuw+lCJxYcuIPsu3jOgqCBRJf4lcuuaZfqaSH0inF7VVMGkj0++VLdWDbdiwMY7CRsI01ZsxLYubVvabiO8ZjyG1X5ZOlNn2nRrH3InYfge45O3UxPZCrFXB3G494xFgg4hN5FMCvuBeIwIRgQjAhMnyo8wZp3jyutkvSSMEpJXP83lY2WJif6u7GyX+achfkOOizWPaRguEvEPQPVPZOofCdWw4ZHCp9NNGBNMdaEq39a3F7R7YGbvjAz7Qx6w6TsYfVz+jAhGBCqrmVz7MIcvl/k2CSWWU9OWWEapKeAqxkkRAeq7kDpqY1YoX6h2j3h7ViRmS59QCScyMwNZAzrqFMs9Sc9E5aSj2g39OiNa1uIDsA91RRpOQGs1IrS7rXnPGBYW7DYW7bbYrMUpgupjWuKyx6vEYEIwIVreEPLfmGZWlUCloyf51MpOse30eIFWmt21Fkj72clSMS0lZkaa6Q6LO0dfAa/Abzkky3NK5Oyaw3dOL2GnL4nY3eFCdwGKbzw35YspodLiH0qoXf0ir0ysG33ijsIYiLkBkQPa12bvhzlLIl5fpUvO2ux5DIdwrtJVH2tpfaNo1YX3IZ9lmA7z1jwJpsAVs4mklIwIRgQjAhVN4kcseU12p2h9FqGufSKTTE5bbeSOxhmJsAWdC9rgMt74hZqyZeYq6l121uHMZHvHBOtlaX2jZ1GB9+GPYfiO49ZvAEDaClE8XuW6vy0GVrVVGP61CpGgez0iIlmh+2GeP3upYDCZO2ZGlOkekztDVxGrjiN4yV32HpXJ2sRDHQi9hxz+F2F7hQHYCMVVGIlOiMCEYELGS1je1jsb9seGlMcl6K1wXoty0Z9mEuXxfyjBJFLEenFLN6sk8AVTHI6MeqrgHpsZFUvo6gvr2syyokZ8uPXtIIyJzI1EjOuo1zpXWuWdLZaSgWg79Be1zXYuDcmOqatByI1ihNK3dStfEwkxGBCMCFT3i5yw5fmGuVV9DrGufSYVFna23pEN1WbsLtdZbCwkA2xBztkwZmrh0X7Rr4jX4HYQnqw9L52zKQ3H1kIew45D3XZt4Yt91Jj4oeCOYZax9Ki1QXslXDd6drmyhmsGhc7epIFuTZS9r4R5uRjSh/WDDtDL/o7j3VV9WPpDJWs39nfR+tjsHDbQe0N7a4ZgZKB40EyKe+BPAqV2Y0lLKLwlnlnX60USNIV+Dsqxt2OlmsQbYkJCXExMMhu6uZ4AV8TQcClrSO0X2dZ0WYh9egDdxcQK9wJI3gL0qggVQqqoVVAVVUAKFAsAANgANgBsBi0gABQLk5zi4lzjUnMrkx6vlGBCMCEYEIwIRgQuOeBWBVgGVgVZWAKlSLEEHYgjYg7EY8IBFCvpri0hzTQjIrzX8eOBEocxq6WEWgDJLAv1YpUWQJ8EcvGvt0qtyTfFW2hLiXmHw29XMcCMu41A3LrHRu0n2jZ0KYidehDjtLTSveKE7yVAMR6ZVO/C/wAE8wzJh6LFaAGz1c10p1sbMFaxMzjf1Iw1iLMUBvjflJGNNn9WOj2jl/2dw76JctjSCSslv7Q/p6mNxcdlR7I3uphlXJOd4R8sGX5folYemVi2PpMyiyNbf0eG7LD3Nmu8tiQZCNsPElZEGWo49J+06uA1eJ3qhLc0vnbTrDafVwj7DTmPfdgXcMG+6rixOJFRgQqg5jvG98qhpmhjjlnqJyojlLBeiilpm9UhgbmNAdwDICQbWMLaloGTa0tALicjsGfyHenjRXR5tsxojYri1jG5jtE0aMe87wKVCj/APOdldRpSrDZfKbAmX8JTE2ubVCAaVH1pkiHxxqy1uwImEXoHfi3ns4gKUtPQK0JarpakZvu4P+wczuaXK98vzGORVkikWWNhdXjZXRh71ZSVI8wcMTXBwq01CriLCfCcWRGlrhmCKEdxWdTSq6sjqHRgVZWAZWU7EMpuCCO4OPSARQr5Y9zHBzTQjIjMJafFrkup5dU+VMtJLuTSvf0RzY7RkBnpiTbYB47CwjW5OFScsJjquljdPZ9nu2eI3a1bNiafRoNIVogxG9sdccdTu+jveOSqnlz4UqqLPaWnrIHp5THVgK42dRTu2qN1JjlS4HrIzAHYkHbETZcJ8CdayI0g0dnrw1aiOHmnPSqdl5+woseWeHtBZiNRvAUIzB3EDknxxYS5wRgQjAhGBCMCEYEIwIRgQkP5j+Faqtz2pp6OB6iURUgKxgWUGBWDSOSEiTc+vIygnYEmwxXtqQnxp1zIbSTRuXDXqA4+a6O0UnJeQsKHHmXhjavxOvpEUAzJ3AFWp4S8l0EWmfNWWql2IpY7+iodtpCQr1JBvsQke5BR7A4lpOwWNo6ZN49kdXv2+A3a0nW3p9GjVhWcDDb2z1zw1N8XbHDJMvS0qoqoihEUBVVQFVVGwCqLAAewDDWAAKBVK97nuLnEknMnMrCvzCONWkldY41F2eRlRFHvZmIUDzJx45waKuNAvqHCfFcGQ2kuOQAqT3BURx/zm5XT6kpA2YSjYGH8HTA2uL1DizKfrQpKPhhdmbdgQ6iF0zuwb9rZwBVjWZoFaEzR0zSC33sX/YGR3OLVIOXHxwfNYqppo44p6ecKY4ixXoOoaFvWJYnUsqE7AmMkAXsNmy7QM4118AEHIbDl8x3KM0q0ebY0WE2E4uY9uZ7QNHDDcQd1cyln5zeLhNmhpw4K0NPFEVB3WWUekSE/GN6f9HCtbka/NXOy0czifCnJW3oFImBZfryDWK4mu1reiOTg/mqLxAKxVveEOOq2jbXRVMtMxN2Ebfg2O28kLBoZDt3dCfdjNBjRIBrCcW8Mu8ZHvCjp6zpWfbcmoTXjeMRwcKEdxCYrgHnllXSmZ0olHY1FJZH792p5G0NtuWWRfJMM0vpA8YR2V3tz5H8e5VbaXo7huq+Qi3T2X4jucBXgC07ymR4C8Ystrx+J1aSPa5hYmOoUf2oJAsoFwfW0lT7CcNEtPQJkfqnVOzI8jiqotKwp+zT+1QiB2hi08HCo7q13KWzUaMUZkVmjJZGKglWKlSUJF1JVmUkWuCR2JxvFoNCRkoRr3NBaCQDnvxrjtxAPELmx6vhQDx34ynosvqaym09aBqZgHF0ZTVQpIrDY2aNmW4IYXuCCBiNtGO+BLuiw8xTP4hXwTLo5IQZ+0IcrHrdeHjDMG44gjgQDs24LLwg8ZKXNIerAdE0ekVFMxHUic9r9tcbWOiUCzWI2ZXVfZKehzbKszGY1j/rYfnVeW5YMxZEb1cYVaeq8ZOHyI1tzG8EEz3EiltGBC0XGnG1LRQvVVcoihT2ndmb6KRoLtJI3ZUUEn8xxrzExDl2GJFNAPzQbTuUjIWfMWhGbLyzC5x5AbScgBrJwVQeAnj5PmtdXAxiCkgp4zTwmxku0rAvM4JBkIUeovqJuAX3ZoSzbRfORn1FGgCg14k578NWA35p50l0ag2NIwDevRXOdedqwAwaNgJzOJzoMlfmGNVquGGjRS7Kiq0hDOwUAswUIC5AuxCqqgm9gAOwGPkNAqQM19uiOcA0kkDLdjXDZia8VEuPfGLLaAfjlXHG9riFSZKhh/ZgjDSkXI9bTpHtIxpTM9Alh+tdQ7MzyGKm7NsKetI/ssIkdrJo4uNB3Vqlv4+55ZW1JllKIh2FRV2d+/daeNtC7bhmkbzTCvM2+84QG03u/Afj3K1rN9HcNtHz8W8eyzAd7iK8QGjc5Lpxfx3W1ra62qlqSDdRI34NTvvHCoWGM72uqA+++FqNHiRzWK4u45dwyHcFacjZsrINuSsJrBuGJ4uNSe8laLGBSKvPk04uEOainLgLXU8sQX2tLEPSIz+aNKgf/ADxPWHGuTVztA8xiPnzVd6eSJmLKMcDGE5prsa7oHm4s5J4OIeDqSpXRVUsNQvumhjlH5tam3xGH6LAhxhdiNDhvFVzzKz8zKOvS8VzD7riPJVNxPycZLNqMUctG5+lTTNpHwinE0QHkqriGjWHKvqWgtO4/I1HgnWT07tWBQRHNiAdtuPNt08yVUvE/InVLqNFXRTD6MdTG8Dfnli6ysf8ADUYho2j8QVMJ4O4iniK+SdpP0jS7qCagObtLCHD7Ju/eKqTijl3zqmuZMvlkQflKbTVKfMLAXmA82jXEPGs6ahVvQyRtHS8Bj4J2k9KLKm6CHMNBOp/Q8XUbycVXkqlH0sDHLGQdLApKjDsbGzow9h2IxGHB1DmOY+YTQ0h7Kihae8EeRCYflu8fc1NdRZfNUmppp5GjYVI6syKsErr057rJfUi36pkGm4AFwQyWXaUcR4cFzrzXGmOJFGk556tdVV+lejVnCRjTsKHciMAIuYNNXNBq3LInq3cU8WLAXPCqzmhS+T5j5RRt+jURN/DERa31SJXZ8wnHQ80tiX4nxa4JAOEOMKmjnjqqSUxTx9j3VlNtSSpcCSJrDUh9wYFWVGWuIUV8F4iQzRw/NDtB1jvwIBXTE9IwJ+A6XmW3mO5g6iDqcNR7jUEg+g3gh4502aQ6ktDVxAek0pa7Ie2uM7dSBj8lwLj5LBW2xZFn2iycZhg4Zt2bxtB1HuNDguY9IdHY9jxqO6UJ3UfqO47HDWO8VC7ni941UeVxB6htc8gPQpUI6spHc/2IgbapW9UXAGpiqtknZ+FKNq/M5AZn8Bv+dAsFh6PzVsRbsEUYOs89Vv4uOpoxO4VIQHxL8UqzMpjUVb3AuIYEuIYUP0Y1Pdjtrlb13PcgBFSuZqbizL78U8BqHD5nM8KAdL2TY8tZUH1Ms34nHrOO0nZsAwHGpN5ch0Lek5i+k6BTwIWsdOvqO2nVa2rT62m97EG1jif0e+liHc3zPiq79JDh+jy7a43nGmulAK02VwqnMw8qhkj3Ml4+5qK6ty+GpNNTQOka+jDpTOGgidupPcyA63a3SMYtYEGxJr+1LSjmPEgNdda00wwJq0HPPXqouhtFNGrPMjBnYsO/EeCTfxaKOcBRuWQHWvY7Eu8YLvpGqSWQk2F5JXY9zYXd2PtO5OFsYuoMzzPzKtE0hsqaBo7gB5AKw+F+XjOqnSY8vljQ/lKnTSqPMrOUmI+zG2JKDZ01FpdhkDaej54+CV5zSiypSoiTDSRqZ0zzbVvNwVtcL8idU2k1tdFCPpR00bzt+aWXoqp/w2GJmDo/ENDFeBuAr4mnkUkznpGl21ErAc7YXkNH2Re+8FbXDHJxksNjLHLWOPbUzNpPxigEMRHkytiZg2HKw6FwLjvPyFB4JJnNO7Vj1ENzYY9xuPN148iFbPDvBtJTLopaWGmX3QQxxffoUX+JxMwoEKCLsNoaNwokqan5mbdemIrnn3nE+a0FJ445MzFFzSj1gkFGqoUa4NiNLspuDsRbGq20pUm6Ira7LwqpN+jtqMbeMrEptDCRzAUooOIaeTeKeKQHsY5Ucf6WON1sRjuqQe9Q8SWjQsIjHDiCPNbDGRayMCFqeIOE6WpXRVU0NQn1Z4klH5g6m2MMWDDii7EaCN4qt2WnZiVdfl4jmHa1xHkoHl3LTlEVTBXU9O1PPTv1EEUsgiJ0shBhdnjA0sfkhfZvtiNbZMsyK2MxtHNyoTTWMssimOLpZacaWfKR4gex4obzRezB6wAOY1kq0sTCT1x1FOrAqyhlYFWVgCpUixBB2II2IOxx4QCKFfTXFpDmmhGRCUXx15PiuurydLru0tBfcDuTSE+wf+WJ7bRnZYylWhYhb+slRhrb/j/jyyorv0c05D6S1pnHIRf8/wDP7WtyWXhziOopZkqKeRoKiBzZgCrKwOl0kRhuLgpJE4t3BG2yvCiuhPERho4fkg/MFW3NysGcgmDGaHMcO46wQfEEcQseJeJZqmWSqqpWlmkN3kc+wdgOypGo2VFAVR2Ax5FiuiOMSIak5k/nIL6lJSFKwmy8uwNYMgPziTrJxKu3wP5UKmt0VNdrpKI2ZUtpqZ17+qCLwRH/AJjDWwvoUAq+J2QseJMdOLVrPE/gN+eymBVfaQ6aQJCsCUpEjazmxh39p24YDWc2p2OGOFqeliSnpYUghj+THGLC53JJ7s5O7OxLMSSSScPkGCyC0MhgADUFz9NzkecimPMPLnnMny3AagMBqW1xmWmqtzLlqyiaqnrqinaonncSOJZZDECEVABCrLGRpQbMG9uId9kyz4roz21c7OpNMgMssgnCFpZacCVZKQIgYxgoLrRezJ6xBOZ1EKecP8JUtMuilpoadPqwRJEPuRRfElCgw4Quw2gDcKJcmZ2YmnX5iI552ucT5rbYzLSRgQtfX8Q08e8s8UYHcySog/1MMY3RGN6xA71sw5aNFwhsceAJ8lFqzxzyZDpbNKPVe2laqF2udgNKMxv5WxpOtKUabpitrsvCqmWaO2o8XmysSm0scBzIXm7xHDpnqVP0aidT8VldT+zFZReu4bz5ldWSjr0CG7a1p5tC1L0aHcopPmoP8MaxhsOJA5LeERwwBPNbah4jqY9oaqohHuhqJov3brjYER7eq5w4OI8itGJKQIprEhMd8TGu8wVJst8b85i2jzSr/wASdp/3/VxtNnplgo2K7nX71VExdHrLjGr5aH3Nu/dopLlnNdn8feuE3lNTUx/XHFG368bTLXnGZxK8QPkAomNoXY8TKBd+F7vm4qwvDDm9zWeso6WoSkaKoqYYHZYZY5AsjhCVPpDJq32ulvLEjJ2zMvjNZEu0JAwBBx/iPkle2NB7Ol5ONMQTEDmMc4AuBGAr2K07052HpUKurmVUFUnWkZ2VWk+RrYhUB9ZL3YhQoYEkgDcjHy40GdOKywmX3AXSdoGdBidR1blSXiP4pcR0RZ/5Igq6cdp6SaeQhdt5YOn1kPe+lZEAFy+F+bnJ2Xx9SHN2tJPMUr5jaVYVlWNYloAN/S3w4nZe1ox3OrdPfdJ2JS/FbxajzJxO2Xw01Tez1FPK5MgAtaZCoV2FgBJ8sAabkbBOm51s2b/qwHbQc+Ip45q67FsSJZLfUiYc+Hqa5o6O9prUDdka1zWr8OeN4aOX0h6CKukQqYfSJHEcbA31CJVZXkvYqz30EAqAd8YpaO2C6+YYcRlU4DfSmew6tS27Vs+LPwvUsjuhNPWugVcNlaggbQM9eGCu/wD4763/ANOp/wDPl/8Axif/ANQxf9scz+Cr3/xxK/8A2H/ZH4q9uXXxomzWGpmmgSAwVAhCxuzhh0Y5LksFsbuRbyvffafsufdOMc5zaXTTDgD81XOlNgQ7GjQ4UN5eHtvYgCnSIphXYraxNJKSZ+KPN3m0FZWUtOlIsdPUywozwSvIVRyoLH0hU1bexLeWEactmZhxnQ4d0AEjEEn7w8lfNj6D2dMScGYjGIXPY1xAcAMRXsE071XeZ812fydq4Q+UNNTD9ckUrfrxGxLXnH5PpwA+YKaYOhdjw84F74nu+Tgo1mXjfnMm0maVX+HO0H7jpY1XT0y8UdFdzp92iloWj1lwTVktD723vvVUZruI6mTaaqqJh7pqmaX947Y1TEe7rOceLifMqWhykvCNYcJjfhY1vkAtSlGg3CKD7woH8Ma4hsGIA5LeMRxwJPNbTIafVNAn154U/SkVf442IYq9o2kea0pl12DEdsa48gSmB4w5Oc3lq62WE0ogmrKmeIyVEiv05Z3lUMqU8gBAfT8r2Yn41iTTor3Mu3S5xFSRmScrp27VWcjp3ZsGUgw4oiX2sY00aCKtaGnEuGdK5LCk5Gc0Py6qjT7LVD/tgTH22wI5zc0cz8gvX+kSzx1IUQ8Q0f3FbODkNqz8rMoF+zSyP+2ePH3/AKdi/wC637JP9wWo70kSw6ss4/xgf2lbSk5CT+UzW/2KK362qm/ZjO3R0+1F5N/9itOJ6SR7ErzifgwLbQchtJ9PMak/YjgT/qWTGb/TsM5xHdwHzBWk70kTPsy7O8uPkQpFwpyYZdTTQVK1dZJJTzRToGemCF43V11BaZWKkqAQGG19xjYgWDChPa++8kEHG7qx1NCjJ3T6dmoL4BhQw17S00Dq0IoaVfnjsTAYZVWSpnnAQHJa4EXBei2O4/n9Nhet/wCpPG9n32p90FJFtQSNkT+k9KF4e8w2bUGlYakzQD+rVWqeK22yEsJYgALKqSKgvfQcJ8taMxL9R1RsdiPxG6hpuV4WpovZ1o1dFh3X9tnRPfhQ7yQTvVqv4ocNZvtmtIcsrGFvTIT6paxsWqI0GoDv+NRGNb/KOJYzcjOfWWXH9oZa9Y1D3hRJose3rExs6L6+EP8A43Z03NJ1/wD5uqdi1ua8ltU5WTLa6lrKVxqSWR2ja21vWhjnjl+2pQf2RjG+wopxgPa5p1k08gQeOHBbUHT+XYCyfgRIcQZgAEfzFpHA14rof8Eudf8AMov/ALE//aYxf/wpz3PtH/FbP/kGyuzF+w3/ADTD8sHhDV5ZBVw1hhZ5qoTJ0JHkXR0Io/WLxRENqRtgCLWN9yAzWRIxJRj2xaVc6uGOoDYNiq/TC3Ja148KJLB1Gsum8AMbzjhQuwoQroxPJBS/8WcmOXVM89S1VWRyVE0kzhHpigeRy7aQ1MzBbsbAsdvacLUewYUV7n33Akk4XdfFpVmSWns7KwGQBChlrGhoqHVoBQVo/PDYo7PyG0n0MxqR9uOB/wDpWPGt/p2GMoju8D5AKUb6SJn2pdncXDzJWqq+Qk/k81t9ui1frWqX9mMT9HT7MXm3/wBgt2H6Se3K8on4sK1U3IbVj5OZQN9qlkT9k8mMH+nYv+637JH9xW430kS560s4fxg/2hayr5Gc0HyKqjf7TVCfsgfHw6wI4yc08x8ittnpEs89eFEHANP9wWXCPJzm8VXRyzGlMMNZSzSmOokZ+nFPHK4VHp0BJVCB63tx8QbDmhFY5926HNJo4nAEHK6Nm1E9p3ZkaVjQ4YiX3Me0VaAKuaWjEPOs7E7uLAXPaMCEYEIwIUd4m8RKClF6usgp/KWaNGPwQtqY+QBxqxpqDBxivDeJAUpKWXOThpLQXv8AhaSOeSrOu5v8nEsUEDTVTyzwwAwwMsYaWRYwxecwgoC1yU1mwNgdsRTrblbwY0kkkDAGmJoMTTWdVU2w9BrTMJ0aKGsDWud0nVNGgmlG3sTTCtN9Fd2J9V8tJxlwbT1sEtJVx9SCXTrQO6G6usiEPGyupV1VgQRuB5415iAyYhmHEFWn5Goy3hSEhPx5CO2ZlnXXtrQ0BzBBwIIxBISvcfcjLDU+WVeruRT1mx+CVES9gNgHiJO137nClM6PuGMB/c78R8weKuCzfSK00ZPwqe9D+bSfJw3NS58a+HFfQtpraWSnF7CRgGhY3sNM6FoWJ9i6tXvAwsx5eLLmkVpG/VzGHdWu5WnZ9qydoNrKRWv3DBw4tND30pvXDwhx3W0T9SiqpKZibsI2HTY7fOQuGhkO1rujEey2PmDGiQDehOLTu18QcD3hZJ6zpWfZcm4TXjVUYjg4UcO4hMl4ec8jDTHmlNqHb0mkFj8ZKZ2PYWJaOQk72jw0S2kBGEw3vb8wfkTwVUWp6O2mr7PiU9x/yeB4EcXJm+COP6Oui9Iop1niDaGK3DJJpVykiMFeOQK6MUYA2ZTaxF2yXmIcwy/CNR+cxqO4qorRsyas6L6maYWupUVyIqRUEYEVBFQSKgqQ42VGKkaLm/yfqywTtNSvDPNATLAzxlopGiLK9OZgEJW4L6DYi4GIBttyt4scSCCRiDTA0OIrhUa6KwYmg1piEyNBDXtc1rui6hAcA6lHXcRXGld1VZnDPiLQVW9JWQVHlFNG7D4oG1KfIgYlYM1BjfRPB4EFKU3Zc5JmkxBez4mkDnkpFjaUWjAhGBCMCFrOJuJIaWGWqqGKQQIZJXCPIVQdzojVnIHc2BsN+wOMMaMyCwxHmjQKnh3LblJSLNxmS8EVe80AqBUneSB4qgeJOeXLUuKWmqKo22ZglNET5mQmYf5OFyLpBBH0bXO35Dxx8FZcp6O56JjMRGMGzFzvDo/zKquI+d3NZNqeCmpFN/ovUyj4SOY4/vhOIiJb0y7qBrebjzw8k5yvo9s6FjHe+Ie5g5Cp/mVV8R+MmbVP84zGpcHuiS9CM+RjpxFGw+KnEREnJiL14jj308G0CcpWwbNlPoZdg3kXjzfePIqGLGNzbcm5PtJ8z7TjSDQMgp4knBbThiS1RSt9Wqp2+6ZD/DGaF9Iz4m+YWnOC9LxRtY/7pXqzi3lxkjAhYu4FyTYDck9reeBegVwCpzxJ5oMlpg8TSCvksVanpVSdfcRJIxFOvmpct39U4gpq15WEC2t87G48zl3E1T3ZOh9qTZEQN9U3MOfVveAOkdxApvSQeIXFVNUzGWly+HLo9x0oHdg2+xYHRCht9GKJBubl9iEKYiQ4j70OGGDYPyAO4DvXQtlyceUg+rmJh0Z3acAKbtbjxc47qKMY1lLp2ORE/iFb/ecn+zosO+jn0MT4/wCxi5/9I/1+D/wj+pETJ4bFU68p+KZb1FW31qqpb9KeQ/xxUMX6R/xO8XFdmSQuy0JuxjByaFqmjGxI3BuD7QfL3HGEtBzC3QSFMuHPGPNqb+b5jUoB2V5evGPIR1AljUfBRjdhzkxC6kRw76+DqhQM1YVnTf00uw7wLp5tunxVq8N87uax7VENNVqAPovTSn4yIZI/uhGJaHb0yzrhrubTzx8kmzXo9s6LjAe+Ge545Gh/mVq8N88uXPYVVNUUptuyhKmIHyMZWY/5OJiFpBBP0jXN8R4Y+CTJv0dz0PGXiMeNmLXePR/mV+8M8SQ1UMVVTsXgnQSROUeMsh7HRIqOAfZcC437EYY4MZkZgiMNWkVGrDvVazcpFk4z5eOKPYaEVBoeIJHiu5mGXpIjxSKHjlRo5EbcMjKVYEe4qSDjI5ocC12RWCFFdCe2Iw0c0gg7CMQea8w/EzgGTL6uooZLnpNeJz3kp2uYJL2FyU9V7CwkSRR8nFTzMu6Wiugu1ZbxqPLPeCuvLItNlpykObZ7Q6Q7Lh1hzxHukHWoxjWUujAhGBC56CWzxt9WRG+5gcfTTRwO8LFFbeY4bQfJesYOLhXFigXjrx/Ll+X1NbAiPLEYFRZQxjvLURQXYIyswUSFtIZbkAXF8RlpTTpWXdFYASKAVyxcB4VTLo5ZkO07QhykYkNdeJu0r0WOdhWud2laHgkD478YMyr7isq3kjP5BPwVOB7ujHpVwPYZNbf2sV3MTkeZ+leSNmQ5DPvqulrNsKQs2n6NCAd2ji77Ry/hoNyhuNNTqmPAXhFmVeR6HSvJGe87/gqYd9+s9le1t1j1uPq425eUjTP0TSRtybz191TuUHaVuSNmj9qigO7Ixf8AZGI/ioN6ZXw+5G4F0vmdS07dzT0xaGEbC4abaeTe9mToeYOGmX0fbnMOrubgOeZ7rvBVNafpEivqyQhhg7T6Od3N6o4G+mP4X4SpaSMQUkEdPECW0RIEBY2uzW3ZzYXdrsbC5OGmDBhwW3IbQBuVUzk7MTsT1sy8vdtca4bBsGwDBba+My0l5O5lLeSVvrSSN97k/wAcU+81cTvPmu04LbsNo2AeS6+PhZUYEIwIUm8NeApMwq6ehjuOs/4Vx3jp1sZ5L2IBVNkuLGRo1PysbEvLumYrYLdeZ2DWeWW8hRNrWkyzJSJNxPZGA7Tj1W95z90E6l6eZblyRJHFEoSOJFjjRdgqKoVQB7goAGLZa0MAa3ILkKLFfFe6JENXOJJO0nEnmuzj6WJURzX+C5rqYVVMmqtolZlUfKmpz60sQA7uLdSIfWDILdZjhetmRMxD9YwdNviNY46xvw1lWPoXb4s6ZMvHNIMWlT2XancNTt1DjdCQpWvuOx7Yr0GoqF0kRTAr7gXiMCFxVT2Vj7gT9wvjHFddY4jUCvtgq4DevWyme6qfeoP6sXMMlxM8UcQqf5vf6Frft0X+/psQFvfUncWffanrQb99QeET+k9Idwlw8amopqVXEZqZ4oBIV1hDI6oGKBlLAar6dS3ta474QoMP1sRsMGl4gV4ro+dmhKS8SYIqGNc6laVuitK0NK0zoeCerw95SMppNLyxmvnG/UqtLRg3B9SnAEIsRdS4kcfXw/y1iy8HpOF4+9lyy4HE71zpamm1pTtWQ3eqZsZge93W40IB2K6Y4wAAAAALAAWAHssBsBieySASSalZYF4jAhcc7WBPuBP6seHJfTRUgLyUp5LgH3gH798U1DdeaHbQF2w4UJC5Mfa+UYEL4zW3OwHfATQVK9ArgE+fKf4LmhpjV1Kaa2tVSyn5UNP8qOMg/Jdr9SUbHUUQ36IJsGxpEy8P1jx03eA1DjrPLUubtNLfFozIl4BrBhE49p2RdwGTd1T7SvnDEq3RgQjAhJbzYcvhgaTNaKP8WkJetiQfMyE3aZVH5BySZbfNuS/yHcxIls2d6omYhDonrDYdvA69hxyJIv3QrScTDW2dNu/WDCG4+0NTCe0PZ7Q6PWADlmwrq20YELF0BBB7EWPwx4QCKFeg0NQnq5SfGOtzBayKsMb+hrSiORI9EjCQThurZijEdFbFUTubg7Yf7GnoszfbFp0btDShxrny1UXOmm1gylmOgxJUOHrC+oJqBdu0u4V9o5krf83v9C1v26L/AH9NjLb31J3Fn32qN0G/fUHhE/pPSUeDn9JZX/eFH+/TCTJfWIfxN81f9vfu2Z/4on3SvTvFrLkRGBCMCEYEJfObXxjrcvWjiozGnpi1QkkeMvIojEAXpXYIpPWa5ZX7CwG+Fq2Z6LLXGwqdK9UkVOFMue9WdoTYMpabo0SaDj6ssoAaA3r1a4V9nUQkVRAAAOwFh8MIAAAoF0WTU1Kyx6vEYEJmOVDl7M7x5rWx2poyHoonHz8gN1mZT+QQgGK/zjgP8hEMzRY9m+tImIo6I6o2nbwGraccgCal000nEsx1nSjv1hwiOHsjWwHtH2uyMOsTddPD2qBRgQjAhGBCxkjBBBAIIIIIuCDsQQe48sC9BINQkv5g+U94DJW5VGZKbd5aJAWkh9rNTKN5IPb0Bd499AZLLEiWjYxhViy4q3W0ZjhtG7MaqigF+aMaaNmA2UtF1ImTYhydsDzqd72TtdHYuWVWB3G494wrAgioVuEUwK+49XiaXkNzWMTZnCWAlkipJI0JF2SNqlZSo7nSZotXu1r78NejzwIkRpzIaRvoXV5VHNU76SIL3QZaKB0Wl4J2FwYRXjdNOBVxc3v9C1v26L/f02Ji3vqTuLPvtSLoN++oPCJ/Seko8HP6Syv+8KP9+mEmS+sQ/ib5q/7e/dsz/wAUT7pXp3i1lyIjAhGBCMCEnXPlmkZmyyEMDLHFVySICLqkjU6xFh3AYxShffob3YR9IXgxIbRmA6u6pbTnQ04FXr6N4L2wZmKR0XGGAdpaHk04Xm14hKzhUVxr4zAbnYe/ASBiV6BXAJmeXvlQecx1uaxmOmFnionBWSf2q1QpsY4Pb0TZ5PphUBWZos2xzFpFmBRuppzPHYN2Z10GBqPSfTRksHSlnOrEydEGTdoYdbveybqq7FroxxgAAAAAAAAWAA2AAHYeWHvJUGSSalZYF4jAhGBCMCEYEIwIVEeNHKhSVxeppSKKtbdmC3p5m7nrRLbS53/DJZt7sJLAYXp6x4cwS+H0X+B4jbvHfXJWPYGmkzZwECYHrIIyFek34Ts904bC2tUmXH3hnXZe/TrqdormySj16eQ726U4GhibE9M6ZAN2Rb4RpiWiyzrsZtN+o8D8sDuV9Wba8pabL8pEDtrcnN4tz7xVuwlYeGU7LmGWMrMjfyjQjUjFWs1VEji6kHSyMyMvZlZlNwxB+ZdxbHhEZ32eLgD4EjvX1a7Q6QmQ4Aj1UXAiuTHEZ6wQCDqIBGITwc4J/wDBa3/3KH/f0uH23fqTuLPvtXPOgv76g8Iv9J6RHhHiE01RTVQQSGmninEZbQGMbq4UsFbSDptq0m3exwgwYhhPbEArdINOC6OnpUTcvElyaB7XNrStLwpWmFaVyqE9PgFzHHNpZ4WohSmCJJdQqOuG1OUtYwQkWte++H6zbUM45zXMu0AOdfkFzppLoqLFhw4rY18PJFLt2lBXtOX3x+5jTlMlPCtGKozxPJqNR0Aul1W1hBMTe977YLStQybmtay9UE50ypuO1eaM6Ki2ocSI6NcDCB1b1agntN2KlM0568wYHo0NNCfYZJJqj9S+jYgnaQRyOixoPEn/ABVgQfRzJtP62O9w3BrfO+mR5fuOaiuy2mrKrR15WqQ/SQpHaOqmiTSpZyPURb3Y3Nz7cM9lzT5mWbFiUqS4YZYOI+SqnSezoNnWjElZetxoZS8anFjXHGg1k6kgfixMzZjmZZix/lCsF2YsbLUSIguSTZUVUUdlVVUWAAFdTRrHiE9t3mQPAU4BdL2K0Ns6WDRQeqh5YZsBPMkk7Sa5rDgLwzrswfp0NO01jZ5T6lPGdr9WcjQpAIOgapCN1RsEvLRZl12C2u/UOJ+WJ3L20rWlLMZfm4gbsbm48G59+DdpCczwX5T6ShKVNURW1q7qxW1PC17joxNfU42tM92uLqsdyMPEjY0OXIfE6T/AcBt3nuoqFt/TSZtEGBLj1cE5ivSd8R1D3RhtLlfGGJVwjAhGBCMCEYEIwIRgQjAhGBC6+YZdHIrRyossbjS8ciq6MPaGVgVI8iMfLmhwuuFQssKK+E4PhuLXDIg0I4EKmc05RsqNRT1dKJKKSnqYKnpwsGp3MMqShTFIG6anQBaJowL3scQL7Ely9sRlW0INBlgQcjkMNVE+QdN7REvElpikRr2ObVw6QvNLa3hSpx9oFSLmQ4QqazK6ulpI+tUOaZkj1ohbp1UErgNIyIDoRiNTAE7X3xsWtLvmJV0OGKuq004OBOe4KL0UnoEjakKYmXXWC+CaE0vMc0YAE5kZBIdnPg/m0JtLllWPNKaSdR8Xp1ljH6WK/iScxD68J3cCfu1C6Pl7ds2YFYczD73hp5PunwV7cj+UTR1df1YZYr0sQHVikjueqb21qtz5YYbAY5sWJeaRgMwRrO1Vx6Q48KLKwPVva7puycD7O4lZc8OUTSVWX9KGWW1NMD0opJLHqpa+hWsfcMFvsc6LDutJwOQJ1jYvPR5HhQpWY9Y9rem3rOA9k7SFQ+TeD+bTG0WWVZ83ppIF/M9QsUZ/SwvQ5OYidSE7vBH3qBWTMW5ZsuKxJmH3PDjybePgnx5b+EKmjyukpauPo1CGpZ49aOV6lVPKgLRs6E6HUmzGx2vtiwLJl3y8q2HEFHVcacXEjLcVzhpXPQJ61IsxLOvMNwA0IrdY1pwIBzBzCj9Byk5X6TUVlUJKySoqZ6npzMFp0MsjyFRFGF6ijXa0rODa9hjAyxJf1jokSriSTQ5YkmlBmMddVJRdNrQ/RoctL0htYxratHSN0AVqa0OHsgcVceX5dHEixxRrFGg0pHGqoij2BVUBVHkBida0NF1ooNyRIsV8V5fEcXOOZJqTxJXZx9LEjAhGBCMCEYEL/9k=" class="logo-tube" style="width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="VK"><div><div class="vk-logo-name">VINTAGE KING</div><div class="vk-logo-tag">New · Used · Vintage · Pro Audio</div></div></div>
+              <div class="vk-nav-actions">
+                
+                <button class="vk-nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+                <button class="vk-nav-icon" style="position:relative;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="vk-cart-count">2</span></button>
+              </div>
+            </div>
+            <div class="vk-nav-line2">
+              <a href="tel:8886531184" class="vk-nav-phone"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.61 4.83 2 2 0 0 1 3.58 2.63h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>888.653.1184 &nbsp;&middot;&nbsp; Mon–Sat 9:30AM–9PM ET</a>
+            </div>
+          </nav>
+
+          <!-- PAGE: HOME -->
+          <div class="vk-page active" id="pg-home">
+            <!-- HERO -->
+            <div class="vk-hero">
+              <span class="vk-hero-coop-label">Co-op · Featured</span>
+              <div class="vk-hero-img">
+                <svg width="70" height="130" viewBox="0 0 70 130" fill="none" style="position:relative;z-index:1">
+                  <rect x="23" y="6" width="24" height="68" rx="12" stroke="rgba(44,44,42,0.25)" stroke-width="2" fill="none"/>
+                  <rect x="28" y="11" width="14" height="58" rx="7" fill="rgba(192,57,43,0.08)"/>
+                  <circle cx="35" cy="40" r="10" fill="rgba(192,57,43,0.55)"/>
+                  <line x1="28" y1="22" x2="42" y2="22" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/>
+                  <line x1="28" y1="60" x2="42" y2="60" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/>
+                  <line x1="35" y1="74" x2="35" y2="100" stroke="rgba(44,44,42,0.2)" stroke-width="2"/>
+                  <ellipse cx="35" cy="103" rx="20" ry="6" stroke="rgba(44,44,42,0.12)" fill="none" stroke-width="1.5"/>
+                  <line x1="23" y1="40" x2="15" y2="40" stroke="rgba(44,44,42,0.12)" stroke-width="1.5"/>
+                  <line x1="47" y1="40" x2="55" y2="40" stroke="rgba(44,44,42,0.12)" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <div class="vk-hero-body">
+                <div class="vk-hero-sponsor">Featured · Neumann</div>
+                <div class="vk-hero-name">U 87 Ai Studio Set</div>
+                <div class="vk-hero-price">$3,595</div>
+                <div class="vk-hero-cta">Shop Now →</div>
+                <div style="display:flex;align-items:center;gap:7px;margin-top:10px;padding-top:8px;border-top:1px solid rgba(44,44,42,0.1);">
+                  <span style="font-size:7px;letter-spacing:0.12em;text-transform:uppercase;color:#9B9B98;">Also</span>
+                  <span style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6B6B68;">Neumann</span>
+                  <span style="color:#D0CEC9;font-size:9px;">·</span>
+                  <span style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6B6B68;">Telefunken</span>
+                  <span style="color:#D0CEC9;font-size:9px;">·</span>
+                  <span style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6B6B68;">Royer</span>
+                  <span style="margin-left:auto;font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:#B0AEA9;">Sponsored</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CATEGORIES -->
+            <div class="vk-section">
+              <div class="vk-section-header"><div class="vk-section-title">Shop by Category</div><a href="#" class="vk-section-link">All →</a></div>
+              <div class="vk-cat-grid">
+                <a href="#" class="vk-cat-tile"><div class="vk-cat-img dark"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="12" y="1" width="12" height="25" rx="6" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/><circle cx="18" cy="13" r="4" fill="rgba(192,57,43,0.55)"/><line x1="18" y1="26" x2="18" y2="33" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><ellipse cx="18" cy="35" rx="7" ry="2" stroke="rgba(255,255,255,0.15)" fill="none"/></svg></div><div class="vk-cat-body"><div class="vk-cat-name">Microphones</div><div class="vk-cat-count">843 products</div></div></a>
+                <a href="#" class="vk-cat-tile"><div class="vk-cat-img mid"><svg width="44" height="28" viewBox="0 0 44 28" fill="none"><rect x="1" y="4" width="42" height="20" rx="3" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/><circle cx="10" cy="14" r="5" stroke="rgba(192,57,43,0.6)" fill="none" stroke-width="1.5"/><rect x="20" y="9" width="4" height="10" rx="1" fill="rgba(192,57,43,0.45)"/><rect x="27" y="8" width="4" height="12" rx="1" fill="rgba(192,57,43,0.35)"/><rect x="34" y="7" width="4" height="14" rx="1" fill="rgba(192,57,43,0.5)"/></svg></div><div class="vk-cat-body"><div class="vk-cat-name">Outboard</div><div class="vk-cat-count">1,240 products</div></div></a>
+                <a href="#" class="vk-cat-tile"><div class="vk-cat-img lt"><svg width="48" height="28" viewBox="0 0 48 28" fill="none"><rect x="1" y="2" width="46" height="24" rx="3" stroke="#8C8C88" stroke-width="1.5" fill="none"/><rect x="1" y="2" width="46" height="8" fill="#D8D4CE" rx="3"/><line x1="1" y1="10" x2="47" y2="10" stroke="#C0BCBA" stroke-width="0.75"/><line x1="12" y1="10" x2="12" y2="26" stroke="#C0BCBA" stroke-width="0.75"/><line x1="24" y1="10" x2="24" y2="26" stroke="#C0BCBA" stroke-width="0.75"/><line x1="36" y1="10" x2="36" y2="26" stroke="#C0BCBA" stroke-width="0.75"/></svg></div><div class="vk-cat-body"><div class="vk-cat-name">Consoles</div><div class="vk-cat-count">287 products</div></div></a>
+                <a href="#" class="vk-cat-tile"><div class="vk-cat-img dark"><svg width="36" height="32" viewBox="0 0 36 32" fill="none"><rect x="4" y="2" width="28" height="20" rx="12" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/><circle cx="18" cy="12" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="1"/><circle cx="18" cy="12" r="2" fill="rgba(192,57,43,0.7)"/><line x1="8" y1="22" x2="6" y2="30" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/><line x1="28" y1="22" x2="30" y2="30" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/></svg></div><div class="vk-cat-body"><div class="vk-cat-name">Monitoring</div><div class="vk-cat-count">412 products</div></div></a>
+              </div>
+            </div>
+
+            <!-- RECENTLY ADDED -->
+            <div class="vk-section">
+              <div class="vk-section-header"><div class="vk-section-title">Recently Added</div><a href="#" class="vk-section-link">View All →</a></div>
+              <div class="vk-product-grid">
+                <div class="vk-pcard"><div class="vk-pcard-img"><span class="vk-pbadge new">New</span><svg width="30" height="54" viewBox="0 0 30 54" fill="none"><rect x="8" y="2" width="14" height="30" rx="7" stroke="rgba(44,44,42,0.25)" stroke-width="1.5" fill="none"/><circle cx="15" cy="17" r="4" fill="rgba(192,57,43,0.45)"/><line x1="15" y1="32" x2="15" y2="44" stroke="rgba(44,44,42,0.2)" stroke-width="1.5"/><ellipse cx="15" cy="47" rx="8" ry="2.5" stroke="rgba(44,44,42,0.15)" fill="none"/></svg></div><div class="vk-pcard-body"><div class="vk-pcard-name">U 87 Ai Studio Set</div><div class="vk-pcard-brand">Neumann</div><div class="vk-pcard-price">$3,595</div></div></div>
+                <div class="vk-pcard"><div class="vk-pcard-img" style="background:#E8E4DE;"><span class="vk-pbadge used">Used · Exc</span><svg width="44" height="28" viewBox="0 0 44 28" fill="none"><rect x="1" y="4" width="42" height="20" rx="3" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="10" cy="14" r="5.5" stroke="#8C8C88" fill="none" stroke-width="1"/><circle cx="24" cy="14" r="5.5" stroke="#8C8C88" fill="none" stroke-width="1"/><circle cx="38" cy="14" r="5.5" stroke="#8C8C88" fill="none" stroke-width="1"/></svg></div><div class="vk-pcard-body"><div class="vk-pcard-name">1176LN Limiting Amp</div><div class="vk-pcard-brand">Universal Audio</div><div class="vk-pcard-price">$1,850 <span class="was">$2,399</span></div></div></div>
+              </div>
+            </div>
+
+            <!-- EDITORIAL HERO v2 -->
+            <div style="padding:28px 14px 24px;background:var(--off-white);border-top:1px solid var(--pale-grey);">
+              <div style="font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--vk-red);margin-bottom:10px;">Spring 2026</div>
+              <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:var(--near-black);line-height:1.2;margin-bottom:10px;">Built for the way <em>you</em> make sound.</h2>
+              <p style="font-size:12.5px;color:var(--mid-grey);line-height:1.7;margin-bottom:20px;">The finest new, used, and vintage pro audio gear — curated by people who've spent their careers inside the world's best studios.</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <a href="#" style="display:inline-flex;align-items:center;background:var(--vk-red);color:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:10px 18px;border-radius:2px;text-decoration:none;">Shop New Arrivals</a>
+                <a href="#" style="display:inline-flex;align-items:center;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--charcoal);text-decoration:none;border-bottom:1px solid var(--light-grey);padding-bottom:1px;">Explore Vintage →</a>
+              </div>
+            </div>
+
+            <!-- EMI EXCLUSIVE -->
+            <div style="background:var(--near-black);position:relative;overflow:hidden;cursor:pointer;">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(192,57,43,0.2) 0%,transparent 65%);pointer-events:none;"></div>
+              <div style="padding:24px 14px 22px;position:relative;z-index:1;">
+                <div style="font-size:8.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(192,57,43,0.85);margin-bottom:10px;">Exclusively at Vintage King</div>
+                <h2 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:#fff;line-height:1.2;margin-bottom:8px;">The EMI TG12345 MkV.</h2>
+                <p style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.65;margin-bottom:18px;">The first new EMI recording console released in over 50 years. Available only through Vintage King.</p>
+                <div style="background:rgba(255,255,255,0.04);border-radius:3px;padding:16px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;">
+                  <svg width="220" height="52" viewBox="0 0 220 52" fill="none">
+                    <rect x="1" y="4" width="218" height="44" rx="3" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <rect x="1" y="4" width="218" height="11" fill="rgba(255,255,255,0.04)" rx="3"/>
+                    <line x1="1" y1="15" x2="219" y2="15" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+                    <rect x="8" y="20" width="4" height="22" rx="1" fill="rgba(255,255,255,0.06)"/>
+                    <rect x="16" y="20" width="4" height="22" rx="1" fill="rgba(255,255,255,0.06)"/>
+                    <rect x="24" y="20" width="4" height="22" rx="1" fill="rgba(255,255,255,0.06)"/>
+                    <rect x="32" y="20" width="4" height="22" rx="1" fill="rgba(255,255,255,0.06)"/>
+                    <rect x="40" y="20" width="4" height="22" rx="1" fill="rgba(255,255,255,0.06)"/>
+                    <rect x="48" y="20" width="4" height="22" rx="1" fill="rgba(255,255,255,0.06)"/>
+                    <rect x="155" y="18" width="28" height="14" rx="2" stroke="rgba(192,57,43,0.5)" fill="none" stroke-width="1"/>
+                    <circle cx="196" cy="32" r="7" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="1"/>
+                  </svg>
+                </div>
+                <a href="#" style="display:inline-flex;align-items:center;gap:6px;background:var(--vk-red);color:#fff;font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:9px 16px;border-radius:2px;text-decoration:none;">Learn More →</a>
+              </div>
+            </div>
+
+            <!-- MYM -->
+            <div class="vk-mym" style="padding-top:20px;">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--near-black);">Make Your Mark</div><a href="#" style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--mid-grey);text-decoration:none;">View All →</a></div>
+              <div class="vk-mym-scroll">
+                <div class="vk-mym-card"><div class="vk-mym-thumb"><div class="vk-mym-play"><svg width="8" height="10" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div><span class="vk-mym-dur">8 min</span></div><div class="vk-mym-meta"><div class="vk-mym-meta-title">"How I track vocals at Capitol Studios"</div></div></div>
+                <div class="vk-mym-card"><div class="vk-mym-thumb" style="background:#1a1a15;"><div class="vk-mym-play"><svg width="8" height="10" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div><span class="vk-mym-dur">12 min</span></div><div class="vk-mym-meta"><div class="vk-mym-meta-title">"Mixing on a vintage Neve 8078"</div></div></div>
+                <div class="vk-mym-card"><div class="vk-mym-thumb" style="background:#181018;"><div class="vk-mym-play"><svg width="8" height="10" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div><span class="vk-mym-dur">16 min</span></div><div class="vk-mym-meta"><div class="vk-mym-meta-title">"Mixing with Joe Chiccarelli"</div></div></div>
+                <div class="vk-mym-card"><div class="vk-mym-thumb" style="background:#0f1518;"><div class="vk-mym-play"><svg width="8" height="10" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div><span class="vk-mym-dur">22 min</span></div><div class="vk-mym-meta"><div class="vk-mym-meta-title">"Mastering with Bob Ludwig"</div></div></div>
+              </div>
+            </div>
+
+            <!-- VINTAGE -->
+            <div class="vk-vintage">
+              <div class="vk-vintage-inner">
+                <div class="vk-vintage-label">Vintage ✦</div>
+                <h2>Rare gear.<br>Authenticated.<br>In stock.</h2>
+                <p>Every vintage piece inspected, tested, and authenticated by our in-house tech shop. Sweetwater cannot compete here.</p>
+                <a href="#" class="btn-amber">Shop Vintage →</a>
+              </div>
+            </div>
+
+            <footer class="vk-footer"><div class="vk-footer-name">VINTAGE KING</div><p class="vk-footer-desc">New · Used · Vintage pro audio gear since 1993.</p><div class="vk-footer-col-title">Shop</div><ul class="vk-footer-links"><li><a href="#">Microphones</a></li><li><a href="#">Outboard</a></li><li><a href="#">Consoles</a></li><li><a href="#">Vintage ✦</a></li><li><a href="#">Deals</a></li></ul><div class="vk-footer-bottom">© 2026 Vintage King Audio, Inc.</div></footer>
+          </div><!-- /pg-home -->
+
+          <!-- PAGE: CATEGORY -->
+          <div class="vk-page" id="pg-category">
+            <div class="vk-breadcrumb"><a href="#">Home</a><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg><span>Microphones</span></div>
+            <div class="vk-cat-header"><h1>Microphones</h1><p>843 products</p></div>
+            <div class="vk-coop-card"><div class="vk-coop-img"><svg width="22" height="42" viewBox="0 0 22 42" fill="none"><rect x="4" y="2" width="14" height="24" rx="7" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/><circle cx="11" cy="14" r="4" fill="rgba(192,57,43,0.5)"/><line x1="11" y1="26" x2="11" y2="34" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/><ellipse cx="11" cy="37" rx="7" ry="2.5" stroke="rgba(255,255,255,0.15)" fill="none"/></svg></div><div class="vk-coop-info"><div class="vk-coop-sponsor">Featured · Neumann</div><div class="vk-coop-name">U 87 Ai Studio Set</div><div class="vk-coop-price">$3,595 · In stock</div><div class="vk-coop-btn">Shop Now →</div></div></div>
+            <div class="vk-filter-bar"><div class="vk-filter-inner"><span class="vk-filter-chip red" onclick="setFilter(this)">All</span><span class="vk-filter-chip" onclick="setFilter(this)">Condenser</span><span class="vk-filter-chip" onclick="setFilter(this)">Dynamic</span><span class="vk-filter-chip" onclick="setFilter(this)">Ribbon</span><span class="vk-filter-chip" onclick="setFilter(this)">Tube</span><span class="vk-filter-chip" onclick="setFilter(this)">Used</span><span class="vk-filter-chip" onclick="setFilter(this)">Under $1k</span><span class="vk-filter-chip" onclick="setFilter(this)">Vintage</span></div></div>
+            <div class="vk-buying-guide"><div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="1.5"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div><div><div class="vk-bg-title">Mic Buying Guide</div><div class="vk-bg-sub">Condenser vs dynamic, polar patterns, budget picks.</div><span class="vk-bg-link">Read the guide →</span></div></div>
+            <div class="vk-grid-2">
+              <div class="vk-gc"><div class="vk-gc-img"><span class="vk-gc-badge new">New</span><svg width="26" height="48" viewBox="0 0 26 48" fill="none"><rect x="6" y="2" width="14" height="26" rx="7" stroke="rgba(44,44,42,0.25)" stroke-width="1.2" fill="none"/><circle cx="13" cy="15" r="4" fill="rgba(192,57,43,0.45)"/><line x1="13" y1="28" x2="13" y2="38" stroke="rgba(44,44,42,0.2)" stroke-width="1.2"/><ellipse cx="13" cy="41" rx="7" ry="2.5" stroke="rgba(44,44,42,0.15)" fill="none"/></svg></div><div class="vk-gc-name">U 87 Ai Studio Set</div><div class="vk-gc-brand">Neumann</div><div class="vk-gc-price">$3,595</div></div>
+              <div class="vk-gc"><div class="vk-gc-img" style="background:#E8E4DE;"><span class="vk-gc-badge used">Used</span><svg width="26" height="48" viewBox="0 0 26 48" fill="none"><rect x="6" y="2" width="14" height="26" rx="7" stroke="#8C8C88" stroke-width="1.2" fill="none"/><circle cx="13" cy="15" r="4" fill="rgba(100,70,0,0.3)"/><line x1="13" y1="28" x2="13" y2="38" stroke="#8C8C88" stroke-width="1.2"/></svg></div><div class="vk-gc-name">C 414 XLS Condenser</div><div class="vk-gc-brand">AKG</div><div class="vk-gc-price">$699 <span class="was">$899</span></div></div>
+              <div class="vk-gc"><div class="vk-gc-img"><span class="vk-gc-badge new">New</span><svg width="26" height="48" viewBox="0 0 26 48" fill="none"><rect x="6" y="2" width="14" height="32" rx="7" stroke="rgba(44,44,42,0.25)" stroke-width="1.2" fill="none"/><rect x="9" y="5" width="8" height="26" rx="4" fill="rgba(44,44,42,0.05)"/><line x1="13" y1="34" x2="13" y2="44" stroke="rgba(44,44,42,0.2)" stroke-width="1.2"/></svg></div><div class="vk-gc-name">TF29 Copperhead</div><div class="vk-gc-brand">Telefunken</div><div class="vk-gc-price">$1,295</div></div>
+              <div class="vk-gc"><div class="vk-gc-img" style="background:#F0EDE8;"><span class="vk-gc-badge sale">Sale</span><svg width="26" height="48" viewBox="0 0 26 48" fill="none"><rect x="7" y="3" width="12" height="28" rx="6" stroke="#8C8C88" stroke-width="1.2" fill="none"/><line x1="13" y1="31" x2="13" y2="42" stroke="#8C8C88" stroke-width="1.2"/><ellipse cx="13" cy="45" rx="7" ry="2.5" stroke="#C0BCBA" fill="none"/></svg></div><div class="vk-gc-name">SM7dB Active Dynamic</div><div class="vk-gc-brand">Shure</div><div class="vk-gc-price">$449 <span class="was">$499</span></div></div>
+              <div class="vk-gc"><div class="vk-gc-img"><span class="vk-gc-badge new">New</span><svg width="26" height="48" viewBox="0 0 26 48" fill="none"><rect x="6" y="2" width="14" height="26" rx="7" stroke="rgba(44,44,42,0.25)" stroke-width="1.2" fill="none"/><circle cx="13" cy="15" r="3.5" fill="rgba(192,57,43,0.4)"/><line x1="13" y1="28" x2="13" y2="38" stroke="rgba(44,44,42,0.2)" stroke-width="1.2"/></svg></div><div class="vk-gc-name">WA-47 Large Diaphragm</div><div class="vk-gc-brand">Warm Audio</div><div class="vk-gc-price">$599</div></div>
+              <div class="vk-gc"><div class="vk-gc-img" style="background:#E8E4DE;"><span class="vk-gc-badge used">Used</span><svg width="26" height="48" viewBox="0 0 26 48" fill="none"><rect x="6" y="2" width="14" height="30" rx="7" stroke="#8C8C88" stroke-width="1.2" fill="none"/><rect x="9" y="5" width="8" height="24" rx="4" fill="rgba(100,70,0,0.1)"/><line x1="13" y1="32" x2="13" y2="44" stroke="#8C8C88" stroke-width="1.2"/></svg></div><div class="vk-gc-name">M 149 Tube Microphone</div><div class="vk-gc-brand">Neumann</div><div class="vk-gc-price">$3,200 <span class="was">$3,999</span></div></div>
+            </div>
+            <div class="vk-expert-strip"><div class="pulse-dot" style="width:8px;height:8px;"></div><div><div class="vk-expert-strip-title">Talk to a Mic Expert</div><div class="vk-expert-strip-sub">Live now · Free consultation</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <footer class="vk-footer"><div class="vk-footer-name">VINTAGE KING</div><ul class="vk-footer-links"><li><a href="#">Mic Buying Guide</a></li><li><a href="#">All Microphones</a></li><li><a href="#">888.653.1184</a></li></ul><div class="vk-footer-bottom">© 2026 Vintage King Audio, Inc.</div></footer>
+          </div><!-- /pg-category -->
+
+          <!-- PAGE: PRODUCT -->
+          <div class="vk-page" id="pg-product">
+            <div class="vk-breadcrumb"><a href="#">Home</a><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg><a href="#">Microphones</a><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg><span>U 87 Ai</span></div>
+            <div class="vk-prod-img"><svg width="72" height="132" viewBox="0 0 72 132" fill="none" style="position:relative;z-index:1;"><rect x="24" y="5" width="24" height="64" rx="12" stroke="rgba(44,44,42,0.3)" stroke-width="2" fill="none"/><rect x="29" y="10" width="14" height="54" rx="7" fill="rgba(192,57,43,0.12)"/><circle cx="36" cy="37" r="9" fill="rgba(192,57,43,0.45)"/><line x1="29" y1="20" x2="43" y2="20" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/><line x1="29" y1="56" x2="43" y2="56" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/><line x1="36" y1="69" x2="36" y2="100" stroke="rgba(44,44,42,0.2)" stroke-width="2"/><ellipse cx="36" cy="103" rx="18" ry="5.5" stroke="rgba(44,44,42,0.12)" fill="none" stroke-width="1.5"/><line x1="24" y1="37" x2="16" y2="37" stroke="rgba(44,44,42,0.12)" stroke-width="1.5"/><line x1="48" y1="37" x2="56" y2="37" stroke="rgba(44,44,42,0.12)" stroke-width="1.5"/></svg></div>
+            <div class="vk-prod-thumbs">
+              <div class="vk-thumb active" onclick="setThumb(this)"><svg width="16" height="30" viewBox="0 0 16 30" fill="none"><rect x="3" y="1" width="10" height="18" rx="5" stroke="rgba(44,44,42,0.3)" stroke-width="1" fill="none"/></svg></div>
+              <div class="vk-thumb" style="background:#2C2C2A;" onclick="setThumb(this)"><svg width="20" height="14" viewBox="0 0 20 14" fill="none"><rect x="1" y="2" width="18" height="10" rx="2" stroke="rgba(255,255,255,0.25)" stroke-width="1" fill="none"/></svg></div>
+              <div class="vk-thumb" onclick="setThumb(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#8C8C88" stroke-width="1" fill="none"/></svg></div>
+            </div>
+            <div class="vk-prod-detail">
+              <div class="vk-prod-brand">Neumann</div>
+              <h1 class="vk-prod-name">U 87 Ai Studio Set</h1>
+              <div class="vk-prod-rating"><div class="vk-stars">★★★★★</div><span class="vk-rating-ct">4.9 (142 reviews)</span></div>
+              <div class="vk-price-row"><div class="vk-price">$3,595</div></div>
+              <div class="vk-financing"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2" style="flex-shrink:0;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span>As low as <strong>$75/mo</strong> with 0% financing</span></div>
+              <div class="vk-specs">
+                <div class="vk-spec"><span>Type</span><strong>Large Diaphragm Condenser</strong></div>
+                <div class="vk-spec"><span>Polar</span><strong>Omni / Cardoid / Fig-8</strong></div>
+                <div class="vk-spec"><span>Noise</span><strong>12 dB-A</strong></div>
+                <div class="vk-spec"><span>Max SPL</span><strong>127 dB w/ pad</strong></div>
+              </div>
+              <div class="vk-condition">
+                <div class="vk-cond-opt sel" onclick="setCond(this)"><div class="vk-cond-label">New</div><div class="vk-cond-price">$3,595</div></div>
+                <div class="vk-cond-opt" onclick="setCond(this)"><div class="vk-cond-label">Used · Excellent</div><div class="vk-cond-price">$2,850</div></div>
+                <div class="vk-cond-opt" onclick="setCond(this)"><div class="vk-cond-label">Used · Good</div><div class="vk-cond-price">$2,400</div></div>
+              </div>
+              <button class="vk-atc">Add to Cart</button>
+              <button class="vk-wl"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Save to Wish List</button>
+              <div class="vk-meta">
+                <div class="vk-meta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>In stock · ships same day by 4PM ET</div>
+                <div class="vk-meta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Free 1-year warranty included</div>
+                <div class="vk-meta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Questions? <a href="#" style="color:var(--vk-red);margin-left:4px;">Talk to a consultant</a></div>
+              </div>
+              <div class="vk-tabs">
+                <div class="vk-tab-nav">
+                  <button class="vk-tab-btn active" onclick="setTab(this,'tab-desc')">Description</button>
+                  <button class="vk-tab-btn" onclick="setTab(this,'tab-specs')">Specifications</button>
+                  <button class="vk-tab-btn" onclick="setTab(this,'tab-fin')">Financing</button>
+                </div>
+                <div class="vk-tab-panel active" id="tab-desc"><p>The Neumann U 87 Ai is the industry standard large-diaphragm condenser microphone. For over 50 years, the first choice of recording engineers worldwide for vocals, acoustic instruments, and broadcast applications.</p><p>Three directional characteristics — omnidirectional, cardioid, and figure-8 — plus switchable 10 dB pad and high-pass filter.</p></div>
+                <div class="vk-tab-panel" id="tab-specs"><table class="vk-specs-tbl"><tr><td>Transducer Type</td><td>Condenser, pressure gradient</td></tr><tr><td>Polar Pattern</td><td>Omni, Cardioid, Figure-8</td></tr><tr><td>Frequency Response</td><td>20 Hz – 20 kHz</td></tr><tr><td>Sensitivity</td><td>-28 dBV/Pa</td></tr><tr><td>Max SPL</td><td>117 dB / 127 dB w/ pad</td></tr><tr><td>Equivalent Noise</td><td>12 dB-A</td></tr><tr><td>Power</td><td>48V phantom</td></tr><tr><td>Weight</td><td>500 g</td></tr></table></div>
+                <div class="vk-tab-panel" id="tab-fin"><p>0% APR for up to 48 months with the Vintage King Credit Card — as low as $75/month.</p><p>PayPal Pay Later and Affirm also available at checkout.</p></div>
+              </div>
+            </div>
+            <div class="vk-sticky-atc"><div class="vk-sticky-info"><div class="vk-sticky-name">U 87 Ai Studio Set</div><div class="vk-sticky-price">$3,595</div></div><button class="vk-sticky-btn">Add to Cart</button></div>
+          </div><!-- /pg-product -->
+
+          <!-- PAGE: FAQ -->
+          <div class="vk-page" id="pg-faq">
+            <div class="vk-faq-hero"><div class="vk-faq-eyebrow">Support</div><h1 class="vk-faq-title">How can we help?</h1><p class="vk-faq-sub">Answers about ordering, gear, and working with our team.</p><div class="vk-faq-search"><input type="text" placeholder="Search questions…"><svg class="vk-faq-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div></div>
+            <div><div class="vk-faq-section-title">Ordering & Payment</div>
+              <div class="vk-faq-item"><button class="vk-faq-q open" onclick="toggleFaq(this)">What payment methods do you accept?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a open">All major credit cards, PayPal, Affirm, and the Vintage King Credit Card. Wire transfer and purchase orders available for large orders.</div></div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">Can I place an order by phone?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">Yes. Call <a href="tel:8886531184">888.653.1184</a>, Mon–Fri 9AM–8PM ET.</div></div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">Do you offer price matching?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">We match authorized dealer prices on new gear. Contact us before purchasing.</div></div>
+            </div>
+            <div><div class="vk-faq-section-title">Shipping & Delivery</div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">How fast does my order ship?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">In-stock orders placed by 4PM ET Monday–Friday ship the same day.</div></div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">Do you offer free shipping?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">Free ground shipping on orders over $99 to the lower 48 states.</div></div>
+            </div>
+            <div><div class="vk-faq-section-title">Used & Vintage Gear</div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">How do you grade used equipment?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">Every used item is inspected, tested, and graded by our in-house technicians. Grades: Excellent, Very Good, Good, Fair.</div></div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">Is vintage gear covered by your warranty?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">Yes. All used and vintage items include our free 1-year warranty, serviced in-house.</div></div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">Can I sell or trade in my gear?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">Yes. Contact us with description and photos. We typically respond within one business day.</div></div>
+            </div>
+            <div><div class="vk-faq-section-title">Financing & Section 179</div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">What financing options are available?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">0% APR up to 48 months with the VK Credit Card, PayPal Pay Later, and Affirm at checkout.</div></div>
+              <div class="vk-faq-item"><button class="vk-faq-q" onclick="toggleFaq(this)">What is Section 179?<span class="vk-faq-icon">+</span></button><div class="vk-faq-a">Section 179 allows businesses to deduct the full purchase price of qualifying equipment in the year purchased. Most pro audio gear qualifies. Consult your tax advisor.</div></div>
+            </div>
+            <div class="vk-contact-strip"><h2 class="vk-contact-title">Still have questions?</h2><p class="vk-contact-sub">Our team of audio engineers is standing by.</p><div class="vk-contact-cards">
+              <div class="vk-contact-card"><div class="vk-contact-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 11 19.79 19.79 0 0 1 .11 2.38 2 2 0 0 1 2.11.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.91a16 16 0 0 0 6.09 6.09l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg></div><div><div class="vk-contact-card-title">Call Us</div><div class="vk-contact-card-sub">Mon–Fri, 9AM–8PM ET</div><a href="tel:8886531184" class="vk-contact-action">888.653.1184</a></div></div>
+              <div class="vk-contact-card"><div class="vk-contact-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="vk-contact-card-title">Email</div><div class="vk-contact-card-sub">Response within 1 business day</div><a href="#" class="vk-contact-action">Send a message →</a></div></div>
+            </div></div>
+            <footer class="vk-footer"><div class="vk-footer-name">VINTAGE KING</div><ul class="vk-footer-links"><li><a href="#">FAQ</a></li><li><a href="#">Shipping Policy</a></li><li><a href="#">888.653.1184</a></li></ul><div class="vk-footer-bottom">© 2026 Vintage King Audio, Inc.</div></footer>
+          </div><!-- /pg-faq -->
+
+        </div><!-- /view-redesign -->
+
+      </div><!-- /phone-screen -->
+      <div class="phone-homebar"></div>
+    </div><!-- /phone-frame -->
+  </div><!-- /phone-col -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- MODE TOGGLE -->
+    <div style="padding:20px 20px 16px;border-bottom:1px solid #E8E6E3;">
+      <div style="font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#9B9B98;margin-bottom:10px;">Choose a demo</div>
+      <div style="display:flex;border:1.5px solid #E8E6E3;border-radius:6px;overflow:hidden;">
+        <button id="toggle-mega" onclick="switchView('mega')" style="flex:1;padding:11px 0;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;background:#1A1A18;color:#fff;border:none;border-right:1.5px solid #E8E6E3;cursor:pointer;">☰ Mobile Nav</button>
+        <button id="toggle-redesign" onclick="switchView('redesign')" style="flex:1;padding:11px 0;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;background:#fff;color:#B0AEA9;border:none;cursor:pointer;">⊞ 4-Page Site</button>
+      </div>
+    </div>
+
+    <!-- MEGA PANEL -->
+    <div id="panel-mega">
+      <div style="padding:16px 20px 4px;"><p style="font-size:11.5px;color:#6B6B68;line-height:1.6;">Full mobile nav — drawer, 6 accordions, conversion pills, Expert CTA. Tap hamburger in phone or use steps below.</p></div>
+      <div style="padding:4px 20px 20px;">
+        <div style="font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#9B9B98;margin:14px 0 10px;">Walkthrough</div>
+        <div class="steps">
+          <div class="step active" onclick="highlight(this)"><div class="step-n">1</div><div><div class="step-t">Open the drawer</div><div class="step-d">Tap ☰ or click below</div><button class="step-action act-dark" onclick="doStep(event,'openDrawer')">▶ Open drawer</button></div></div>
+          <div class="step" onclick="highlight(this)"><div class="step-n">2</div><div><div class="step-t">Trust pills + search</div><div class="step-d">Free shipping · 0% financing · Warranty · Same-day</div><button class="step-action act-dark" onclick="doStep(event,'openDrawer')">▶ Open drawer</button></div></div>
+          <div class="step" onclick="highlight(this)"><div class="step-n">3</div><div><div class="step-t">Microphones — financing pill</div><div class="step-d">Sub-links + 0% financing conversion pill</div><button class="step-action act-red" onclick="doStep(event,'openMics')">▶ Open Microphones</button></div></div>
+          <div class="step" onclick="highlight(this)"><div class="step-n">4</div><div><div class="step-t">Vintage ✦ — amber + auth</div><div class="step-d">Amber accent · Authenticity guaranteed pill</div><button class="step-action act-amber" onclick="doStep(event,'openVintage')">▶ Open Vintage</button></div></div>
+          <div class="step" onclick="highlight(this)"><div class="step-n">5</div><div><div class="step-t">Explore links</div><div class="step-d">MYM · PLAYBACK · Integration · Restoration · Trade · Financing</div><button class="step-action act-dark" onclick="doStep(event,'scrollExplore')">▶ Scroll to Explore</button></div></div>
+          <div class="step" onclick="highlight(this)"><div class="step-n">6</div><div><div class="step-t">Expert CTA — always visible</div><div class="step-d">Pinned at bottom · pulse dot · VK's conversion lever</div><button class="step-action act-green" onclick="doStep(event,'scrollExpert')">▶ Scroll to Expert</button></div></div>
+        </div>
+      </div>
+      <div style="border-top:1px solid #E8E6E3;padding:16px 20px 20px;">
+        <div style="font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#9B9B98;margin-bottom:10px;">Messaging priority</div>
+        <div class="msg-rows">
+          <div class="msg-row"><div class="msg-p">P1</div><div class="msg-t">Talk to an Expert · pulse dot</div><span class="msg-b act-green" style="background:rgba(74,222,128,0.12);color:#16A34A;">Sticky bar</span></div>
+          <div class="msg-row"><div class="msg-p">P2</div><div class="msg-t">Free shipping · 0% financing · Warranty · Same-day</div><span class="msg-b act-dark" style="background:rgba(0,0,0,0.06);color:#6B6B68;">Trust pills</span></div>
+          <div class="msg-row"><div class="msg-p">P3</div><div class="msg-t">Tier 1 co-op · hero + category top</div><span class="msg-b act-red" style="background:rgba(192,57,43,0.1);color:#C0392B;">Page</span></div>
+          <div class="msg-row"><div class="msg-p">P4</div><div class="msg-t">Conversion pill per accordion</div><span class="msg-b act-red" style="background:rgba(192,57,43,0.1);color:#C0392B;">Drawer</span></div>
+          <div class="msg-row"><div class="msg-p">P5</div><div class="msg-t">Make Your Mark · MYM strip</div><span class="msg-b act-dark" style="background:rgba(0,0,0,0.06);color:#6B6B68;">Homepage</span></div>
+          <div class="msg-row"><div class="msg-p">P6</div><div class="msg-t">Vintage Authenticity Guarantee</div><span class="msg-b act-amber" style="background:rgba(212,134,10,0.1);color:#D4860A;">Vintage</span></div>
+        </div>
+      </div>
+    </div><!-- /panel-mega -->
+
+    <!-- 4-PAGE PANEL -->
+    <div id="panel-redesign" style="display:none;">
+      <div style="padding:16px 20px 14px;border-bottom:1px solid #E8E6E3;">
+        <div style="font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#9B9B98;margin-bottom:10px;">Switch pages</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <button id="pgbtn-home" onclick="setPage('pg-home','pgbtn-home')" style="width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;background:#1A1A18;color:#fff;border:none;border-radius:4px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;"><span style="opacity:0.5;font-size:10px;">01</span>Homepage</button>
+          <button id="pgbtn-category" onclick="setPage('pg-category','pgbtn-category')" style="width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;background:#fff;color:#9B9B98;border:1.5px solid #E8E6E3;border-radius:4px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;"><span style="font-size:10px;">02</span>Category — Microphones</button>
+          <button id="pgbtn-product" onclick="setPage('pg-product','pgbtn-product')" style="width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;background:#fff;color:#9B9B98;border:1.5px solid #E8E6E3;border-radius:4px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;"><span style="font-size:10px;">03</span>Product — Neumann U 87</button>
+          <button id="pgbtn-faq" onclick="setPage('pg-faq','pgbtn-faq')" style="width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;background:#fff;color:#9B9B98;border:1.5px solid #E8E6E3;border-radius:4px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;"><span style="font-size:10px;">04</span>FAQ &amp; Support</button>
+        </div>
+      </div>
+      <div style="padding:16px 20px;">
+        <div style="font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#9B9B98;margin-bottom:8px;">What's on each page</div>
+        <div id="pg-desc-home">
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Product-first hero (Neumann co-op) · Category grid · Recently Added · Editorial hero · EMI exclusive · Make Your Mark · Vintage block</div>
+        </div>
+        <div id="pg-desc-category" style="display:none;">
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Tier 1 co-op card · Filter chips · Mic Buying Guide · 6-product grid · Expert CTA strip</div>
+        </div>
+        <div id="pg-desc-product" style="display:none;">
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Product image · 0% financing inline · Condition selector (New/Used/Good) · Add to Cart · Tabs · Sticky ATC bar</div>
+        </div>
+        <div id="pg-desc-faq" style="display:none;">
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">4 FAQ sections · Accordion · Call/Email contact strip · 888.653.1184 wired</div>
+        </div>
+      </div>
+      <div style="padding:0 20px 20px;">
+        <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:4px;padding:9px 11px;">
+          <div style="font-size:9.5px;font-weight:700;color:#16A34A;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;">Mobile CSS · Live · v1.5</div>
+          <div style="font-size:10.5px;color:#374151;line-height:1.5;">All 4 pages responsive at 375px. Unified file — fully interactive.</div>
+        </div>
+      </div>
+    </div><!-- /panel-redesign -->
+
+    <!-- BREAKPOINT -->
+    <div class="panel">
+      <div class="panel-head">Active Breakpoint</div>
+      <div class="panel-body">
+        <div class="bp-active"><div class="bp-active-lbl">Simulated at 375px · Mobile breakpoint active (&lt; 768px)</div></div>
+        <div class="bp-other"><div class="bp-other-dot"></div><div class="bp-other-lbl">Tablet</div><div class="bp-other-desc">768–1023px · Desktop nav · mega-menu</div></div>
+        <div class="bp-other"><div class="bp-other-dot"></div><div class="bp-other-lbl">Desktop</div><div class="bp-other-desc">1024px+ · Full mega-menu · all co-op zones</div></div>
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+</div><!-- /sim-layout -->
+
+<div class="sim-footer">Vintage King Audio · Mobile Simulator v1.5 · March 2026 · Confidential · Built by AJ / Barreletics Ops with Claude</div>
+
+<script>
+let currentView = 'mega';
+
+function switchView(view) {
+  currentView = view;
+  const btnMega = document.getElementById('toggle-mega');
+  const btnRedesign = document.getElementById('toggle-redesign');
+  const hdrMega = document.getElementById('btn-mega');
+  const hdrRedesign = document.getElementById('btn-redesign');
+  if (view === 'mega') {
+    btnMega.style.background = '#1A1A18'; btnMega.style.color = '#fff';
+    btnRedesign.style.background = '#fff'; btnRedesign.style.color = '#B0AEA9';
+    hdrMega.classList.add('active'); hdrRedesign.classList.remove('active');
+  } else {
+    btnRedesign.style.background = '#1A1A18'; btnRedesign.style.color = '#fff';
+    btnMega.style.background = '#fff'; btnMega.style.color = '#B0AEA9';
+    hdrRedesign.classList.add('active'); hdrMega.classList.remove('active');
+  }
+  document.getElementById('view-mega').style.display = view === 'mega' ? 'block' : 'none';
+  document.getElementById('view-redesign').style.display = view === 'redesign' ? 'block' : 'none';
+  document.getElementById('panel-mega').style.display = view === 'mega' ? 'block' : 'none';
+  document.getElementById('panel-redesign').style.display = view === 'redesign' ? 'block' : 'none';
+  if (view === 'redesign') { closeDrawer(); setPage('pg-home','pgbtn-home'); }
+}
+
+function setPage(pageId, btnId) {
+  document.querySelectorAll('.vk-page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById(pageId);
+  if (pg) { pg.classList.add('active'); pg.scrollTop = 0; }
+  const map = {'pgbtn-home':'pgbtn-home','pgbtn-category':'pgbtn-category','pgbtn-product':'pgbtn-product','pgbtn-faq':'pgbtn-faq'};
+  ['pgbtn-home','pgbtn-category','pgbtn-product','pgbtn-faq'].forEach(id => {
+    const b = document.getElementById(id);
+    if (!b) return;
+    if (id === btnId) { b.style.background='#1A1A18'; b.style.color='#fff'; b.style.border='1.5px solid #1A1A18'; }
+    else { b.style.background='#fff'; b.style.color='#9B9B98'; b.style.border='1.5px solid #E8E6E3'; }
+  });
+  ['pg-desc-home','pg-desc-category','pg-desc-product','pg-desc-faq'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  const descMap = {'pgbtn-home':'pg-desc-home','pgbtn-category':'pg-desc-category','pgbtn-product':'pg-desc-product','pgbtn-faq':'pg-desc-faq'};
+  const d = document.getElementById(descMap[btnId]);
+  if (d) d.style.display = 'block';
+}
+
+function openDrawer() {
+  const overlay = document.getElementById('vk-overlay');
+  overlay.style.display = 'block';
+  setTimeout(() => overlay.classList.add('open'), 10);
+  document.getElementById('vk-drawer').classList.add('open');
+}
+function closeDrawer() {
+  const overlay = document.getElementById('vk-overlay');
+  overlay.classList.remove('open');
+  document.getElementById('vk-drawer').classList.remove('open');
+  setTimeout(() => { if (!document.getElementById('vk-drawer').classList.contains('open')) overlay.style.display = 'none'; }, 300);
+}
+
+function toggleAcc(id) {
+  const acc = document.getElementById(id);
+  const isOpen = acc.classList.contains('open');
+  document.querySelectorAll('.vk-acc.open').forEach(a => { if(a !== acc) a.classList.remove('open'); });
+  acc.classList.toggle('open', !isOpen);
+}
+
+function scrollDrawerTo(el) {
+  const db = document.getElementById('vk-drawer-body');
+  if (!el || !db) return;
+  db.scrollTo({ top: Math.max(0, el.offsetTop - 60), behavior: 'smooth' });
+}
+
+function doStep(e, action) {
+  e.stopPropagation();
+  highlight(e.target.closest('.step'));
+  const db = document.getElementById('vk-drawer-body');
+  switch(action) {
+    case 'openDrawer':
+      openDrawer();
+      setTimeout(() => db.scrollTo({top:0,behavior:'smooth'}), 340);
+      break;
+    case 'openMics':
+      openDrawer();
+      setTimeout(() => {
+        document.querySelectorAll('.vk-acc.open').forEach(a => a.classList.remove('open'));
+        const el = document.getElementById('acc-mics');
+        el.classList.add('open');
+        setTimeout(() => scrollDrawerTo(el), 200);
+      }, 340);
+      break;
+    case 'openVintage':
+      openDrawer();
+      setTimeout(() => {
+        document.querySelectorAll('.vk-acc.open').forEach(a => a.classList.remove('open'));
+        const el = document.getElementById('acc-vin');
+        el.classList.add('open');
+        setTimeout(() => scrollDrawerTo(el), 200);
+      }, 340);
+      break;
+    case 'scrollExplore':
+      openDrawer();
+      setTimeout(() => db.scrollTo({top: db.scrollHeight * 0.6, behavior:'smooth'}), 400);
+      break;
+    case 'scrollExpert':
+      openDrawer();
+      setTimeout(() => db.scrollTo({top: db.scrollHeight, behavior:'smooth'}), 400);
+      break;
+  }
+}
+
+function highlight(el) {
+  if (!el) return;
+  el.closest('.steps').querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setThumb(el) {
+  el.closest('.vk-prod-thumbs').querySelectorAll('.vk-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+function setCond(el) {
+  el.closest('.vk-condition').querySelectorAll('.vk-cond-opt').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function setTab(btn, pane) {
+  btn.closest('.vk-tabs').querySelectorAll('.vk-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.closest('.vk-tabs').querySelectorAll('.vk-tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(pane).classList.add('active');
+}
+function setFilter(el) {
+  el.closest('.vk-filter-inner').querySelectorAll('.vk-filter-chip').forEach(c => c.classList.remove('red'));
+  el.classList.add('red');
+}
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  btn.closest('div').querySelectorAll('.vk-faq-q').forEach(q => {
+    q.classList.remove('open');
+    if (q.nextElementSibling) q.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) { btn.classList.add('open'); answer.classList.add('open'); }
+}
+
+// Init
+document.getElementById('vk-overlay').style.display = 'none';
+</script>
+</body>
+</html>
