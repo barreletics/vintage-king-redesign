@@ -1,0 +1,3248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage King — Redesign Concept v1.0</title>
+<!-- 
+  VINTAGE KING REDESIGN CONCEPT
+  Version: 1.0
+  Date: March 22, 2026
+  Pages: Homepage, Category, Product, FAQ
+  Author: AJ / Barreletics Ops — built with Claude
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vk-red: #C0392B;
+    --vk-red-dark: #922B21;
+    --off-white: #F7F5F2;
+    --warm-white: #FDFCFB;
+    --near-black: #1A1A18;
+    --charcoal: #2C2C2A;
+    --mid-grey: #6B6B68;
+    --light-grey: #D8D6D2;
+    --pale-grey: #EDEDEA;
+    --amber: #D4860A;
+    --amber-bg: #F5E6C8;
+    --nav-height: 72px;
+    --nav-h: 72px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--warm-white);
+    color: var(--near-black);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* PAGE SWITCHER */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* PAGE NAV */
+  .page-switcher {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(26,26,24,0.92);
+    padding: 10px 16px;
+    border-radius: 40px;
+    z-index: 9999;
+    backdrop-filter: blur(12px);
+  }
+  .page-switcher button {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .page-switcher button.active,
+  .page-switcher button:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.12);
+  }
+  .page-switcher button.active { color: var(--vk-red); }
+
+  /* ── NAV (from MegaMenu v4.0) ── */
+  /* ── TOPBAR ── */
+  .utility-bar {
+    background: var(--warm-white);
+    border-bottom: 1px solid rgba(26,26,24,0.08);
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+  .utility-bar-links {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .utility-bar-links a {
+    font-size: 10px;
+    color: rgba(26,26,24,0.45);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    padding: 0 12px;
+    border-right: 1px solid rgba(26,26,24,0.12);
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .utility-bar-links a:first-child { padding-left: 0; }
+  .utility-bar-links a:last-child { border-right: none; }
+  .utility-bar-links a:hover { color: rgba(26,26,24,0.85); }
+  .utility-bar-phone {
+    font-size: 10px;
+    color: var(--vk-red);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.15s;
+  }
+  .utility-bar-phone:hover { color: rgba(26,26,24,0.85); }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--near-black); height: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; font-size: 11px; color: rgba(255,255,255,0.72);
+  }
+  .topbar a { color: rgba(255,255,255,0.72); text-decoration: none; transition: color 0.15s; }
+  .topbar a:hover { color: rgba(255,255,255,0.85); }
+  .topbar-left { display: flex; gap: 24px; align-items: center; }
+  .topbar-right { display: flex; gap: 20px; align-items: center; }
+  .topbar-divider { width: 1px; height: 12px; background: rgba(255,255,255,0.15); }
+  .topbar-highlight { color: var(--vk-red); font-weight: 500; }
+
+  /* ── PRIMARY NAV ── */
+  .site-nav {
+    position: sticky; top: 32px; z-index: 199;
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--light-grey);
+    height: var(--nav-h);
+  }
+  .nav-inner {
+    max-width: 1440px; margin: 0 auto; padding: 0 40px; height: 100%;
+    height: 100%; display: flex; align-items: center; gap: 0;
+  }
+
+  /* LOGO */
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; margin-right: 32px; }
+  .logo-tube { width: 20px; height: 32px; flex-shrink: 0; }
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-text .name { font-family: "Roboto", "DM Sans", sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--near-black); }
+  .logo-text .tagline { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid-grey); margin-top: 3px; }
+
+  /* NAV ITEMS */
+  .nav-items { display: flex; align-items: stretch; height: 100%; list-style: none; flex: 1; }
+  .nav-item { height: 100%; position: relative; }
+  .nav-item > a {
+    display: flex; align-items: center; gap: 4px; height: 100%;
+    padding: 0 8px; font-size: 11.5px; font-weight: 500;
+    letter-spacing: 0.025em; color: var(--charcoal); text-decoration: none;
+    white-space: nowrap; transition: color 0.15s;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .nav-item > a:hover, .nav-item.open > a { color: var(--near-black); border-bottom-color: var(--vk-red); }
+  .nav-item.vintage > a { color: var(--amber); }
+  .nav-item.vintage > a:hover, .nav-item.vintage.open > a { color: var(--near-black); border-bottom-color: var(--amber); }
+  .nav-item.deals > a { color: var(--vk-red); font-weight: 600; }
+  .nav-chevron { width: 10px; height: 10px; transition: transform 0.2s ease; opacity: 0.4; }
+  .nav-item.open .nav-chevron { transform: rotate(180deg); opacity: 0.7; }
+
+  /* NAV ACTIONS */
+  .nav-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; flex-shrink: 0; }
+  .nav-search-wrap {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--off-white); border: 1px solid var(--light-grey);
+    border-radius: 4px; padding: 7px 12px; transition: border-color 0.15s;
+  }
+  .nav-search-wrap:focus-within { border-color: var(--charcoal); }
+  .nav-search-wrap input { border: none; background: none; font-family: var(--body); font-size: 12.5px; color: var(--charcoal); outline: none; width: 100px; }
+  .nav-search-wrap input::placeholder { color: var(--mid-grey); }
+  .nav-icon { background: none; border: none; cursor: pointer; color: var(--charcoal); padding: 6px; display: flex; align-items: center; transition: color 0.15s; position: relative; }
+  .nav-icon:hover { color: var(--vk-red); }
+  .cart-count { position: absolute; top: 0; right: 0; background: var(--vk-red); color: #fff; font-size: 9px; font-weight: 600; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .nav-expert-btn { display: flex; align-items: center; gap: 7px; background: var(--vk-red); color: #fff; border: none; cursor: pointer; padding: 9px 16px; border-radius: 3px; font-family: var(--body); font-size: 11.5px; font-weight: 500; letter-spacing: 0.05em; white-space: nowrap; transition: background 0.15s; }
+  .nav-expert-btn:hover { background: var(--vk-red-dk); }
+  .pulse-dot { width: 7px; height: 7px; background: #4ade80; border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+
+  /* ══════════════════════════════════════════════
+     MEGA MENU SYSTEM
+  ══════════════════════════════════════════════ */
+
+  /* The mega wrapper is fixed, full-width, hidden by default */
+  .mega {
+    display: none;
+    position: fixed;
+    left: 0; right: 0;
+    background: var(--warm-white);
+    border-top: 2px solid var(--vk-red);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.10);
+    z-index: 300;
+    flex-direction: column; /* stack: body + bottom-bar */
+    animation: menuIn 0.18s ease;
+    max-height: calc(100vh - 110px);
+    overflow: clip;
+  }
+
+  /* ── CO-OP ALIGNMENT: grid keeps panel flush with bottom of tiles+bar ── */
+  .nav-item.open > .mega { display: grid; grid-template-columns: 1fr 260px; grid-template-rows: 1fr auto; }
+  .mega-body { display: contents; }
+  .mega-cats { grid-column: 1; grid-row: 1; min-width: 0; }
+  .mega-panel { grid-column: 2; grid-row: 1 / 4; min-width: 260px; max-width: 260px; flex-shrink: 0; display: flex; flex-direction: column; background: var(--near-black); position: relative; overflow: hidden; }
+  .mega-tiles-outer { grid-column: 1; grid-row: 2; min-width: 0; align-self: end; }
+  .mega-bar { grid-column: 1; grid-row: 3; min-width: 0; background: var(--off-white); border-top: 1px solid rgba(26,26,24,0.12); }
+
+  @keyframes menuIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── MEGA BODY: left cols + right panel side by side ── */
+  .mega-body {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Left: category columns */
+  .mega-cats {
+    flex: 1;
+    display: flex;
+    padding: 20px 32px 0 40px;
+    gap: 0;
+    min-width: 0;
+  }
+
+  .mega-col { flex: 1; padding-right: 28px; border-right: 1px solid var(--pale-grey); margin-right: 28px; }
+  .mega-col:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+  .mega-col-head { font-size: 9.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid-grey); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--pale-grey); }
+  .mega-col ul { list-style: none; }
+  .mega-col ul li { margin-bottom: 1px; }
+  .mega-col ul li a { display: block; font-size: 13px; color: var(--charcoal); text-decoration: none; padding: 5px 0; transition: color 0.12s, padding-left 0.12s; }
+  .mega-col ul li a:hover { color: var(--vk-red); padding-left: 5px; }
+  .mega-col ul li a.bold { font-weight: 500; color: var(--near-black); }
+  .mega-col .view-all { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--vk-red); text-decoration: none; margin-top: 12px; transition: gap 0.15s; }
+  .mega-col .view-all:hover { gap: 7px; }
+  .mega-col-head-secondary { font-size: 9.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid-grey); margin-top: 18px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--pale-grey); }
+
+  /* ── RIGHT PANEL: dark, full height of mega-body ── */
+  /* mega-panel styles merged into grid rule above */
+  .mega-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(192,57,43,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .mega-panel.vintage-panel { background: linear-gradient(165deg, #1C1A10 0%, #2A2412 100%); }
+  .mega-panel.vintage-panel::before { background: radial-gradient(ellipse at 70% 30%, rgba(212,134,10,0.2) 0%, transparent 65%); }
+  .mega-panel.studio-panel { background: linear-gradient(165deg, #0E1218 0%, #1A2030 100%); }
+  .mega-panel.studio-panel::before { background: radial-gradient(ellipse at 60% 40%, rgba(59,130,246,0.12) 0%, transparent 65%); }
+
+  /* Feature area — grows to fill space */
+  .panel-feature { flex: 1; padding: 22px 22px 16px; display: flex; flex-direction: column; position: relative; cursor: pointer; }
+  .panel-sponsor { font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+  .panel-img { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 0; position: relative; }
+  .panel-img-tag { position: absolute; top: 0; left: 0; }
+  .panel-brand { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .panel-name { font-family: var(--display); font-size: 16px; color: #fff; line-height: 1.25; margin-bottom: 6px; }
+  .panel-price { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+  .panel-cta { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: var(--vk-red); border: none; cursor: pointer; padding: 8px 14px; border-radius: 2px; text-decoration: none; transition: background 0.15s; align-self: flex-start; }
+  .panel-cta:hover { opacity: 0.85; }
+  .panel-coop-label { font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.18); text-align: right; margin-top: 8px; }
+
+  /* Make Your Mark strip */
+  .panel-mym { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.07); cursor: pointer; transition: background 0.15s; flex-shrink: 0; }
+  .panel-mym:hover { background: rgba(255,255,255,0.05); }
+  .panel-mym-label { font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .panel-mym-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+  .panel-mym-title { font-family: var(--display); font-size: 13px; font-style: italic; color: rgba(255,255,255,0.8); line-height: 1.35; margin-bottom: 4px; }
+  .panel-mym-sub { font-size: 10px; color: rgba(255,255,255,0.35); display: flex; align-items: center; gap: 4px; }
+
+  /* Expert CTA */
+  .panel-expert { padding: 13px 18px; border-top: 1px solid rgba(255,255,255,0.07); background: var(--vk-red); display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; transition: background 0.15s; flex-shrink: 0; margin-top: auto; }
+  .panel-expert:hover { background: var(--vk-red-dk); }
+  .panel-expert-title { font-size: 12px; font-weight: 500; color: #fff; margin-bottom: 1px; }
+  .panel-expert-sub { font-size: 10px; color: rgba(255,255,255,0.6); }
+
+  /* ── ZONE 3: 3 neutral tiles — bottom row flush with panel ── */
+  .mega-tiles-outer { background: var(--off-white); border-top: 1px solid var(--light-grey); width: 100%; }
+  .mega-tiles { display: flex; gap: 8px; padding: 12px 40px; max-width: 1440px; margin: 0 auto; }
+  .ptile { flex: 1; display: flex; align-items: center; gap: 10px; padding: 10px 14px; text-decoration: none; background: var(--pale-grey); border: 1px solid rgba(26,26,24,0.12); border-radius: 3px; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
+  .ptile:hover { background: #E5E3DF; border-color: rgba(26,26,24,0.2); }
+  .ptile-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 3px; }
+  .ptile-icon.dk { background: var(--charcoal); }
+  .ptile-icon.am { background: var(--amber-bg); }
+  .ptile-body { flex: 1; min-width: 0; }
+  .ptile-label { font-size: 8px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--mid-grey); margin-bottom: 2px; }
+
+  .itile { flex: 1; display: flex; flex-direction: row; text-decoration: none; border-radius: 3px; overflow: hidden; cursor: pointer; border: 1px solid rgba(26,26,24,0.12); min-width: 0; min-height: 72px; }
+  .itile-img { position: relative; width: 96px; flex-shrink: 0; overflow: hidden; }
+  .itile-bg { position: absolute; inset: 0; transition: transform 0.3s ease; }
+  .itile:hover .itile-img .itile-bg { transform: scale(1.03); }
+  .itile-arrow { position: absolute; top: 6px; right: 6px; color: rgba(255,255,255,0.6); font-size: 11px; z-index: 2; transition: color 0.15s; }
+  .itile:hover .itile-arrow { color: rgba(255,255,255,0.9); }
+  .itile-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.18); }
+  .itile-body { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 10px 14px; background: var(--off-white); min-width: 0; border-left: 1px solid rgba(26,26,24,0.08); }
+  .itile-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vk-red); font-weight: 600; margin-bottom: 4px; }
+  .itile-name { font-size: 12.5px; font-weight: 600; color: var(--near-black); line-height: 1.2; margin-bottom: 3px; }
+  .itile-sub { font-size: 10px; color: var(--mid-grey); line-height: 1.3; }
+  .itile-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 7.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); pointer-events: none; z-index: 1; }
+  .itile-cta { display: inline-block; margin-top: 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--vk-red); color: #fff; padding: 3px 8px; border-radius: 2px; align-self: flex-start; }
+  .mega-tiles { display: flex; gap: 6px; flex: 1; }
+  .ptile-name { font-size: 12px; font-weight: 500; color: var(--near-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ptile-detail { font-size: 10px; color: var(--mid-grey); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── ZONE 2: Bottom bar — inside mega, below body ── */
+    /* mega-bar background handled by grid rule */
+  .mega-bar-inner {
+    display: flex; align-items: center;
+    max-width: 1440px; margin: 0 auto;
+    padding: 0 40px; min-height: 46px;
+  }
+  .mbb-vk { display: flex; align-items: center; gap: 24px; flex: 1; }
+  .mbb-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(26,26,24,0.75); white-space: nowrap; }
+  .mbb-item svg { color: var(--vk-red); flex-shrink: 0; }
+  .mbb-item strong { color: rgba(26,26,24,0.88); font-weight: 500; }
+  .mbb-item a { color: rgba(26,26,24,0.42); text-decoration: none; font-size: 10px; margin-left: 4px; }
+  .mbb-item a:hover { color: rgba(26,26,24,0.85); }
+  .mbb-sep { width: 1px; height: 28px; background: rgba(26,26,24,0.15); margin: 0 24px; flex-shrink: 0; }
+  .mbb-brands { display: flex; align-items: center; flex-shrink: 0; }
+  .mbb-brands-label { font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(26,26,24,0.4); margin-right: 12px; white-space: nowrap; }
+  .mbb-brand { display: flex; align-items: center; justify-content: center; padding: 0 14px; height: 46px; border-left: 1px solid rgba(26,26,24,0.12); cursor: pointer; transition: background 0.15s; text-decoration: none; }
+  .mbb-brand:hover { background: rgba(26,26,24,0.06); }
+  .mbb-brand span { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,26,24,0.55); transition: color 0.15s; }
+  .mbb-brand:hover span { color: rgba(26,26,24,0.90); }
+  .mbb-sponsored { font-size: 7.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,26,24,0.28); padding-left: 12px; border-left: 1px solid rgba(26,26,24,0.12); height: 46px; display: flex; align-items: center; }
+
+  /* Cats section bottom padding accounts for tiles being in panel */
+  .mega-cats-wrap { padding-bottom: 16px; }
+
+
+    /* ===== PAGE 1: HOMEPAGE ===== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+  }
+  .hero-content {
+    background: var(--near-black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-content::before {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    right: -80px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192,57,43,0.12) 0%, transparent 70%);
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--vk-red);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-headline em { font-style: italic; color: rgba(255,255,255,0.6); }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    max-width: 380px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-actions { display: flex; gap: 12px; align-items: center; position: relative; z-index: 1; }
+  .btn-primary {
+    background: var(--vk-red);
+    color: #fff;
+    padding: 13px 28px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--vk-red-dark); }
+  .btn-ghost {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s;
+  }
+  .btn-ghost:hover { color: #fff; }
+
+  .hero-image {
+    background: var(--off-white);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-image-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #F0EDE8 0%, #E8E4DE 100%);
+  }
+  .hero-image-content { position: relative; z-index: 1; text-align: center; padding: 60px; }
+  .hero-image-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    margin-bottom: 32px;
+  }
+  .hero-image-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--near-black);
+    margin-top: 24px;
+    margin-bottom: 4px;
+  }
+  .hero-image-price {
+    font-size: 13px;
+    color: var(--mid-grey);
+  }
+
+  /* COLOR BLOCK */
+  .color-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 340px;
+  }
+  .color-block-amber {
+    background: #1C1C1A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .color-block-amber::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: -60px;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(212,134,10,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .color-block-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .color-block-headline {
+    font-family: var(--font-display);
+    font-size: 38px;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .color-block-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    max-width: 340px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .btn-amber {
+    background: var(--amber);
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.15s;
+    position: relative;
+    z-index: 1;
+    align-self: flex-start;
+  }
+  .btn-amber:hover { opacity: 0.85; }
+  .color-block-visual {
+    background: var(--amber-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .color-block-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #F5E6C8 0%, #EDD5A0 100%);
+  }
+  .color-block-visual-inner { position: relative; z-index: 1; text-align: center; }
+  .color-block-visual-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(100,70,0,0.6);
+    margin-bottom: 16px;
+  }
+  .color-block-visual-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--near-black);
+    margin-top: 20px;
+  }
+
+  /* CATEGORY STRIP */
+  .section { padding: 64px 0; }
+  .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--near-black);
+  }
+  .section-link {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+  }
+  .section-link:hover { color: var(--vk-red); }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .category-tile {
+    background: var(--off-white);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+  }
+  .category-tile:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .category-tile-img {
+    height: 200px;
+    background: var(--pale-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .category-tile-img.dark { background: var(--charcoal); }
+  .category-tile-img.mid { background: #3A3A38; }
+  .category-tile-body { padding: 16px 20px 20px; }
+  .category-tile-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 2px;
+  }
+  .category-tile-count {
+    font-size: 12px;
+    color: var(--mid-grey);
+  }
+
+  /* FEATURED PRODUCTS */
+  .product-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--light-grey);
+  }
+  .product-card {
+    background: var(--warm-white);
+    padding: 32px 28px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .product-card:hover { background: var(--off-white); }
+  .product-card-img {
+    height: 220px;
+    background: var(--pale-grey);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .product-card-img.dark-bg { background: #2C2C2A; }
+  .product-card-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--vk-red);
+    font-weight: 500;
+    border: 1px solid var(--vk-red);
+    padding: 3px 7px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  .product-card-name {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--near-black);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .product-card-brand {
+    font-size: 12px;
+    color: var(--mid-grey);
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+  .product-card-price {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--near-black);
+  }
+  .product-card-price .was {
+    font-size: 13px;
+    color: var(--mid-grey);
+    text-decoration: line-through;
+    font-weight: 400;
+    margin-left: 6px;
+  }
+
+  /* TRUST STRIP */
+  .trust-strip {
+    background: var(--off-white);
+    border-top: 1px solid var(--light-grey);
+    padding: 32px 0;
+  }
+  .trust-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .trust-item { display: flex; align-items: flex-start; gap: 14px; }
+  .trust-icon { color: var(--vk-red); flex-shrink: 0; margin-top: 2px; }
+  .trust-text-title { font-size: 13px; font-weight: 500; color: var(--near-black); margin-bottom: 2px; }
+  .trust-text-sub { font-size: 12px; color: var(--mid-grey); line-height: 1.5; }
+
+  /* ===== PAGE 2: CATEGORY PAGE ===== */
+  .page-breadcrumb {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 40px 0;
+    font-size: 12px;
+    color: var(--mid-grey);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .page-breadcrumb a { color: var(--mid-grey); text-decoration: none; }
+  .page-breadcrumb a:hover { color: var(--vk-red); }
+  .page-breadcrumb span { color: var(--near-black); }
+
+  .category-header {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 40px 32px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .category-header-left {}
+  .category-header-title {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 4px;
+  }
+  .category-header-count {
+    font-size: 13px;
+    color: var(--mid-grey);
+  }
+
+  .filter-bar {
+    background: var(--off-white);
+    border-top: 1px solid var(--light-grey);
+    border-bottom: 1px solid var(--light-grey);
+    padding: 0;
+  }
+  .filter-bar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 50px;
+  }
+  .filter-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    font-weight: 500;
+    margin-right: 24px;
+    flex-shrink: 0;
+  }
+  .filter-chip {
+    font-size: 12px;
+    color: var(--charcoal);
+    padding: 5px 14px;
+    border: 1px solid var(--light-grey);
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-right: 8px;
+    transition: all 0.15s;
+    background: var(--warm-white);
+  }
+  .filter-chip:hover, .filter-chip.active {
+    border-color: var(--near-black);
+    background: var(--near-black);
+    color: #fff;
+  }
+  .filter-chip.red-active {
+    border-color: var(--vk-red);
+    background: var(--vk-red);
+    color: #fff;
+  }
+  .filter-sort {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--mid-grey);
+    flex-shrink: 0;
+  }
+  .filter-sort select {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--charcoal);
+    border: 1px solid var(--light-grey);
+    border-radius: 3px;
+    padding: 5px 10px;
+    background: var(--warm-white);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .product-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 40px 64px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px 24px;
+  }
+  .grid-product-card { cursor: pointer; }
+  .grid-product-img {
+    background: var(--off-white);
+    border-radius: 3px;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .grid-product-img.dk { background: #2C2C2A; }
+  .grid-product-img.md { background: #E8E4DE; }
+  .grid-product-card:hover .grid-product-img { background: var(--pale-grey); }
+  .grid-product-card:hover .grid-product-img.dk { background: #3A3A38; }
+  .grid-product-badge-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .grid-badge {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .grid-badge.new { background: var(--near-black); color: #fff; }
+  .grid-badge.used { background: var(--amber-bg); color: var(--amber); }
+  .grid-badge.sale { background: #fde8e6; color: var(--vk-red); }
+  .grid-product-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 2px;
+    line-height: 1.3;
+  }
+  .grid-product-brand {
+    font-size: 11px;
+    color: var(--mid-grey);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .grid-product-price {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--near-black);
+  }
+  .grid-product-price .was {
+    font-size: 12px;
+    color: var(--mid-grey);
+    text-decoration: line-through;
+    font-weight: 400;
+    margin-left: 5px;
+  }
+
+  /* ===== PAGE 3: PRODUCT PAGE ===== */
+  .product-page-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+  .product-layout {
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: 64px;
+    align-items: start;
+  }
+  .product-image-main {
+    background: var(--off-white);
+    border-radius: 4px;
+    height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .product-image-main.dark-bg { background: var(--near-black); }
+  .product-thumbs {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .product-thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 3px;
+    background: var(--pale-grey);
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s;
+  }
+  .product-thumb.active { border-color: var(--near-black); }
+  .product-thumb:nth-child(2) { background: #2C2C2A; }
+  .product-thumb:nth-child(3) { background: #3A3A38; }
+
+  .product-detail {}
+  .product-detail-brand {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    margin-bottom: 8px;
+  }
+  .product-detail-name {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--near-black);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .product-detail-sku {
+    font-size: 11px;
+    color: var(--mid-grey);
+    font-family: var(--font-mono);
+    margin-bottom: 20px;
+  }
+  .product-detail-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--pale-grey);
+  }
+  .stars { color: var(--amber); font-size: 14px; letter-spacing: 1px; }
+  .rating-count { font-size: 12px; color: var(--mid-grey); }
+  .rating-link { font-size: 12px; color: var(--vk-red); text-decoration: none; }
+
+  .product-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .product-price-main {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--near-black);
+  }
+  .product-price-was {
+    font-size: 16px;
+    color: var(--mid-grey);
+    text-decoration: line-through;
+  }
+  .product-price-save {
+    font-size: 12px;
+    background: #fde8e6;
+    color: var(--vk-red);
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .product-financing {
+    background: var(--off-white);
+    border-radius: 3px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--charcoal);
+  }
+  .product-financing strong { color: var(--near-black); }
+
+  .product-key-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .spec-pill {
+    background: var(--off-white);
+    border-radius: 3px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--charcoal);
+  }
+  .spec-pill span { display: block; font-size: 10px; color: var(--mid-grey); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+
+  .product-condition-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .condition-option {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--light-grey);
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .condition-option.selected {
+    border-color: var(--near-black);
+    background: var(--near-black);
+  }
+  .condition-option-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+  .condition-option.selected .condition-option-label { color: #fff; }
+  .condition-option-price { font-size: 11px; color: var(--mid-grey); margin-top: 2px; }
+  .condition-option.selected .condition-option-price { color: rgba(255,255,255,0.55); }
+
+  .add-to-cart {
+    width: 100%;
+    background: var(--vk-red);
+    color: #fff;
+    border: none;
+    padding: 16px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-bottom: 12px;
+    transition: background 0.15s;
+  }
+  .add-to-cart:hover { background: var(--vk-red-dark); }
+  .wishlist-btn {
+    width: 100%;
+    background: none;
+    color: var(--charcoal);
+    border: 1px solid var(--light-grey);
+    padding: 13px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: border-color 0.15s;
+  }
+  .wishlist-btn:hover { border-color: var(--charcoal); }
+
+  .product-meta {
+    border-top: 1px solid var(--pale-grey);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .product-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--charcoal);
+  }
+  .product-meta-row svg { color: var(--vk-red); flex-shrink: 0; }
+
+  .product-tabs {
+    margin-top: 60px;
+    border-top: 1px solid var(--light-grey);
+  }
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--light-grey);
+  }
+  .tab-btn {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid-grey);
+    background: none;
+    border: none;
+    padding: 16px 28px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .tab-btn.active { color: var(--near-black); border-bottom-color: var(--vk-red); }
+  .tab-btn:hover { color: var(--near-black); }
+  .tab-content { padding: 32px 0; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+  .tab-pane p {
+    font-size: 14px;
+    color: var(--charcoal);
+    line-height: 1.8;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+
+  .specs-table { width: 100%; max-width: 600px; border-collapse: collapse; }
+  .specs-table tr { border-bottom: 1px solid var(--pale-grey); }
+  .specs-table td { padding: 12px 0; font-size: 13px; }
+  .specs-table td:first-child { color: var(--mid-grey); width: 220px; }
+  .specs-table td:last-child { color: var(--charcoal); font-weight: 500; }
+
+  /* ===== PAGE 4: FAQ PAGE ===== */
+  .faq-hero {
+    background: var(--near-black);
+    padding: 72px 40px;
+    text-align: center;
+  }
+  .faq-hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--vk-red);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .faq-hero-title {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .faq-hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.45);
+    max-width: 480px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+  .faq-search {
+    max-width: 440px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .faq-search input {
+    width: 100%;
+    padding: 14px 48px 14px 20px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .faq-search input::placeholder { color: rgba(255,255,255,0.35); }
+  .faq-search input:focus { border-color: rgba(255,255,255,0.35); }
+  .faq-search-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.35);
+  }
+
+  .faq-layout {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .faq-sidebar { position: sticky; top: 88px; }
+  .faq-sidebar-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .faq-sidebar-nav { list-style: none; }
+  .faq-sidebar-nav li { margin-bottom: 2px; }
+  .faq-sidebar-nav li a {
+    font-size: 13px;
+    color: var(--charcoal);
+    text-decoration: none;
+    display: block;
+    padding: 7px 10px;
+    border-radius: 3px;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .faq-sidebar-nav li a:hover { color: var(--near-black); background: var(--off-white); }
+  .faq-sidebar-nav li a.active { color: var(--vk-red); border-left-color: var(--vk-red); background: #fdf0ee; }
+
+  .faq-main {}
+  .faq-section { margin-bottom: 52px; }
+  .faq-section-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--pale-grey);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--pale-grey);
+  }
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--near-black);
+    transition: color 0.15s;
+  }
+  .faq-q:hover { color: var(--vk-red); }
+  .faq-q.open { color: var(--vk-red); }
+  .faq-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--light-grey);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mid-grey);
+    transition: all 0.2s;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .faq-q.open .faq-icon {
+    background: var(--vk-red);
+    border-color: var(--vk-red);
+    color: #fff;
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    display: none;
+    padding: 0 0 20px;
+    font-size: 14px;
+    color: var(--mid-grey);
+    line-height: 1.8;
+    max-width: 600px;
+  }
+  .faq-a.open { display: block; }
+  .faq-a a { color: var(--vk-red); text-decoration: none; }
+  .faq-a a:hover { text-decoration: underline; }
+
+  .faq-contact-strip {
+    background: var(--off-white);
+    border-top: 1px solid var(--light-grey);
+    padding: 48px 40px;
+  }
+  .faq-contact-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .contact-card {
+    background: var(--warm-white);
+    border: 1px solid var(--light-grey);
+    border-radius: 4px;
+    padding: 28px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .contact-card:hover { border-color: var(--vk-red); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+  .contact-card-icon {
+    width: 36px;
+    height: 36px;
+    background: #fde8e6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--vk-red);
+    flex-shrink: 0;
+  }
+  .contact-card-title { font-size: 14px; font-weight: 500; color: var(--near-black); margin-bottom: 4px; }
+  .contact-card-sub { font-size: 12px; color: var(--mid-grey); line-height: 1.6; }
+  .contact-card-action { font-size: 12px; color: var(--vk-red); text-decoration: none; margin-top: 8px; display: inline-block; }
+
+  /* FOOTER */
+  .site-footer {
+    background: #F0EDE8;
+    padding: 56px 0 32px;
+    margin-bottom: 80px;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand-name {
+    font-family: "Roboto", "DM Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--near-black);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-brand-desc {
+    font-size: 13px;
+    color: var(--mid-grey);
+    line-height: 1.7;
+    max-width: 260px;
+  }
+  .footer-col-title {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a {
+    font-size: 13px;
+    color: var(--charcoal);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-col ul li a:hover { color: var(--near-black); }
+  .footer-bottom {
+    border-top: 1px solid var(--light-grey);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--mid-grey);
+  }
+  .footer-bottom a { color: var(--mid-grey); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--near-black); }
+
+  /* HAMBURGER HIDDEN ON DESKTOP */
+  .mobile-menu-btn { display: none; }
+
+  /* SVG ICONS / ILLUSTRATIONS */
+  svg { vertical-align: middle; }
+
+  /* ── CO-OP BANNER (category page) ── */
+  .coop-banner { background: var(--near-black); border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .coop-banner-inner { max-width: 1440px; margin: 0 auto; padding: 20px 40px; display: flex; align-items: center; gap: 24px; }
+  .coop-banner-img { width: 60px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .coop-banner-body { flex: 1; }
+  .coop-banner-sponsor { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+  .coop-banner-name { font-family: var(--font-display); font-size: 20px; color: #fff; margin-bottom: 4px; }
+  .coop-banner-price { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+  .coop-banner-cta { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: var(--vk-red); padding: 8px 16px; border-radius: 2px; text-decoration: none; transition: background 0.15s; }
+  .coop-banner-cta:hover { background: var(--vk-red-dk); }
+  .coop-banner-label { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.15); writing-mode: vertical-rl; flex-shrink: 0; }
+
+  /* ── MAKE YOUR MARK ── */
+  .mym-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .mym-card { display: flex; flex-direction: column; gap: 10px; text-decoration: none; transition: opacity 0.15s; }
+  .mym-card:hover { opacity: 0.8; }
+  .mym-card-thumb { height: 160px; background: var(--near-black); border-radius: 3px; display: flex; align-items: center; justify-content: center; }
+  .mym-card-studio { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid-grey); }
+  .mym-card-title { font-family: var(--font-display); font-size: 15px; font-style: italic; color: var(--near-black); line-height: 1.35; }
+  .mym-card-meta { font-size: 11px; color: var(--mid-grey); }
+
+  /* ── VINTAGE SPOTLIGHT ── */
+  .vintage-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .vintage-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(212,134,10,0.15); border-radius: 3px; padding: 24px; position: relative; }
+  .vintage-card-badge { position: absolute; top: 16px; right: 16px; font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); background: rgba(212,134,10,0.12); border: 1px solid rgba(212,134,10,0.25); border-radius: 2px; padding: 3px 8px; }
+  .vintage-card-img { height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .vintage-card-name { font-family: var(--font-display); font-size: 16px; color: rgba(255,255,255,0.9); margin-bottom: 4px; }
+  .vintage-card-detail { font-size: 11px; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+  .vintage-card-price { font-size: 16px; font-weight: 500; }
+
+  </style>
+</head>
+<body>
+
+<!-- PAGE SWITCHER -->
+<div class="page-switcher">
+  <button class="active" onclick="showPage('home', this)">Homepage</button>
+  <button onclick="showPage('category', this)">Category</button>
+  <button onclick="showPage('product', this)">Product</button>
+  <button onclick="showPage('faq', this)">FAQ</button>
+</div>
+
+<!-- SHARED NAV COMPONENT -->
+<template id="nav-template">
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="#">Free shipping on orders over $99</a>
+    <div class="topbar-divider"></div>
+    <a href="#"><span class="topbar-highlight">0% financing up to 48 months</span> — Learn more</a>
+  </div>
+
+</div>
+
+<!-- ── PRIMARY NAV ── -->
+<div class="utility-bar">
+  <div class="utility-bar-links">
+    <a href="#">Studio Professionals</a>
+    <a href="#">Trade Program</a>
+    <a href="#">Studio Installations</a>
+    <a href="#">Sell or Trade</a>
+    <a href="#">Financing</a>
+    <a href="#">Section 179</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:0">
+    <a href="tel:8886531184" class="utility-bar-phone"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.61 4.83 2 2 0 0 1 3.58 2.63h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>888.653.1184</a>
+    <span style="color:rgba(26,26,24,0.2);padding:0 10px;font-size:10px">·</span>
+    <a href="#" style="font-size:10px;color:rgba(26,26,24,0.45);text-decoration:none;letter-spacing:0.03em;transition:color 0.15s">Sign In</a>
+  </div>
+</div>
+<nav class="site-nav">
+  <div class="nav-inner">
+
+    <a href="#" class="nav-logo">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACgAKADASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAcGCAEEBQMC/8QAUBAAAQMDAQQGBQUKCwcFAAAAAQIDBAAFEQYHEiExEyJBUWFxFDJCgZEVUmJyoQgjMzRjc4KSsbIWNjdDRHWis7TC0RckJTWDlMFTVFbS0//EABsBAAIDAQEBAAAAAAAAAAAAAAUGAAQHAwIB/8QANhEAAQIEAggEBQMFAQAAAAAAAQIDAAQFESExBhJBUWFxkaGBscHwEyIyM9EUQuEjNFKCwvH/2gAMAwEAAhEDEQA/ALl0UUVIkFFFFSJBWtNmRYMRcqbJZjR2xlbrywhKR3kngKXe0Xaxa9POO26zobulzTlK8L+8sHlhSh6yvop7uJFIfU2or1qWb6Ve7g9LIOW2j1WmvqoHAc8Z5ntJoXNVRtk6qMT2hppOis1OgOO/IjjmeQ9T4Xh56n206bt2+1aI8i8PjhvI+9s5+uoZPmlJFLu+bY9Zz99MNcO1NHl6OyHHAPrLyD+qKXlFBXajMOfutyw/nvD1J6M06VH29Y71Y9su0di4aq1RPX0kzUl4X4CWtCf1UkJ+yua9KlO9Z6VIdV3rdUT9teNFVCtRxJg0hltsWQkDkLR7MypTXWZlSGld6HVA/ZXRt+qtUQF9JD1JeEeBlrWn9VRKfsrkUVAtQxBiLZbcFlpB5iGHY9ses4G4mY5DurQ9b0hnccI+sjAH6ppiaY206buJQ1eI8izvnA3lffWcn6aRkeZSB41XiirbVRmG/wB1+eP894CzmjNOmh9vVO9OHbLtF0IUyLPiIlQZLMmO4ModZWFpUO8EcDWzVOtM6ivWmpvpVluD0Qk5cbBy259dB4HljPMdhFPfZ3tZteoHGrdekt2u5rwlBKvvDxPDCVH1VfRPfwJo1K1Rt46q8D2hFq2ik1JAuNfOjhmOY9R42hnUUUUUhWgoooqRIKKKKkSPN1xDTanHFJQhAypROAB30gdq+1Z+6OPWXTEhTNuGUPTUEhcjvCD7KPHmrswPWztz2gKucl7S9mk4t7RKJzyD+MLB4tg/MHHPeeHIdZT0vVGolRLTRw2nf798dH0a0aShImpoXUcQk7OJ47t3PLCQlHVSndSOQHKs0UUFh7goorBKU9ZXVSO01IkZr2gxZE+azBhsuSJMhYbZaQMlSj2f+fAZPZUm0ds81PqdaHI0JUOEcZmSwUIx3pB6y/DAx4in3s+2f2XRzHSRkql3Fad12a8OuQeaUj2U+A4nAyTir0rT3Zg3Isnf+PdoXavpJK09JSk6zm4ep2cs4q9OiyoE16DMjuR5UdZbeaWMFKh2f6HkRgjnXjVp9oOz+yaxZ35STFuKE7rU1kdcAcgoclp8DyycEZpC6x2dao0xvuSIfpsIZxLigrRjvUPWR454eJqTVPdYN7XTv/Pu0SkaSStQSEqOq5uO3kdvLPziJUVgKSrrJ6ye8VmqMMUFYISrqqTvJPAg8qzRUiQ1tlO1WRaVs2XU8hT1uOEMzFklyN3BZ5qR480+I9V/tOIdbS42pK0LGUqByCO+qVU1thu0FVrks6YvMjNudUEQ3ln8WWeTZPzCeXzTw5HqmqdUSkhp04bDu99uWSJpLo0lxJmpUWUMVJG3iOO8beedg6KKKYYziCoVthn6gg6LkfwcgyJEh49G68wMrjtYO8sJHWJ7BgHGc9lTWiubqCtBSDa8WJV4MPJdKQoA3scjFJEbu4nd9UcBjlwr6qzuvNmNg1P0spCPk25r4+lMJ4LP5RHAL8+CuHOkLrTROoNJvH5Ui78TOETGMqZVk8ATzSfA48M0qTMi7L4kXG8e8I12laQylRslJ1V/4n0O3z4RHKKKkmzGxM6j1xbbXKTmKVKdkJ+chCSrHvIAPgTVVCCtQSMzBeYfTLtKdXkkEnwjf0Ds41BqzdlNpTb7YT+NvpJ3x+TTwKvPIHjwp36P2ZaU07uPJhfKE1PH0mZhage9KfVT5gZ8TUyZbbaaQ22hKEIASlKRgADkAK9aaZanMsWJFzvMZJU9JZ2fJSFaiNw9Tt8uEFFFFEIXoKKKKkSIRq/ZlpTUfSPLhfJ81XH0mHhtRPepPqq8yM+IpIa+2b37SaFSnN24Wwf0thJG4PyieJR55I8RmrTV5PNtutqbcQlbawUqSoZBB5jFD5mnMvi4FjvHrDBTNJZyQISVa6Nx9Ds8uEUroqS7T7EzpzXFxtcNO7ECkux0/NQtIVu+QOQPACo1SstBQopOYjXJd9Ew0l1GSgCPGCvle7uK3t3dPA55VJdFaK1Bqx5PyXF3YgOFzH8pZTg8QD7R8BnxxT60Hsx0/pfopTiflO5o4+lPpGEH8mjiEdvHirjzq1LSDsxiBYbz7xgRVdIZSnXSo6y/8R67vPhHtscn6gm6Lj/wigyI8hk9G06/wXIaAG6sg9YHsOQM4z21NqKKa2kFtASTe0ZFNPB95ToSEgm9hkIgm13W72i7ZBdhx2JEuXI3Q28SB0aRlauHmkfpVzNL7ZdMXQIZuocs0g8CXuuyTjscHIeKgmlz90Pd0z9oRt6XklFsjIaKQeKVrG+o/qlv4UuqATNSdbmFBBwGFo0KmaLSkxTm1PAhahe4OOOXDK2yLpRZMeVHRIiyG32VjKHG1hSVDvBHCsvstyGVsvNpcbWClSFDIUO4iqe2C+3qwv8ATWW5SoKycqDSuoo96kHKVe8U0dL7cZTQQxqW1pfTyMmF1VeZbUcHzBHlVxirtLwcGr3EBZ7Q2bY+aXOuOh6Zd78I7Ou9jFvmFc3SrjdukcSYi8+jrOOSeZb7OWR4CoZsjtV00/tft9vu8F6FILb4CVjgsBsnKSOCh4gmnhpfWGnNSt/8IurD7uMlhR3Hk+aFYVjxxiu0thlxbbjjLa1tEqbUUglJIIJB7OBI99dP0DDi0vNG1jfDKK40gnpdhySm0k3BGOChcd/HrHvRRUX2nXidp/Rc6823o/SYymVJDgylQLqApJ8wSO+iDiw2kqOzGFyXZU+6lpGaiAOZwiUUVGNAaxtesLWZUFfRSWsCTFUeuyo/tSexXb5ggSeohxLiQpJuIj7Dku4W3RZQzEFFFcvUV7tmn7W7crtKTGjNjiTxKj2JSOalHsAr0pQSLnKPCEKcUEIFychHUopZ7L9eztaauuyVRxEt0aMgxmDgr4rOVLPfgchwHjzpmVzZeS8jXRlFmdknZJ34LwsqwPUXit2161XTUG1+db7PBemSEssApbAwkFsEFR5JHioiploTYzBhbk7VTjdwkcCIjeegR4KPAufYPA02EMMtrdcbZQhbpCnFBIBUQAAT38AB7q4uqNY6c00g/K92jsO4yGEnfeV5ITlXvxiqP6Bhtannje5vjkIOnSCemGG5KUSRYAYYqNh28OsdthlthhDLLaG20AJSlIACQOwCsSpDEWOuRJebZZQMrW6sJSkd5J4UkNU7cZToWzpq1pjp5CTN6yvMNpOB5knypW3++3rUD/TXq6SpygcpDiuok96UDCU8+wV4fq7SMGxfsIsSGhs4/wDNMHUHU9Mu9+EPrVO2XTFrC2bUHbzIHAFjqMg47XDzHikKrpbItbva0t1wcmR48eXEkBJbZJI6NQyhXHjzCh+jVYqYn3PN3TA2ii3qeSEXOMtoJ7VLQOkSfckOfGqUtUnVzCdc4HC0GqlotKS1OcLIJWkXuTjhieGV9kWFu1ntN2Z6G6WyHNb+a+wlY+0VCrzsd0ZP3lRY8q2OK9qK+cD9Fe8ke4CpExrjRzzxZRqiz9KCQUKmISrI4EYJFdiLcIEpO9FnRnweRbdSofYaNKRLv5gGEdqYqEj9BUjqB0yhH3rYVdGgtdmvkWSn2WpTamj+sneB+AqFXrZ5rS05VI0/KeaH85Fw+D44RlXxAq2FFU3KQwr6bj3xg1LaZVBrByyxxFj2t5GKTrCo8ro3EqZkNEHdUClxBHb3g00NkGvdVK1ba9Py7kqdBkuKbUJQ33EANqI3V8DnIHrZ4U+brabXdmehultiTWvmyGUuD7RUbibNtJQr9Evdvt7kKXFX0jYZeUGycEYKCSORPLFV26Y8w4FNrwuL7MIIzOlUlPyy2phn5rG2RsbYG+BGO4RM6hu2sb2zC+D5rKFfBxJ/8VMq8nWm3W1NuIStCwUqSoZBB7MUadR8RCk7xaEmVf8A076HbX1SD0N4p1YLxcrDd2bpaZSo8trkeYUDzSoe0k44j38CARZvZtrm26ytZcZ3Y1xZA9KiFWSg/OSfaQew+44NLvabsgU10t20ezvI4qet2eIHe1/9Ph2JpSWi43CzXRq4W+Q5EmxlnCgCCkjgUqB+BSaWmnHqe7qrGB93EabNyslpJLfFYVZY27RwUN3sbRFpdfa1s+jreHp7nSy3QfR4iCOkdI7fBPeo8PM4BrTrHVF41ZdDcLs9vJGQxHRkNsJPYkd/eo8T8AOfeblMu1weul0lOSJTpytxZ7B2dwSOwDgKYGzXZTcdQdFcr501utZwpLeMPyB4Z9RPieJ7ByNR6Yen16jYw3epj1I02R0fY+PMKGvv9Ej3xsMup9zChz5dvb3Rq6IRmkFeDje3icZ78ccU+60LNa7fZ7c1b7ZDZiRWvVbbGBntJ7ye0nia36PScuZdkIJvGe1moCoziphKbA27C0V32wa91SjV100/DuSoMCMtLafRRuOLBbSTvL58yfVxSvRvSJXRp6R6Q6ScDK3Fk9veTVpZmzbSM7UMu+XC3uTJclYcWHnlFsEJAwEAgHgBzzUktVptdpZ6G122JBa+bHZS2PgBQxymPPuFTi8Lm23CGmW0qkpCXQ3Ls3VYXyFzbE3xJx3iKvWTZ5rS7bio+n5TLR/nZWGAPEheFfAGprZdhV0dCFXq+RYyfaaitqdPuUrdA+Bp90VYbpDCfquffCB0zplUHcG7IHAXPe/kIXVm2O6MgYVKjyrm4PalPnB/RRupPvBqaWizWm0M9Fa7ZDgo7o7CUfsFe0q4QIqd6VOjMAcy46lI+01xpGudHR19G5qiz9JnG6mYhRz3YBNXEol2MgBAV2YqE99ZUseJHTKKp3dHRXec2r2JLqT5hZFaSmWV9ZTLaleKQabGoNj2rZupLpKhrtaYkic8+yXZKkq3FuFQBAQe/HOsMbDNUK/DXSzt/UU4r/IKWDIvqURqGNVb0gpyW0kvDKFrGuVyi9WHdLhFT3MSVt/ukV14et9Yw+rH1Rdv+rILv7+an7Wwe7K/Cakgt/VhqV/nFbcfYIr+kaqz9SBj9rhroiRnBkkjxH5iq9XqIv7i0q/1J/5iFw9q2vYvrXxMrwfitH91INSfRm17VVy1PbLXPZtK48uU2wtSWFoWApWMjrkZ91dprYPaf57UVyP1G20/tBrp2PY1p603SJcm7reHnoryH2wtbQSVJUCMgIzjh31calp9Khcm3OA05UtHXG1BKBcg2si2PQQz61pjoajqV0zTJOEpU56u8TgDmO04xntrZqA7f0pVspuyVJ3gVxuB5fjDdG33PhNKXuBMIslL/qZltm9tZQF88zaNTV2qNomnlrd/glBuUIcpEN9xZA71I3d4e4EeNJTXOrI+rJSZzmn4cGdnC5MZ5RLgA5LGME+PPsr10ptC1Xprcbh3JUqIn+iy8uox3JOd5PgAQPCpmrVGzbXPV1TaVWG5rGPTWDwJ7y4kccflE4HfS66/+qGqHLcFWt4G0aRKyCqS4HFS+tb9zZVfxQTjxtccIXmkb3DsNx+UHrDFuzzZBY9JdUENkHmEgEFXcTy7KYX+3e9f/Hrf/wBwv/StWdsXub60SNOXy13O3uDebedWUKx5oCgrzGPKtf8A2Ja0/wDcWX/uXP8A868tonmRqoBHICO0zMUGdV8R9QJ4lQtwtcW6Q19kmspetLVPmS4LMRUaSGUpbWVBQ3Eqzxx3/ZU4pf7F9I3bSFnuMS7rhrdkSw836O4pY3ejSnjlIwcg0wKYJQuFlPxPqjOKsmXTOLEt9Gy3KEJrXa5qu26nudqgM2lDMSUtlCnGFqWQlWMk74GfdUXmbVteyvVviYvgxFaH7ySaal92Nadu12l3Ny53hl+U8t9wIW0UhSlZOMozjj31zHNg9p/mdRXIfnG21fsAoQ9Lz6lGxNucOcnUtHm20hSBcAXui+PQwqJmt9ZSurI1RdP+lILX7mK5Em43KV1Zl0uEpPc/KW5+8TTif2Cqx/u+qt368DP7HBWk5sHuyfwWpILn1oak/wCc1TXIzhzST4j8wZZr9ER9taU/6kf8wnUsso6yWW0q7wkCty1t9LdIjP8A6khtHxUBTLf2GaoT+Bulnc+upxP+Q1mw7HtWw9R2yXLXa1RY81h50tyVFW4hxKiACgdg765iRfSQNQxbXpBT1IJDwyiwtFaF5uUOz2qRdJ7imokZBceWEKWUpHM4SCfhS2u+3HTkcKTa7dcLgrHBSgllsnzV1v7NNL0y0z9arRksnTJud+w2VDfs6nCGxRVdLvtt1TKO7b4NutyDn2VPuD9I4H9modd9Zasu3/MNRXJ1J5oQ90SD4bqMA/Ch7lYZT9IJ7fz2hjl9Cp5zF1SU9z2w7xaa86hsVmRvXa8QYXg8+lKj5AnJqIydr2kE3GPBguTLg6/IbYBYjkIBWoJBJXu5HHszVaAlPWVu9YnJPaTW5ZVbt7t7nzJbSvgsVSVWHVGyQB3/ABBtrQqUbSS6sqPgB6nvFz65moLNb7/aH7TdWC/Ef3ekQFqScghQIKSCCCAa6dFMakhQIOUZqham1BaDYjEEQjdU7DXE772mrtv8yI07gfIOJH7U++lZqPTl+0490d6tciEnOA6oAtqPZhYyk+Wc1cJakoBUo4A4knlUD1htP0ZaW3Yq5Kbu9gpVGiJDo8lKPUHlnPhQabp0ska2tqeXT8Q60fSaprWGvh/F7HqMOo8YrtYL7etPyvSLLdJEFZOVBtQ3FH6SDlKveDTW0ntwcRuMantu+OXpUMYPmpsn7QfdSv1ZdbbdroqVa9Pw7IzxHQx1qIVx5kcEjySke+uRQdqZdl1f01Yduhh1mqVK1JsKmWrKPLWHiM+pEXD01f7RqO3fKFmnNy2ArcUU5BQvAO6oHilWCDg94rrUp/uYf4m3X+tl/wByzTYpqlHS8ylZzMZHVZREnOOMINwk7YXbG13R/wAoSYM1yZb3Y8hxgl6OVIUUKKSQpG9wOO3FS6zaisV5TvWq7wZvgy+lSh5gHIqo97Xv3u5OfPlvK+Liv9a0ilPVUpPWByD2g0DTWHUmygD2/MPjuhUo6kKaWUnwI9D3i7dFVCtGsdWWn/l+ork0kckuPdKgeG6vIHwqZWfbbqmKd24Q7bcUAD2VMOH9IZH9mrrdYZP1Ajv/AD2gJMaFTreLSkq7Hvh3ixdFKe0bcdPSMJultuFvVjipIS82D5p639mmTZrnDvFrj3S3uF2JJQHGllCkFSew4UAaIMzLT30KvC5OUybkvvtlI37OuUbEyOzKiuxZDaXWXkFtxCuSkkYIPuqomsrBI0vqSbY5G8roFZZcPNxo+ov4cD4gjsq4VLbbloxWo7CLpbmd+625JUlI5vtc1N+J4ZT45HtGqdTlS83rJzT5bYNaK1YSM18Nw2QvDkdh9Dzvsit9FYB3+sn1TyrNK8a1BXpFVuSmHPmOpV8DXnXw+rdYWruBPwFfL2xj4RrYRdwVGNpl/laY0VOvUJll2SwWkoS8CUZW4lGSAQTjezjI5VJGVb7KFd6Qag233+Si7fnI3+Ibp0m1FDC1JzAPlGGUtpDs8y2sXBUkEcCRFf8AU+sNSal3k3i7PPMH+jo+9sgd24nAP6WT41wq3bDb1Xa9QbW28llUyQhgOFO8EFSgM4yM8+WRVitJ7JdKWTcelR1XiWnj0szCkA8+Dfq+WcnxpYl5V6bJVfmSY1aoVaSoqA3q2vklI/8AB7yhCaX0jqTUq0/I9reeZPOQv72wPHfPA+ScnwpsaV2HwWQh7U1ycmL5mNFJbbHgV+srzG7TiQlKEBKEpSkDAAHAV90bYpLLeK/mPbpCNP6XzszdLP8ATTwz6/i0c6y2i2WWEmFaYMeFHB3txlASCTzJ7z4njXRzRXw4d1CldwJomAEiwhWUpS1FSjcmKWzF782Q5891aviqvOvhlW+hKu8A/GvukW98Y38CwtBRRWCd3rK6qRzqR9jr6PsMjVGpIdjj7w9IX9+WObbQ9dfuHLxIHbVu4cdmJFZixmktMsIS22hPAJSBgD4UvdhmjF6csRutxZ3LrcUgrSrmy1zSjwJ5q8cD2aZVNFLlSy3rKzV5RkulVWE9NfDbPyIw5nafQddsFFFFE4V4QG3TZ8q3Pv6pssf/AHF0lc9lA/ALJ4uAfMPtdx48icKWrrLQlaClQCkkYIIyCKQe1fZQ9blvXrS0dT0Hit6AgErY7y2PaR9HmOzI4BfqNOIJdaGG0Ro2jWkqVpEpNmxGCVHbwPHcdvPNS18qSlbakq9UjB8qyClXWT1k94rNA4fIsTsI1hedUMXOLeFR3Pk9LAadQ3urUFb+d7jg+oOQHOupt9/kou35yN/iG6gn3L8qOi6X6GpxKX3WWHG0EjKkpLgUR5b6c+Yqd7ff5KLt+cjf4humRtxTlOUVG5sr1jLJyXRL6RoQ2nVTrt2Ay/bfveK/bPP4+af/AKyj/wB4Kt7VQtnn8fNP/wBZR/7wVb2vNF+2rnFnTj+4a5Hzgoooo1CPBSv276xvWl2LZFs6o7Xygl8OuLbKlp3dzG7xwPXPMHlTQpEfdPyo67nYYaXUqkNMvuOIBGUpUWwknz3VY8jVGpOFuXUUmxw8xB3RqXRMVJtDidZONwcvpNu9oTaUpQ2lKfVAwPKvqisEpT1ldVPfSlGyxmm1sL2fKuUpnVN6j4gtELgMrH4wsHg4R8wez3njyA3jZRsoeuK2b1qmOpmCMLZguAhb/cpweyj6PNXbgcFPxCEoQEpASkDAAGABRqnU4qIddGGwQh6S6SpQkysobk4KUNnAcd52c8vuiiimGM5goooqRIKKKKkSFttE2U2nUbjtxtak2u6r4qUlOWXj9NI5H6Q49+aQ2qdM3zS8r0e+W9yPk4Q8Osy4for5Hy4HvAq4VeEqNHlx1x5TLb7Lg3VtuICkqHcQeBoZNUxt46yflPbpDRSdKpqRAbc+dHHMcj6G/C0VC0WtxrWthcbccaX8pxhvIUQcF1II4dhBII7QSO2rDfdAfyU3X87G/wAQ3XjN2SaWVeoV2tiX7W/FlNSeiYVllZQsK3SlWd0cPZIrqbXrRcb7s9uVstMf0mY4WVNt76U7266hRGVEDkk8zVdmTdYl3kKxuDa3KL0/WpWfqMo82bBKhe+FvmG3K0VjsNwVab3BuiWUvKhyEPhoq3QopUDjODjlzxVidlu0ZWtrhMhuWYQFRmUu7wk9KFZURj1E4pCXHR+rIC92Vpm7J8URVOge9AI+2mN9zZEmRdSXj0qHKj5iIA6ZlSMnfPeBVKnLebfS3kDmLcOUMGkrEnNSK5jBSkjAg8RuNjE22pbRlaJmwojdnTcFSmlObxk9EE4IGPUVnnUAm7db+62oQ7HbYp7C66t79m5W190rDmStQ2b0WHKkYiuA9CypeDvjuBpcW7R+rJ692Lpm7K8VxVNJ+KwB9tdZyamQ+pCCbcBw5RTolJpSpBt+YSNYg3JJ3nZe3aLJ7Kr5cNR6Fg3i6dD6W+t4L6FBSjqurSMDJ7EjtqtWu1uO65vynHFLV8pSBlSiTgOKAHuAAHcABVkNkNouNi2e262XaP6NMbLynG99Kt3edWoDKSRyUORrmRdk2l/l2beLomRc3pUp2T0T6sMoK1FW7upxvDj7RNWpiVemWGhttjflAimVWTpc/NLP0kkJ1cbjWNrbLWhAaX01fNUSvR7Hb3JODhbx6rLZ+kvkPLie4Gnxs72UWnTjjdxuik3S6o4pWU4ZZPPqJPM/SPHuAphRY0eHGRHix2mGWxuobbQEpSO4AcBWxXaVpbbJ1lfMe3SKlW0qmp4Ftv5EcMzzPoLeMFFFFE4V4KKKKkSP/9k=" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="VK">
+      <div class="logo-text">
+        <span class="name">Vintage King</span>
+        <span class="tagline">New · Used · Vintage · Pro Audio</span>
+      </div>
+    </a>
+
+    <ul class="nav-items">
+
+      <!-- ══ MICROPHONES ══ -->
+      <li class="nav-item" id="item-mics">
+        <a href="#" onclick="return false">Microphones
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">By Type</div>
+                <ul>
+                  <li><a href="#" class="bold">All Microphones</a></li>
+                  <li><a href="#">Condenser Microphones</a></li>
+                  <li><a href="#">Dynamic Microphones</a></li>
+                  <li><a href="#">Ribbon Microphones</a></li>
+                  <li><a href="#">Tube Microphones</a></li>
+                  <li><a href="#">Stereo Microphones</a></li>
+                  <li><a href="#">Boundary Microphones</a></li>
+                  <li><a href="#">USB Microphones</a></li>
+                </ul>
+                <a href="#" class="view-all">All Types →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Top Brands</div>
+                <ul>
+                  <li><a href="#">Neumann</a></li>
+                  <li><a href="#">Telefunken</a></li>
+                  <li><a href="#">AKG</a></li>
+                  <li><a href="#">Shure</a></li>
+                  <li><a href="#">Royer Labs</a></li>
+                  <li><a href="#">Wunder Audio</a></li>
+                  <li><a href="#">Sennheiser</a></li>
+                  <li><a href="#">Warm Audio</a></li>
+                </ul>
+                <a href="#" class="view-all">All Brands →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Shop By Price</div>
+                <ul>
+                  <li><a href="#">Under $500</a></li>
+                  <li><a href="#">$500 – $1,500</a></li>
+                  <li><a href="#">$1,500 – $5,000</a></li>
+                  <li><a href="#">$5,000+</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Resources</div>
+                <ul>
+                  <li><a href="#">Mic Buying Guide</a></li>
+                  <li><a href="#">Polar Pattern Explained</a></li>
+                  <li><a href="#">Talk to a Consultant</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mega-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor">Featured · Neumann</div>
+                <div class="panel-brand">Neumann</div>
+                <div class="panel-name">U 87 Ai Studio Set</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag tag-white">Co-op</span></div>
+                  <svg width="70" height="120" viewBox="0 0 70 120" fill="none">
+                    <rect x="23" y="5" width="24" height="64" rx="12" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+                    <rect x="28" y="10" width="14" height="54" rx="7" fill="rgba(255,255,255,0.06)"/>
+                    <circle cx="35" cy="37" r="8" fill="rgba(192,57,43,0.5)"/>
+                    <line x1="28" y1="20" x2="42" y2="20" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/>
+                    <line x1="28" y1="52" x2="42" y2="52" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/>
+                    <line x1="35" y1="69" x2="35" y2="90" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                    <ellipse cx="35" cy="93" rx="17" ry="5" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price">$3,595</div>
+                  <a href="#" class="panel-cta">Shop Now →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Talk to a Mic Expert</div><div class="panel-expert-sub">Live now · Free consultation</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1C1410"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.3) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Just Landed</div><div class="itile-name">Telefunken ELA M 251</div><div class="itile-sub">c.1961 · 1 available · $22,500</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#0A1520"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(59,130,246,0.25) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CATEGORY IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Pairs Well With</div><div class="itile-name">Mic Preamps</div><div class="itile-sub">From $299 · 140+ options</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.25) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op · Neumann</div><div class="itile-name">U 87 Ai Studio Set</div><div class="itile-sub">$3,595 · In stock</div><div class="itile-cta">Shop Now →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ OUTBOARD ══ -->
+      <li class="nav-item" id="item-outboard">
+        <a href="#" onclick="return false">Outboard
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Dynamics</div>
+                <ul>
+                  <li><a href="#" class="bold">All Dynamics</a></li>
+                  <li><a href="#">Compressors</a></li>
+                  <li><a href="#">Limiters</a></li>
+                  <li><a href="#">Gates & Expanders</a></li>
+                  <li><a href="#">500 Series Dynamics</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Equalizers</div>
+                <ul>
+                  <li><a href="#">Parametric EQ</a></li>
+                  <li><a href="#">Graphic EQ</a></li>
+                  <li><a href="#">500 Series EQ</a></li>
+                </ul>
+                <a href="#" class="view-all">All Outboard →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Effects & Preamps</div>
+                <ul>
+                  <li><a href="#">Reverb Units</a></li>
+                  <li><a href="#">Tape Delays</a></li>
+                  <li><a href="#">Harmonic Exciters</a></li>
+                  <li><a href="#">Stereo Wideners</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Preamps</div>
+                <ul>
+                  <li><a href="#">Mic Preamps</a></li>
+                  <li><a href="#">Channel Strips</a></li>
+                  <li><a href="#">DI Boxes</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Top Brands</div>
+                <ul>
+                  <li><a href="#">Universal Audio</a></li>
+                  <li><a href="#">SSL</a></li>
+                  <li><a href="#">API</a></li>
+                  <li><a href="#">Neve / AMS</a></li>
+                  <li><a href="#">Empirical Labs</a></li>
+                  <li><a href="#">Chandler Limited</a></li>
+                  <li><a href="#">Tube-Tech</a></li>
+                  <li><a href="#">Manley Labs</a></li>
+                </ul>
+                <a href="#" class="view-all">All Brands →</a>
+              </div>
+            </div>
+            <div class="mega-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor">Featured · Universal Audio</div>
+                <div class="panel-brand">Universal Audio</div>
+                <div class="panel-name">1176LN Limiting Amplifier</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag tag-red">New</span></div>
+                  <svg width="110" height="65" viewBox="0 0 110 65" fill="none">
+                    <rect x="4" y="9" width="102" height="44" rx="3" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" fill="none"/>
+                    <circle cx="17" cy="40" r="7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="36" cy="40" r="7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="55" cy="40" r="7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="74" cy="40" r="7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="93" cy="40" r="7" fill="rgba(192,57,43,0.6)"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price">$1,849 <span style="font-size:11px;color:rgba(255,255,255,0.3);text-decoration:line-through">$2,299</span></div>
+                  <a href="#" class="panel-cta">Shop Now →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Talk to a Gear Expert</div><div class="panel-expert-sub">Live now · Free consultation</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1C1410"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Just Landed</div><div class="itile-name">UREI 1176 Rev. A</div><div class="itile-sub">c.1969 · 1 in stock · $4,800</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.22) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Explore</div><div class="itile-name">500 Series Rack</div><div class="itile-sub">Mix and match · From $299</div><div class="itile-cta">Explore →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op · Universal Audio</div><div class="itile-name">1176LN Limiting Amp</div><div class="itile-sub">$1,849 · New</div><div class="itile-cta">Shop Now →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ CONSOLES ══ -->
+      <li class="nav-item" id="item-consoles">
+        <a href="#" onclick="return false">Consoles
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Analog Consoles</div>
+                <ul>
+                  <li><a href="#" class="bold">All Consoles</a></li>
+                  <li><a href="#">Large Format</a></li>
+                  <li><a href="#">Mid Format</a></li>
+                  <li><a href="#">Compact & Project</a></li>
+                  <li><a href="#">Summing Mixers</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Digital Consoles</div>
+                <ul>
+                  <li><a href="#">Studio Digital</a></li>
+                  <li><a href="#">Live Sound Digital</a></li>
+                  <li><a href="#">Control Surfaces</a></li>
+                </ul>
+                <a href="#" class="view-all">All Consoles →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Top Brands</div>
+                <ul>
+                  <li><a href="#">SSL</a></li>
+                  <li><a href="#">API</a></li>
+                  <li><a href="#">Neve / AMS</a></li>
+                  <li><a href="#">Rupert Neve Designs</a></li>
+                  <li><a href="#">Harrison</a></li>
+                  <li><a href="#">Audient</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Resources</div>
+                <ul>
+                  <li><a href="#">Console Buying Guide</a></li>
+                  <li><a href="#">Studio Design Services</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">By Application</div>
+                <ul>
+                  <li><a href="#">Recording Studios</a></li>
+                  <li><a href="#">Post Production</a></li>
+                  <li><a href="#">Broadcast</a></li>
+                  <li><a href="#">Live Sound</a></li>
+                  <li><a href="#">Home Studio</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Exclusive</div>
+                <ul>
+                  <li><a href="#" style="color:var(--amber);font-weight:500">EMI TG12345 MkV ✦</a></li>
+                  <li><a href="#">Custom Builds</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mega-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor">Exclusive at Vintage King</div>
+                <div class="panel-brand">EMI</div>
+                <div class="panel-name">TG12345 MkV Console</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag tag-amber">Exclusive</span></div>
+                  <svg width="120" height="56" viewBox="0 0 120 56" fill="none">
+                    <rect x="3" y="6" width="114" height="40" rx="3" stroke="rgba(255,255,255,0.25)" stroke-width="1.2" fill="none"/>
+                    <line x1="22" y1="6" x2="22" y2="46" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+                    <line x1="42" y1="6" x2="42" y2="46" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+                    <line x1="62" y1="6" x2="62" y2="46" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+                    <line x1="82" y1="6" x2="82" y2="46" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+                    <circle cx="12" cy="28" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="0.75"/>
+                    <circle cx="32" cy="28" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="0.75"/>
+                    <circle cx="52" cy="28" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="0.75"/>
+                    <circle cx="72" cy="28" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="0.75"/>
+                    <circle cx="112" cy="28" r="5" fill="rgba(212,134,10,0.7)"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price">Contact for pricing</div>
+                  <a href="#" class="panel-cta" style="background:var(--amber)">Learn More →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Console Consultation</div><div class="panel-expert-sub">Studio design included · Free</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1A1208"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.35) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Exclusive</div><div class="itile-name">EMI TG12345 MkV</div><div class="itile-sub">Only at Vintage King</div><div class="itile-cta">Learn More →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1A1208"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Rare · Vintage</div><div class="itile-name">Neve 8078 Large Format</div><div class="itile-sub">c.1975 · Restored</div><div class="itile-cta">View →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#0A1520"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(59,130,246,0.22) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op · SSL</div><div class="itile-name">4000 Series Console</div><div class="itile-sub">New and used available</div><div class="itile-cta">Shop Now →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ VINTAGE ══ -->
+      <li class="nav-item vintage" id="item-vintage">
+        <a href="#" onclick="return false">Vintage and Used ✦
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Vintage Microphones</div>
+                <ul>
+                  <li><a href="#" class="bold">All Vintage Mics</a></li>
+                  <li><a href="#">Neumann Vintage</a></li>
+                  <li><a href="#">AKG Vintage</a></li>
+                  <li><a href="#">Telefunken / Ela</a></li>
+                  <li><a href="#">RCA Ribbon Mics</a></li>
+                  <li><a href="#">Western Electric</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Vintage Outboard</div>
+                <ul>
+                  <li><a href="#">Neve 1073 / 1081</a></li>
+                  <li><a href="#">UREI / UA 1176</a></li>
+                  <li><a href="#">LA-2A / LA-3A</a></li>
+                  <li><a href="#">Pultec EQs</a></li>
+                </ul>
+                <a href="#" class="view-all" style="color:var(--amber)">All Vintage →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Vintage Consoles</div>
+                <ul>
+                  <li><a href="#">Neve 8078 / 8068</a></li>
+                  <li><a href="#">SSL 4000 Series</a></li>
+                  <li><a href="#">API Legacy</a></li>
+                  <li><a href="#">MCI / Sony</a></li>
+                  <li><a href="#">Trident Series</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">By Era</div>
+                <ul>
+                  <li><a href="#">1950s – 1960s</a></li>
+                  <li><a href="#">1970s</a></li>
+                  <li><a href="#">1980s</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Sell or Trade</div>
+                <ul>
+                  <li><a href="#">Sell Your Gear</a></li>
+                  <li><a href="#">Trade-In Program</a></li>
+                  <li><a href="#">Get an Appraisal</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Tech Shop</div>
+                <ul>
+                  <li><a href="#">Restoration Services</a></li>
+                  <li><a href="#">Vintage Repair</a></li>
+                  <li><a href="#">Authenticity Guarantee</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mega-panel vintage-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor" style="color:rgba(212,134,10,0.55)">Just Landed · Vintage</div>
+                <div class="panel-brand" style="color:rgba(212,134,10,0.5)">Neumann · c.1968</div>
+                <div class="panel-name">U 47 Tube Microphone</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag" style="background:rgba(212,134,10,0.2);color:var(--amber)">Just In</span></div>
+                  <svg width="55" height="100" viewBox="0 0 55 100" fill="none">
+                    <rect x="16" y="4" width="23" height="54" rx="11.5" stroke="rgba(212,134,10,0.5)" stroke-width="1.5" fill="none"/>
+                    <rect x="20" y="8" width="15" height="46" rx="7.5" fill="rgba(212,134,10,0.07)"/>
+                    <circle cx="27.5" cy="31" r="7" fill="rgba(212,134,10,0.4)"/>
+                    <line x1="27.5" y1="58" x2="27.5" y2="76" stroke="rgba(212,134,10,0.35)" stroke-width="1.5"/>
+                    <ellipse cx="27.5" cy="79" rx="13" ry="4" stroke="rgba(212,134,10,0.2)" fill="none" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price" style="color:var(--amber)">$14,500</div>
+                  <a href="#" class="panel-cta" style="background:var(--amber)">View This Piece →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert" style="background:var(--amber)">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Vintage Gear Specialist</div><div class="panel-expert-sub">Appraisals · Trades · Sourcing</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1A1208"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.35) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Just In</div><div class="itile-name">Pultec EQP-1A</div><div class="itile-sub">c.1960s · 2 available · $6,500</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1A1208"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.30) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Just In</div><div class="itile-name">LA-2A Leveler</div><div class="itile-sub">c.1971 · Serviced · $5,200</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.22) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">SERVICE IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Sell or Trade</div><div class="itile-name">Get Top Dollar</div><div class="itile-sub">Free appraisal · Fast offer</div><div class="itile-cta">Learn More →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ STUDIO DESIGN ══ -->
+      <li class="nav-item" id="item-studio">
+        <a href="#" onclick="return false">Studio Design
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Services</div>
+                <ul>
+                  <li><a href="#" class="bold">Studio Design Overview</a></li>
+                  <li><a href="#">Acoustic Design & Treatment</a></li>
+                  <li><a href="#">Equipment Integration</a></li>
+                  <li><a href="#">Control Room Design</a></li>
+                  <li><a href="#">Live Room Design</a></li>
+                  <li><a href="#">Post Production Suites</a></li>
+                  <li><a href="#">Broadcast Facilities</a></li>
+                </ul>
+                <a href="#" class="view-all">Our Services →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">VK Integration</div>
+                <ul>
+                  <li><a href="#" class="bold">VK Integration</a></li>
+                  <li><a href="#">New Studio Builds</a></li>
+                  <li><a href="#">Studio Upgrades</a></li>
+                  <li><a href="#">EDU & Institutional</a></li>
+                  <li><a href="#">Live Sound Venues</a></li>
+                  <li><a href="#">House of Worship</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Locations</div>
+                <ul>
+                  <li><a href="#">Remote / Virtual</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Start a Project</div>
+                <ul>
+                  <li><a href="#">Get a Consultation</a></li>
+                  <li><a href="#">Portfolio & Case Studies</a></li>
+                  <li><a href="#">Our Design Team</a></li>
+                  <li><a href="#">Client Reviews</a></li>
+                </ul>
+                <div style="margin-top:18px;background:var(--pale-grey);border-radius:4px;padding:14px">
+                  <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:6px">Why VK Design?</div>
+                  <div style="font-size:12px;color:var(--charcoal);line-height:1.6">Hundreds of studios built worldwide. No other retailer offers this depth of in-house expertise.</div>
+                </div>
+              </div>
+            </div>
+            <div class="mega-panel studio-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor" style="color:rgba(255,255,255,0.25)">VK Integration</div>
+                <div class="panel-brand" style="color:rgba(255,255,255,0.3)">VK Studio Design</div>
+                <div class="panel-name">Build your room.<br>Define your sound.</div>
+                <div class="panel-img">
+                  
+                  
+                </div>
+                <div>
+                  <div class="panel-price" style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400">Home studios to world-class facilities</div>
+                  <a href="#" class="panel-cta" style="background:rgba(59,130,246,0.75);margin-top:14px">Start a Project →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Studio Design Consultation</div><div class="panel-expert-sub">Free · No commitment</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#0A1520"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(59,130,246,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">STUDIO PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Case Study</div><div class="itile-name">Capitol Studios Rebuild</div><div class="itile-sub">Full console integration</div><div class="itile-cta">Read →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.25) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">SERVICE IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Start a Project</div><div class="itile-name">Free Consultation</div><div class="itile-sub">No commitment · Any budget</div><div class="itile-cta">Book →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#141418"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(255,255,255,0.08) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op Slot</div><div class="itile-name">Available for Partners</div><div class="itile-sub">Brand integration · Revenue share</div><div class="itile-cta">Learn More →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ MONITORING ══ -->
+      <li class="nav-item" id="item-monitoring">
+        <a href="#" onclick="return false">Monitoring
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Studio Monitors</div>
+                <ul>
+                  <li><a href="#" class="bold">All Monitors</a></li>
+                  <li><a href="#">Nearfield Monitors</a></li>
+                  <li><a href="#">Midfield Monitors</a></li>
+                  <li><a href="#">Mastering Monitors</a></li>
+                  <li><a href="#">Subwoofers</a></li>
+                  <li><a href="#">Passive Monitors</a></li>
+                </ul>
+                <a href="#" class="view-all">All Monitors →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Headphones</div>
+                <ul>
+                  <li><a href="#">Studio Headphones</a></li>
+                  <li><a href="#">Reference Headphones</a></li>
+                  <li><a href="#">Headphone Amps</a></li>
+                  <li><a href="#">Cue Systems</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Top Brands</div>
+                <ul>
+                  <li><a href="#">Genelec</a></li>
+                  <li><a href="#">ATC</a></li>
+                  <li><a href="#">PMC</a></li>
+                  <li><a href="#">Focal</a></li>
+                  <li><a href="#">Dynaudio</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Monitor Controllers</div>
+                <ul>
+                  <li><a href="#">Analog Controllers</a></li>
+                  <li><a href="#">Digital Controllers</a></li>
+                  <li><a href="#">Speaker Switchers</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Resources</div>
+                <ul>
+                  <li><a href="#">Monitor Placement Guide</a></li>
+                  <li><a href="#">Room Acoustics 101</a></li>
+                  <li><a href="#">Monitor Buying Guide</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mega-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor">Featured · Genelec</div>
+                <div class="panel-brand">Genelec</div>
+                <div class="panel-name">8351B SAM Studio Monitor</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag tag-black">Best Seller</span></div>
+                  <svg width="80" height="90" viewBox="0 0 80 90" fill="none">
+                    <rect x="15" y="8" width="50" height="64" rx="6" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="rgba(255,255,255,0.04)"/>
+                    <circle cx="40" cy="42" r="18" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="40" cy="42" r="10" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="0.75"/>
+                    <circle cx="40" cy="42" r="4" fill="rgba(192,57,43,0.6)"/>
+                    <rect x="31" y="18" width="18" height="10" rx="5" stroke="rgba(255,255,255,0.2)" stroke-width="0.75" fill="none"/>
+                    <circle cx="40" cy="23" r="2.5" fill="rgba(255,255,255,0.15)"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price">$3,995 / each</div>
+                  <a href="#" class="panel-cta">Shop Now →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Talk to a Monitor Expert</div><div class="panel-expert-sub">Live now · Free consultation</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1C1820"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Best Seller</div><div class="itile-name">Genelec 8351B SAM</div><div class="itile-sub">$3,995 / each · In stock</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#141418"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.22) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Add to Setup</div><div class="itile-name">Studio Subwoofers</div><div class="itile-sub">From $699 · Pairs with monitors</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.30) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op · Genelec</div><div class="itile-name">8361B Triple-Point</div><div class="itile-sub">$6,995 / each · Premium</div><div class="itile-cta">Shop Now →</div></div></a></div></div>
+        </div>
+      </li>
+
+
+      <!-- ══ LEARN ══ -->
+      <li class="nav-item" id="item-learn">
+        <a href="#" onclick="return false">Learn
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats" style="padding:32px 40px">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;flex:1">
+                <div style="padding-right:32px;border-right:1px solid var(--pale-grey)">
+                  <div class="mega-col-head">Original Content</div>
+                  <ul style="list-style:none">
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Make Your Mark</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Video series with the engineers behind the records. Capitol Studios, Bob Ludwig, Joe Chiccarelli.</div>
+                      </a>
+                    </li>
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">PLAYBACK Magazine</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">7 issues. The stories behind the gear. Free digital subscription.</div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Blog & Buying Guides</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Mic buying guides, compression explained, console comparisons, and more.</div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div style="padding:0 32px;border-right:1px solid var(--pale-grey)">
+                  <div class="mega-col-head">Services</div>
+                  <ul style="list-style:none">
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Studio Installations</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">From a single room to a full facility. Acoustic design, integration, commissioning.</div>
+                      </a>
+                    </li>
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Gear Restoration</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Repairs, tune-ups, and full restorations by our in-house tech shop.</div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Sell or Trade</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Simple, hassle-free gear acquisition. Contact us with photos and description.</div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div style="padding-left:32px">
+                  <div class="mega-col-head">From VK</div>
+                  <ul style="list-style:none">
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">About Vintage King</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Every person at VK is a musician or engineer. We use this gear. We know it.</div>
+                      </a>
+                    </li>
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">0% Financing</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">48 months with the VK Credit Card. PayPal Pay Later and Affirm at checkout.</div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Section 179 Tax Savings</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Deduct qualifying gear purchases in the year you buy. Most pro audio qualifies.</div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- DEALS -->
+      <li class="nav-item deals">
+        <a href="#">Deals</a>
+      </li>
+
+    </ul>
+
+    <!-- Mobile hamburger — visible only on mobile -->
+    <button class="mobile-menu-btn" id="mob-open-btn" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+
+    <div class="nav-actions">
+      <div class="nav-search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B68" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Search 50,000+ products…">
+      </div>
+      <button class="nav-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <button class="nav-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <div class="cart-count">2</div>
+      </button>
+      <button class="nav-expert-btn">
+        <div class="pulse-dot"></div>
+        Ask
+      </button>
+    </div>
+  </div>
+</nav>
+</template>
+
+<!-- ============================================================ -->
+<!-- PAGE 1: HOMEPAGE -->
+<!-- ============================================================ -->
+<div id="home" class="page active">
+  <div id="nav-home"></div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">New Arrivals — Spring 2026</div>
+      <h1 class="hero-headline">Built for the<br>way <em>you</em><br>make sound.</h1>
+      <p class="hero-sub">The finest new, used, and vintage pro audio gear — curated by people who've spent their careers inside the world's best studios.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">Shop New Arrivals</a>
+        <a href="#" class="btn-ghost">Explore Vintage →</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-image-bg"></div>
+      <div class="hero-image-content">
+        <div class="hero-image-label">Featured Piece</div>
+        <!-- Illustrated Mic -->
+        <svg width="100" height="180" viewBox="0 0 100 180" fill="none">
+          <rect x="35" y="10" width="30" height="80" rx="15" stroke="#2C2C2A" stroke-width="2" fill="#F0EDE8"/>
+          <rect x="40" y="16" width="20" height="68" rx="10" fill="#E0DDD8"/>
+          <circle cx="50" cy="50" r="8" fill="#2C2C2A" opacity="0.15"/>
+          <line x1="50" y1="90" x2="50" y2="120" stroke="#2C2C2A" stroke-width="2"/>
+          <ellipse cx="50" cy="122" rx="22" ry="7" stroke="#2C2C2A" stroke-width="1.5" fill="none"/>
+          <line x1="28" y1="50" x2="20" y2="50" stroke="#2C2C2A" stroke-width="1.5" opacity="0.3"/>
+          <line x1="72" y1="50" x2="80" y2="50" stroke="#2C2C2A" stroke-width="1.5" opacity="0.3"/>
+          <line x1="40" y1="25" x2="60" y2="25" stroke="#C0392B" stroke-width="0.75" opacity="0.4"/>
+          <line x1="40" y1="35" x2="60" y2="35" stroke="#C0392B" stroke-width="0.75" opacity="0.4"/>
+          <line x1="40" y1="45" x2="60" y2="45" stroke="#C0392B" stroke-width="0.75" opacity="0.4"/>
+          <line x1="40" y1="55" x2="60" y2="55" stroke="#C0392B" stroke-width="0.75" opacity="0.4"/>
+          <line x1="40" y1="65" x2="60" y2="65" stroke="#C0392B" stroke-width="0.75" opacity="0.4"/>
+          <line x1="40" y1="75" x2="60" y2="75" stroke="#C0392B" stroke-width="0.75" opacity="0.4"/>
+        </svg>
+        <div class="hero-image-name">Neumann U 87 Ai</div>
+        <div class="hero-image-price">$3,595</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- CATEGORIES -->
+  <div class="section" style="background:var(--warm-white)">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 class="section-title">Shop by Category</h2>
+        <a href="#" class="section-link">All Categories →</a>
+      </div>
+      <div class="category-grid">
+        <a href="#" class="category-tile">
+          <div class="category-tile-img dark">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+              <rect x="22" y="5" width="16" height="38" rx="8" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none"/>
+              <circle cx="30" cy="24" r="5" fill="rgba(192,57,43,0.6)"/>
+              <line x1="30" y1="43" x2="30" y2="52" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+              <ellipse cx="30" cy="54" rx="10" ry="3" stroke="rgba(255,255,255,0.2)" fill="none"/>
+            </svg>
+          </div>
+          <div class="category-tile-body">
+            <div class="category-tile-name">Microphones</div>
+            <div class="category-tile-count">843 products</div>
+          </div>
+        </a>
+        <a href="#" class="category-tile">
+          <div class="category-tile-img mid">
+            <svg width="70" height="50" viewBox="0 0 70 50" fill="none">
+              <rect x="5" y="10" width="60" height="30" rx="4" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+              <rect x="12" y="17" width="8" height="16" rx="2" fill="rgba(255,255,255,0.15)"/>
+              <rect x="24" y="17" width="8" height="16" rx="2" fill="rgba(255,255,255,0.15)"/>
+              <rect x="36" y="17" width="8" height="16" rx="2" fill="rgba(255,255,255,0.15)"/>
+              <rect x="48" y="17" width="8" height="16" rx="2" fill="rgba(192,57,43,0.5)"/>
+              <line x1="5" y1="40" x2="5" y2="46" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+              <line x1="65" y1="40" x2="65" y2="46" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="category-tile-body">
+            <div class="category-tile-name">Outboard & Processing</div>
+            <div class="category-tile-count">1,240 products</div>
+          </div>
+        </a>
+        <a href="#" class="category-tile">
+          <div class="category-tile-img" style="background:#E8E4DE">
+            <svg width="80" height="50" viewBox="0 0 80 50" fill="none">
+              <rect x="4" y="8" width="72" height="34" rx="3" stroke="#8C8C88" stroke-width="1.5" fill="none"/>
+              <rect x="4" y="8" width="72" height="10" rx="3" fill="#D8D4CE"/>
+              <line x1="4" y1="18" x2="76" y2="18" stroke="#C0BCBA" stroke-width="1"/>
+              <line x1="20" y1="18" x2="20" y2="42" stroke="#C0BCBA" stroke-width="0.75"/>
+              <line x1="36" y1="18" x2="36" y2="42" stroke="#C0BCBA" stroke-width="0.75"/>
+              <line x1="52" y1="18" x2="52" y2="42" stroke="#C0BCBA" stroke-width="0.75"/>
+            </svg>
+          </div>
+          <div class="category-tile-body">
+            <div class="category-tile-name">Consoles & Mixers</div>
+            <div class="category-tile-count">287 products</div>
+          </div>
+        </a>
+        <a href="#" class="category-tile">
+          <div class="category-tile-img dark">
+            <svg width="60" height="55" viewBox="0 0 60 55" fill="none">
+              <rect x="8" y="5" width="44" height="32" rx="20" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+              <circle cx="30" cy="21" r="8" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
+              <circle cx="30" cy="21" r="3" fill="rgba(192,57,43,0.7)"/>
+              <line x1="15" y1="37" x2="12" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+              <line x1="45" y1="37" x2="48" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="category-tile-body">
+            <div class="category-tile-name">Studio Monitoring</div>
+            <div class="category-tile-count">412 products</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOR BLOCK -->
+  <div class="color-block">
+    <div class="color-block-amber">
+      <div class="color-block-label">Exclusively at VK</div>
+      <h2 class="color-block-headline">The EMI<br>TG12345 MkV.<br>First time in 50 years.</h2>
+      <p class="color-block-sub">The first new EMI recording console released in over half a century. Available only through Vintage King.</p>
+      <a href="#" class="btn-amber">Learn More</a>
+    </div>
+    <div class="color-block-visual">
+      <div class="color-block-visual-inner">
+        <div class="color-block-visual-label">EMI TG12345 MkV</div>
+        <svg width="140" height="80" viewBox="0 0 140 80" fill="none">
+          <rect x="5" y="15" width="130" height="50" rx="4" stroke="rgba(100,70,0,0.5)" stroke-width="1.5" fill="rgba(212,134,10,0.1)"/>
+          <rect x="5" y="15" width="130" height="14" fill="rgba(212,134,10,0.2)"/>
+          <line x1="5" y1="29" x2="135" y2="29" stroke="rgba(100,70,0,0.3)" stroke-width="0.75"/>
+          <line x1="28" y1="29" x2="28" y2="65" stroke="rgba(100,70,0,0.2)" stroke-width="0.75"/>
+          <line x1="51" y1="29" x2="51" y2="65" stroke="rgba(100,70,0,0.2)" stroke-width="0.75"/>
+          <line x1="74" y1="29" x2="74" y2="65" stroke="rgba(100,70,0,0.2)" stroke-width="0.75"/>
+          <line x1="97" y1="29" x2="97" y2="65" stroke="rgba(100,70,0,0.2)" stroke-width="0.75"/>
+          <line x1="120" y1="29" x2="120" y2="65" stroke="rgba(100,70,0,0.2)" stroke-width="0.75"/>
+          <circle cx="16" cy="48" r="6" stroke="rgba(100,70,0,0.5)" stroke-width="1" fill="none"/>
+          <circle cx="39" cy="48" r="6" stroke="rgba(100,70,0,0.5)" stroke-width="1" fill="none"/>
+          <circle cx="62" cy="48" r="6" stroke="rgba(100,70,0,0.5)" stroke-width="1" fill="none"/>
+          <circle cx="85" cy="48" r="6" stroke="rgba(100,70,0,0.5)" stroke-width="1" fill="none"/>
+          <circle cx="108" cy="48" r="6" stroke="rgba(100,70,0,0.5)" stroke-width="1" fill="none"/>
+          <circle cx="131" cy="48" r="6" fill="rgba(212,134,10,0.6)"/>
+        </svg>
+        <div class="color-block-visual-name">EMI TG12345 MkV Console</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED PRODUCTS -->
+  <div class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 class="section-title">Recently Added</h2>
+        <a href="#" class="section-link">View All →</a>
+      </div>
+    </div>
+    <div class="product-row">
+      <div class="product-card">
+        <div class="product-card-img dark-bg">
+          <svg width="50" height="90" viewBox="0 0 50 90" fill="none">
+            <rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+            <circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.5)"/>
+            <line x1="25" y1="48" x2="25" y2="62" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+            <ellipse cx="25" cy="64" rx="10" ry="3" stroke="rgba(255,255,255,0.2)" fill="none"/>
+          </svg>
+        </div>
+        <div class="product-card-badge">New</div>
+        <div class="product-card-name">U 87 Ai Studio Set</div>
+        <div class="product-card-brand">Neumann</div>
+        <div class="product-card-price">$3,595</div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img" style="background:#ECEAE4">
+          <svg width="90" height="55" viewBox="0 0 90 55" fill="none">
+            <rect x="5" y="8" width="80" height="38" rx="4" stroke="#8C8C88" stroke-width="1.5" fill="none"/>
+            <rect x="5" y="8" width="80" height="10" rx="4" fill="#DDD9D4"/>
+            <line x1="5" y1="18" x2="85" y2="18" stroke="#C8C4C0" stroke-width="0.75"/>
+            <circle cx="22" cy="36" r="7" stroke="#8C8C88" stroke-width="1" fill="none"/>
+            <circle cx="45" cy="36" r="7" stroke="#8C8C88" stroke-width="1" fill="none"/>
+            <circle cx="68" cy="36" r="7" stroke="#8C8C88" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="product-card-badge" style="color:var(--amber);border-color:var(--amber)">Used — Excellent</div>
+        <div class="product-card-name">1176LN Limiting Amplifier</div>
+        <div class="product-card-brand">Universal Audio</div>
+        <div class="product-card-price">$1,850 <span class="was">$2,399</span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img dark-bg">
+          <svg width="70" height="60" viewBox="0 0 70 60" fill="none">
+            <rect x="5" y="10" width="60" height="38" rx="3" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+            <rect x="10" y="16" width="16" height="26" rx="2" fill="rgba(192,57,43,0.25)"/>
+            <rect x="30" y="16" width="16" height="26" rx="2" fill="rgba(255,255,255,0.06)"/>
+            <rect x="50" y="16" width="10" height="26" rx="2" fill="rgba(255,255,255,0.06)"/>
+          </svg>
+        </div>
+        <div class="product-card-badge">Exclusive</div>
+        <div class="product-card-name">Prism Sound Titan</div>
+        <div class="product-card-brand">Prism Sound</div>
+        <div class="product-card-price">$4,499</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  
+
+      
+
+      <!-- STUDIO INSTALLATIONS -->
+      <div class="section" style="background:var(--off-white)">
+        <div class="section-inner">
+          <div class="section-header" style="margin-bottom:40px">
+            <div>
+              <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:10px">VK Integrations Team</div>
+              <h2 class="section-title">Studio Installations</h2>
+            </div>
+            <a href="#" class="section-link">Start a Project →</a>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px">
+            <div style="background:var(--near-black);aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;position:relative;overflow:hidden">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 30%,rgba(192,57,43,0.15) 0%,transparent 70%)"></div>
+              <div style="position:relative;z-index:1">
+                <div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px">Recording Studio</div>
+                <div style="font-family:var(--font-display);font-size:16px;color:#fff;margin-bottom:3px">Capitol Studios</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.4)">Full console integration · Acoustic design</div>
+              </div>
+            </div>
+            <div style="background:#1A1510;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;position:relative;overflow:hidden">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 40% 40%,rgba(212,134,10,0.12) 0%,transparent 70%)"></div>
+              <div style="position:relative;z-index:1">
+                <div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(212,134,10,0.5);margin-bottom:6px">Post Production</div>
+                <div style="font-family:var(--font-display);font-size:16px;color:#fff;margin-bottom:3px">Larrabee Sound</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.4)">Monitoring systems · Room tuning</div>
+              </div>
+            </div>
+            <div style="background:#0E1218;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;position:relative;overflow:hidden">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(59,130,246,0.1) 0%,transparent 70%)"></div>
+              <div style="position:relative;z-index:1">
+                <div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px">Mix Room</div>
+                <div style="font-family:var(--font-display);font-size:16px;color:#fff;margin-bottom:3px">East Side Sound</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.4)">Signal chain design · Full install</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px;background:var(--off-white);padding:16px 0 0">
+            <span style="font-size:11px;color:var(--mid-grey);background:var(--warm-white);border:1px solid var(--light-grey);border-radius:2px;padding:5px 12px">Acoustic Design</span>
+            <span style="font-size:11px;color:var(--mid-grey);background:var(--warm-white);border:1px solid var(--light-grey);border-radius:2px;padding:5px 12px">Equipment Integration</span>
+            <span style="font-size:11px;color:var(--mid-grey);background:var(--warm-white);border:1px solid var(--light-grey);border-radius:2px;padding:5px 12px">Control Room Design</span>
+            <span style="font-size:11px;color:var(--mid-grey);background:var(--warm-white);border:1px solid var(--light-grey);border-radius:2px;padding:5px 12px">Live Room Design</span>
+            <span style="font-size:11px;color:var(--mid-grey);background:var(--warm-white);border:1px solid var(--light-grey);border-radius:2px;padding:5px 12px">New Studio Builds</span>
+          </div>
+          <div style="background:var(--warm-white);border:1px solid var(--light-grey);border-top:none;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px">
+            <div>
+              <div style="font-size:14px;font-weight:500;color:var(--near-black);margin-bottom:6px">Work with our Integrations Team</div>
+              <div style="font-size:13px;color:var(--mid-grey);line-height:1.6">From a single room to a full facility — acoustic design, equipment selection, installation, and commissioning, handled entirely in-house.</div>
+            </div>
+            <a href="#" class="btn-primary" style="white-space:nowrap;flex-shrink:0">Free Consultation</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLAYBACK MAGAZINE -->
+      <div class="section" style="background:var(--warm-white)">
+        <div class="section-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+          <div>
+            <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:16px">VK Original</div>
+            <h2 style="font-family:var(--font-display);font-size:40px;font-weight:500;line-height:1.15;margin-bottom:16px">PLAYBACK<br>Magazine</h2>
+            <p style="font-size:15px;color:var(--mid-grey);line-height:1.7;margin-bottom:12px">7 issues. The stories behind the gear — interviews with the engineers and producers who shaped recorded music.</p>
+            <p style="font-size:13px;color:var(--mid-grey);margin-bottom:28px">Free digital subscription.</p>
+            <a href="#" class="btn-primary">Subscribe Free →</a>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <div style="background:var(--near-black);border-radius:3px;aspect-ratio:3/4;display:flex;align-items:flex-end;padding:16px">
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6)">Issue 07</div>
+            </div>
+            <div style="background:#1A1510;border-radius:3px;aspect-ratio:3/4;display:flex;align-items:flex-end;padding:16px;margin-top:24px">
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(212,134,10,0.7)">Issue 06</div>
+            </div>
+            <div style="background:var(--near-black);border-radius:3px;aspect-ratio:3/4;display:flex;align-items:flex-end;padding:16px">
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6)">Issue 05</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- EDITORIAL -->
+      <div class="section" style="background:#2C2C2A">
+        <div class="section-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+          <div>
+            <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px">The VK Difference</div>
+            <h2 style="font-family:var(--font-display);font-size:40px;font-weight:500;line-height:1.15;margin-bottom:20px;color:#fff">Gear for people<br>who know <em style="font-style:italic;color:rgba(255,255,255,0.45)">gear.</em></h2>
+            <p style="font-size:15px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:420px;margin-bottom:32px">New, used, and vintage — curated by people who've spent their careers inside the world's best studios. No one else offers this depth of selection, expertise, or service.</p>
+            <div style="display:flex;gap:16px">
+              <a href="#" class="btn-primary">Shop New Arrivals</a>
+              <a href="#" class="btn-ghost">Explore Vintage →</a>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--off-white);border-radius:6px;padding:32px;margin:-8px">
+            <div style="background:var(--warm-white);border:1px solid var(--light-grey);border-radius:3px;padding:24px">
+              <div style="font-size:28px;font-weight:600;color:var(--near-black);margin-bottom:4px">843</div>
+              <div style="font-size:12px;color:var(--mid-grey)">Microphones in stock</div>
+            </div>
+            <div style="background:var(--warm-white);border:1px solid var(--light-grey);border-radius:3px;padding:24px">
+              <div style="font-size:28px;font-weight:600;color:var(--amber);margin-bottom:4px">2,400+</div>
+              <div style="font-size:12px;color:var(--mid-grey)">Vintage and used pieces</div>
+            </div>
+            <div style="background:var(--warm-white);border:1px solid var(--light-grey);border-radius:3px;padding:24px">
+              <div style="font-size:28px;font-weight:600;color:var(--near-black);margin-bottom:4px">30+</div>
+              <div style="font-size:12px;color:var(--mid-grey)">Years in pro audio</div>
+            </div>
+            <div style="background:var(--vk-red);border-radius:3px;padding:24px">
+              <div style="font-size:13px;font-weight:500;color:#fff;margin-bottom:6px">In-house tech shop</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.65)">Every piece serviced, tested, and warrantied by our own engineers. No third party.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAKE YOUR MARK -->
+      <div class="section" style="background:var(--off-white)">
+        <div class="section-inner">
+          <div class="section-header" style="margin-bottom:32px">
+            <div>
+              <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:8px">Original Series</div>
+              <h2 class="section-title" style="color:var(--near-black)">Make Your Mark</h2>
+            </div>
+            <a href="#" style="font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none">All Episodes →</a>
+          </div>
+          <div class="mym-grid">
+            <a href="#" class="mym-card">
+              <div class="mym-card-thumb" style="background:var(--near-black)"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="1"/><polygon points="13,10 23,16 13,22" fill="rgba(192,57,43,0.8)"/></svg></div>
+              <div class="mym-card-studio">Capitol Studios</div>
+              <div class="mym-card-title">"How I track vocals at Capitol Studios"</div>
+              <div class="mym-card-meta">8 min · Al Schmitt</div>
+            </a>
+            <a href="#" class="mym-card">
+              <div class="mym-card-thumb" style="background:linear-gradient(135deg,#1A1510,#2A1F08)"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="rgba(212,134,10,0.3)" fill="none" stroke-width="1"/><polygon points="13,10 23,16 13,22" fill="rgba(212,134,10,0.8)"/></svg></div>
+              <div class="mym-card-studio">Olympic Studios · London</div>
+              <div class="mym-card-title">"The Neve 8078 — why nothing comes close"</div>
+              <div class="mym-card-meta">12 min · Glyn Johns</div>
+            </a>
+            <a href="#" class="mym-card">
+              <div class="mym-card-thumb" style="background:var(--near-black)"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="1"/><polygon points="13,10 23,16 13,22" fill="rgba(192,57,43,0.8)"/></svg></div>
+              <div class="mym-card-studio">East Side Sound · New York</div>
+              <div class="mym-card-title">"Building the mix from scratch"</div>
+              <div class="mym-card-meta">10 min · Joe Chiccarelli</div>
+            </a>
+            <a href="#" class="mym-card">
+              <div class="mym-card-thumb" style="background:var(--near-black)"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="1"/><polygon points="13,10 23,16 13,22" fill="rgba(192,57,43,0.8)"/></svg></div>
+              <div class="mym-card-studio">Gateway Mastering · Portland</div>
+              <div class="mym-card-title">"Mastering for vinyl — what changes"</div>
+              <div class="mym-card-meta">9 min · Bob Ludwig</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VINTAGE SPOTLIGHT -->
+      <div class="section" style="background:#1C1A10;position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(212,134,10,0.18) 0%,transparent 65%);pointer-events:none"></div>
+        <div class="section-inner" style="position:relative;z-index:1">
+          <div style="font-size:8.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:12px">Vintage ✦</div>
+          <h2 style="font-family:var(--font-display);font-size:44px;font-weight:500;color:#fff;line-height:1.15;margin-bottom:12px">Rare gear.<br>Authenticated.<br>In stock.</h2>
+          <p style="font-size:15px;color:rgba(255,255,255,0.5);line-height:1.65;margin-bottom:28px;max-width:520px">Every vintage piece inspected, tested, and authenticated by our in-house tech shop.</p>
+          <a href="#" style="display:inline-flex;align-items:center;gap:6px;background:var(--amber);color:#fff;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:12px 22px;border-radius:2px;text-decoration:none">Shop Vintage →</a>
+          <div style="margin-top:32px;padding-top:28px;border-top:1px solid rgba(212,134,10,0.2);display:flex;align-items:flex-start;gap:14px">
+            <span style="font-size:22px;flex-shrink:0;line-height:1">🎖️</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--amber);margin-bottom:4px">Authenticity Guaranteed</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;max-width:480px">No other retailer offers this depth of in-house expertise. Every piece comes with our tech shop's sign-off and our free 1-year warranty.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+            
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <div>
+          <div class="trust-text-title">Free Shipping Over $99</div>
+          <div class="trust-text-sub">Lower 48 states, same-day on orders by 4PM ET</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div>
+          <div class="trust-text-title">Free 1-Year Warranty</div>
+          <div class="trust-text-sub">Serviced by our in-house expert technicians</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <div>
+          <div class="trust-text-title">0% Financing, 48 Mo.</div>
+          <div class="trust-text-sub">On qualifying purchases with VK Credit Card</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div>
+          <div class="trust-text-title">Expert Consultants</div>
+          <div class="trust-text-sub">Real engineers. Real studio experience.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+            <div id="footer-home"></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 2: CATEGORY PAGE -->
+<!-- ============================================================ -->
+<div id="category" class="page">
+  <div id="nav-category"></div>
+
+  <div class="page-breadcrumb">
+    <a href="#">Home</a>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    <span>Microphones</span>
+  </div>
+
+  <div class="category-header">
+    <div class="category-header-left">
+      <h1 class="category-header-title">Microphones</h1>
+      <div class="category-header-count">843 products</div>
+    </div>
+  </div>
+
+  
+      <!-- TIER 1 CO-OP BANNER -->
+      <div class="coop-banner">
+        <div class="coop-banner-inner">
+          <div class="coop-banner-img">
+            <svg width="52" height="96" viewBox="0 0 52 96" fill="none">
+              <rect x="14" y="3" width="24" height="58" rx="12" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" fill="none"/>
+              <rect x="19" y="8" width="14" height="48" rx="7" fill="rgba(255,255,255,0.06)"/>
+              <circle cx="26" cy="32" r="7" fill="rgba(192,57,43,0.55)"/>
+              <line x1="19" y1="16" x2="33" y2="16" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/>
+              <line x1="19" y1="48" x2="33" y2="48" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/>
+              <line x1="26" y1="61" x2="26" y2="82" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+              <ellipse cx="26" cy="85" rx="14" ry="4" stroke="rgba(255,255,255,0.12)" fill="none" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="coop-banner-body">
+            <div class="coop-banner-sponsor">Featured · Neumann</div>
+            <div class="coop-banner-name">U 87 Ai Studio Set</div>
+            <div class="coop-banner-price">$3,595</div>
+            <a href="#" class="coop-banner-cta">Shop Now →</a>
+          </div>
+          <div class="coop-banner-label">Co-op · Sponsored placement</div>
+        </div>
+      </div>
+
+<div class="filter-bar">
+    <div class="filter-bar-inner">
+      <span class="filter-label">Filter</span>
+      <button class="filter-chip red-active">All</button>
+      <button class="filter-chip">Condenser</button>
+      <button class="filter-chip">Dynamic</button>
+      <button class="filter-chip">Ribbon</button>
+      <button class="filter-chip">Tube</button>
+      <button class="filter-chip">Used</button>
+      <button class="filter-chip">Under $1,000</button>
+      <div class="filter-sort">
+        <span>Sort:</span>
+        <select>
+          <option>Most Popular</option>
+          <option>Price: Low–High</option>
+          <option>Price: High–Low</option>
+          <option>Newest</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-grid">
+    <!-- 8 products -->
+    <div class="grid-product-card">
+      <div class="grid-product-img dk">
+        <svg width="40" height="75" viewBox="0 0 40 75" fill="none">
+          <rect x="12" y="4" width="16" height="40" rx="8" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" fill="none"/>
+          <circle cx="20" cy="24" r="4" fill="rgba(192,57,43,0.5)"/>
+          <line x1="20" y1="44" x2="20" y2="55" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+          <ellipse cx="20" cy="57" rx="8" ry="2.5" stroke="rgba(255,255,255,0.2)" fill="none"/>
+        </svg>
+      </div>
+      <div class="grid-product-badge-row"><span class="grid-badge new">New</span></div>
+      <div class="grid-product-name">U 87 Ai Studio Set</div>
+      <div class="grid-product-brand">Neumann</div>
+      <div class="grid-product-price">$3,595</div>
+    </div>
+    <div class="grid-product-card">
+      <div class="grid-product-img md">
+        <svg width="40" height="75" viewBox="0 0 40 75" fill="none">
+          <rect x="12" y="4" width="16" height="40" rx="8" stroke="#8C8C88" stroke-width="1.2" fill="none"/>
+          <circle cx="20" cy="24" r="4" fill="rgba(100,70,0,0.3)"/>
+          <line x1="20" y1="44" x2="20" y2="55" stroke="#8C8C88" stroke-width="1.2"/>
+          <ellipse cx="20" cy="57" rx="8" ry="2.5" stroke="#C0BCBA" fill="none"/>
+        </svg>
+      </div>
+      <div class="grid-product-badge-row"><span class="grid-badge used">Used</span></div>
+      <div class="grid-product-name">C 414 XLS Condenser</div>
+      <div class="grid-product-brand">AKG</div>
+      <div class="grid-product-price">$699 <span class="was">$899</span></div>
+    </div>
+    <div class="grid-product-card">
+      <div class="grid-product-img dk">
+        <svg width="40" height="75" viewBox="0 0 40 75" fill="none">
+          <rect x="10" y="4" width="20" height="44" rx="10" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" fill="none"/>
+          <rect x="14" y="8" width="12" height="36" rx="6" fill="rgba(255,255,255,0.06)"/>
+          <line x1="20" y1="48" x2="20" y2="58" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="grid-product-badge-row"><span class="grid-badge new">New</span></div>
+      <div class="grid-product-name">TF29 Copperhead</div>
+      <div class="grid-product-brand">Telefunken</div>
+      <div class="grid-product-price">$1,295</div>
+    </div>
+    <div class="grid-product-card">
+      <div class="grid-product-img" style="background:#F0EDE8">
+        <svg width="40" height="75" viewBox="0 0 40 75" fill="none">
+          <rect x="13" y="5" width="14" height="38" rx="7" stroke="#8C8C88" stroke-width="1.2" fill="none"/>
+          <line x1="20" y1="43" x2="20" y2="54" stroke="#8C8C88" stroke-width="1.2"/>
+          <ellipse cx="20" cy="56" rx="8" ry="2.5" stroke="#C0BCBA" fill="none"/>
+        </svg>
+      </div>
+      <div class="grid-product-badge-row"><span class="grid-badge sale">Sale</span></div>
+      <div class="grid-product-name">SM7dB Active Dynamic</div>
+      <div class="grid-product-brand">Shure</div>
+      <div class="grid-product-price">$449 <span class="was">$499</span></div>
+    </div>
+    <div class="grid-product-card">
+      <div class="grid-product-img dk">
+        <svg width="44" height="70" viewBox="0 0 44 70" fill="none">
+          <rect x="8" y="8" width="28" height="36" rx="14" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" fill="none"/>
+          <ellipse cx="22" cy="26" rx="8" ry="10" stroke="rgba(255,255,255,0.15)" fill="none"/>
+          <line x1="22" y1="44" x2="22" y2="55" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+          <ellipse cx="22" cy="57" rx="8" ry="2.5" stroke="rgba(255,255,255,0.2)" fill="none"/>
+        </svg>
+      </div>
+      <div class="grid-product-badge-row"><span class="grid-badge new">New</span></div>
+      <div class="grid-product-name">R-10 Small Ribbon</div>
+      <div class="grid-product-brand">Royer Labs</div>
+      <div class="grid-product-price">$595</div>
+    </div>
+    <div class="grid-product-card">
+      <div class="grid-product-img md">
+        <svg width="40" height="75" viewBox="0 0 40 75" fill="none">
+          <rect x="12" y="4" width="16" height="40" rx="8" stroke="#8C8C88" stroke-width="1.2" fill="none"/>
+          <rect x="15" y="7" width="10" height="34" rx="5" fill="rgba(100,70,0,0.15)"/>
+          <line x1="20" y1="44" x2="20" y2="55" stroke="#8C8C88" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="grid-product-badge-row"><span class="grid-badge used">Used</span></div>
+      <div class="grid-product-name">M 149 Tube Microphone</div>
+      <div class="grid-product-brand">Neumann</div>
+      <div class="grid-product-price">$3,200 <span class="was">$3,999</span></div>
+    </div>
+    <div class="grid-product-card">
+      <div class="grid-product-img dk">
+        <svg width="40" height="75" viewBox="0 0 40 75" fill="none">
+          <rect x="13" y="4" width="14" height="38" rx="7" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="none"/>
+          <line x1="20" y1="42" x2="20" y2="54" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+          <ellipse cx="20" cy="56" rx="8" ry="2.5" stroke="rgba(255,255,255,0.2)" fill="none"/>
+          <circle cx="20" cy="23" r="3.5" fill="rgba(192,57,43,0.4)"/>
+        </svg>
+      </div>
+      <div class="grid-product-badge-row"><span class="grid-badge new">New</span></div>
+      <div class="grid-product-name">WA-47 Large Diaphragm</div>
+      <div class="grid-product-brand">Warm Audio</div>
+      <div class="grid-product-price">$599</div>
+    </div>
+    <div class="grid-product-card">
+      <div class="grid-product-img" style="background:#E8E4DE">
+        <svg width="40" height="75" viewBox="0 0 40 75" fill="none">
+          <rect x="14" y="5" width="12" height="36" rx="6" stroke="#8C8C88" stroke-width="1.2" fill="none"/>
+          <line x1="20" y1="41" x2="20" y2="53" stroke="#8C8C88" stroke-width="1.2"/>
+          <line x1="12" y1="53" x2="28" y2="53" stroke="#8C8C88" stroke-width="1.2"/>
+          <line x1="12" y1="57" x2="28" y2="57" stroke="#C0BCBA" stroke-width="0.75"/>
+        </svg>
+      </div>
+      <div class="grid-product-badge-row"><span class="grid-badge sale">Sale</span></div>
+      <div class="grid-product-name">KM 184 Stereo Set</div>
+      <div class="grid-product-brand">Neumann</div>
+      <div class="grid-product-price">$1,650 <span class="was">$1,999</span></div>
+    </div>
+  </div>
+
+  <div id="footer-category"></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 3: PRODUCT PAGE -->
+<!-- ============================================================ -->
+<div id="product" class="page">
+  <div id="nav-product"></div>
+
+  <div class="page-breadcrumb">
+    <a href="#">Home</a>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    <a href="#">Microphones</a>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    <span>Neumann U 87 Ai</span>
+  </div>
+
+  <div class="product-page-inner">
+    <div class="product-layout">
+      <!-- LEFT: IMAGES -->
+      <div>
+        <div class="product-image-main dark-bg">
+          <svg width="100" height="180" viewBox="0 0 100 180" fill="none">
+            <rect x="32" y="8" width="36" height="90" rx="18" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none"/>
+            <rect x="38" y="14" width="24" height="78" rx="12" fill="rgba(255,255,255,0.06)"/>
+            <circle cx="50" cy="53" r="10" fill="rgba(192,57,43,0.4)"/>
+            <line x1="38" y1="28" x2="62" y2="28" stroke="rgba(192,57,43,0.3)" stroke-width="0.75"/>
+            <line x1="38" y1="40" x2="62" y2="40" stroke="rgba(192,57,43,0.3)" stroke-width="0.75"/>
+            <line x1="38" y1="68" x2="62" y2="68" stroke="rgba(192,57,43,0.3)" stroke-width="0.75"/>
+            <line x1="38" y1="80" x2="62" y2="80" stroke="rgba(192,57,43,0.3)" stroke-width="0.75"/>
+            <line x1="50" y1="98" x2="50" y2="130" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+            <ellipse cx="50" cy="133" rx="22" ry="7" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="1.5"/>
+            <line x1="28" y1="50" x2="18" y2="50" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+            <line x1="72" y1="50" x2="82" y2="50" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="product-thumbs">
+          <div class="product-thumb active">
+            <svg width="24" height="44" viewBox="0 0 24 44" fill="none"><rect x="6" y="2" width="12" height="28" rx="6" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/><line x1="12" y1="30" x2="12" y2="38" stroke="rgba(255,255,255,0.2)" stroke-width="1"/></svg>
+          </div>
+          <div class="product-thumb">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="8" width="24" height="14" rx="2" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/><circle cx="8" cy="15" r="3" stroke="rgba(255,255,255,0.2)" fill="none"/></svg>
+          </div>
+          <div class="product-thumb">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/><circle cx="14" cy="14" r="4" fill="rgba(192,57,43,0.3)"/></svg>
+          </div>
+          <div class="product-thumb" style="background:#2C2C2A">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><line x1="6" y1="14" x2="22" y2="14" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="14" y1="6" x2="14" y2="22" stroke="rgba(255,255,255,0.2)" stroke-width="1"/></svg>
+          </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="product-tabs">
+          <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(this, 'desc')">Description</button>
+            <button class="tab-btn" onclick="switchTab(this, 'specs')">Specifications</button>
+            <button class="tab-btn" onclick="switchTab(this, 'financing')">Financing</button>
+          </div>
+          <div class="tab-content">
+            <div class="tab-pane active" id="desc">
+              <p>The Neumann U 87 Ai is the industry standard large-diaphragm condenser microphone. For over 50 years, it has been the first choice of recording engineers worldwide for vocals, acoustic instruments, and broadcast applications.</p>
+              <p>Featuring three directional characteristics — omnidirectional, cardioid, and figure-8 — and switchable 10 dB pad and high-pass filter, the U 87 Ai delivers the clarity and presence that have made it the most recorded microphone in history.</p>
+            </div>
+            <div class="tab-pane" id="specs">
+              <table class="specs-table">
+                <tr><td>Transducer Type</td><td>Condenser, pressure gradient</td></tr>
+                <tr><td>Polar Pattern</td><td>Omni, Cardioid, Figure-8</td></tr>
+                <tr><td>Frequency Response</td><td>20 Hz – 20 kHz</td></tr>
+                <tr><td>Sensitivity</td><td>-28 dBV/Pa (40 mV/Pa)</td></tr>
+                <tr><td>Max SPL</td><td>117 dB / 127 dB w/ pad</td></tr>
+                <tr><td>Equivalent Noise</td><td>12 dB-A</td></tr>
+                <tr><td>Power Requirement</td><td>48V phantom power</td></tr>
+                <tr><td>Weight</td><td>500 g</td></tr>
+              </table>
+            </div>
+            <div class="tab-pane" id="financing">
+              <p>Vintage King offers flexible financing options to make professional gear accessible. The U 87 Ai qualifies for 0% APR financing for up to 48 months with the Vintage King Credit Card.</p>
+              <p>Additional options including PayPal Pay Later and Affirm are available at checkout. Contact an audio consultant to discuss lease-to-own programs for studio buildouts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: DETAIL -->
+      <div class="product-detail">
+        <div class="product-detail-brand">Neumann</div>
+        <h1 class="product-detail-name">U 87 Ai Studio Set</h1>
+        <div class="product-detail-sku">MFR# U87AI-STUDIO-SET</div>
+
+        <div class="product-detail-rating">
+          <div class="stars">★★★★★</div>
+          <span class="rating-count">4.9 (142 reviews)</span>
+          <a href="#" class="rating-link">Read reviews</a>
+        </div>
+
+        <div class="product-price-row">
+          <div class="product-price-main">$3,595</div>
+        </div>
+
+        <div class="product-financing">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--vk-red);flex-shrink:0"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          <span>As low as <strong>$75/mo</strong> with 0% financing — <a href="#" style="color:var(--vk-red);text-decoration:none">Learn more</a></span>
+        </div>
+
+        <div class="product-key-specs">
+          <div class="spec-pill"><span>Type</span>Large Diaphragm Condenser</div>
+          <div class="spec-pill"><span>Polar</span>Omni / Cardioid / Fig-8</div>
+          <div class="spec-pill"><span>Noise Floor</span>12 dB-A</div>
+          <div class="spec-pill"><span>Max SPL</span>127 dB (w/ pad)</div>
+        </div>
+
+        <div class="product-condition-row">
+          <div class="condition-option selected">
+            <div class="condition-option-label">New</div>
+            <div class="condition-option-price">$3,595</div>
+          </div>
+          <div class="condition-option">
+            <div class="condition-option-label">Used — Excellent</div>
+            <div class="condition-option-price">$2,850</div>
+          </div>
+          <div class="condition-option">
+            <div class="condition-option-label">Used — Good</div>
+            <div class="condition-option-price">$2,400</div>
+          </div>
+        </div>
+
+        <button class="add-to-cart">Add to Cart</button>
+        <button class="wishlist-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Save to Wish List
+        </button>
+
+        <div class="product-meta">
+          <div class="product-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            In stock — ships same day if ordered by 4PM ET
+          </div>
+          <div class="product-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Free 1-year warranty included
+          </div>
+          <div class="product-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Questions? <a href="#" style="color:var(--vk-red);margin-left:4px;text-decoration:none">Talk to a consultant</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-product"></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 4: FAQ PAGE -->
+<!-- ============================================================ -->
+<div id="faq" class="page">
+  <div id="nav-faq"></div>
+
+  <div class="faq-hero">
+    <div class="faq-hero-eyebrow">Support</div>
+    <h1 class="faq-hero-title">How can we help?</h1>
+    <p class="faq-hero-sub">Answers to the most common questions about ordering, gear, and working with our team.</p>
+    <div class="faq-search">
+      <input type="text" placeholder="Search questions…">
+      <svg class="faq-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+  </div>
+
+  <div class="faq-layout">
+    <!-- SIDEBAR -->
+    <div class="faq-sidebar">
+      <div class="faq-sidebar-label">Topics</div>
+      <ul class="faq-sidebar-nav">
+        <li><a href="#" class="active">Ordering & Payment</a></li>
+        <li><a href="#">Shipping & Delivery</a></li>
+        <li><a href="#">Returns & Exchanges</a></li>
+        <li><a href="#">Used & Vintage Gear</a></li>
+        <li><a href="#">Financing</a></li>
+        <li><a href="#">Warranty & Repair</a></li>
+        <li><a href="#">Studio Consulting</a></li>
+      </ul>
+    </div>
+
+    <!-- FAQ CONTENT -->
+    <div class="faq-main">
+
+      <div class="faq-section">
+        <div class="faq-section-title">Ordering and Payment</div>
+
+        <div class="faq-item">
+          <button class="faq-q open" onclick="toggleFaq(this)">
+            What payment methods do you accept?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a open">We accept all major credit cards, PayPal, Affirm, and the Vintage King Credit Card. For large orders or studio builds, wire transfer and purchase orders are available — contact your account manager to arrange.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can I place an order by phone?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes. Our audio consultants are available by phone at 888.653.1184, Monday through Friday 9AM–8PM ET. They can assist with orders, product selection, and studio design questions.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Do you offer price matching?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">We match authorized dealer prices on new gear. If you find a lower price from an authorized retailer, contact us before purchasing and we'll do our best to match or beat it.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Is my payment information secure?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">All transactions are processed through PCI-compliant payment systems. We do not store full credit card numbers on our servers. SSL encryption is applied across the entire checkout process.</div>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <div class="faq-section-title">Shipping and Delivery</div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How fast does my order ship?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">In-stock orders placed by 4PM ET Monday–Friday ship the same day. Expedited and overnight options are available at checkout. Large or fragile items may require additional packaging time.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Do you offer free shipping?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Free ground shipping is included on orders over $99 to the lower 48 states. Alaska, Hawaii, and international orders are subject to standard shipping rates based on destination and weight.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Do you ship internationally?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes. We ship to most countries worldwide. International customers are responsible for applicable duties, taxes, and customs fees. Shipping costs are calculated at checkout based on destination.</div>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <div class="faq-section-title">Used and Vintage Gear</div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How do you grade used equipment?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Every used item is inspected, tested, and graded by our in-house technicians. Condition grades are Excellent, Very Good, Good, and Fair — each defined by cosmetic and functional criteria listed on the product page. We don't sell gear we wouldn't use ourselves.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Is vintage gear covered by your warranty?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes. All used and vintage items sold by Vintage King include our free 1-year warranty, serviced by our in-house tech shop. Warranty terms are the same as new gear — if it fails under normal use, we fix it.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can I sell or trade in my gear?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">We purchase used gear and accept trade-ins toward new or used purchases. Contact us with a description and photos of your item. Our team typically responds within one business day with an offer.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTACT STRIP -->
+  <div class="faq-contact-strip">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px 28px">
+      <h2 style="font-family:var(--font-display);font-size:24px;color:var(--near-black);margin-bottom:4px">Still have questions?</h2>
+      <p style="font-size:14px;color:var(--mid-grey)">Our team of audio engineers is standing by.</p>
+    </div>
+    <div class="faq-contact-inner">
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.61 4.83 2 2 0 0 1 3.58 2.63h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-title">Call Us</div>
+          <div class="contact-card-sub">Mon–Fri, 9AM–8PM ET</div>
+          <a href="tel:8886531184" class="contact-card-action">888.653.1184</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-title">Email</div>
+          <div class="contact-card-sub">Response within 1 business day</div>
+          <a href="#" class="contact-card-action">Send a message →</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-title">Live Chat</div>
+          <div class="contact-card-sub">Available during business hours</div>
+          <a href="#" class="contact-card-action">Start a chat →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-faq"></div>
+</div>
+
+<!-- FOOTER TEMPLATE -->
+<template id="footer-template">
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">
+          <svg width="16" height="24" viewBox="0 0 22 34" fill="none"><rect x="7" y="1" width="8" height="20" rx="4" stroke="#C0392B" stroke-width="1.5" fill="none"/><line x1="11" y1="21" x2="11" y2="28" stroke="#C0392B" stroke-width="1.5"/><line x1="5" y1="28" x2="17" y2="28" stroke="#C0392B" stroke-width="1.5"/><circle cx="11" cy="10" r="2.5" fill="#C0392B" opacity="0.7"/></svg>
+          VINTAGE KING
+        </div>
+        <p class="footer-brand-desc">The pro audio outfitter for all of your sonic journeys. Serving engineers and artists since 1993.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Shop</div>
+        <ul>
+          <li><a href="#">Microphones</a></li>
+          <li><a href="#">Outboard Gear</a></li>
+          <li><a href="#">Consoles</a></li>
+          <li><a href="#">Monitoring</a></li>
+          <li><a href="#">Vintage</a></li>
+          <li><a href="#">Deals</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <ul>
+          <li><a href="#">About VK</a></li>
+          <li><a href="#">Tech Shop</a></li>
+          <li><a href="#">Studio Design</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Help</div>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Warranty</a></li>
+          <li><a href="#">Financing</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Vintage King Audio, Inc. All rights reserved.</span>
+      <div style="display:flex;gap:20px">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</template>
+
+<script>
+  let closeTimer = null;
+
+  function updateMenuPositions() {
+    const nav = document.querySelector('.site-nav');
+    if (!nav) return;
+    const bottom = nav.getBoundingClientRect().bottom;
+    document.querySelectorAll('.mega').forEach(m => {
+      m.style.top = bottom + 'px';
+    });
+  }
+
+  function setupNav() {
+    updateMenuPositions();
+    window.addEventListener('scroll', updateMenuPositions);
+    window.addEventListener('resize', updateMenuPositions);
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+      if (!item.querySelector('.mega')) return;
+
+      item.addEventListener('mouseenter', () => {
+        clearTimeout(closeTimer);
+        updateMenuPositions();
+        document.querySelectorAll('.nav-item.open').forEach(o => {
+          if (o !== item) o.classList.remove('open');
+        });
+        item.classList.add('open');
+      });
+
+      item.addEventListener('mouseleave', () => {
+        closeTimer = setTimeout(() => item.classList.remove('open'), 120);
+      });
+
+      const mega = item.querySelector('.mega');
+      if (mega) {
+        mega.addEventListener('mouseenter', () => clearTimeout(closeTimer));
+        mega.addEventListener('mouseleave', () => {
+          closeTimer = setTimeout(() => item.classList.remove('open'), 120);
+        });
+      }
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.nav-item')) {
+        document.querySelectorAll('.nav-item.open').forEach(o => o.classList.remove('open'));
+      }
+    });
+  }
+
+  /* ── MOBILE NAV v4.0 ── */
+  (function () {
+    const openBtn   = document.getElementById('mob-open-btn');
+    const closeBtn  = document.getElementById('mob-close-btn');
+    const overlay   = document.getElementById('mob-overlay');
+    const nav       = document.getElementById('mob-nav');
+    if (!openBtn || !closeBtn || !overlay || !nav) return;
+
+    function openMob() {
+      document.body.classList.add('mob-open');
+      overlay.classList.add('open');
+      nav.classList.add('open');
+      nav.focus();
+    }
+
+    function closeMob() {
+      document.body.classList.remove('mob-open');
+      overlay.classList.remove('open');
+      nav.classList.remove('open');
+    }
+
+    openBtn.addEventListener('click', openMob);
+    closeBtn.addEventListener('click', closeMob);
+    overlay.addEventListener('click', closeMob);
+
+    // Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) closeMob();
+    });
+
+    // Accordion
+    document.querySelectorAll('.mob-accordion-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const accordion = btn.closest('.mob-accordion');
+        const isOpen = accordion.classList.contains('open');
+
+        // Close all others
+        document.querySelectorAll('.mob-accordion.open').forEach(a => {
+          if (a !== accordion) a.classList.remove('open');
+        });
+
+        accordion.classList.toggle('open', !isOpen);
+      });
+    });
+  })();
+</script>
+</body>
+
+<script>
+  // Inject nav and footer into each page
+  function injectShared() {
+    ['home','category','product','faq'].forEach(p => {
+      const navTarget = document.getElementById('nav-' + p);
+      const footerTarget = document.getElementById('footer-' + p);
+      if (navTarget) navTarget.innerHTML = document.getElementById('nav-template').innerHTML;
+      if (footerTarget) footerTarget.innerHTML = document.getElementById('footer-template').innerHTML;
+    });
+  }
+
+  function showPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.page-switcher button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    // close all in same section
+    btn.closest('.faq-section').querySelectorAll('.faq-q').forEach(q => {
+      q.classList.remove('open');
+      q.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      answer.classList.add('open');
+    }
+  }
+
+  function switchTab(btn, pane) {
+    btn.closest('.product-tabs').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.closest('.product-tabs').querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(pane).classList.add('active');
+  }
+
+  // Filter chips
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('filter-chip')) {
+      e.target.closest('.filter-bar-inner').querySelectorAll('.filter-chip').forEach(c => {
+        c.classList.remove('red-active','active');
+      });
+      e.target.classList.add('red-active');
+    }
+    // Condition options
+    if (e.target.closest('.condition-option')) {
+      const opt = e.target.closest('.condition-option');
+      opt.closest('.product-condition-row').querySelectorAll('.condition-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    }
+    // Product thumbs
+    if (e.target.closest('.product-thumb')) {
+      const thumb = e.target.closest('.product-thumb');
+      thumb.closest('.product-thumbs').querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+  });
+
+  injectShared();
+  setupNav();
+</script>
+</body>
+</html>
