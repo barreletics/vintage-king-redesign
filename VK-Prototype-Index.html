@@ -80,29 +80,40 @@ body {
 
 .hub-review {
   margin-bottom: 22px;
+  padding-left: 14px;
+  border-left: 3px solid #C0392B;
+}
+.hub-review + .hub-review {
+  border-left-color: #2C2C2A;
 }
 .hub-review:last-of-type { margin-bottom: 0; }
-.hub-badge {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #fff;
-  background: #C0392B;
-  padding: 4px 8px;
-  border-radius: 4px;
+.hub-review-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 8px;
 }
-.hub-badge--2 {
-  background: #2C2C2A;
+.hub-step {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: #C0392B;
 }
+.hub-step--2 { background: #2C2C2A; }
 .hub-review h3 {
   font-size: 16px;
   font-weight: 600;
   color: #1A1A18;
-  margin-bottom: 6px;
+  margin: 0;
   letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 .hub-review p {
   font-size: 13px;
@@ -199,15 +210,19 @@ body {
     <p class="hub-panel-sub">The two links below are the newest work. Open them first when you are reviewing the redesign.</p>
 
     <div class="hub-review">
-      <span class="hub-badge">Look at first</span>
-      <h3>Microphones category</h3>
+      <div class="hub-review-head">
+        <span class="hub-step" aria-hidden="true">1</span>
+        <h3>Microphones category</h3>
+      </div>
       <p>This is where you see <strong>filters</strong>: two light rows under the hero (collections, then quick picks). Tap the red <strong>See more</strong> pill or <strong>All filters</strong> to open the <strong>drawer</strong> with every facet.</p>
       <a class="hub-go hub-go--primary" id="card-mic-latest" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open microphones demo</a>
     </div>
 
     <div class="hub-review">
-      <span class="hub-badge hub-badge--2">Then this</span>
-      <h3>Mega menu</h3>
+      <div class="hub-review-head">
+        <span class="hub-step hub-step--2" aria-hidden="true">2</span>
+        <h3>Mega menu</h3>
+      </div>
       <p>Top navigation and dropdown panels only (no product grid).</p>
       <a class="hub-go hub-go--secondary" id="card-cursor-mega-menu" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu</a>
     </div>
