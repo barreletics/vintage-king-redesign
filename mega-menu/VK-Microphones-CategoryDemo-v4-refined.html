@@ -193,7 +193,7 @@
   }
   .subcat-pills-inner {
     max-width: 1400px; margin: 0 auto; padding: 12px 24px 14px;
-    display: flex; flex-wrap: nowrap; align-items: center; gap: 8px;
+    display: flex; flex-wrap: nowrap; align-items: center; gap: 10px;
     overflow-x: auto; -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
   }
@@ -206,23 +206,35 @@
     border-radius: 999px; cursor: pointer;
     padding: 9px 18px; white-space: nowrap;
     box-shadow: 0 2px 10px rgba(192, 57, 43, 0.28);
-    margin-left: 4px;
+    margin-left: 12px;
   }
   .subcat-open-filters:hover { filter: brightness(1.06); color: #fff; }
   .subcat-open-filters:focus-visible {
     outline: 2px solid var(--vk-red); outline-offset: 3px;
   }
   .subcat-pill {
-    flex-shrink: 0; font-size: 12.5px; font-weight: 500; color: var(--mid-grey);
-    padding: 8px 10px 8px 0; border: none; border-radius: 0;
-    background: none; text-decoration: none; white-space: nowrap;
-    transition: color 0.15s;
+    flex-shrink: 0; font-size: 12px; font-weight: 500; color: var(--charcoal);
+    padding: 8px 14px; border-radius: 999px;
+    border: 1px solid var(--light-grey);
+    background: var(--off-white);
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
   }
-  .subcat-pill:hover { color: var(--near-black); }
+  .subcat-pill:hover {
+    color: var(--near-black);
+    border-color: var(--mid-grey);
+    background: var(--warm-white);
+  }
   .subcat-pill.active {
-    color: var(--near-black); font-weight: 600;
-    text-decoration: underline; text-decoration-color: var(--vk-red);
-    text-decoration-thickness: 2px; text-underline-offset: 5px;
+    color: #fff;
+    font-weight: 600;
+    background: var(--near-black);
+    border-color: var(--near-black);
+  }
+  .subcat-pill:focus-visible,
+  .quick-filter-bar .qf-chip:focus-visible {
+    outline: 2px solid var(--vk-red);
+    outline-offset: 2px;
   }
 
   /* Quick refinements: subtle shelf below subcat rail */
@@ -233,16 +245,26 @@
     box-shadow: 0 4px 14px rgba(26, 26, 24, 0.04);
   }
   .quick-filter-bar .qf-chip {
-    padding: 6px 4px; margin-right: 14px; border: none; border-radius: 0;
-    background: none; color: #3d3d39; text-decoration: none;
-    font-family: inherit; font-size: 13px; font-weight: 500;
+    padding: 7px 13px; margin-right: 0; border-radius: 999px;
+    border: 1px solid var(--light-grey);
+    background: var(--warm-white);
+    color: var(--charcoal);
+    text-decoration: none;
+    font-family: inherit; font-size: 12.5px; font-weight: 500;
     letter-spacing: 0.01em;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
   }
-  .quick-filter-bar .qf-chip:hover { color: var(--near-black); }
+  .quick-filter-bar .qf-chip:hover {
+    color: var(--near-black);
+    border-color: var(--mid-grey);
+    background: #fff;
+  }
   .quick-filter-bar .qf-chip.is-active {
-    color: var(--vk-red);
+    color: var(--near-black);
     font-weight: 600;
-    text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+    border-color: var(--near-black);
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(26, 26, 24, 0.08);
   }
   .quick-filter-inner {
     max-width: 1400px; margin: 0 auto; padding: 15px 24px 16px;
@@ -253,7 +275,7 @@
     display: flex; align-items: center; gap: 10px;
   }
   .quick-filter-chips {
-    display: flex; align-items: center; gap: 8px 12px; flex: 1; min-width: 0;
+    display: flex; align-items: center; gap: 8px 10px; flex: 1; min-width: 0;
     flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     padding-bottom: 2px;
