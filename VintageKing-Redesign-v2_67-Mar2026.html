@@ -1693,9 +1693,48 @@
   .vintage-card-detail { font-size: 11px; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
   .vintage-card-price { font-size: 16px; font-weight: 500; }
 
+  /* Reviewer handoff — matches mega-menu / PLP demos */
+  .vk-reviewer-rail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999999;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 10px;
+    padding: 8px 12px;
+    font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    font-size: 11px;
+    line-height: 1.35;
+    background: #0d0d0c;
+    color: rgba(255,255,255,0.55);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .vk-reviewer-rail a { color: #fff; text-decoration: none; font-weight: 500; }
+  .vk-reviewer-rail a:hover { color: var(--vk-red); }
+  .vk-reviewer-rail .vk-rr-here { color: #fff; font-weight: 600; }
+  .vk-reviewer-rail .vk-rr-sep { color: rgba(255,255,255,0.35); user-select: none; }
+  body.vk-reviewer-pad { padding-top: 38px; }
+  html { scroll-padding-top: 44px; }
+
   </style>
 </head>
-<body>
+<body class="vk-reviewer-pad">
+
+<nav class="vk-reviewer-rail" aria-label="Reviewer navigation">
+  <a href="VK-Prototype-Index.html">Dashboard</a>
+  <span class="vk-rr-sep">|</span>
+  <a href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">New mega menu designs</a>
+  <span class="vk-rr-sep">|</span>
+  <a href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">New filter designs (Microphones)</a>
+  <span class="vk-rr-sep">|</span>
+  <span class="vk-rr-here">Full redesign — all pages</span>
+  <span class="vk-rr-sep">|</span>
+  <a href="#product">PDP sample</a>
+</nav>
 
 <!-- PAGE SWITCHER -->
 <div class="header-toggle secondary-cta-toggle" style="background:#f0f0ee;border-bottom:1px solid #ddd">
@@ -4525,6 +4564,20 @@
     btn.classList.add('active');
     window.scrollTo(0, 0);
   }
+
+  (function syncHashToProductPage() {
+    function apply() {
+      if (location.hash !== '#product') return;
+      var btn = document.querySelector('.page-switcher button:nth-child(3)');
+      if (btn) showPage('product', btn);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', apply);
+    } else {
+      apply();
+    }
+    window.addEventListener('hashchange', apply);
+  })();
 
   function toggleFaq(btn) {
     const answer = btn.nextElementSibling;
