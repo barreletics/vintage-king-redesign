@@ -24,9 +24,13 @@
   body { font-family: 'Roboto', system-ui, sans-serif; background: var(--warm-white); color: var(--near-black); -webkit-font-smoothing: antialiased; }
 
   .lab-bar {
+    position: sticky;
+    top: 0;
+    z-index: 500;
     display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
     padding: 10px 24px; background: var(--near-black); color: rgba(255,255,255,0.75);
     font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .lab-bar a { color: #fff; text-decoration: none; font-weight: 500; }
   .lab-bar a:hover { color: var(--vk-red); }
