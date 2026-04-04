@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage King — Microphones PLP v4 · refined hero + cards · Cursor Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vk-red: #C0392B;
+    --near-black: #1A1A18;
+    --charcoal: #2C2C2A;
+    --warm-white: #FDFCFB;
+    --off-white: #F7F5F2;
+    --pale-grey: #EDEDEA;
+    --light-grey: #D8D6D2;
+    --mid-grey: #6B6B68;
+    --amber: #D4860A;
+    --drawer-w: min(400px, 92vw);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Roboto', system-ui, sans-serif; background: var(--warm-white); color: var(--near-black); -webkit-font-smoothing: antialiased; }
+
+  .lab-bar {
+    display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+    padding: 10px 24px; background: var(--near-black); color: rgba(255,255,255,0.75);
+    font-size: 12px;
+  }
+  .lab-bar a { color: #fff; text-decoration: none; font-weight: 500; }
+  .lab-bar a:hover { color: var(--vk-red); }
+  .lab-bar span { color: rgba(255,255,255,0.45); }
+
+  .buyer-cards-wrap { background: var(--pale-grey); border-bottom: 1px solid var(--light-grey); }
+  .buyer-cards-inner {
+    max-width: 1400px; margin: 0 auto; padding: 16px 24px;
+    display: grid; grid-template-columns: 1fr; gap: 12px;
+  }
+  @media (min-width: 768px) {
+    .buyer-cards-inner { grid-template-columns: 1fr 1fr; gap: 16px; }
+  }
+  .buyer-card {
+    background: var(--warm-white);
+    border: 1px solid var(--light-grey);
+    border-radius: 6px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 8px rgba(26,26,24,0.06);
+    border-top: 2px solid var(--pale-grey);
+  }
+  .buyer-card-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--vk-red); margin-bottom: 10px;
+  }
+  .buyer-card h3 {
+    font-family: 'Roboto', system-ui, sans-serif;
+    font-size: 17px; font-weight: 600; margin-bottom: 10px; color: var(--near-black); line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+  .buyer-card p { font-size: 13px; line-height: 1.55; color: var(--charcoal); margin-bottom: 14px; font-weight: 400; }
+  .buyer-card-cta {
+    font-size: 12px; font-weight: 600; color: var(--vk-red); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .buyer-card-cta .cta-arr { font-size: 14px; line-height: 1; transition: transform 0.15s ease; }
+  .buyer-card-cta:hover { color: var(--near-black); }
+  .buyer-card-cta:hover .cta-arr { transform: translateX(3px); color: var(--vk-red); }
+
+  .plp-hero-kicker {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid-grey);
+    margin-bottom: 10px; opacity: 0.95;
+  }
+  .plp-hero-inventory {
+    margin: 0 0 18px; padding-top: 14px;
+    border-top: 1px solid var(--pale-grey);
+    font-size: 12px; font-weight: 400; color: var(--mid-grey); max-width: 30rem; line-height: 1.55;
+  }
+  .plp-hero-inventory span { color: var(--charcoal); font-weight: 500; }
+  .plp-hero-lede {
+    margin: 0; font-size: clamp(15px, 1.45vw, 17px); line-height: 1.62; color: var(--charcoal);
+    max-width: 30rem; font-weight: 400;
+  }
+
+  .plp-bottom-seo {
+    max-width: 1400px; margin: 0 auto; padding: 28px 24px 40px;
+    border-top: 1px solid var(--pale-grey);
+  }
+  .plp-bottom-seo p {
+    font-size: 13px; line-height: 1.6; color: var(--mid-grey); max-width: 44rem;
+  }
+
+  .expert-cta {
+    margin-top: 20px; padding: 16px 14px; background: var(--near-black); color: rgba(255,255,255,0.92);
+    border-radius: 4px;
+  }
+  .ecta-eyebrow {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+    color: rgba(255,255,255,0.5); display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+  }
+  .ecta-dot { width: 6px; height: 6px; background: #16a34a; border-radius: 50%; flex-shrink: 0; }
+  .ecta-head { font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 500; margin-bottom: 6px; line-height: 1.25; }
+  .ecta-sub { font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.5; margin-bottom: 12px; }
+  .ecta-btn {
+    display: inline-block; font-size: 12px; font-weight: 600; padding: 10px 16px;
+    background: var(--vk-red); color: #fff; text-decoration: none; border-radius: 3px; margin-bottom: 12px;
+  }
+  .ecta-btn:hover { filter: brightness(1.08); }
+  .ecta-links { display: flex; flex-wrap: wrap; gap: 10px 16px; font-size: 11px; }
+  .ecta-link { color: rgba(255,255,255,0.72); text-decoration: underline; text-underline-offset: 2px; }
+  .ecta-link:hover { color: #fff; }
+
+  .page-breadcrumb {
+    max-width: 1400px; margin: 0 auto; padding: 18px 24px 0;
+    font-size: 12px; color: var(--mid-grey); display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .page-breadcrumb a { color: var(--mid-grey); text-decoration: none; }
+  .page-breadcrumb a:hover { color: var(--vk-red); }
+
+  .plp-hero {
+    max-width: 1400px; margin: 0 auto; padding: 28px 24px 20px;
+  }
+  @media (min-width: 768px) {
+    .plp-hero { padding: 40px 40px 32px; }
+  }
+  .plp-hero-inner {
+    display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center;
+  }
+  @media (min-width: 768px) {
+    .plp-hero-inner {
+      grid-template-columns: minmax(300px, 0.42fr) minmax(0, 0.58fr);
+      gap: min(56px, 6vw); align-items: center;
+    }
+  }
+  .plp-hero-copy { min-width: 0; align-self: center; max-width: 36rem; }
+  @media (min-width: 768px) {
+    .plp-hero-copy { padding-right: 20px; padding-left: 4px; }
+  }
+  .plp-hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(32px, 4.6vw, 48px);
+    font-weight: 500; margin-bottom: 14px; line-height: 1.06; letter-spacing: -0.025em;
+  }
+  .plp-hero-visual {
+    border-radius: 6px;
+    width: 100%;
+    min-height: 360px;
+    height: min(48vh, 480px);
+    max-height: 520px;
+    background: linear-gradient(145deg, #2C2C2A 0%, #1A1A18 100%);
+    border: 1px solid var(--pale-grey);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .plp-hero-visual svg { display: block; opacity: 0.45; width: min(48%, 240px); height: auto; }
+  @media (max-width: 767px) {
+    .plp-hero-visual {
+      min-height: 240px; height: min(40vh, 320px); max-height: 380px; order: 2;
+    }
+    .plp-hero-copy { order: 1; }
+  }
+
+  /* Sibling collections — lateral nav */
+  .subcat-pills {
+    border-top: 1px solid var(--pale-grey);
+    border-bottom: 1px solid var(--pale-grey);
+    background: var(--off-white);
+  }
+  .subcat-pills-inner {
+    max-width: 1400px; margin: 0 auto; padding: 12px 24px 14px;
+    display: flex; flex-wrap: nowrap; align-items: center; gap: 8px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .subcat-pills-inner::-webkit-scrollbar { height: 4px; }
+  .subcat-pills-inner::-webkit-scrollbar-thumb { background: var(--light-grey); border-radius: 2px; }
+  .subcat-open-filters {
+    flex-shrink: 0; font-family: inherit; font-size: 12px; font-weight: 600;
+    color: var(--near-black); background: var(--warm-white); border: 1px solid var(--light-grey);
+    border-radius: 22px; cursor: pointer; padding: 8px 16px; white-space: nowrap;
+  }
+  .subcat-open-filters:hover { border-color: var(--charcoal); color: var(--vk-red); }
+  .subcat-pill {
+    flex-shrink: 0; font-size: 12.5px; font-weight: 500; color: var(--charcoal);
+    padding: 8px 10px 8px 0; border: none; border-radius: 0;
+    background: none; text-decoration: none; white-space: nowrap;
+    transition: color 0.15s;
+  }
+  .subcat-pill:hover { color: var(--vk-red); }
+  .subcat-pill.active {
+    color: var(--vk-red); font-weight: 600;
+    text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+  }
+
+  .quick-filter-bar {
+    background: var(--off-white);
+    border-bottom: 1px solid var(--light-grey);
+  }
+  .quick-filter-bar .qf-chip {
+    padding: 4px 2px; margin-right: 12px; border: none; border-radius: 0;
+    background: none; color: var(--charcoal); text-decoration: none;
+    font-family: inherit; font-size: 12px; font-weight: 500;
+  }
+  .quick-filter-bar .qf-chip:hover { color: var(--vk-red); }
+  .quick-filter-bar .qf-chip.is-active {
+    color: var(--vk-red);
+    text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+  }
+  .quick-filter-inner {
+    max-width: 1400px; margin: 0 auto; padding: 10px 24px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: nowrap;
+  }
+  .quick-filter-chips-wrap {
+    flex: 1; min-width: 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .quick-filter-chips {
+    display: flex; align-items: center; gap: 8px 12px; flex: 1; min-width: 0;
+    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 2px;
+  }
+  .quick-filter-chips::-webkit-scrollbar { height: 4px; }
+  .quick-filter-chips::-webkit-scrollbar-thumb { background: var(--light-grey); border-radius: 2px; }
+  .qf-label {
+    flex-shrink: 0; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--mid-grey); font-weight: 600; margin-right: 10px;
+  }
+  .qf-chip { flex-shrink: 0; cursor: pointer; white-space: nowrap; }
+  .qf-see-all {
+    flex-shrink: 0; font-family: inherit; font-size: 12px; font-weight: 600;
+    color: var(--vk-red); background: none; border: none; cursor: pointer; text-decoration: underline;
+    text-underline-offset: 3px; padding: 6px 4px; white-space: nowrap;
+  }
+  .qf-see-all:hover { color: var(--near-black); }
+  .qf-sort {
+    flex-shrink: 0; margin-left: auto; display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--mid-grey);
+  }
+  .qf-sort select {
+    font-family: inherit; font-size: 12px; padding: 6px 10px; border: 1px solid var(--light-grey);
+    border-radius: 3px; background: var(--warm-white); color: var(--charcoal); cursor: pointer; max-width: 160px;
+  }
+
+  .plp-layout {
+    max-width: 1400px; margin: 0 auto;
+    display: block;
+    padding: 0 24px 64px;
+  }
+
+  .plp-sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; width: var(--drawer-w);
+    z-index: 410; background: var(--warm-white);
+    border-right: 1px solid var(--light-grey); box-shadow: 8px 0 32px rgba(0,0,0,0.12);
+    padding: 20px 18px; transform: translateX(-100%); transition: transform 0.28s ease;
+    overflow-y: auto;
+  }
+  .plp-sidebar.open { transform: translateX(0); }
+  .plp-sidebar:focus { outline: none; }
+  .plp-sidebar:focus-visible { outline: 2px solid var(--vk-red); outline-offset: -2px; }
+
+  .plf-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--vk-red); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+
+  .plf-group {
+    margin-bottom: 4px; border-bottom: 1px solid var(--pale-grey);
+  }
+  .plf-group:last-child { border-bottom: none; }
+
+  .plf-group > summary {
+    list-style: none; cursor: pointer; font-size: 10px; font-weight: 600; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--vk-red); padding: 14px 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .plf-group > summary::-webkit-details-marker { display: none; }
+  .plf-group > summary::after {
+    content: ''; width: 7px; height: 7px; border-right: 1.5px solid var(--mid-grey); border-bottom: 1.5px solid var(--mid-grey);
+    transform: rotate(45deg); transition: transform 0.2s; flex-shrink: 0; margin-left: 8px;
+  }
+  .plf-group[open] > summary::after { transform: rotate(-135deg); }
+
+  .plf-body { padding-bottom: 14px; }
+  .plf-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .plf-search {
+    width: 100%; font-family: inherit; font-size: 12px; padding: 8px 10px; margin-bottom: 10px;
+    border: 1px solid var(--light-grey); border-radius: 3px; background: var(--warm-white); color: var(--charcoal);
+  }
+  .plf-search::placeholder { color: var(--mid-grey); }
+
+  .plf-checkbox-list { display: flex; flex-direction: column; gap: 0; max-height: 220px; overflow-y: auto; }
+  .plp-sidebar .plf-check-row {
+    display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--charcoal);
+    cursor: pointer; padding: 8px 4px 8px 0; margin: 0; text-decoration: none;
+  }
+  .plp-sidebar .plf-check-row:focus-within {
+    outline: 2px solid var(--vk-red); outline-offset: 2px; border-radius: 2px;
+  }
+  .plp-sidebar .plf-check-row input[type="checkbox"] {
+    width: 15px; height: 15px; flex-shrink: 0; margin: 2px 0 0; cursor: pointer;
+    accent-color: var(--vk-red);
+  }
+  .plp-sidebar .plf-check-row:has(input:checked) { color: var(--vk-red); font-weight: 600; }
+
+  .plf-hint { font-size: 11px; color: var(--mid-grey); margin-top: 8px; line-height: 1.4; }
+
+  .plf-range {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+  }
+  .plf-range input {
+    font-family: inherit; font-size: 12px; padding: 6px 8px; border: 1px solid var(--light-grey); border-radius: 3px;
+  }
+
+  .plf-link {
+    display: block; font-size: 12px; color: var(--charcoal); text-decoration: none; padding: 4px 0;
+  }
+  .plf-link:hover { color: var(--vk-red); }
+
+  .plf-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .plf-clear {
+    font-family: inherit; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 8px 12px; border: 1px solid var(--charcoal); background: transparent; color: var(--charcoal); cursor: pointer; border-radius: 3px;
+  }
+  .plf-clear:hover { background: var(--off-white); }
+
+  .plp-main { padding: 24px 0; min-width: 0; max-width: 1400px; margin: 0 auto; }
+
+  .plp-toolbar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
+    margin-bottom: 20px;
+  }
+  .plp-count { font-size: 13px; color: var(--mid-grey); flex: 1; min-width: 120px; }
+  .plp-page-ctl {
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mid-grey); flex-shrink: 0;
+  }
+  .plp-page-ctl select {
+    font-family: inherit; font-size: 12px; padding: 6px 10px; border: 1px solid var(--light-grey);
+    border-radius: 3px; background: var(--warm-white); color: var(--charcoal); cursor: pointer;
+  }
+
+  .active-filters {
+    display: none; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 18px;
+    padding: 12px 14px; background: var(--off-white); border: 1px solid var(--pale-grey); border-radius: 4px;
+  }
+  .active-filters.has-items { display: flex; }
+  .af-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--mid-grey); width: 100%; margin-bottom: 2px;
+  }
+  @media (min-width: 600px) {
+    .af-title { width: auto; margin-bottom: 0; margin-right: 8px; }
+  }
+  .af-pill {
+    font-family: inherit; font-size: 11px; color: var(--charcoal);
+    padding: 5px 11px; border: 1px solid var(--light-grey); border-radius: 16px;
+    background: var(--warm-white); cursor: pointer; transition: border-color 0.12s, color 0.12s;
+  }
+  .af-pill:hover { border-color: var(--vk-red); color: var(--vk-red); }
+  .af-clear {
+    font-family: inherit; font-size: 11px; font-weight: 600; background: none; border: none;
+    color: var(--vk-red); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; margin-left: auto;
+  }
+  .af-clear:hover { color: var(--near-black); }
+
+  .plp-products { margin-bottom: 8px; }
+  .plp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px 20px;
+  }
+  @media (max-width: 900px) {
+    .plp-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .plp-grid { grid-template-columns: 1fr; }
+  }
+  .plp-more-actions {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 12px; margin-top: 28px; width: 100%;
+  }
+  .plp-see-more {
+    font-family: inherit; font-size: 12px; font-weight: 600; color: #fff;
+    background: var(--vk-red); border: 1px solid var(--vk-red); cursor: pointer;
+    padding: 10px 18px; border-radius: 4px;
+  }
+  .plp-see-more:hover:not(:disabled) { filter: brightness(1.06); }
+  .plp-see-more:disabled { opacity: 0.4; cursor: not-allowed; }
+  .plp-show-less {
+    font-family: inherit; font-size: 12px; font-weight: 600; color: var(--charcoal);
+    background: var(--warm-white); border: 1px solid var(--light-grey); cursor: pointer;
+    padding: 10px 18px; border-radius: 4px;
+  }
+  .plp-show-less:hover { border-color: var(--charcoal); color: var(--vk-red); }
+  .plp-show-less[hidden] { display: none !important; }
+  .pcard {
+    text-decoration: none; color: inherit; cursor: pointer;
+    display: block; padding: 12px; margin: -12px; border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .pcard:hover { background: var(--off-white); }
+  .pcard:focus-visible { outline: 2px solid var(--vk-red); outline-offset: 2px; }
+  .pcard-ph {
+    aspect-ratio: 1; background: var(--pale-grey); border-radius: 3px; margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--pale-grey);
+  }
+  .pcard-span-2 .pcard-ph { aspect-ratio: 2 / 1; }
+  @media (max-width: 520px) {
+    .pcard-span-2 { grid-column: span 1; }
+    .pcard-span-2 .pcard-ph { aspect-ratio: 1; }
+  }
+  .pcard-ph svg { opacity: 0.85; }
+  .pcard-ph.dk { background: #2C2C2A; border-color: var(--light-grey); }
+  .pcard-ph.dk svg { opacity: 1; }
+  .pcard-badge {
+    display: inline-block; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--vk-red); font-weight: 500; border: 1px solid var(--vk-red);
+    padding: 3px 7px; border-radius: 2px; margin-bottom: 10px;
+  }
+  .pcard-badge--used { color: var(--amber); border-color: var(--amber); }
+  .pcard-badge--vintage { color: #7c5c20; border-color: #9a7340; }
+  .pcard-badge--demo { color: var(--mid-grey); border-color: var(--mid-grey); }
+  .pcard-badge--open { color: var(--charcoal); border-color: var(--charcoal); }
+  .pcard-name {
+    font-family: 'Playfair Display', Georgia, serif; font-size: clamp(15px, 1.4vw, 17px);
+    font-weight: 500; color: var(--near-black); margin-bottom: 4px; line-height: 1.3;
+  }
+  .pcard-brand { font-size: 12px; color: var(--mid-grey); margin-bottom: 10px; letter-spacing: 0.02em; }
+  .pcard-price {
+    font-size: 16px; font-weight: 500; color: var(--near-black);
+  }
+  .pcard-price-was {
+    font-size: 13px; color: var(--mid-grey); text-decoration: line-through; font-weight: 400; margin-left: 6px;
+  }
+  .pcard-details {
+    display: inline-flex; align-items: center; gap: 4px; margin-top: 12px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--vk-red);
+  }
+  .pcard-details-arr { font-size: 12px; line-height: 1; transition: transform 0.15s ease; }
+  .pcard:hover .pcard-details { color: var(--near-black); }
+  .pcard:hover .pcard-details-arr { transform: translateX(3px); color: var(--vk-red); }
+  .pcard-span-2 { grid-column: span 2; }
+
+  .drawer-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(26,26,24,0.4); z-index: 400;
+  }
+  .drawer-backdrop.open { display: block; }
+
+  .plf-close {
+    display: block; margin-left: auto; background: none; border: none; font-size: 22px; line-height: 1;
+    cursor: pointer; color: var(--mid-grey); padding: 4px;
+  }
+
+  .filter-fab {
+    display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 300; font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 14px 28px; border: none; border-radius: 24px;
+    background: var(--vk-red); color: #fff; cursor: pointer; box-shadow: 0 8px 24px rgba(192,57,43,0.35);
+  }
+  .filter-fab:hover { filter: brightness(1.05); }
+
+  @media (max-width: 900px) {
+    .quick-filter-inner { padding-left: 16px; padding-right: 16px; flex-wrap: wrap; }
+    .quick-filter-chips-wrap { flex: 1 1 100%; min-width: 0; }
+    .qf-sort { flex: 1 1 100%; width: 100%; margin-left: 0; justify-content: flex-end; }
+    .plp-layout { padding-left: 16px; padding-right: 16px; }
+    .filter-fab { display: block; }
+    .page-breadcrumb, .plp-hero, .subcat-pills-inner, .buyer-cards-inner, .plp-bottom-seo { padding-left: 16px; padding-right: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lab-bar">
+  <a href="../VK-Prototype-Index-from-GitHub.html">Index</a>
+  <span>|</span>
+  <a href="VintageKing-MegaMenu-CursorLab-v2.html">Mega menu</a>
+  <span>|</span>
+  <span>PLP v4 refined (this page)</span>
+  <span>|</span>
+  <a href="VK-Microphones-CategoryDemo-v3-hybrid.html">PLP v3</a>
+  <span>|</span>
+  <a href="VK-Microphones-CategoryDemo-v2.html">PLP v2</a>
+  <span>|</span>
+  <a href="VK-Microphones-CategoryDemo-v1.html">PLP v1</a>
+</div>
+
+<nav class="page-breadcrumb" aria-label="Breadcrumb">
+  <a href="#">Home</a>
+  <span aria-hidden="true">›</span>
+  <span>Microphones</span>
+</nav>
+
+<header class="plp-hero">
+  <div class="plp-hero-inner">
+    <div class="plp-hero-copy">
+      <p class="plp-hero-kicker">Recording / live / broadcast</p>
+      <h1>Microphones</h1>
+      <p class="plp-hero-inventory" aria-label="What we stock">
+        <span>New</span> · <span>Used</span> · <span>Vintage</span> · <span>Open box</span> · <span>Demo</span> when listed
+      </p>
+      <p class="plp-hero-lede">Studio staples, broadcast standards, and standout vintage—picked and supported by engineers who track with this gear every day.</p>
+    </div>
+    <div class="plp-hero-visual" role="img" aria-label="Category hero placeholder">
+      <svg width="200" height="200" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+        <rect x="48" y="12" width="24" height="56" rx="12" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+        <circle cx="60" cy="36" r="8" fill="rgba(192,57,43,0.45)"/>
+        <path d="M60 68v20M48 92h24" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="60" cy="94" rx="20" ry="6" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<nav class="subcat-pills" aria-label="Popular microphone collections">
+  <div class="subcat-pills-inner">
+    <a href="#" class="subcat-pill active">All</a>
+    <a href="#" class="subcat-pill">Condenser</a>
+    <a href="#" class="subcat-pill">Dynamic</a>
+    <a href="#" class="subcat-pill">Ribbon</a>
+    <a href="#" class="subcat-pill">Tube</a>
+    <a href="#" class="subcat-pill">USB / digital</a>
+    <a href="#" class="subcat-pill">Lavalier &amp; headset</a>
+    <a href="#" class="subcat-pill">Vintage &amp; collectible</a>
+    <button type="button" class="subcat-open-filters" id="subcat-open-filters">See more</button>
+  </div>
+</nav>
+
+<div class="quick-filter-bar" aria-label="Quick refinements">
+  <div class="quick-filter-inner">
+    <div class="quick-filter-chips-wrap">
+      <div class="quick-filter-chips">
+        <span class="qf-label">Quick refinements</span>
+        <button type="button" class="qf-chip" data-qf>Under $500</button>
+        <button type="button" class="qf-chip" data-qf>Under $1,000</button>
+        <button type="button" class="qf-chip" data-qf>New</button>
+        <button type="button" class="qf-chip" data-qf>Used</button>
+        <button type="button" class="qf-chip" data-qf>Open box</button>
+        <button type="button" class="qf-chip" data-qf>Vintage</button>
+        <button type="button" class="qf-chip" data-qf>On sale</button>
+        <button type="button" class="qf-chip" data-qf>In stock only</button>
+      </div>
+      <button type="button" class="qf-see-all" id="qf-see-all">All filters</button>
+    </div>
+    <div class="qf-sort">
+      <label for="sort">Sort</label>
+      <select id="sort">
+        <option>Most popular</option>
+        <option>Featured</option>
+        <option>Price: Low to high</option>
+        <option>Price: High to low</option>
+        <option>Newest</option>
+        <option>Best selling</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="buyer-cards-wrap" aria-label="Guides and advice">
+  <div class="buyer-cards-inner">
+    <div class="buyer-card">
+      <div class="buyer-card-eyebrow">Buying guide</div>
+      <h3>Choose the right microphone</h3>
+      <p>Condenser vs. dynamic, large vs. small diaphragm, polar patterns, and how to match the mic to the source—straight criteria, no fluff.</p>
+      <a href="#" class="buyer-card-cta">Read the guide <span class="cta-arr" aria-hidden="true">&rarr;</span></a>
+    </div>
+    <div class="buyer-card">
+      <div class="buyer-card-eyebrow">First serious rig</div>
+      <h3>Stepping up from a first setup</h3>
+      <p>Shortlist the models working engineers actually keep—whether you&rsquo;re upgrading from USB or building room two. Same bar as the pros; we just get you there faster.</p>
+      <a href="#" class="buyer-card-cta">See where to start <span class="cta-arr" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+
+<div class="plp-layout">
+  <aside class="plp-sidebar" id="sidebar" aria-label="All filters" tabindex="-1">
+    <div class="plf-title">
+      All filters
+      <button type="button" class="plf-close" id="drawer-close" aria-label="Close filters">×</button>
+    </div>
+    <div class="plf-actions">
+      <button type="button" class="plf-clear" id="plf-clear-demo">Clear demo selection</button>
+    </div>
+
+    <details class="plf-group" open>
+      <summary>Collection / sub-type</summary>
+      <div class="plf-body">
+        <p class="plf-hint" style="margin-bottom:8px">Full taxonomy—types not shown in the top strip appear here.</p>
+        <div class="plf-checkbox-list" style="max-height:none">
+          <label class="plf-check-row"><input type="checkbox"> Large diaphragm condenser</label>
+          <label class="plf-check-row"><input type="checkbox"> Small diaphragm condenser</label>
+          <label class="plf-check-row"><input type="checkbox"> Shotgun &amp; broadcast</label>
+          <label class="plf-check-row"><input type="checkbox"> Stereo &amp; matched pairs</label>
+          <label class="plf-check-row"><input type="checkbox"> Boundary &amp; installed</label>
+          <label class="plf-check-row"><input type="checkbox"> Parts &amp; upgrades</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group" open>
+      <summary>Brand</summary>
+      <div class="plf-body">
+        <input type="search" class="plf-search" placeholder="Search brands…" aria-label="Search brands">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Neumann</label>
+          <label class="plf-check-row"><input type="checkbox"> Shure</label>
+          <label class="plf-check-row"><input type="checkbox"> AKG</label>
+          <label class="plf-check-row"><input type="checkbox"> Sennheiser</label>
+          <label class="plf-check-row"><input type="checkbox"> Telefunken</label>
+          <label class="plf-check-row"><input type="checkbox"> Sony</label>
+          <label class="plf-check-row"><input type="checkbox"> Audio-Technica</label>
+          <label class="plf-check-row"><input type="checkbox"> Blue / Baltic</label>
+          <label class="plf-check-row"><input type="checkbox"> Warm Audio</label>
+          <label class="plf-check-row"><input type="checkbox"> Mojave</label>
+          <label class="plf-check-row"><input type="checkbox"> Royer</label>
+          <label class="plf-check-row"><input type="checkbox"> Coles</label>
+          <label class="plf-check-row"><input type="checkbox"> Electro-Voice</label>
+          <label class="plf-check-row"><input type="checkbox"> DPA</label>
+          <label class="plf-check-row"><input type="checkbox"> Schoeps</label>
+          <label class="plf-check-row"><input type="checkbox"> Manley</label>
+          <label class="plf-check-row"><input type="checkbox"> Chandler</label>
+          <label class="plf-check-row"><input type="checkbox"> Universal Audio</label>
+          <label class="plf-check-row"><input type="checkbox"> Lewitt</label>
+          <label class="plf-check-row"><input type="checkbox"> Earthworks</label>
+          <label class="plf-check-row"><input type="checkbox"> Peluso</label>
+          <label class="plf-check-row"><input type="checkbox"> Bock / Edge</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Price</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Under $500</label>
+          <label class="plf-check-row"><input type="checkbox"> $500 – $1,000</label>
+          <label class="plf-check-row"><input type="checkbox"> $1,000 – $2,500</label>
+          <label class="plf-check-row"><input type="checkbox"> $2,500 – $5,000</label>
+          <label class="plf-check-row"><input type="checkbox"> $5,000 – $10,000</label>
+          <label class="plf-check-row"><input type="checkbox"> $10,000+</label>
+        </div>
+        <div class="plf-range">
+          <input type="text" inputmode="numeric" placeholder="Min $" aria-label="Minimum price">
+          <input type="text" inputmode="numeric" placeholder="Max $" aria-label="Maximum price">
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Condition &amp; listing</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> New</label>
+          <label class="plf-check-row"><input type="checkbox"> Used — Mint</label>
+          <label class="plf-check-row"><input type="checkbox"> Used — Excellent</label>
+          <label class="plf-check-row"><input type="checkbox"> Used — Good</label>
+          <label class="plf-check-row"><input type="checkbox"> Open box</label>
+          <label class="plf-check-row"><input type="checkbox"> B-stock</label>
+          <label class="plf-check-row"><input type="checkbox"> Vintage / consignment</label>
+          <label class="plf-check-row"><input type="checkbox"> Factory refurbished</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Availability &amp; fulfillment</summary>
+      <div class="plf-body">
+        <label class="plf-check-row"><input type="checkbox"> In stock only</label>
+        <label class="plf-check-row"><input type="checkbox"> Ships same day</label>
+        <label class="plf-check-row"><input type="checkbox"> Free shipping</label>
+        <label class="plf-check-row"><input type="checkbox"> Pickup (Detroit HQ)</label>
+        <a href="#" class="plf-link" style="margin-top:6px">Financing eligible</a>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Polar pattern</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Cardioid</label>
+          <label class="plf-check-row"><input type="checkbox"> Supercardioid</label>
+          <label class="plf-check-row"><input type="checkbox"> Hypercardioid</label>
+          <label class="plf-check-row"><input type="checkbox"> Omnidirectional</label>
+          <label class="plf-check-row"><input type="checkbox"> Bidirectional / Figure-8</label>
+          <label class="plf-check-row"><input type="checkbox"> Multi-pattern</label>
+          <label class="plf-check-row"><input type="checkbox"> Shotgun / lobar</label>
+          <label class="plf-check-row"><input type="checkbox"> Variable / continuous</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Connectivity &amp; digital</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> XLR (analog)</label>
+          <label class="plf-check-row"><input type="checkbox"> USB-C</label>
+          <label class="plf-check-row"><input type="checkbox"> USB-A</label>
+          <label class="plf-check-row"><input type="checkbox"> Wireless handheld</label>
+          <label class="plf-check-row"><input type="checkbox"> Wireless bodypack</label>
+          <label class="plf-check-row"><input type="checkbox"> Lightning (legacy)</label>
+          <label class="plf-check-row"><input type="checkbox"> Digital AES / network-ready</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Capsule &amp; circuit topology</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Large diaphragm</label>
+          <label class="plf-check-row"><input type="checkbox"> Small diaphragm</label>
+          <label class="plf-check-row"><input type="checkbox"> Dynamic moving-coil</label>
+          <label class="plf-check-row"><input type="checkbox"> Ribbon (active)</label>
+          <label class="plf-check-row"><input type="checkbox"> Ribbon (passive)</label>
+          <label class="plf-check-row"><input type="checkbox"> Tube output</label>
+          <label class="plf-check-row"><input type="checkbox"> Solid-state FET</label>
+          <label class="plf-check-row"><input type="checkbox"> Modeling / plugin-native</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Form factor &amp; mounting</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Handheld</label>
+          <label class="plf-check-row"><input type="checkbox"> Pencil / side-address</label>
+          <label class="plf-check-row"><input type="checkbox"> Shotgun (interference tube)</label>
+          <label class="plf-check-row"><input type="checkbox"> Lavalier / clip-on</label>
+          <label class="plf-check-row"><input type="checkbox"> Headset</label>
+          <label class="plf-check-row"><input type="checkbox"> Desktop / vocal booth</label>
+          <label class="plf-check-row"><input type="checkbox"> Boundary / PZM</label>
+          <label class="plf-check-row"><input type="checkbox"> Hanging / choir</label>
+          <label class="plf-check-row"><input type="checkbox"> Stereo bar / MS pair</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Application</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Vocals</label>
+          <label class="plf-check-row"><input type="checkbox"> Voiceover / broadcast</label>
+          <label class="plf-check-row"><input type="checkbox"> Podcast / stream</label>
+          <label class="plf-check-row"><input type="checkbox"> Acoustic instruments</label>
+          <label class="plf-check-row"><input type="checkbox"> Drum overheads &amp; room</label>
+          <label class="plf-check-row"><input type="checkbox"> Guitar cabinets</label>
+          <label class="plf-check-row"><input type="checkbox"> Brass &amp; woodwinds</label>
+          <label class="plf-check-row"><input type="checkbox"> Choir &amp; ensemble</label>
+          <label class="plf-check-row"><input type="checkbox"> Field / ENG</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Power &amp; phantom</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> 48V phantom</label>
+          <label class="plf-check-row"><input type="checkbox"> 12V / T-power (legacy)</label>
+          <label class="plf-check-row"><input type="checkbox"> Tube PSU included</label>
+          <label class="plf-check-row"><input type="checkbox"> Battery powered</label>
+          <label class="plf-check-row"><input type="checkbox"> USB bus power</label>
+          <label class="plf-check-row"><input type="checkbox"> Passive (no power)</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Onboard controls</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Pad (switch)</label>
+          <label class="plf-check-row"><input type="checkbox"> High-pass filter</label>
+          <label class="plf-check-row"><input type="checkbox"> Pattern control</label>
+          <label class="plf-check-row"><input type="checkbox"> Gain / trim</label>
+          <label class="plf-check-row"><input type="checkbox"> Mute</label>
+          <label class="plf-check-row"><input type="checkbox"> Headphone monitor (USB)</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Included accessories</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Shock mount</label>
+          <label class="plf-check-row"><input type="checkbox"> Pop filter / windscreen</label>
+          <label class="plf-check-row"><input type="checkbox"> Hard case / pouch</label>
+          <label class="plf-check-row"><input type="checkbox"> Stereo mounting bar</label>
+          <label class="plf-check-row"><input type="checkbox"> Thread adapters</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Color &amp; finish</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Black</label>
+          <label class="plf-check-row"><input type="checkbox"> Silver / nickel</label>
+          <label class="plf-check-row"><input type="checkbox"> White</label>
+          <label class="plf-check-row"><input type="checkbox"> Custom / limited</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Deals</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> On sale</label>
+          <label class="plf-check-row"><input type="checkbox"> Clearance</label>
+          <label class="plf-check-row"><input type="checkbox"> Bundle value</label>
+        </div>
+      </div>
+    </details>
+
+    <div class="expert-cta">
+      <div class="ecta-eyebrow"><span class="ecta-dot" aria-hidden="true"></span> Live now</div>
+      <div class="ecta-head">Not sure which mic is right for you?</div>
+      <div class="ecta-sub">Our engineers have spent careers in the world&rsquo;s best studios. Five minutes saves hours of guessing.</div>
+      <a href="#" class="ecta-btn">Talk to a mic expert</a>
+      <div class="ecta-links">
+        <a href="#" class="ecta-link">Live chat</a>
+        <a href="#" class="ecta-link">Callback</a>
+        <a href="#" class="ecta-link">888.653.1184</a>
+      </div>
+    </div>
+  </aside>
+
+  <main class="plp-main">
+    <div class="plp-toolbar">
+      <p class="plp-count">Showing <strong id="plp-visible-count">4</strong> of <strong>156</strong> matches <span style="color:var(--mid-grey);font-weight:400">(demo)</span></p>
+      <div class="plp-page-ctl">
+        <label for="plp-page-size">Per page</label>
+        <select id="plp-page-size" aria-label="Results per page">
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+    <div class="active-filters" id="active-filters" aria-live="polite">
+      <span class="af-title">Active filters</span>
+      <div id="af-pills" style="display:contents"></div>
+      <button type="button" class="af-clear" id="af-clear-all">Clear all</button>
+    </div>
+    <div class="plp-products">
+      <div class="plp-grid" id="plp-grid" aria-label="Products">
+        <a href="#" class="pcard">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.5)"/><line x1="25" y1="48" x2="25" y2="62" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><ellipse cx="25" cy="64" rx="10" ry="3" stroke="rgba(255,255,255,0.2)" fill="none"/></svg>
+          </div>
+          <div class="pcard-badge">New</div>
+          <div class="pcard-name">U 87 Ai Studio Set</div>
+          <div class="pcard-brand">Neumann</div>
+          <div class="pcard-price">$3,595</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph" style="background:#ECEAE4" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.35)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--used">Used — Excellent</div>
+          <div class="pcard-name">SM7B Broadcast</div>
+          <div class="pcard-brand">Shure</div>
+          <div class="pcard-price">$399<span class="pcard-price-was">$449</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(255,255,255,0.15)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--demo">Demo</div>
+          <div class="pcard-name">WA-47JR</div>
+          <div class="pcard-brand">Warm Audio</div>
+          <div class="pcard-price">$599<span class="pcard-price-was">$799</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <a href="#" class="pcard">
+          <div class="pcard-ph" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.22)"/></svg>
+          </div>
+          <div class="pcard-badge">New</div>
+          <div class="pcard-name">LCT 1040</div>
+          <div class="pcard-brand">Lewitt</div>
+          <div class="pcard-price">$1,699</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(212,134,10,0.4)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--used">Used — Good</div>
+          <div class="pcard-name">M 160</div>
+          <div class="pcard-brand">Beyerdynamic</div>
+          <div class="pcard-price">$429<span class="pcard-price-was">$499</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph" style="background:#ECEAE4" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(107,107,104,0.35)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--demo">Demo</div>
+          <div class="pcard-name">HypeMic</div>
+          <div class="pcard-brand">Apogee</div>
+          <div class="pcard-price">$349<span class="pcard-price-was">$399</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <a href="#" class="pcard pcard-span-2">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="70" height="60" viewBox="0 0 70 60" fill="none"><rect x="5" y="10" width="60" height="38" rx="3" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/><rect x="10" y="16" width="16" height="26" rx="2" fill="rgba(192,57,43,0.25)"/><rect x="30" y="16" width="16" height="26" rx="2" fill="rgba(255,255,255,0.06)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--vintage">Vintage</div>
+          <div class="pcard-name">ELA M 251E</div>
+          <div class="pcard-brand">Telefunken</div>
+          <div class="pcard-price">$14,500</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.25)"/></svg>
+          </div>
+          <div class="pcard-badge">New</div>
+          <div class="pcard-name">CMC 6 / MK 4 — stereo set</div>
+          <div class="pcard-brand">Schoeps</div>
+          <div class="pcard-price">$3,195</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(212,134,10,0.35)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--used">Used — Mint</div>
+          <div class="pcard-name">R-121</div>
+          <div class="pcard-brand">Royer</div>
+          <div class="pcard-price">$999<span class="pcard-price-was">$1,095</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <a href="#" class="pcard">
+          <div class="pcard-ph" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(26,26,24,0.2)"/></svg>
+          </div>
+          <div class="pcard-badge">New</div>
+          <div class="pcard-name">AT4040</div>
+          <div class="pcard-brand">Audio-Technica</div>
+          <div class="pcard-price">$299</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph" style="background:#ECEAE4" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.2)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--open">Open box</div>
+          <div class="pcard-name">MA-300</div>
+          <div class="pcard-brand">Mojave</div>
+          <div class="pcard-price">$1,649<span class="pcard-price-was">$1,899</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(154,115,64,0.5)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--vintage">Vintage</div>
+          <div class="pcard-name">4038 — matched pair</div>
+          <div class="pcard-brand">Coles</div>
+          <div class="pcard-price">$2,400</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.3)"/></svg>
+          </div>
+          <div class="pcard-badge">New</div>
+          <div class="pcard-name">SV33</div>
+          <div class="pcard-brand">Earthworks</div>
+          <div class="pcard-price">$1,999</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <a href="#" class="pcard">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.3)"/></svg>
+          </div>
+          <div class="pcard-badge">New</div>
+          <div class="pcard-name">Reference Cardioid</div>
+          <div class="pcard-brand">Manley</div>
+          <div class="pcard-price">$2,700</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(192,57,43,0.28)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--used">Used — Excellent</div>
+          <div class="pcard-name">REDD Microphone</div>
+          <div class="pcard-brand">Chandler Limited</div>
+          <div class="pcard-price">$2,195<span class="pcard-price-was">$2,499</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(255,255,255,0.12)"/></svg>
+          </div>
+          <div class="pcard-badge">New</div>
+          <div class="pcard-name">C-800G</div>
+          <div class="pcard-brand">Sony</div>
+          <div class="pcard-price">$8,490</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard pcard-span-2">
+          <div class="pcard-ph" style="background:#ECEAE4" aria-hidden="true">
+            <svg width="70" height="60" viewBox="0 0 70 60" fill="none"><rect x="5" y="10" width="60" height="38" rx="3" stroke="#8C8C88" stroke-width="1.5" fill="none"/><rect x="12" y="18" width="14" height="22" rx="2" fill="rgba(192,57,43,0.15)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--used">Used — Mint</div>
+          <div class="pcard-name">P-12 / 251 tribute</div>
+          <div class="pcard-brand">Peluso</div>
+          <div class="pcard-price">$1,895<span class="pcard-price-was">$2,095</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="#8C8C88" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(26,26,24,0.25)"/></svg>
+          </div>
+          <div class="pcard-badge">New</div>
+          <div class="pcard-name">4011A stereo pair</div>
+          <div class="pcard-brand">DPA</div>
+          <div class="pcard-price">$2,640</div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a href="#" class="pcard">
+          <div class="pcard-ph dk" aria-hidden="true">
+            <svg width="50" height="90" viewBox="0 0 50 90" fill="none"><rect x="17" y="4" width="16" height="44" rx="8" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/><circle cx="25" cy="26" r="5" fill="rgba(212,134,10,0.45)"/></svg>
+          </div>
+          <div class="pcard-badge pcard-badge--vintage">Vintage</div>
+          <div class="pcard-name">MD 441 U</div>
+          <div class="pcard-brand">Sennheiser</div>
+          <div class="pcard-price">$549<span class="pcard-price-was">$629</span></div>
+          <span class="pcard-details">Details <span class="pcard-details-arr" aria-hidden="true">&rarr;</span></span>
+        </a>
+      </div>
+      <div class="plp-more-actions">
+        <button type="button" class="plp-see-more" id="plp-see-more">See more</button>
+        <button type="button" class="plp-show-less" id="plp-show-less" hidden>Show fewer</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<section class="plp-bottom-seo" aria-label="About this category">
+  <p><strong>Microphones at Vintage King</strong> covers condenser, dynamic, ribbon, and tube—new, used, vintage, and open-box—with expert support before and after purchase. Refine by price, condition, and availability above; open <strong>All filters</strong> for capsule, polar pattern, connectivity, and the full taxonomy. Long-form guides, setup advice, and FAQs on the live site support search and AI summaries.</p>
+</section>
+
+<button type="button" class="filter-fab" id="filter-fab">Filters</button>
+
+<script>
+(function () {
+  function qs(id) { return document.getElementById(id); }
+  const sidebar = qs('sidebar');
+  const back = qs('drawer-backdrop');
+  const fab = qs('filter-fab');
+  const closeBtn = qs('drawer-close');
+  const activeWrap = qs('active-filters');
+  const afPills = qs('af-pills');
+  const qfButtons = document.querySelectorAll('.qf-chip[data-qf]');
+
+  function collectActive() {
+    const items = [];
+    sidebar.querySelectorAll('.plf-check-row input:checked').forEach(function (input) {
+      var row = input.closest('.plf-check-row');
+      var label = row ? row.textContent.replace(/\s+/g, ' ').trim() : '';
+      if (label) items.push({ type: 'check', label: label });
+    });
+    qfButtons.forEach(function (b) {
+      if (b.classList.contains('is-active')) {
+        items.push({ type: 'quick', label: b.textContent.trim() });
+      }
+    });
+    return items;
+  }
+
+  function removeOne(item) {
+    if (item.type === 'check') {
+      document.querySelectorAll('.plf-check-row').forEach(function (row) {
+        var txt = row.textContent.replace(/\s+/g, ' ').trim();
+        if (txt === item.label) {
+          var input = row.querySelector('input');
+          if (input) input.checked = false;
+        }
+      });
+    } else if (item.type === 'quick') {
+      qfButtons.forEach(function (b) {
+        if (b.textContent.trim() === item.label) {
+          b.classList.remove('is-active', 'is-primary');
+        }
+      });
+    }
+    syncActiveFilters();
+  }
+
+  function clearAllFacets() {
+    document.querySelectorAll('.plf-check-row input').forEach(function (i) { i.checked = false; });
+    qfButtons.forEach(function (b) { b.classList.remove('is-primary', 'is-active'); });
+    syncActiveFilters();
+  }
+
+  function syncActiveFilters() {
+    var items = collectActive();
+    afPills.innerHTML = '';
+    if (items.length === 0) {
+      activeWrap.classList.remove('has-items');
+      return;
+    }
+    activeWrap.classList.add('has-items');
+    items.forEach(function (item) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'af-pill';
+      btn.setAttribute('aria-label', 'Remove filter ' + item.label);
+      btn.textContent = item.label + ' \u00D7';
+      btn.addEventListener('click', function () { removeOne(item); });
+      afPills.appendChild(btn);
+    });
+  }
+
+  function openDrawer() {
+    sidebar.classList.add('open');
+    back.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    sidebar.scrollTop = 0;
+    sidebar.focus();
+  }
+  function closeDrawer() {
+    sidebar.classList.remove('open');
+    back.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  fab.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  back.addEventListener('click', closeDrawer);
+
+  qs('qf-see-all').addEventListener('click', openDrawer);
+  var subcatOpen = qs('subcat-open-filters');
+  if (subcatOpen) subcatOpen.addEventListener('click', openDrawer);
+
+  sidebar.addEventListener('change', function (e) {
+    if (e.target.matches('.plf-check-row input')) syncActiveFilters();
+  });
+
+  qfButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      this.classList.toggle('is-active');
+      this.classList.remove('is-primary');
+      syncActiveFilters();
+    });
+  });
+
+  qs('af-clear-all').addEventListener('click', clearAllFacets);
+  qs('plf-clear-demo').addEventListener('click', clearAllFacets);
+
+  var plpGrid = qs('plp-grid');
+  var plpCards = plpGrid ? plpGrid.querySelectorAll('.pcard') : [];
+  var plpVisible = qs('plp-visible-count');
+  var plpPageSize = qs('plp-page-size');
+  var plpSeeMore = qs('plp-see-more');
+  var plpShowLess = qs('plp-show-less');
+  var PLP_INITIAL = 4;
+  var PLP_STEP = 3;
+  var plpShown = PLP_INITIAL;
+  var plpCap = plpPageSize ? parseInt(plpPageSize.value, 10) || 10 : 10;
+
+  function plpMaxVisible() {
+    return Math.min(plpCap, plpCards.length);
+  }
+  function plpRefresh() {
+    var maxV = plpMaxVisible();
+    if (plpShown > maxV) plpShown = maxV;
+    plpCards.forEach(function (el, i) {
+      el.style.display = i < plpShown ? '' : 'none';
+    });
+    if (plpVisible) plpVisible.textContent = String(plpShown);
+    if (plpSeeMore) plpSeeMore.disabled = plpShown >= maxV;
+    if (plpShowLess) plpShowLess.hidden = plpShown <= PLP_INITIAL;
+  }
+  if (plpPageSize) {
+    plpPageSize.addEventListener('change', function () {
+      plpCap = parseInt(this.value, 10) || 10;
+      plpRefresh();
+    });
+  }
+  if (plpSeeMore) {
+    plpSeeMore.addEventListener('click', function () {
+      plpShown = Math.min(plpShown + PLP_STEP, plpMaxVisible());
+      plpRefresh();
+    });
+  }
+  if (plpShowLess) {
+    plpShowLess.addEventListener('click', function () {
+      plpShown = PLP_INITIAL;
+      plpRefresh();
+    });
+  }
+  plpRefresh();
+
+  syncActiveFilters();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+  CURSOR LAB — local only. Nav + megas synced from GitHub barreletics/vintage-king-redesign VintageKing-Redesign-v2_67-Mar2026.html (reference copy in this folder). Strategy/Claude originals are not edited.
+-->
+<title>Vintage King — Mega Lab v2.9 · 3× text preset</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vk-red: #C0392B;
+    --vk-red-dk: #922B21;
+    --near-black: #1A1A18;
+    --charcoal: #2C2C2A;
+    --warm-white: #FDFCFB;
+    --off-white: #F7F5F2;
+    --pale-grey: #EDEDEA;
+    --light-grey: #D8D6D2;
+    --mid-grey: #6B6B68;
+    --amber: #D4860A;
+    --amber-bg: #F5E6C8;
+    --nav-h: 48px;
+    --demo-hub-h: 40px;
+    --proto-bar-h: 42px;
+    --utility-bar-h: 44px;
+    --display: 'Playfair Display', Georgia, serif;
+    --body: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { font-family: var(--body); background: var(--warm-white); color: var(--near-black); -webkit-font-smoothing: antialiased; }
+
+  /* ── TAGS ── */
+  .tag { display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+  .tag-red   { background: #fde8e6; color: var(--vk-red); }
+  .tag-black { background: var(--near-black); color: #fff; }
+  .tag-amber { background: var(--amber-bg); color: var(--amber); }
+  .tag-white { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+
+  /* ── TOPBAR ── */
+  .demo-hub-bar {
+    position: sticky; top: 0; z-index: 202;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+    min-height: var(--demo-hub-h); padding: 8px 20px;
+    background: var(--near-black); color: rgba(255,255,255,0.55);
+    font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .demo-hub-bar a { color: #fff; text-decoration: none; font-weight: 500; }
+  .demo-hub-bar a:hover { color: var(--vk-red); }
+  .demo-hub-bar .dh-here { color: #fff; font-weight: 600; }
+  .demo-hub-bar .dh-sep { color: rgba(255,255,255,0.35); user-select: none; }
+
+  .topbar {
+    position: sticky; top: calc(var(--demo-hub-h) + var(--proto-bar-h)); z-index: 200;
+    background: var(--near-black); height: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; font-size: 11px; color: rgba(255,255,255,0.45);
+  }
+  .topbar a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+  .topbar a:hover { color: rgba(255,255,255,0.85); }
+  .topbar-left { display: flex; gap: 24px; align-items: center; }
+  .topbar-right { display: flex; gap: 20px; align-items: center; }
+  .topbar-divider { width: 1px; height: 12px; background: rgba(255,255,255,0.15); }
+  .topbar-highlight { color: var(--vk-red); font-weight: 500; }
+
+  /* ── VALUE / UTILITY ROW (v2_67: trade · studio · finance — between topbar and categories) ── */
+  .utility-bar {
+    position: sticky;
+    top: calc(var(--demo-hub-h) + var(--proto-bar-h) + 32px);
+    z-index: 198;
+    background: var(--warm-white);
+    box-shadow: 0 1px 0 rgba(26,26,24,0.06);
+    border-bottom: 1px solid rgba(26,26,24,0.1);
+    min-height: var(--utility-bar-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 40px;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    column-gap: 12px;
+  }
+  .utility-bar-links {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .utility-bar-links a {
+    font-size: 12px;
+    color: rgba(26,26,24,0.68);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    padding: 0 12px;
+    border-right: 1px solid rgba(26,26,24,0.12);
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .utility-bar-links a:first-child { padding-left: 0; }
+  .utility-bar-links a:last-child { border-right: none; }
+  .utility-bar-links a:hover { color: rgba(26,26,24,0.85); }
+  .utility-bar-phone {
+    font-size: 12.5px;
+    color: var(--vk-red);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.15s;
+  }
+  .utility-bar-phone:hover { color: rgba(26,26,24,0.85); }
+  .utility-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ── PRIMARY NAV (two rows: brand + tools, then category strip — no horizontal scroll) ── */
+  .site-nav {
+    position: sticky; top: calc(var(--demo-hub-h) + var(--proto-bar-h) + 32px + var(--utility-bar-h)); z-index: 199;
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--light-grey);
+  }
+  .nav-inner {
+    max-width: 1440px; margin: 0 auto; padding: 0 20px;
+    display: flex; flex-direction: column; align-items: stretch;
+    min-width: 0;
+  }
+  .nav-row-top {
+    display: flex; align-items: center; gap: 10px;
+    min-height: 52px; padding: 4px 0;
+  }
+  .nav-top-spacer { flex: 1; min-width: 12px; }
+  .nav-row-cats {
+    border-top: 1px solid var(--pale-grey);
+    padding: 2px 0 6px;
+  }
+
+  /* LOGO — Roboto wordmark (brand lockup); Playfair reserved for editorial inside megas */
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  @media (min-width: 768px) {
+    .nav-row-top .nav-logo { margin-right: 32px; }
+  }
+  .logo-tube { width: 20px; height: 32px; flex-shrink: 0; }
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-text .name {
+    font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--near-black);
+  }
+  .logo-text .tagline {
+    font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    margin-top: 3px;
+  }
+
+  /* NAV ITEMS */
+  .nav-items-wrap {
+    width: 100%;
+    overflow: visible;
+  }
+  .nav-items {
+    display: flex; align-items: stretch; flex-wrap: wrap;
+    list-style: none; width: 100%;
+    row-gap: 0; column-gap: 0;
+  }
+  .nav-item { height: var(--nav-h); position: relative; }
+  /* Invisible bridge: fixed megas don’t expand the li box — without this, mouse leaves the li before reaching the panel */
+  .nav-item:has(.mega)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 14px;
+    z-index: 297;
+  }
+  .nav-item > a {
+    display: flex; align-items: center; gap: 4px; height: 100%;
+    padding: 0 15px; font-size: 12.5px; font-weight: 500;
+    letter-spacing: 0.025em; color: var(--charcoal); text-decoration: none;
+    white-space: nowrap; transition: color 0.15s;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .nav-item > a:hover, .nav-item.open > a { color: var(--near-black); border-bottom-color: var(--vk-red); }
+  .nav-item.vintage > a { color: var(--amber); }
+  .nav-item.vintage > a:hover, .nav-item.vintage.open > a { color: var(--near-black); border-bottom-color: var(--amber); }
+  .nav-item.deals > a { color: var(--vk-red); font-weight: 600; }
+  .nav-chevron { width: 10px; height: 10px; transition: transform 0.2s ease; opacity: 0.4; }
+  .nav-item.open .nav-chevron { transform: rotate(180deg); opacity: 0.7; }
+  .nav-plus { width: 10px; height: 10px; flex-shrink: 0; opacity: 0.55; }
+  .nav-item.vintage .nav-chevron { display: none; }
+  .nav-item.vintage.open .nav-plus { opacity: 0.85; }
+
+  /* NAV ACTIONS */
+  .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .nav-search-wrap {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--off-white); border: 1px solid var(--light-grey);
+    border-radius: 4px; padding: 7px 12px; transition: border-color 0.15s;
+  }
+  .nav-search-wrap:focus-within { border-color: var(--charcoal); }
+  .nav-search-wrap input { border: none; background: none; font-family: var(--body); font-size: 12.5px; color: var(--charcoal); outline: none; width: 200px; min-width: 0; }
+  .nav-search-wrap input::placeholder { color: var(--mid-grey); }
+  .nav-icon { background: none; border: none; cursor: pointer; color: var(--charcoal); padding: 6px; display: flex; align-items: center; transition: color 0.15s; position: relative; }
+  .nav-icon:hover { color: var(--vk-red); }
+  .cart-count { position: absolute; top: 0; right: 0; background: var(--vk-red); color: #fff; font-size: 9px; font-weight: 600; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .nav-expert-btn { display: flex; align-items: center; gap: 6px; background: var(--vk-red); color: #fff; border: none; cursor: pointer; padding: 8px 14px; border-radius: 3px; font-family: var(--body); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; white-space: nowrap; transition: background 0.15s; }
+  .nav-expert-btn:hover { background: var(--vk-red-dk); }
+
+  /* Ask dropdown (GitHub VintageKing-Redesign-v2_67) */
+  .ask-wrap { position: relative; flex-shrink: 0; }
+  .ask-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 220px;
+    background: var(--warm-white);
+    border: 1px solid var(--light-grey);
+    border-top: 2px solid var(--vk-red);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    border-radius: 0 0 3px 3px;
+    z-index: 400;
+    overflow: hidden;
+  }
+  .ask-wrap:hover .ask-dropdown { display: block; }
+  .ask-dropdown-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px;
+    text-decoration: none;
+    color: var(--charcoal);
+    font-size: 13px;
+    font-weight: 400;
+    border-bottom: 1px solid var(--pale-grey);
+    transition: background 0.12s, color 0.12s;
+  }
+  .ask-dropdown-item:last-child { border-bottom: none; }
+  .ask-dropdown-item:hover { background: var(--off-white); color: var(--vk-red); }
+  .ask-dropdown-item svg { flex-shrink: 0; color: var(--vk-red); }
+  .pulse-dot { width: 7px; height: 7px; background: #4ade80; border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+
+  /* ══════════════════════════════════════════════
+     MEGA MENU SYSTEM
+  ══════════════════════════════════════════════ */
+
+  /* The mega wrapper is fixed, full-width, hidden by default */
+  .mega {
+    display: none;
+    position: fixed;
+    left: 0; right: 0;
+    background: var(--warm-white);
+    border-top: 2px solid var(--vk-red);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.10);
+    z-index: 350;
+    flex-direction: column;
+    animation: menuIn 0.18s ease;
+    min-height: 420px;
+    max-height: calc(100vh - 140px);
+    overflow: clip;
+  }
+  @keyframes menuIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+
+  /* Left: category columns */
+  .mega-cats {
+    flex: 1;
+    display: flex;
+    padding: 20px 32px 0 40px;
+    gap: 0;
+    min-width: 0;
+  }
+
+  .mega-col { flex: 1; padding-right: 28px; border-right: 1px solid var(--pale-grey); margin-right: 28px; }
+  .mega-col:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+  .mega-col-head { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid-grey); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--pale-grey); }
+  .mega-col ul { list-style: none; }
+  .mega-col ul li { margin-bottom: 1px; }
+  .mega-col ul li a { display: block; font-size: 13px; color: var(--charcoal); text-decoration: none; padding: 5px 0; transition: color 0.12s, padding-left 0.12s; }
+  .mega-col ul li a:hover { color: var(--vk-red); padding-left: 5px; }
+  .mega-col ul li a.bold { font-weight: 500; color: var(--near-black); }
+  .mega-col .view-all { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--vk-red); text-decoration: none; margin-top: 12px; transition: gap 0.15s; }
+  .mega-col .view-all:hover { gap: 7px; }
+  .mega-col-head-secondary { font-size: 9.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid-grey); margin-top: 18px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--pale-grey); }
+
+  /* ── RIGHT PANEL: dark, full height of mega-body ── */
+  .mega-panel {
+    width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--near-black);
+    position: relative;
+    overflow: hidden;
+  }
+  .mega-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(192,57,43,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .mega-panel.vintage-panel { background: linear-gradient(165deg, #1C1A10 0%, #2A2412 100%); }
+  .mega-panel.vintage-panel::before { background: radial-gradient(ellipse at 70% 30%, rgba(212,134,10,0.2) 0%, transparent 65%); }
+  .mega-panel.studio-panel { background: linear-gradient(165deg, #0E1218 0%, #1A2030 100%); }
+  .mega-panel.studio-panel::before { background: radial-gradient(ellipse at 60% 40%, rgba(59,130,246,0.12) 0%, transparent 65%); }
+
+  /* ── MEGA: CSS grid (aligned with Live v1_36) ── */
+  .nav-item.open > .mega { display: grid; grid-template-columns: 1fr 260px; grid-template-rows: 1fr auto; }
+  .mega-body { display: contents; }
+  .mega-cats { grid-column: 1; grid-row: 1; min-width: 0; }
+  .mega-panel { grid-column: 2; grid-row: 1 / 4; width: 260px; min-width: 260px; max-width: 260px; flex-shrink: 0; }
+  .mega-panel-light {
+    grid-column: 2; grid-row: 1 / 4; min-width: 260px; max-width: 260px;
+    flex-shrink: 0; display: flex; flex-direction: column;
+    background: var(--warm-white); border-left: 1px solid var(--light-grey);
+    overflow: hidden;
+  }
+  .panel-light-block {
+    display: block; padding: 16px 20px;
+    border-bottom: 1px solid var(--light-grey);
+    text-decoration: none; transition: background 0.12s; cursor: pointer;
+  }
+  .panel-light-block:hover { background: var(--off-white); }
+  .panel-light-label { font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid-grey); margin-bottom: 5px; }
+  .panel-light-title { font-size: 13px; font-weight: 500; color: var(--near-black); line-height: 1.3; margin-bottom: 5px; }
+  .panel-light-sub { font-size: 11px; color: var(--mid-grey); line-height: 1.4; margin-bottom: 8px; }
+  .panel-light-cta { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--vk-red); }
+  .mega-tiles-outer { grid-column: 1; grid-row: 2; min-width: 0; align-self: end; }
+  .mega-bar { grid-column: 1; grid-row: 3; min-width: 0; background: var(--off-white); border-top: 1px solid rgba(26,26,24,0.12); }
+
+  /* Feature area — grows to fill space */
+  .panel-feature { flex: 1; padding: 22px 22px 16px; display: flex; flex-direction: column; position: relative; cursor: pointer; }
+  .panel-sponsor { font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+  .panel-img { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 0; position: relative; }
+  .panel-img-tag { position: absolute; top: 0; left: 0; }
+  .panel-brand { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .panel-name { font-family: var(--display); font-size: 16px; color: #fff; line-height: 1.25; margin-bottom: 6px; }
+  .panel-price { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+  .panel-cta { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: var(--vk-red); border: none; cursor: pointer; padding: 8px 14px; border-radius: 2px; text-decoration: none; transition: background 0.15s; align-self: flex-start; }
+  .panel-cta:hover { opacity: 0.85; }
+  .panel-coop-label { font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.18); text-align: right; margin-top: 8px; }
+
+  /* Make Your Mark strip */
+  .panel-mym { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.07); cursor: pointer; transition: background 0.15s; flex-shrink: 0; }
+  .panel-mym:hover { background: rgba(255,255,255,0.05); }
+  .panel-mym-label { font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .panel-mym-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+  .panel-mym-title { font-family: var(--display); font-size: 13px; font-style: italic; color: rgba(255,255,255,0.8); line-height: 1.35; margin-bottom: 4px; }
+  .panel-mym-sub { font-size: 10px; color: rgba(255,255,255,0.35); display: flex; align-items: center; gap: 4px; }
+
+  /* Expert CTA */
+  .panel-expert { padding: 13px 18px; border-top: 1px solid rgba(255,255,255,0.07); background: var(--vk-red); display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; transition: background 0.15s; flex-shrink: 0; margin-top: auto; }
+  .panel-expert:hover { background: var(--vk-red-dk); }
+  .panel-expert-title { font-size: 12px; font-weight: 500; color: #fff; margin-bottom: 1px; }
+  .panel-expert-sub { font-size: 10px; color: rgba(255,255,255,0.6); }
+
+  /* ── ZONE 3: 3 neutral tiles — bottom row flush with panel ── */
+  .mega-tiles-outer { background: var(--off-white); border-top: 1px solid var(--light-grey); width: 100%; }
+  .mega-tiles { display: flex; gap: 6px; padding: 12px 40px; max-width: 1440px; margin: 0 auto; min-width: 0; }
+  .ptile { flex: 1; display: flex; align-items: center; gap: 10px; padding: 10px 14px; text-decoration: none; background: var(--warm-white); border: 1px solid var(--light-grey); border-radius: 3px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+  .ptile:hover { border-color: var(--charcoal); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .ptile-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--pale-grey); border-radius: 3px; }
+  .ptile-icon.dk { background: var(--charcoal); }
+  .ptile-icon.am { background: var(--amber-bg); }
+  .ptile-body { flex: 1; min-width: 0; }
+  .ptile-label { font-size: 8px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--mid-grey); margin-bottom: 2px; }
+  .ptile-name { font-size: 12px; font-weight: 500; color: var(--near-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ptile-detail { font-size: 10px; color: var(--mid-grey); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .itile { flex: 1; display: flex; flex-direction: row; text-decoration: none; border-radius: 3px; overflow: hidden; cursor: pointer; border: 1px solid rgba(26,26,24,0.12); min-width: 0; min-height: 72px; }
+  .itile-img { position: relative; width: 120px; flex-shrink: 0; overflow: hidden; background: var(--near-black); }
+  .itile-bg { position: absolute; inset: 0; transition: transform 0.3s ease; }
+  .itile:hover .itile-img .itile-bg { transform: scale(1.03); }
+  .itile-arrow { position: absolute; top: 6px; right: 6px; color: rgba(255,255,255,0.6); font-size: 11px; z-index: 2; transition: color 0.15s; }
+  .itile:hover .itile-arrow { color: rgba(255,255,255,0.9); }
+  .itile-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.18); }
+  .itile-body { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 10px 14px; background: var(--off-white); min-width: 0; border-left: 1px solid rgba(26,26,24,0.08); }
+  .itile-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vk-red); font-weight: 600; margin-bottom: 4px; }
+  .itile-name { font-size: 12.5px; font-weight: 600; color: var(--near-black); line-height: 1.2; margin-bottom: 3px; }
+  .itile-sub { font-size: 10px; color: var(--mid-grey); line-height: 1.3; }
+  .itile-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 7.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); pointer-events: none; z-index: 1; }
+  .itile-cta { display: inline-block; margin-top: 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--vk-red); color: #fff; padding: 3px 8px; border-radius: 2px; align-self: flex-start; }
+
+  /* ── ZONE 2: Bottom bar — light strip (Live v1_36) ── */
+  .mega-bar-inner {
+    display: flex; align-items: center; flex-wrap: wrap; row-gap: 8px;
+    max-width: 1440px; margin: 0 auto;
+    padding: 0 40px; min-height: 46px;
+  }
+  .mbb-vk { display: flex; align-items: center; gap: 24px; flex: 1; flex-wrap: wrap; min-width: 0; }
+  .mbb-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(26,26,24,0.75); white-space: nowrap; }
+  .mbb-item svg { color: var(--vk-red); flex-shrink: 0; }
+  .mbb-item strong { color: rgba(26,26,24,0.88); font-weight: 500; }
+  .mbb-item a { color: rgba(26,26,24,0.42); text-decoration: none; font-size: 10px; margin-left: 4px; }
+  .mbb-item a:hover { color: rgba(26,26,24,0.85); }
+  .mbb-sep { width: 1px; height: 28px; background: rgba(26,26,24,0.15); margin: 0 24px; flex-shrink: 0; }
+  .mbb-brands { display: flex; align-items: center; flex-shrink: 0; flex-wrap: wrap; max-width: 100%; }
+  .mbb-brands-label { font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(26,26,24,0.4); margin-right: 12px; white-space: nowrap; }
+  .mbb-brand { display: flex; align-items: center; justify-content: center; padding: 0 14px; height: 46px; border-left: 1px solid rgba(26,26,24,0.12); cursor: pointer; transition: background 0.15s; text-decoration: none; }
+  .mbb-brand:hover { background: rgba(26,26,24,0.06); }
+  .mbb-brand span { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,26,24,0.55); transition: color 0.15s; }
+  .mbb-brand:hover span { color: rgba(26,26,24,0.90); }
+  .mbb-sponsored { font-size: 7.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,26,24,0.28); padding-left: 12px; border-left: 1px solid rgba(26,26,24,0.12); height: 46px; display: flex; align-items: center; }
+
+  /* Cats section bottom padding accounts for tiles being in panel */
+  .mega-cats-wrap { padding-bottom: 24px; }
+
+  /* ── CURSOR LAB v2: scan-first — wider rail, fold-safe height, taxonomy scrolls (minmax fixes grid shrink) ── */
+  body.vk-mega-v2 { overflow-x: clip; }
+  body.vk-mega-v2 .mega {
+    min-height: 0;
+    max-height: min(68vh, 560px);
+    overflow: hidden;
+  }
+  body.vk-mega-v2 .nav-item.open > .mega {
+    grid-template-columns: 1fr 280px;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  body.vk-mega-v2 .mega-cats {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+  body.vk-mega-v2 .mega-panel { width: 280px !important; min-width: 280px !important; max-width: 280px !important; }
+  body.vk-mega-v2 .mega-panel-light { min-width: 280px !important; max-width: 280px !important; }
+  body.vk-mega-v2 .panel-img { display: none !important; }
+  body.vk-mega-v2 .panel-feature { padding: 20px 20px 14px !important; }
+  body.vk-mega-v2 .panel-name { font-size: 16px; line-height: 1.3; }
+  body.vk-mega-v2 .panel-mym { display: none !important; }
+  body.vk-mega-v2 .mega-tiles .itile:nth-child(3) { display: none; }
+  body.vk-mega-v2 .mega-tiles { gap: 12px; padding: 16px 36px; }
+  body.vk-mega-v2 .itile-img { width: 140px; }
+  body.vk-mega-v2 .itile-name { font-size: 13px; }
+  body.vk-mega-v2 .itile-body { padding: 12px 14px; }
+
+  /* ── DEMO STAGE ── */
+  .demo-stage { min-height: 100vh; padding: 60px 40px; max-width: 1440px; margin: 0 auto; }
+  .demo-title { font-family: var(--display); font-size: 42px; font-weight: 500; color: var(--near-black); margin-bottom: 12px; }
+  .demo-sub { font-size: 15px; color: var(--mid-grey); margin-bottom: 48px; max-width: 600px; line-height: 1.7; }
+  .demo-instructions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 64px; }
+  .demo-pill { background: var(--off-white); border: 1px solid var(--light-grey); border-radius: 20px; padding: 8px 16px; font-size: 12px; color: var(--charcoal); display: flex; align-items: center; gap: 6px; }
+  .demo-pill span { color: var(--vk-red); font-weight: 500; }
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .demo-card { background: var(--off-white); border: 1px solid var(--light-grey); border-radius: 4px; padding: 20px 24px; }
+  .demo-card-title { font-weight: 500; font-size: 14px; color: var(--near-black); margin-bottom: 4px; }
+  .demo-card-desc { font-size: 12px; color: var(--mid-grey); line-height: 1.6; }
+
+  .version-badge { position: fixed; bottom: 16px; right: 16px; background: var(--near-black); color: rgba(255,255,255,0.4); font-size: 10px; padding: 6px 12px; border-radius: 20px; pointer-events: none; z-index: 9999; }
+
+  /* ══════════════════════════════════════════════
+     MOBILE NAV — v4.0
+  ══════════════════════════════════════════════ */
+
+  /* Hamburger button — hidden on desktop */
+  .mobile-menu-btn {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    color: var(--charcoal); padding: 8px;
+    align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+  .mobile-menu-btn:hover { color: var(--vk-red); }
+
+  /* Overlay behind the slide-in panel */
+  .mobile-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+  .mobile-overlay.open { opacity: 1; pointer-events: auto; }
+
+  /* The slide-in drawer */
+  .mobile-nav {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: min(88vw, 360px);
+    background: var(--warm-white);
+    z-index: 501;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+  .mobile-nav.open { transform: translateX(0); }
+
+  /* Mobile nav header: logo + close */
+  .mob-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--light-grey);
+    background: var(--warm-white);
+    flex-shrink: 0;
+  }
+  .mob-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+  .mob-logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .mob-logo-name {
+    font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--near-black);
+  }
+  .mob-logo-tag {
+    font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    font-size: 7.5px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    margin-top: 2px;
+  }
+  .mob-close {
+    background: none; border: none; cursor: pointer;
+    color: var(--mid-grey); padding: 6px;
+    display: flex; align-items: center;
+    transition: color 0.15s;
+  }
+  .mob-close:hover { color: var(--vk-red); }
+
+  /* Scrollable body of the drawer */
+  .mob-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+  }
+
+  /* Search in drawer */
+  .mob-search {
+    display: flex; align-items: center; gap: 8px;
+    margin: 14px 20px 4px;
+    background: var(--off-white);
+    border: 1px solid var(--light-grey);
+    border-radius: 4px;
+    padding: 9px 13px;
+  }
+  .mob-search input {
+    border: none; background: none;
+    font-family: var(--body); font-size: 13px;
+    color: var(--charcoal); outline: none; width: 100%;
+  }
+  .mob-search input::placeholder { color: var(--mid-grey); }
+
+  /* Accordion items */
+  .mob-accordion { border-bottom: 1px solid var(--pale-grey); }
+  .mob-accordion-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; background: none; border: none; cursor: pointer;
+    padding: 15px 20px;
+    font-family: var(--body); font-size: 13.5px; font-weight: 500;
+    color: var(--charcoal); text-align: left;
+    transition: color 0.15s;
+  }
+  .mob-accordion-btn:hover { color: var(--vk-red); }
+  .mob-accordion-btn.vintage-btn { color: var(--amber); }
+  .mob-accordion-btn.vintage-btn:hover { color: var(--near-black); }
+  .mob-nav-plus {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 4px;
+    vertical-align: -1px;
+    opacity: 0.75;
+  }
+  .mob-accordion-btn.deals-btn { color: var(--vk-red); font-weight: 600; }
+  .mob-acc-chevron {
+    width: 14px; height: 14px; flex-shrink: 0;
+    transition: transform 0.22s ease;
+    color: var(--mid-grey);
+  }
+  .mob-accordion.open .mob-acc-chevron { transform: rotate(180deg); }
+
+  /* Accordion content */
+  .mob-accordion-content {
+    display: none;
+    background: var(--off-white);
+    border-top: 1px solid var(--pale-grey);
+  }
+  .mob-accordion.open .mob-accordion-content { display: block; }
+
+  /* Sub-links inside accordion */
+  .mob-sub-links { padding: 8px 0 4px; }
+  .mob-sub-links a {
+    display: block; padding: 8px 28px;
+    font-size: 13px; color: var(--charcoal);
+    text-decoration: none; transition: color 0.12s, padding-left 0.12s;
+  }
+  .mob-sub-links a:hover { color: var(--vk-red); padding-left: 34px; }
+  .mob-sub-links a.bold { font-weight: 500; color: var(--near-black); }
+  .mob-sub-view-all {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--vk-red);
+    text-decoration: none; margin: 4px 28px 12px;
+    transition: gap 0.15s;
+  }
+  .mob-sub-view-all:hover { gap: 7px; }
+
+  /* Co-op card inside accordion (Tier 1 equivalent) */
+  .mob-coop-card {
+    margin: 0 16px 14px;
+    background: var(--near-black);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex; align-items: center; gap: 0;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    position: relative;
+  }
+  .mob-coop-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(192,57,43,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .mob-coop-card.vintage-card::before {
+    background: radial-gradient(ellipse at 80% 50%, rgba(212,134,10,0.22) 0%, transparent 70%);
+  }
+  .mob-coop-card:hover { opacity: 0.9; }
+  .mob-coop-img {
+    width: 64px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 12px 8px;
+  }
+  .mob-coop-info { flex: 1; padding: 12px 14px 12px 4px; }
+  .mob-coop-sponsor { font-size: 7.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 3px; }
+  .mob-coop-name { font-family: var(--display); font-size: 13px; color: #fff; line-height: 1.25; margin-bottom: 3px; }
+  .mob-coop-price { font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 6px; }
+  .mob-coop-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 9.5px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #fff;
+    background: var(--vk-red); border-radius: 2px;
+    padding: 4px 9px;
+  }
+
+  /* Make Your Mark strip — horizontal scroll */
+  .mob-mym-strip {
+    margin: 4px 0 0;
+    padding: 12px 20px;
+    border-top: 1px solid var(--light-grey);
+    background: var(--warm-white);
+  }
+  .mob-mym-strip-label {
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid-grey); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .mob-mym-strip-label::after { content: ''; flex: 1; height: 1px; background: var(--pale-grey); }
+  .mob-mym-scroll {
+    display: flex; gap: 10px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-bottom: 2px;
+  }
+  .mob-mym-scroll::-webkit-scrollbar { display: none; }
+  .mob-mym-card {
+    flex-shrink: 0; width: 160px;
+    background: var(--near-black); border-radius: 3px;
+    overflow: hidden; cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .mob-mym-card:hover { opacity: 0.88; }
+  .mob-mym-thumb {
+    height: 72px;
+    background: var(--charcoal);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .mob-mym-play {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(192,57,43,0.85);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mob-mym-duration {
+    position: absolute; bottom: 5px; right: 7px;
+    font-size: 9px; color: rgba(255,255,255,0.5);
+    background: rgba(0,0,0,0.5); padding: 1px 5px; border-radius: 2px;
+  }
+  .mob-mym-meta { padding: 8px 10px; }
+  .mob-mym-meta-label { font-size: 7.5px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 3px; }
+  .mob-mym-meta-title { font-family: var(--display); font-style: italic; font-size: 11px; color: rgba(255,255,255,0.8); line-height: 1.35; }
+
+  /* Links that have no mega dropdown */
+  .mob-plain-link {
+    display: block; padding: 15px 20px;
+    font-size: 13.5px; font-weight: 600; color: var(--vk-red);
+    text-decoration: none;
+    border-bottom: 1px solid var(--pale-grey);
+    transition: color 0.15s;
+  }
+  .mob-plain-link:hover { color: var(--vk-red-dk); }
+
+  /* Utility links at the bottom */
+  .mob-util {
+    display: flex; flex-wrap: wrap; gap: 0;
+    margin-top: 8px;
+    border-top: 1px solid var(--light-grey);
+    padding: 8px 0;
+  }
+  .mob-util a {
+    flex: 0 0 50%;
+    padding: 10px 20px;
+    font-size: 12px; color: var(--mid-grey);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .mob-util a:hover { color: var(--vk-red); }
+
+  /* Sticky bottom bar — Expert CTA */
+  .mob-sticky-bar {
+    flex-shrink: 0;
+    border-top: 1px solid var(--light-grey);
+    background: var(--warm-white);
+  }
+  .mob-sticky-expert {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--vk-red);
+    padding: 14px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .mob-sticky-expert:hover { background: var(--vk-red-dk); }
+  .mob-sticky-expert-text { flex: 1; }
+  .mob-sticky-expert-title { font-size: 13px; font-weight: 500; color: #fff; }
+  .mob-sticky-expert-sub { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 1px; }
+  .mob-sticky-meta {
+    display: flex; align-items: center; justify-content: space-around;
+    padding: 10px 16px;
+    gap: 4px;
+  }
+  .mob-sticky-meta-item {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px;
+    font-size: 10px; color: var(--mid-grey);
+    white-space: nowrap;
+  }
+  .mob-sticky-meta-sep { width: 1px; height: 14px; background: var(--light-grey); flex-shrink: 0; }
+  .mob-sticky-meta-item a { color: inherit; text-decoration: none; }
+  .mob-sticky-meta-item a:hover { color: var(--vk-red); }
+
+  /* ── RESPONSIVE BREAKPOINTS ── */
+  @media (min-width: 1100px) {
+    .nav-search-wrap input { width: 180px; }
+    .nav-inner { padding: 0 40px; }
+  }
+
+  /* ── LAYOUT MODEL TABS (top control strip — same white field, compare nav density) ── */
+  .proto-switcher {
+    position: sticky; top: var(--demo-hub-h); z-index: 201;
+    min-height: var(--proto-bar-h);
+    display: flex; align-items: stretch; flex-wrap: wrap; gap: 0;
+    background: #fff;
+    border-bottom: 1px solid var(--pale-grey);
+    font-family: var(--body);
+  }
+  .proto-switcher-label {
+    display: flex; align-items: center; padding: 0 14px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--mid-grey); background: #fff; border-right: 1px solid var(--pale-grey);
+    flex-shrink: 0;
+  }
+  .proto-tabs { display: flex; flex-wrap: wrap; flex: 1; min-width: 0; }
+  .proto-tab {
+    flex: 1 1 auto;
+    min-width: 108px;
+    padding: 10px 12px;
+    border: none; border-right: 1px solid var(--pale-grey);
+    background: #fff;
+    font-family: var(--body); font-size: 11px; font-weight: 500;
+    color: var(--charcoal); cursor: pointer; transition: background 0.15s, color 0.15s;
+    white-space: normal; line-height: 1.25; text-align: center;
+  }
+  .proto-tab:hover { background: var(--pale-grey); color: var(--near-black); }
+  .proto-tab.active { background: var(--near-black); color: #fff; }
+  .proto-notes {
+    max-width: 1440px; margin: 0 auto; padding: 14px 24px 16px;
+    background: #fff; border-bottom: 1px solid var(--light-grey);
+    font-size: 13px; line-height: 1.65; color: var(--charcoal);
+  }
+  .proto-notes h2 { font-family: var(--display); font-size: 15px; font-weight: 500; color: var(--near-black); margin-bottom: 8px; }
+  .proto-notes ul { margin: 8px 0 0 1.1em; padding: 0; }
+  .proto-notes li { margin-bottom: 4px; }
+  .proto-notes a { color: var(--vk-red); }
+  .proto-tax { font-size: 11px; color: var(--mid-grey); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--pale-grey); }
+
+  /* Look 1 — Standard (default: boosted rail + itiles above) */
+
+  /* Look 4 · Rail-first — widest sponsor column */
+  body.vk-mega-v2.vk-look-4 .nav-item.open > .mega { grid-template-columns: 1fr 300px; }
+  body.vk-mega-v2.vk-look-4 .mega-panel,
+  body.vk-mega-v2.vk-look-4 .mega-panel-light {
+    width: 300px !important; min-width: 300px !important; max-width: 300px !important;
+  }
+  body.vk-look-4 .panel-name { font-size: 18px; }
+
+  /* Look 5 · Tiles-first — bigger tile thumbs + trust row */
+  body.vk-look-5 .mega-tiles { padding: 22px 40px; gap: 14px; }
+  body.vk-look-5 .itile-img { width: 156px; }
+  body.vk-look-5 .itile-name { font-size: 14px; }
+  body.vk-look-5 .itile-label { font-size: 10px; }
+  body.vk-look-5 .mega-bar-inner { min-height: 54px; }
+  body.vk-look-5 .mega-cats { padding-bottom: 8px; }
+
+  /* Look 6 · Text-only tiles — no tiny photos; faster scan, clearer for AI/snippets */
+  body.vk-look-6.vk-mega-v2 .mega-tiles { padding: 16px 36px; gap: 12px; }
+  body.vk-look-6.vk-mega-v2 .itile { flex-direction: row; align-items: stretch; min-height: 78px; }
+  body.vk-look-6.vk-mega-v2 .itile-img { display: none !important; }
+  body.vk-look-6.vk-mega-v2 .itile-body {
+    flex: 1; border-left: 3px solid var(--vk-red); padding: 12px 16px; background: var(--warm-white);
+    justify-content: center; border-radius: 0 3px 3px 0;
+  }
+  body.vk-look-6.vk-mega-v2 .itile:hover .itile-body { background: var(--off-white); }
+
+  /* Look 7 · Full-bleed photo cards — one image story per card; conversion + brand */
+  body.vk-look-7.vk-mega-v2 .mega-tiles { padding: 16px 36px; gap: 12px; }
+  body.vk-look-7.vk-mega-v2 .itile {
+    flex-direction: column; position: relative; min-height: 128px; overflow: hidden;
+  }
+  body.vk-look-7.vk-mega-v2 .itile-img {
+    width: 100% !important; min-height: 110px; height: 110px; flex-shrink: 0;
+  }
+  body.vk-look-7.vk-mega-v2 .itile-body {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(26,26,24,0.88) 65%);
+    border-left: none; padding: 26px 14px 12px; justify-content: flex-end;
+  }
+  body.vk-look-7.vk-mega-v2 .itile-label { color: rgba(255,255,255,0.85); }
+  body.vk-look-7.vk-mega-v2 .itile-name { color: #fff; }
+  body.vk-look-7.vk-mega-v2 .itile-sub { color: rgba(255,255,255,0.75); }
+  body.vk-look-7.vk-mega-v2 .itile-cta { background: #fff; color: var(--vk-red); }
+  body.vk-look-7.vk-mega-v2 .itile-arrow { color: rgba(255,255,255,0.8); }
+
+  /* Look 8 · Hero photo + text pick — balances emotion + second SKU without three micro-thumbs */
+  body.vk-look-8.vk-mega-v2 .mega-tiles {
+    display: flex; flex-direction: row; align-items: stretch; gap: 12px; padding: 16px 36px;
+  }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile { flex: 1; min-width: 0; }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:first-child {
+    flex: 1.85; flex-direction: column; position: relative; min-height: 128px; overflow: hidden;
+  }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:first-child .itile-img {
+    width: 100% !important; min-height: 110px; height: 110px; flex-shrink: 0;
+  }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:first-child .itile-body {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(26,26,24,0.88) 65%);
+    border-left: none; padding: 26px 14px 12px; justify-content: flex-end;
+  }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:first-child .itile-label { color: rgba(255,255,255,0.85); }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:first-child .itile-name { color: #fff; }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:first-child .itile-sub { color: rgba(255,255,255,0.75); }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:first-child .itile-cta { background: #fff; color: var(--vk-red); }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:first-child .itile-arrow { color: rgba(255,255,255,0.8); }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:nth-child(2) { flex-direction: row; align-items: stretch; }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:nth-child(2) .itile-img { display: none !important; }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:nth-child(2) .itile-body {
+    flex: 1; position: static; border-left: 3px solid var(--amber); padding: 12px 14px;
+    background: var(--off-white); justify-content: center;
+  }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:nth-child(2) .itile-name { color: var(--near-black); }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:nth-child(2) .itile-sub { color: var(--mid-grey); }
+  body.vk-look-8.vk-mega-v2 .mega-tiles .itile:nth-child(2) .itile-label { color: var(--vk-red); }
+
+  /* Look 9 · Three itiles — taxonomy + three picks (rail unchanged); tighter thumbs so three fit */
+  body.vk-mega-v2.vk-look-9 .mega-tiles .itile:nth-child(3) { display: flex !important; }
+  body.vk-mega-v2.vk-look-9 .mega-tiles { gap: 8px; padding: 14px 28px; }
+  body.vk-mega-v2.vk-look-9 .itile-img { width: 112px !important; }
+  body.vk-mega-v2.vk-look-9 .itile-body { padding: 10px 12px; }
+  body.vk-mega-v2.vk-look-9 .itile-name { font-size: 12px; }
+
+  /* Look 10 · Three text-only itiles — same as look 6 + third slot + tighter type row */
+  body.vk-mega-v2.vk-look-10 .mega-tiles .itile:nth-child(3) { display: flex !important; }
+  body.vk-mega-v2.vk-look-10 .mega-tiles { padding: 14px 28px; gap: 8px; }
+  body.vk-mega-v2.vk-look-10 .itile { flex-direction: row; align-items: stretch; min-height: 72px; }
+  body.vk-mega-v2.vk-look-10 .itile-img { display: none !important; }
+  body.vk-mega-v2.vk-look-10 .itile-body {
+    flex: 1; border-left: 3px solid var(--vk-red); padding: 10px 12px; background: var(--warm-white);
+    justify-content: center; border-radius: 0 3px 3px 0;
+  }
+  body.vk-mega-v2.vk-look-10 .itile:hover .itile-body { background: var(--off-white); }
+  body.vk-mega-v2.vk-look-10 .itile-name { font-size: 12px; }
+  body.vk-mega-v2.vk-look-10 .itile-sub { font-size: 9.5px; }
+
+  @media (max-width: 767px) {
+    .topbar { display: none; top: 0; }
+    .utility-bar {
+      display: flex;
+      top: var(--demo-hub-h);
+      padding: 8px 16px;
+      min-height: 40px;
+    }
+    .utility-bar-links { flex-wrap: wrap; row-gap: 6px; }
+    .utility-bar-links a { font-size: 11px; padding: 0 10px; }
+    .proto-switcher { display: none; }
+    .proto-notes { display: none; }
+    .nav-row-cats { display: none; }
+    .nav-items-wrap { display: none; }
+    .site-nav { top: calc(var(--demo-hub-h) + 40px); }
+    .nav-actions { display: none; }
+    .mobile-menu-btn { display: flex; margin-left: auto; }
+    .nav-inner { padding: 0 16px; }
+    .nav-row-top { min-height: 56px; }
+    .nav-logo { margin-right: 0; }
+    body.mob-open { overflow: hidden; }
+    .mobile-overlay { display: block; }
+    .version-badge { display: none; }
+  }
+
+  @media (min-width: 768px) {
+    .mobile-overlay, .mobile-nav { display: none !important; }
+  }
+</style>
+</head>
+<body class="vk-mega-v2 vk-look-1">
+
+<nav class="demo-hub-bar" aria-label="All Cursor lab demos">
+  <a href="../VK-Prototype-Index-from-GitHub.html">Index</a>
+  <span class="dh-sep">|</span>
+  <span class="dh-here">Mega menu (this page)</span>
+  <span class="dh-sep">|</span>
+  <a href="VK-Microphones-CategoryDemo-v3-hybrid.html">PLP v3 hybrid</a>
+  <span class="dh-sep">|</span>
+  <a href="VK-Microphones-CategoryDemo-v4-refined.html">PLP v4</a>
+  <span class="dh-sep">|</span>
+  <a href="VK-Microphones-CategoryDemo-v2.html">Microphones PLP v2</a>
+  <span class="dh-sep">|</span>
+  <a href="VK-Microphones-CategoryDemo-v1.html">Microphones PLP v1</a>
+</nav>
+
+<div class="proto-switcher" role="tablist" aria-label="Live itile presets (fold-safe mega; wide rail / thumb size = CMS per category)">
+  <span class="proto-switcher-label">Presets</span>
+  <div class="proto-tabs">
+    <button type="button" class="proto-tab active" role="tab" aria-selected="true" data-look="1">1 · Standard</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="6">2 · Text</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="7">3 · Two photos</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="8">4 · Hero + text</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="9">5 · Three tiles</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="10">6 · 3 × text</button>
+  </div>
+</div>
+
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span>📞 888.653.1184 &nbsp;Mon–Sat 9:30AM–9PM ET</span>
+    <div class="topbar-divider"></div>
+    <a href="#">Free shipping on orders over $99</a>
+    <div class="topbar-divider"></div>
+    <a href="#"><span class="topbar-highlight">0% financing up to 48 months</span> — Learn more</a>
+  </div>
+  <div class="topbar-right">
+    <a href="#">Section 179 Tax Savings</a>
+    <div class="topbar-divider"></div>
+    <a href="#">Locations: LA · Nashville · Atlanta</a>
+    <div class="topbar-divider"></div>
+    <a href="#">Sign In</a>
+  </div>
+</div>
+
+<!-- ── VALUE LINE: between black topbar and logo row (Studio Pros · Trade · Installs · etc.) ── -->
+<div class="utility-bar" aria-label="Value services and account">
+  <div class="utility-bar-links">
+    <a href="#">Studio Professionals</a>
+    <a href="#">Trade Program</a>
+    <a href="#">Studio Installations</a>
+    <a href="#" style="color:var(--vk-red);font-weight:500">Sell or Trade</a>
+    <a href="#">Financing</a>
+    <a href="#">Section 179</a>
+  </div>
+  <div class="utility-bar-right">
+    <a href="tel:8886531184" class="utility-bar-phone"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.61 4.83 2 2 0 0 1 3.58 2.63h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>888.653.1184</a>
+    <span style="color:rgba(26,26,24,0.2);padding:0 10px;font-size:10px">·</span>
+    <a href="#" style="font-size:12.5px;font-weight:600;color:rgba(26,26,24,0.55);text-decoration:none;letter-spacing:0.03em;transition:color 0.15s">Sign In</a>
+  </div>
+</div>
+
+<!-- ── PRIMARY NAV ── -->
+<nav class="site-nav" aria-label="Main">
+  <div class="nav-inner">
+    <div class="nav-row nav-row-top">
+    <a href="#" class="nav-logo">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACgAKADASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAcGCAEEBQMC/8QAUBAAAQMDAQQGBQUKCwcFAAAAAQIDBAAFEQYHEiExEyJBUWFxFDJCgZEVUmJyoQgjMzRjc4KSsbIWNjdDRHWis7TC0RckJTWDlMFTVFbS0//EABsBAAIDAQEBAAAAAAAAAAAAAAUGAAQHAwIB/8QANhEAAQIEAggEBQMFAQAAAAAAAQIDAAQFESExBhJBUWFxkaGBscHwEyIyM9EUQuEjNFKCwvH/2gAMAwEAAhEDEQA/ALl0UUVIkFFFFSJBWtNmRYMRcqbJZjR2xlbrywhKR3kngKXe0Xaxa9POO26zobulzTlK8L+8sHlhSh6yvop7uJFIfU2or1qWb6Ve7g9LIOW2j1WmvqoHAc8Z5ntJoXNVRtk6qMT2hppOis1OgOO/IjjmeQ9T4Xh56n206bt2+1aI8i8PjhvI+9s5+uoZPmlJFLu+bY9Zz99MNcO1NHl6OyHHAPrLyD+qKXlFBXajMOfutyw/nvD1J6M06VH29Y71Y9su0di4aq1RPX0kzUl4X4CWtCf1UkJ+yua9KlO9Z6VIdV3rdUT9teNFVCtRxJg0hltsWQkDkLR7MypTXWZlSGld6HVA/ZXRt+qtUQF9JD1JeEeBlrWn9VRKfsrkUVAtQxBiLZbcFlpB5iGHY9ses4G4mY5DurQ9b0hnccI+sjAH6ppiaY206buJQ1eI8izvnA3lffWcn6aRkeZSB41XiirbVRmG/wB1+eP894CzmjNOmh9vVO9OHbLtF0IUyLPiIlQZLMmO4ModZWFpUO8EcDWzVOtM6ivWmpvpVluD0Qk5cbBy259dB4HljPMdhFPfZ3tZteoHGrdekt2u5rwlBKvvDxPDCVH1VfRPfwJo1K1Rt46q8D2hFq2ik1JAuNfOjhmOY9R42hnUUUUUhWgoooqRIKKKKkSPN1xDTanHFJQhAypROAB30gdq+1Z+6OPWXTEhTNuGUPTUEhcjvCD7KPHmrswPWztz2gKucl7S9mk4t7RKJzyD+MLB4tg/MHHPeeHIdZT0vVGolRLTRw2nf798dH0a0aShImpoXUcQk7OJ47t3PLCQlHVSndSOQHKs0UUFh7goorBKU9ZXVSO01IkZr2gxZE+azBhsuSJMhYbZaQMlSj2f+fAZPZUm0ds81PqdaHI0JUOEcZmSwUIx3pB6y/DAx4in3s+2f2XRzHSRkql3Fad12a8OuQeaUj2U+A4nAyTir0rT3Zg3Isnf+PdoXavpJK09JSk6zm4ep2cs4q9OiyoE16DMjuR5UdZbeaWMFKh2f6HkRgjnXjVp9oOz+yaxZ35STFuKE7rU1kdcAcgoclp8DyycEZpC6x2dao0xvuSIfpsIZxLigrRjvUPWR454eJqTVPdYN7XTv/Pu0SkaSStQSEqOq5uO3kdvLPziJUVgKSrrJ6ye8VmqMMUFYISrqqTvJPAg8qzRUiQ1tlO1WRaVs2XU8hT1uOEMzFklyN3BZ5qR480+I9V/tOIdbS42pK0LGUqByCO+qVU1thu0FVrks6YvMjNudUEQ3ln8WWeTZPzCeXzTw5HqmqdUSkhp04bDu99uWSJpLo0lxJmpUWUMVJG3iOO8beedg6KKKYYziCoVthn6gg6LkfwcgyJEh49G68wMrjtYO8sJHWJ7BgHGc9lTWiubqCtBSDa8WJV4MPJdKQoA3scjFJEbu4nd9UcBjlwr6qzuvNmNg1P0spCPk25r4+lMJ4LP5RHAL8+CuHOkLrTROoNJvH5Ui78TOETGMqZVk8ATzSfA48M0qTMi7L4kXG8e8I12laQylRslJ1V/4n0O3z4RHKKKkmzGxM6j1xbbXKTmKVKdkJ+chCSrHvIAPgTVVCCtQSMzBeYfTLtKdXkkEnwjf0Ds41BqzdlNpTb7YT+NvpJ3x+TTwKvPIHjwp36P2ZaU07uPJhfKE1PH0mZhage9KfVT5gZ8TUyZbbaaQ22hKEIASlKRgADkAK9aaZanMsWJFzvMZJU9JZ2fJSFaiNw9Tt8uEFFFFEIXoKKKKkSIRq/ZlpTUfSPLhfJ81XH0mHhtRPepPqq8yM+IpIa+2b37SaFSnN24Wwf0thJG4PyieJR55I8RmrTV5PNtutqbcQlbawUqSoZBB5jFD5mnMvi4FjvHrDBTNJZyQISVa6Nx9Ds8uEUroqS7T7EzpzXFxtcNO7ECkux0/NQtIVu+QOQPACo1SstBQopOYjXJd9Ew0l1GSgCPGCvle7uK3t3dPA55VJdFaK1Bqx5PyXF3YgOFzH8pZTg8QD7R8BnxxT60Hsx0/pfopTiflO5o4+lPpGEH8mjiEdvHirjzq1LSDsxiBYbz7xgRVdIZSnXSo6y/8R67vPhHtscn6gm6Lj/wigyI8hk9G06/wXIaAG6sg9YHsOQM4z21NqKKa2kFtASTe0ZFNPB95ToSEgm9hkIgm13W72i7ZBdhx2JEuXI3Q28SB0aRlauHmkfpVzNL7ZdMXQIZuocs0g8CXuuyTjscHIeKgmlz90Pd0z9oRt6XklFsjIaKQeKVrG+o/qlv4UuqATNSdbmFBBwGFo0KmaLSkxTm1PAhahe4OOOXDK2yLpRZMeVHRIiyG32VjKHG1hSVDvBHCsvstyGVsvNpcbWClSFDIUO4iqe2C+3qwv8ATWW5SoKycqDSuoo96kHKVe8U0dL7cZTQQxqW1pfTyMmF1VeZbUcHzBHlVxirtLwcGr3EBZ7Q2bY+aXOuOh6Zd78I7Ou9jFvmFc3SrjdukcSYi8+jrOOSeZb7OWR4CoZsjtV00/tft9vu8F6FILb4CVjgsBsnKSOCh4gmnhpfWGnNSt/8IurD7uMlhR3Hk+aFYVjxxiu0thlxbbjjLa1tEqbUUglJIIJB7OBI99dP0DDi0vNG1jfDKK40gnpdhySm0k3BGOChcd/HrHvRRUX2nXidp/Rc6823o/SYymVJDgylQLqApJ8wSO+iDiw2kqOzGFyXZU+6lpGaiAOZwiUUVGNAaxtesLWZUFfRSWsCTFUeuyo/tSexXb5ggSeohxLiQpJuIj7Dku4W3RZQzEFFFcvUV7tmn7W7crtKTGjNjiTxKj2JSOalHsAr0pQSLnKPCEKcUEIFychHUopZ7L9eztaauuyVRxEt0aMgxmDgr4rOVLPfgchwHjzpmVzZeS8jXRlFmdknZJ34LwsqwPUXit2161XTUG1+db7PBemSEssApbAwkFsEFR5JHioiploTYzBhbk7VTjdwkcCIjeegR4KPAufYPA02EMMtrdcbZQhbpCnFBIBUQAAT38AB7q4uqNY6c00g/K92jsO4yGEnfeV5ITlXvxiqP6Bhtannje5vjkIOnSCemGG5KUSRYAYYqNh28OsdthlthhDLLaG20AJSlIACQOwCsSpDEWOuRJebZZQMrW6sJSkd5J4UkNU7cZToWzpq1pjp5CTN6yvMNpOB5knypW3++3rUD/TXq6SpygcpDiuok96UDCU8+wV4fq7SMGxfsIsSGhs4/wDNMHUHU9Mu9+EPrVO2XTFrC2bUHbzIHAFjqMg47XDzHikKrpbItbva0t1wcmR48eXEkBJbZJI6NQyhXHjzCh+jVYqYn3PN3TA2ii3qeSEXOMtoJ7VLQOkSfckOfGqUtUnVzCdc4HC0GqlotKS1OcLIJWkXuTjhieGV9kWFu1ntN2Z6G6WyHNb+a+wlY+0VCrzsd0ZP3lRY8q2OK9qK+cD9Fe8ke4CpExrjRzzxZRqiz9KCQUKmISrI4EYJFdiLcIEpO9FnRnweRbdSofYaNKRLv5gGEdqYqEj9BUjqB0yhH3rYVdGgtdmvkWSn2WpTamj+sneB+AqFXrZ5rS05VI0/KeaH85Fw+D44RlXxAq2FFU3KQwr6bj3xg1LaZVBrByyxxFj2t5GKTrCo8ro3EqZkNEHdUClxBHb3g00NkGvdVK1ba9Py7kqdBkuKbUJQ33EANqI3V8DnIHrZ4U+brabXdmehultiTWvmyGUuD7RUbibNtJQr9Evdvt7kKXFX0jYZeUGycEYKCSORPLFV26Y8w4FNrwuL7MIIzOlUlPyy2phn5rG2RsbYG+BGO4RM6hu2sb2zC+D5rKFfBxJ/8VMq8nWm3W1NuIStCwUqSoZBB7MUadR8RCk7xaEmVf8A076HbX1SD0N4p1YLxcrDd2bpaZSo8trkeYUDzSoe0k44j38CARZvZtrm26ytZcZ3Y1xZA9KiFWSg/OSfaQew+44NLvabsgU10t20ezvI4qet2eIHe1/9Ph2JpSWi43CzXRq4W+Q5EmxlnCgCCkjgUqB+BSaWmnHqe7qrGB93EabNyslpJLfFYVZY27RwUN3sbRFpdfa1s+jreHp7nSy3QfR4iCOkdI7fBPeo8PM4BrTrHVF41ZdDcLs9vJGQxHRkNsJPYkd/eo8T8AOfeblMu1weul0lOSJTpytxZ7B2dwSOwDgKYGzXZTcdQdFcr501utZwpLeMPyB4Z9RPieJ7ByNR6Yen16jYw3epj1I02R0fY+PMKGvv9Ej3xsMup9zChz5dvb3Rq6IRmkFeDje3icZ78ccU+60LNa7fZ7c1b7ZDZiRWvVbbGBntJ7ye0nia36PScuZdkIJvGe1moCoziphKbA27C0V32wa91SjV100/DuSoMCMtLafRRuOLBbSTvL58yfVxSvRvSJXRp6R6Q6ScDK3Fk9veTVpZmzbSM7UMu+XC3uTJclYcWHnlFsEJAwEAgHgBzzUktVptdpZ6G122JBa+bHZS2PgBQxymPPuFTi8Lm23CGmW0qkpCXQ3Ls3VYXyFzbE3xJx3iKvWTZ5rS7bio+n5TLR/nZWGAPEheFfAGprZdhV0dCFXq+RYyfaaitqdPuUrdA+Bp90VYbpDCfquffCB0zplUHcG7IHAXPe/kIXVm2O6MgYVKjyrm4PalPnB/RRupPvBqaWizWm0M9Fa7ZDgo7o7CUfsFe0q4QIqd6VOjMAcy46lI+01xpGudHR19G5qiz9JnG6mYhRz3YBNXEol2MgBAV2YqE99ZUseJHTKKp3dHRXec2r2JLqT5hZFaSmWV9ZTLaleKQabGoNj2rZupLpKhrtaYkic8+yXZKkq3FuFQBAQe/HOsMbDNUK/DXSzt/UU4r/IKWDIvqURqGNVb0gpyW0kvDKFrGuVyi9WHdLhFT3MSVt/ukV14et9Yw+rH1Rdv+rILv7+an7Wwe7K/Cakgt/VhqV/nFbcfYIr+kaqz9SBj9rhroiRnBkkjxH5iq9XqIv7i0q/1J/5iFw9q2vYvrXxMrwfitH91INSfRm17VVy1PbLXPZtK48uU2wtSWFoWApWMjrkZ91dprYPaf57UVyP1G20/tBrp2PY1p603SJcm7reHnoryH2wtbQSVJUCMgIzjh31calp9Khcm3OA05UtHXG1BKBcg2si2PQQz61pjoajqV0zTJOEpU56u8TgDmO04xntrZqA7f0pVspuyVJ3gVxuB5fjDdG33PhNKXuBMIslL/qZltm9tZQF88zaNTV2qNomnlrd/glBuUIcpEN9xZA71I3d4e4EeNJTXOrI+rJSZzmn4cGdnC5MZ5RLgA5LGME+PPsr10ptC1Xprcbh3JUqIn+iy8uox3JOd5PgAQPCpmrVGzbXPV1TaVWG5rGPTWDwJ7y4kccflE4HfS66/+qGqHLcFWt4G0aRKyCqS4HFS+tb9zZVfxQTjxtccIXmkb3DsNx+UHrDFuzzZBY9JdUENkHmEgEFXcTy7KYX+3e9f/Hrf/wBwv/StWdsXub60SNOXy13O3uDebedWUKx5oCgrzGPKtf8A2Ja0/wDcWX/uXP8A868tonmRqoBHICO0zMUGdV8R9QJ4lQtwtcW6Q19kmspetLVPmS4LMRUaSGUpbWVBQ3Eqzxx3/ZU4pf7F9I3bSFnuMS7rhrdkSw836O4pY3ejSnjlIwcg0wKYJQuFlPxPqjOKsmXTOLEt9Gy3KEJrXa5qu26nudqgM2lDMSUtlCnGFqWQlWMk74GfdUXmbVteyvVviYvgxFaH7ySaal92Nadu12l3Ny53hl+U8t9wIW0UhSlZOMozjj31zHNg9p/mdRXIfnG21fsAoQ9Lz6lGxNucOcnUtHm20hSBcAXui+PQwqJmt9ZSurI1RdP+lILX7mK5Em43KV1Zl0uEpPc/KW5+8TTif2Cqx/u+qt368DP7HBWk5sHuyfwWpILn1oak/wCc1TXIzhzST4j8wZZr9ER9taU/6kf8wnUsso6yWW0q7wkCty1t9LdIjP8A6khtHxUBTLf2GaoT+Bulnc+upxP+Q1mw7HtWw9R2yXLXa1RY81h50tyVFW4hxKiACgdg765iRfSQNQxbXpBT1IJDwyiwtFaF5uUOz2qRdJ7imokZBceWEKWUpHM4SCfhS2u+3HTkcKTa7dcLgrHBSgllsnzV1v7NNL0y0z9arRksnTJud+w2VDfs6nCGxRVdLvtt1TKO7b4NutyDn2VPuD9I4H9modd9Zasu3/MNRXJ1J5oQ90SD4bqMA/Ch7lYZT9IJ7fz2hjl9Cp5zF1SU9z2w7xaa86hsVmRvXa8QYXg8+lKj5AnJqIydr2kE3GPBguTLg6/IbYBYjkIBWoJBJXu5HHszVaAlPWVu9YnJPaTW5ZVbt7t7nzJbSvgsVSVWHVGyQB3/ABBtrQqUbSS6sqPgB6nvFz65moLNb7/aH7TdWC/Ef3ekQFqScghQIKSCCCAa6dFMakhQIOUZqham1BaDYjEEQjdU7DXE772mrtv8yI07gfIOJH7U++lZqPTl+0490d6tciEnOA6oAtqPZhYyk+Wc1cJakoBUo4A4knlUD1htP0ZaW3Yq5Kbu9gpVGiJDo8lKPUHlnPhQabp0ska2tqeXT8Q60fSaprWGvh/F7HqMOo8YrtYL7etPyvSLLdJEFZOVBtQ3FH6SDlKveDTW0ntwcRuMantu+OXpUMYPmpsn7QfdSv1ZdbbdroqVa9Pw7IzxHQx1qIVx5kcEjySke+uRQdqZdl1f01Yduhh1mqVK1JsKmWrKPLWHiM+pEXD01f7RqO3fKFmnNy2ArcUU5BQvAO6oHilWCDg94rrUp/uYf4m3X+tl/wByzTYpqlHS8ylZzMZHVZREnOOMINwk7YXbG13R/wAoSYM1yZb3Y8hxgl6OVIUUKKSQpG9wOO3FS6zaisV5TvWq7wZvgy+lSh5gHIqo97Xv3u5OfPlvK+Liv9a0ilPVUpPWByD2g0DTWHUmygD2/MPjuhUo6kKaWUnwI9D3i7dFVCtGsdWWn/l+ork0kckuPdKgeG6vIHwqZWfbbqmKd24Q7bcUAD2VMOH9IZH9mrrdYZP1Ajv/AD2gJMaFTreLSkq7Hvh3ixdFKe0bcdPSMJultuFvVjipIS82D5p639mmTZrnDvFrj3S3uF2JJQHGllCkFSew4UAaIMzLT30KvC5OUybkvvtlI37OuUbEyOzKiuxZDaXWXkFtxCuSkkYIPuqomsrBI0vqSbY5G8roFZZcPNxo+ov4cD4gjsq4VLbbloxWo7CLpbmd+625JUlI5vtc1N+J4ZT45HtGqdTlS83rJzT5bYNaK1YSM18Nw2QvDkdh9Dzvsit9FYB3+sn1TyrNK8a1BXpFVuSmHPmOpV8DXnXw+rdYWruBPwFfL2xj4RrYRdwVGNpl/laY0VOvUJll2SwWkoS8CUZW4lGSAQTjezjI5VJGVb7KFd6Qag233+Si7fnI3+Ibp0m1FDC1JzAPlGGUtpDs8y2sXBUkEcCRFf8AU+sNSal3k3i7PPMH+jo+9sgd24nAP6WT41wq3bDb1Xa9QbW28llUyQhgOFO8EFSgM4yM8+WRVitJ7JdKWTcelR1XiWnj0szCkA8+Dfq+WcnxpYl5V6bJVfmSY1aoVaSoqA3q2vklI/8AB7yhCaX0jqTUq0/I9reeZPOQv72wPHfPA+ScnwpsaV2HwWQh7U1ycmL5mNFJbbHgV+srzG7TiQlKEBKEpSkDAAHAV90bYpLLeK/mPbpCNP6XzszdLP8ATTwz6/i0c6y2i2WWEmFaYMeFHB3txlASCTzJ7z4njXRzRXw4d1CldwJomAEiwhWUpS1FSjcmKWzF782Q5891aviqvOvhlW+hKu8A/GvukW98Y38CwtBRRWCd3rK6qRzqR9jr6PsMjVGpIdjj7w9IX9+WObbQ9dfuHLxIHbVu4cdmJFZixmktMsIS22hPAJSBgD4UvdhmjF6csRutxZ3LrcUgrSrmy1zSjwJ5q8cD2aZVNFLlSy3rKzV5RkulVWE9NfDbPyIw5nafQddsFFFFE4V4QG3TZ8q3Pv6pssf/AHF0lc9lA/ALJ4uAfMPtdx48icKWrrLQlaClQCkkYIIyCKQe1fZQ9blvXrS0dT0Hit6AgErY7y2PaR9HmOzI4BfqNOIJdaGG0Ro2jWkqVpEpNmxGCVHbwPHcdvPNS18qSlbakq9UjB8qyClXWT1k94rNA4fIsTsI1hedUMXOLeFR3Pk9LAadQ3urUFb+d7jg+oOQHOupt9/kou35yN/iG6gn3L8qOi6X6GpxKX3WWHG0EjKkpLgUR5b6c+Yqd7ff5KLt+cjf4humRtxTlOUVG5sr1jLJyXRL6RoQ2nVTrt2Ay/bfveK/bPP4+af/AKyj/wB4Kt7VQtnn8fNP/wBZR/7wVb2vNF+2rnFnTj+4a5Hzgoooo1CPBSv276xvWl2LZFs6o7Xygl8OuLbKlp3dzG7xwPXPMHlTQpEfdPyo67nYYaXUqkNMvuOIBGUpUWwknz3VY8jVGpOFuXUUmxw8xB3RqXRMVJtDidZONwcvpNu9oTaUpQ2lKfVAwPKvqisEpT1ldVPfSlGyxmm1sL2fKuUpnVN6j4gtELgMrH4wsHg4R8wez3njyA3jZRsoeuK2b1qmOpmCMLZguAhb/cpweyj6PNXbgcFPxCEoQEpASkDAAGABRqnU4qIddGGwQh6S6SpQkysobk4KUNnAcd52c8vuiiimGM5goooqRIKKKKkSFttE2U2nUbjtxtak2u6r4qUlOWXj9NI5H6Q49+aQ2qdM3zS8r0e+W9yPk4Q8Osy4for5Hy4HvAq4VeEqNHlx1x5TLb7Lg3VtuICkqHcQeBoZNUxt46yflPbpDRSdKpqRAbc+dHHMcj6G/C0VC0WtxrWthcbccaX8pxhvIUQcF1II4dhBII7QSO2rDfdAfyU3X87G/wAQ3XjN2SaWVeoV2tiX7W/FlNSeiYVllZQsK3SlWd0cPZIrqbXrRcb7s9uVstMf0mY4WVNt76U7266hRGVEDkk8zVdmTdYl3kKxuDa3KL0/WpWfqMo82bBKhe+FvmG3K0VjsNwVab3BuiWUvKhyEPhoq3QopUDjODjlzxVidlu0ZWtrhMhuWYQFRmUu7wk9KFZURj1E4pCXHR+rIC92Vpm7J8URVOge9AI+2mN9zZEmRdSXj0qHKj5iIA6ZlSMnfPeBVKnLebfS3kDmLcOUMGkrEnNSK5jBSkjAg8RuNjE22pbRlaJmwojdnTcFSmlObxk9EE4IGPUVnnUAm7db+62oQ7HbYp7C66t79m5W190rDmStQ2b0WHKkYiuA9CypeDvjuBpcW7R+rJ692Lpm7K8VxVNJ+KwB9tdZyamQ+pCCbcBw5RTolJpSpBt+YSNYg3JJ3nZe3aLJ7Kr5cNR6Fg3i6dD6W+t4L6FBSjqurSMDJ7EjtqtWu1uO65vynHFLV8pSBlSiTgOKAHuAAHcABVkNkNouNi2e262XaP6NMbLynG99Kt3edWoDKSRyUORrmRdk2l/l2beLomRc3pUp2T0T6sMoK1FW7upxvDj7RNWpiVemWGhttjflAimVWTpc/NLP0kkJ1cbjWNrbLWhAaX01fNUSvR7Hb3JODhbx6rLZ+kvkPLie4Gnxs72UWnTjjdxuik3S6o4pWU4ZZPPqJPM/SPHuAphRY0eHGRHix2mGWxuobbQEpSO4AcBWxXaVpbbJ1lfMe3SKlW0qmp4Ftv5EcMzzPoLeMFFFFE4V4KKKKkSP/9k=" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="VK">
+      <div class="logo-text">
+        <span class="name">Vintage King</span>
+        <span class="tagline">NEW • USED • VINTAGE • PRO AUDIO</span>
+      </div>
+    </a>
+    <div class="nav-top-spacer" aria-hidden="true"></div>
+    <button class="mobile-menu-btn" id="mob-open-btn" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="nav-actions">
+      <div class="nav-search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B68" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Search 50,000+ products.." aria-label="Search products">
+      </div>
+      <button class="nav-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <button class="nav-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <div class="cart-count">2</div>
+      </button>
+      <div class="ask-wrap">
+        <button class="nav-expert-btn">
+          <div class="pulse-dot"></div>
+          Ask
+        </button>
+        <div class="ask-dropdown">
+          <a href="#" class="ask-dropdown-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Live Chat
+          </a>
+          <a href="#" class="ask-dropdown-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.61 4.83 2 2 0 0 1 3.58 2.63h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+            Request a Callback
+          </a>
+          <a href="#" class="ask-dropdown-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            Video Chat
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="nav-row nav-row-cats">
+    <div class="nav-items-wrap">
+    <ul class="nav-items">
+
+      <!-- ══ MICROPHONES ══ -->
+      <li class="nav-item" id="item-mics">
+        <a href="#" onclick="return false">Microphones
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">By Type</div>
+                <ul>
+                  <li><a href="#" class="bold">All Microphones</a></li>
+                  <li><a href="#">Condenser Microphones</a></li>
+                  <li><a href="#">Dynamic Microphones</a></li>
+                  <li><a href="#">Ribbon Microphones</a></li>
+                  <li><a href="#">Tube Microphones</a></li>
+                  <li><a href="#">Stereo Microphones</a></li>
+                  <li><a href="#">Boundary Microphones</a></li>
+                  <li><a href="#">USB Microphones</a></li>
+                </ul>
+                <a href="#" class="view-all">All Types →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Top Brands</div>
+                <ul>
+                  <li><a href="#">Neumann</a></li>
+                  <li><a href="#">Telefunken</a></li>
+                  <li><a href="#">AKG</a></li>
+                  <li><a href="#">Shure</a></li>
+                  <li><a href="#">Royer Labs</a></li>
+                  <li><a href="#">Wunder Audio</a></li>
+                  <li><a href="#">Sennheiser</a></li>
+                  <li><a href="#">Warm Audio</a></li>
+                </ul>
+                <a href="#" class="view-all">All Brands →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Shop By Price</div>
+                <ul>
+                  <li><a href="#">Under $500</a></li>
+                  <li><a href="#">$500 – $1,500</a></li>
+                  <li><a href="#">$1,500 – $5,000</a></li>
+                  <li><a href="#">$5,000+</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Resources</div>
+                <ul>
+                  <li><a href="#">Mic Buying Guide</a></li>
+                  <li><a href="#">Polar Pattern Explained</a></li>
+                  <li><a href="#">Talk to a Consultant</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mega-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor">Featured · Neumann</div>
+                <div class="panel-brand">Neumann</div>
+                <div class="panel-name">U 87 Ai Studio Set</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag tag-white">Co-op</span></div>
+                  <svg width="70" height="120" viewBox="0 0 70 120" fill="none">
+                    <rect x="23" y="5" width="24" height="64" rx="12" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+                    <rect x="28" y="10" width="14" height="54" rx="7" fill="rgba(255,255,255,0.06)"/>
+                    <circle cx="35" cy="37" r="8" fill="rgba(192,57,43,0.5)"/>
+                    <line x1="28" y1="20" x2="42" y2="20" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/>
+                    <line x1="28" y1="52" x2="42" y2="52" stroke="rgba(192,57,43,0.25)" stroke-width="0.75"/>
+                    <line x1="35" y1="69" x2="35" y2="90" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                    <ellipse cx="35" cy="93" rx="17" ry="5" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price">$3,595</div>
+                  <a href="#" class="panel-cta">Shop Now →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Talk to a Mic Expert</div><div class="panel-expert-sub">Live now · Free consultation</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1C1410"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.3) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Just Landed</div><div class="itile-name">Telefunken ELA M 251</div><div class="itile-sub">c.1961 · 1 available · $22,500</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#0A1520"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(59,130,246,0.25) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CATEGORY IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Pairs Well With</div><div class="itile-name">Mic Preamps</div><div class="itile-sub">From $299 · 140+ options</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.25) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op · Neumann</div><div class="itile-name">U 87 Ai Studio Set</div><div class="itile-sub">$3,595 · In stock</div><div class="itile-cta">Shop Now →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ OUTBOARD ══ -->
+      <li class="nav-item" id="item-outboard">
+        <a href="#" onclick="return false">Outboard
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Dynamics</div>
+                <ul>
+                  <li><a href="#" class="bold">All Dynamics</a></li>
+                  <li><a href="#">Compressors</a></li>
+                  <li><a href="#">Limiters</a></li>
+                  <li><a href="#">Gates & Expanders</a></li>
+                  <li><a href="#">500 Series Dynamics</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Equalizers</div>
+                <ul>
+                  <li><a href="#">Parametric EQ</a></li>
+                  <li><a href="#">Graphic EQ</a></li>
+                  <li><a href="#">500 Series EQ</a></li>
+                </ul>
+                <a href="#" class="view-all">All Outboard →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Effects & Preamps</div>
+                <ul>
+                  <li><a href="#">Reverb Units</a></li>
+                  <li><a href="#">Tape Machines</a></li>
+                  <li><a href="#">Tape Delays</a></li>
+                  <li><a href="#">Harmonic Exciters</a></li>
+                  <li><a href="#">Stereo Wideners</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Preamps</div>
+                <ul>
+                  <li><a href="#">Mic Preamps</a></li>
+                  <li><a href="#">Channel Strips</a></li>
+                  <li><a href="#">DI Boxes</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Top Brands</div>
+                <ul>
+                  <li><a href="#">API</a></li>
+                  <li><a href="#">Chandler Limited</a></li>
+                  <li><a href="#">Empirical Labs</a></li>
+                  <li><a href="#">Manley Labs</a></li>
+                  <li><a href="#">Neve / AMS</a></li>
+                  <li><a href="#">SSL</a></li>
+                  <li><a href="#">Tube-Tech</a></li>
+                  <li><a href="#">Universal Audio</a></li>
+                </ul>
+                <a href="#" class="view-all">All Brands →</a>
+              </div>
+            </div>
+            <div class="mega-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor">Featured · Universal Audio</div>
+                <div class="panel-brand">Universal Audio</div>
+                <div class="panel-name">1176LN Limiting Amplifier</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag tag-red">New</span></div>
+                  <svg width="110" height="65" viewBox="0 0 110 65" fill="none">
+                    <rect x="4" y="9" width="102" height="44" rx="3" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" fill="none"/>
+                    <circle cx="17" cy="40" r="7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="36" cy="40" r="7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="55" cy="40" r="7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="74" cy="40" r="7" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="93" cy="40" r="7" fill="rgba(192,57,43,0.6)"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price">$1,849 <span style="font-size:11px;color:rgba(255,255,255,0.3);text-decoration:line-through">$2,299</span></div>
+                  <a href="#" class="panel-cta">Shop Now →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Talk to a Gear Expert</div><div class="panel-expert-sub">Live now · Free consultation</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1C1410"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Just Landed</div><div class="itile-name">UREI 1176 Rev. A</div><div class="itile-sub">c.1969 · 1 in stock · $4,800</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.22) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Explore</div><div class="itile-name">500 Series Rack</div><div class="itile-sub">Mix and match · From $299</div><div class="itile-cta">Explore →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op · Universal Audio</div><div class="itile-name">1176LN Limiting Amp</div><div class="itile-sub">$1,849 · New</div><div class="itile-cta">Shop Now →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ CONSOLES ══ -->
+      <li class="nav-item" id="item-consoles">
+        <a href="#" onclick="return false">Consoles
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Analog Consoles</div>
+                <ul>
+                  <li><a href="#" class="bold">All Consoles</a></li>
+                  <li><a href="#">Large Format</a></li>
+                  <li><a href="#">Mid Format</a></li>
+                  <li><a href="#">Compact & Project</a></li>
+                  <li><a href="#">Summing Mixers</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Digital Consoles</div>
+                <ul>
+                  <li><a href="#">Studio Digital</a></li>
+                  <li><a href="#">Live Sound Digital</a></li>
+                  <li><a href="#">Control Surfaces</a></li>
+                </ul>
+                <a href="#" class="view-all">All Consoles →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Top Brands</div>
+                <ul>
+                  <li><a href="#">API</a></li>
+                  <li><a href="#">Audient</a></li>
+                  <li><a href="#">Harrison</a></li>
+                  <li><a href="#">Neve / AMS</a></li>
+                  <li><a href="#">Rupert Neve Designs</a></li>
+                  <li><a href="#">SSL</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Resources</div>
+                <ul>
+                  <li><a href="#">Console Buying Guide</a></li>
+                  <li><a href="#">Studio Design Services</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">By Application</div>
+                <ul>
+                  <li><a href="#">Recording Studios</a></li>
+                  <li><a href="#">Post Production</a></li>
+                  <li><a href="#">Broadcast</a></li>
+                  <li><a href="#">Live Sound</a></li>
+                  <li><a href="#">Home Studio</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Exclusive</div>
+                <ul>
+                  <li><a href="#" style="color:var(--amber);font-weight:500">EMI TG12345 MkV ✦</a></li>
+                  <li><a href="#">Custom Builds</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mega-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor">Exclusive at Vintage King</div>
+                <div class="panel-brand">EMI</div>
+                <div class="panel-name">TG12345 MkV Console</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag tag-amber">Exclusive</span></div>
+                  <svg width="120" height="56" viewBox="0 0 120 56" fill="none">
+                    <rect x="3" y="6" width="114" height="40" rx="3" stroke="rgba(255,255,255,0.25)" stroke-width="1.2" fill="none"/>
+                    <line x1="22" y1="6" x2="22" y2="46" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+                    <line x1="42" y1="6" x2="42" y2="46" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+                    <line x1="62" y1="6" x2="62" y2="46" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+                    <line x1="82" y1="6" x2="82" y2="46" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+                    <circle cx="12" cy="28" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="0.75"/>
+                    <circle cx="32" cy="28" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="0.75"/>
+                    <circle cx="52" cy="28" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="0.75"/>
+                    <circle cx="72" cy="28" r="5" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="0.75"/>
+                    <circle cx="112" cy="28" r="5" fill="rgba(212,134,10,0.7)"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price">Contact for pricing</div>
+                  <a href="#" class="panel-cta" style="background:var(--amber)">Learn More →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Console Consultation</div><div class="panel-expert-sub">Studio design included · Free</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1A1208"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.35) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Exclusive</div><div class="itile-name">EMI TG12345 MkV</div><div class="itile-sub">Only at Vintage King</div><div class="itile-cta">Learn More →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1A1208"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Rare · Vintage</div><div class="itile-name">Neve 8078 Large Format</div><div class="itile-sub">c.1975 · Restored</div><div class="itile-cta">View →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#0A1520"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(59,130,246,0.22) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op · SSL</div><div class="itile-name">4000 Series Console</div><div class="itile-sub">New and used available</div><div class="itile-cta">Shop Now →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ VINTAGE ══ -->
+      <li class="nav-item vintage" id="item-vintage">
+        <a href="#" onclick="return false">Vintage and Used
+          <svg class="nav-plus" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 1v8M1 5h8"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Vintage Microphones</div>
+                <ul>
+                  <li><a href="#" class="bold">All Vintage Mics</a></li>
+                  <li><a href="#">Neumann Vintage</a></li>
+                  <li><a href="#">AKG Vintage</a></li>
+                  <li><a href="#">Telefunken / Ela</a></li>
+                  <li><a href="#">RCA Ribbon Mics</a></li>
+                  <li><a href="#">Western Electric</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Vintage Outboard</div>
+                <ul>
+                  <li><a href="#">Neve 1073 / 1081</a></li>
+                  <li><a href="#">UREI / UA 1176</a></li>
+                  <li><a href="#">LA-2A / LA-3A</a></li>
+                  <li><a href="#">Pultec EQs</a></li>
+                </ul>
+                <a href="#" class="view-all" style="color:var(--amber)">All Vintage →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Vintage Consoles</div>
+                <ul>
+                  <li><a href="#">Neve 8078 / 8068</a></li>
+                  <li><a href="#">SSL 4000 Series</a></li>
+                  <li><a href="#">API Legacy</a></li>
+                  <li><a href="#">MCI / Sony</a></li>
+                  <li><a href="#">Trident Series</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">By Era</div>
+                <ul>
+                  <li><a href="#">1950s – 1960s</a></li>
+                  <li><a href="#">1970s</a></li>
+                  <li><a href="#">1980s</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Sell or Trade</div>
+                <ul>
+                  <li><a href="#">Sell Your Gear</a></li>
+                  <li><a href="#">Trade-In Program</a></li>
+                  <li><a href="#">Get an Appraisal</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Tech Shop</div>
+                <ul>
+                  <li><a href="#">Restoration Services</a></li>
+                  <li><a href="#">Vintage Repair</a></li>
+                  <li><a href="#">Authenticity Guarantee</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mega-panel vintage-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor" style="color:rgba(212,134,10,0.55)">Just Landed · Vintage</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag" style="background:rgba(212,134,10,0.2);color:var(--amber)">Just In</span></div>
+                  <svg width="55" height="100" viewBox="0 0 55 100" fill="none">
+                    <rect x="16" y="4" width="23" height="54" rx="11.5" stroke="rgba(212,134,10,0.5)" stroke-width="1.5" fill="none"/>
+                    <rect x="20" y="8" width="15" height="46" rx="7.5" fill="rgba(212,134,10,0.07)"/>
+                    <circle cx="27.5" cy="31" r="7" fill="rgba(212,134,10,0.4)"/>
+                    <line x1="27.5" y1="58" x2="27.5" y2="76" stroke="rgba(212,134,10,0.35)" stroke-width="1.5"/>
+                    <ellipse cx="27.5" cy="79" rx="13" ry="4" stroke="rgba(212,134,10,0.2)" fill="none" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-brand" style="color:rgba(212,134,10,0.5)">Neumann · c.1968</div>
+                  <div class="panel-name">U 47 Tube Microphone</div>
+                  <div class="panel-price" style="color:var(--amber)">$14,500</div>
+                  <a href="#" class="panel-cta" style="background:var(--amber)">View This Piece →</a>
+                  <div class="panel-coop-label">1 in stock · Authenticated</div>
+                </div>
+              </div>
+              <a href="#" class="panel-expert" style="background:var(--amber)">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Vintage Gear Specialist</div><div class="panel-expert-sub">Appraisals · Trades · Sourcing</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1A1208"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.35) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Just In</div><div class="itile-name">Pultec EQP-1A</div><div class="itile-sub">c.1960s · 2 available · $6,500</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1A1208"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(212,134,10,0.30) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Just In</div><div class="itile-name">LA-2A Leveler</div><div class="itile-sub">c.1971 · Serviced · $5,200</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.22) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">SERVICE IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Sell or Trade</div><div class="itile-name">Get Top Dollar</div><div class="itile-sub">Free appraisal · Fast offer</div><div class="itile-cta">Learn More →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ STUDIO DESIGN ══ -->
+      <li class="nav-item" id="item-studio">
+        <a href="#" onclick="return false">Studio Design
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Services</div>
+                <ul>
+                  <li><a href="#" class="bold">Studio Design Overview</a></li>
+                  <li><a href="#">Acoustic Design & Treatment</a></li>
+                  <li><a href="#">Equipment Integration</a></li>
+                  <li><a href="#">Control Room Design</a></li>
+                  <li><a href="#">Live Room Design</a></li>
+                  <li><a href="#">Post Production Suites</a></li>
+                  <li><a href="#">Broadcast Facilities</a></li>
+                </ul>
+                <a href="#" class="view-all">Our Services →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">VK Integration</div>
+                <ul>
+                  <li><a href="#" class="bold">VK Integration</a></li>
+                  <li><a href="#">New Studio Builds</a></li>
+                  <li><a href="#">Studio Upgrades</a></li>
+                  <li><a href="#">EDU & Institutional</a></li>
+                  <li><a href="#">Live Sound Venues</a></li>
+                  <li><a href="#">House of Worship</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Locations</div>
+                <ul>
+                  <li><a href="#">Remote / Virtual</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Start a Project</div>
+                <ul>
+                  <li><a href="#">Get a Consultation</a></li>
+                  <li><a href="#">Portfolio & Case Studies</a></li>
+                  <li><a href="#">Our Design Team</a></li>
+                  <li><a href="#">Client Reviews</a></li>
+                </ul>
+                <div style="margin-top:18px;background:var(--pale-grey);border-radius:4px;padding:14px">
+                  <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:6px">Why VK Design?</div>
+                  <div style="font-size:12px;color:var(--charcoal);line-height:1.6">Hundreds of studios built worldwide. No other retailer offers this depth of in-house expertise.</div>
+                </div>
+              </div>
+            </div>
+            <div class="mega-panel studio-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor" style="color:rgba(255,255,255,0.25)">VK Integration</div>
+                <div class="panel-brand" style="color:rgba(255,255,255,0.3)">VK Studio Design</div>
+                <div class="panel-name">Build your room.<br>Define your sound.</div>
+                <div class="panel-img">
+                  
+                  
+                </div>
+                <div>
+                  <div class="panel-price" style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400">Home studios to world-class facilities</div>
+                  <a href="#" class="panel-cta" style="background:rgba(59,130,246,0.75);margin-top:14px">Start a Project →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Studio Design Consultation</div><div class="panel-expert-sub">Free · No commitment</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#0A1520"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(59,130,246,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">STUDIO PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Case Study</div><div class="itile-name">Capitol Studios Rebuild</div><div class="itile-sub">Full console integration</div><div class="itile-cta">Read →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.25) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">SERVICE IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Start a Project</div><div class="itile-name">Free Consultation</div><div class="itile-sub">No commitment · Any budget</div><div class="itile-cta">Book →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#141418"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(255,255,255,0.08) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op Slot</div><div class="itile-name">Available for Partners</div><div class="itile-sub">Brand integration · Revenue share</div><div class="itile-cta">Learn More →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ MONITORING ══ -->
+      <li class="nav-item" id="item-monitoring">
+        <a href="#" onclick="return false">Monitoring
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats mega-cats-wrap">
+              <div class="mega-col">
+                <div class="mega-col-head">Studio Monitors</div>
+                <ul>
+                  <li><a href="#" class="bold">All Monitors</a></li>
+                  <li><a href="#">Nearfield Monitors</a></li>
+                  <li><a href="#">Midfield Monitors</a></li>
+                  <li><a href="#">Mastering Monitors</a></li>
+                  <li><a href="#">Subwoofers</a></li>
+                  <li><a href="#">Passive Monitors</a></li>
+                </ul>
+                <div class="mega-col-head-secondary">Headphones</div>
+                <ul>
+                  <li><a href="#">Studio Headphones</a></li>
+                  <li><a href="#">Reference Headphones</a></li>
+                  <li><a href="#">Headphone Amps</a></li>
+                  <li><a href="#">Cue Systems</a></li>
+                </ul>
+                <a href="#" class="view-all">All Monitors →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Top Brands</div>
+                <ul>
+                  <li><a href="#">ADAM Audio</a></li>
+                  <li><a href="#">Amphion</a></li>
+                  <li><a href="#">ATC</a></li>
+                  <li><a href="#">Barefoot Sound</a></li>
+                  <li><a href="#">Dynaudio</a></li>
+                  <li><a href="#">Focal</a></li>
+                  <li><a href="#">Genelec</a></li>
+                  <li><a href="#">Neumann</a></li>
+                  <li><a href="#">PMC</a></li>
+                </ul>
+                <a href="#" class="view-all">All Brands →</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-head">Monitor Controllers</div>
+                <ul>
+                  <li><a href="#">Analog Controllers</a></li>
+                  <li><a href="#">Digital Controllers</a></li>
+                  <li><a href="#">Speaker Switchers</a></li>
+                </ul>
+                <div style="margin-top:14px;background:var(--off-white);border:1px solid var(--pale-grey);border-radius:3px;padding:10px 12px">
+                  <div style="font-size:9px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--pale-grey)">Resources</div>
+                  <ul style="list-style:none">
+                    <li><a href="#" style="display:block;font-size:12px;color:var(--charcoal);text-decoration:none;padding:3px 0;transition:color 0.12s">Monitor Placement Guide</a></li>
+                    <li><a href="#" style="display:block;font-size:12px;color:var(--charcoal);text-decoration:none;padding:3px 0;transition:color 0.12s">Room Acoustics 101</a></li>
+                    <li><a href="#" style="display:block;font-size:12px;color:var(--charcoal);text-decoration:none;padding:3px 0;transition:color 0.12s">Monitor Buying Guide</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="mega-panel">
+              <div class="panel-feature">
+                <div class="panel-sponsor">Featured · Genelec</div>
+                <div class="panel-brand">Genelec</div>
+                <div class="panel-name">8351B SAM Studio Monitor</div>
+                <div class="panel-img">
+                  <div class="panel-img-tag"><span class="tag tag-black">Best Seller</span></div>
+                  <svg width="80" height="90" viewBox="0 0 80 90" fill="none">
+                    <rect x="15" y="8" width="50" height="64" rx="6" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="rgba(255,255,255,0.04)"/>
+                    <circle cx="40" cy="42" r="18" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="40" cy="42" r="10" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="0.75"/>
+                    <circle cx="40" cy="42" r="4" fill="rgba(192,57,43,0.6)"/>
+                    <rect x="31" y="18" width="18" height="10" rx="5" stroke="rgba(255,255,255,0.2)" stroke-width="0.75" fill="none"/>
+                    <circle cx="40" cy="23" r="2.5" fill="rgba(255,255,255,0.15)"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="panel-price">$3,995 / each</div>
+                  <a href="#" class="panel-cta">Shop Now →</a>
+                </div>
+              
+              </div>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Talk to a Monitor Expert</div><div class="panel-expert-sub">Live now · Free consultation</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a></div>
+          </div>
+          <div class="mega-tiles-outer"><div class="mega-tiles"><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#1C1820"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.28) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Best Seller</div><div class="itile-name">Genelec 8351B SAM</div><div class="itile-sub">$3,995 / each · In stock</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#141418"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.22) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">PRODUCT PHOTO</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Add to Setup</div><div class="itile-name">Studio Subwoofers</div><div class="itile-sub">From $699 · Pairs with monitors</div><div class="itile-cta">Shop →</div></div></a><a href="#" class="itile"><div class="itile-img"><div class="itile-bg" style="background:#111010"></div><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,0.30) 0%,transparent 70%)"></div><div class="itile-overlay"></div><div class="itile-placeholder">CO-OP IMAGE</div><span class="itile-arrow">↗</span></div><div class="itile-body"><div class="itile-label">Co-op · Genelec</div><div class="itile-name">8361B Triple-Point</div><div class="itile-sub">$6,995 / each · Premium</div><div class="itile-cta">Shop Now →</div></div></a></div></div>
+        </div>
+      </li>
+
+      <!-- ══ LEARN ══ -->
+      <li class="nav-item" id="item-learn">
+        <a href="#" onclick="return false">Learn
+          <svg class="nav-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </a>
+        <div class="mega">
+          <div class="mega-body">
+            <div class="mega-cats" style="padding:32px 32px 32px 40px">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;flex:1">
+                <div style="padding-right:32px;border-right:1px solid var(--pale-grey)">
+                  <div class="mega-col-head">Original Content</div>
+                  <ul style="list-style:none">
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Make Your Mark</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Video series with the engineers behind the records. Capitol Studios, Bob Ludwig, Joe Chiccarelli.</div>
+                      </a>
+                    </li>
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">PLAYBACK Magazine</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">7 issues. The stories behind the gear. Free digital subscription.</div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Blog &amp; Buying Guides</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Mic buying guides, compression explained, console comparisons, and more.</div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div style="padding:0 32px;border-right:1px solid var(--pale-grey)">
+                  <div class="mega-col-head">Services</div>
+                  <ul style="list-style:none">
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Studio Installations</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">From a single room to a full facility. Acoustic design, integration, commissioning.</div>
+                      </a>
+                    </li>
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Gear Restoration</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Repairs, tune-ups, and full restorations by our in-house tech shop.</div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Sell or Trade</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Simple, hassle-free gear acquisition. Contact us with photos and description.</div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div style="padding-left:32px">
+                  <div class="mega-col-head">From VK</div>
+                  <ul style="list-style:none">
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">About Vintage King</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Every person at VK is a musician or engineer. We use this gear. We know it.</div>
+                      </a>
+                    </li>
+                    <li style="margin-bottom:16px">
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">0% Financing</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">48 months with the VK Credit Card. PayPal Pay Later and Affirm at checkout.</div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" style="display:block;text-decoration:none">
+                        <div style="font-size:13px;font-weight:500;color:var(--near-black);margin-bottom:3px">Section 179 Tax Savings</div>
+                        <div style="font-size:12px;color:var(--mid-grey);line-height:1.5">Deduct qualifying gear purchases in the year you buy. Most pro audio qualifies.</div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="mega-panel-light">
+              <a href="#" class="panel-light-block">
+                <div class="panel-light-label">Make Your Mark · Ep. 04</div>
+                <div class="panel-light-title">&quot;The Neve 8078 — why nothing comes close&quot;</div>
+                <div class="panel-light-sub">12 min · Glyn Johns · Olympic Studios</div>
+                <span class="panel-light-cta">Watch →</span>
+              </a>
+              <a href="#" class="panel-light-block">
+                <div class="panel-light-label">Buying Guide</div>
+                <div class="panel-light-title">Microphone Buying Guide</div>
+                <div class="panel-light-sub">Condenser vs. Dynamic vs. Ribbon — what to choose</div>
+                <span class="panel-light-cta">Read →</span>
+              </a>
+              <a href="#" class="panel-light-block" style="border-bottom:none;margin-top:auto">
+                <div class="panel-light-label">Latest from the Blog</div>
+                <div class="panel-light-title">&quot;How to build a hybrid studio in 2026&quot;</div>
+                <div class="panel-light-sub">Analog warmth. Digital flexibility.</div>
+                <span class="panel-light-cta">Read →</span>
+              </a>
+              <a href="#" class="panel-expert">
+                <div class="pulse-dot"></div>
+                <div><div class="panel-expert-title">Talk to an Expert</div><div class="panel-expert-sub">Live · Available now</div></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- DEALS -->
+      <li class="nav-item deals">
+        <a href="#">Deals</a>
+      </li>
+
+    </ul>
+    </div>
+    </div>
+
+  </div>
+</nav>
+
+<div class="proto-notes" id="proto-notes" aria-live="polite"></div>
+
+<!-- ══ MOBILE NAV v4.0 ══ -->
+<div class="mobile-overlay" id="mob-overlay"></div>
+
+<div class="mobile-nav" id="mob-nav" role="dialog" aria-modal="true" aria-label="Navigation">
+
+  <!-- Header: Logo + Close -->
+  <div class="mob-header">
+    <a href="#" class="mob-logo">
+      <svg width="16" height="26" viewBox="0 0 20 32" fill="none">
+        <rect x="5" y="1" width="10" height="20" rx="5" stroke="#C0392B" stroke-width="1.5" fill="none"/>
+        <circle cx="10" cy="9" r="3" fill="#C0392B" opacity="0.8"/>
+        <line x1="8" y1="5" x2="8" y2="13" stroke="#C0392B" stroke-width="0.6" opacity="0.4"/>
+        <line x1="12" y1="5" x2="12" y2="13" stroke="#C0392B" stroke-width="0.6" opacity="0.4"/>
+        <line x1="10" y1="21" x2="10" y2="26" stroke="#C0392B" stroke-width="1.5"/>
+        <line x1="4" y1="26" x2="16" y2="26" stroke="#C0392B" stroke-width="1.5"/>
+        <line x1="2" y1="31" x2="18" y2="31" stroke="#888" stroke-width="1"/>
+      </svg>
+      <div class="mob-logo-text">
+        <span class="mob-logo-name">Vintage King</span>
+        <span class="mob-logo-tag">NEW • USED • VINTAGE • PRO AUDIO</span>
+      </div>
+    </a>
+    <button class="mob-close" id="mob-close-btn" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- Scrollable body -->
+  <div class="mob-body">
+
+    <!-- Search -->
+    <div class="mob-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B68" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search 50,000+ products.." aria-label="Search">
+    </div>
+
+    <!-- ── MICROPHONES ── -->
+    <div class="mob-accordion">
+      <button class="mob-accordion-btn" data-target="mob-acc-mics">
+        Microphones
+        <svg class="mob-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mob-accordion-content" id="mob-acc-mics">
+        <div class="mob-sub-links">
+          <a href="#" class="bold">All Microphones</a>
+          <a href="#">Condenser Microphones</a>
+          <a href="#">Dynamic Microphones</a>
+          <a href="#">Ribbon Microphones</a>
+          <a href="#">Tube Microphones</a>
+          <a href="#">Stereo Microphones</a>
+          <a href="#">USB Microphones</a>
+          <a href="#" class="mob-sub-view-all">All Microphones →</a>
+        </div>
+        <!-- Tier 1 Co-op Card -->
+        <a href="#" class="mob-coop-card">
+          <div class="mob-coop-img">
+            <svg width="28" height="52" viewBox="0 0 70 120" fill="none">
+              <rect x="23" y="5" width="24" height="64" rx="12" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+              <rect x="28" y="10" width="14" height="54" rx="7" fill="rgba(255,255,255,0.06)"/>
+              <circle cx="35" cy="37" r="8" fill="rgba(192,57,43,0.5)"/>
+              <line x1="35" y1="69" x2="35" y2="90" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+              <ellipse cx="35" cy="93" rx="17" ry="5" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="mob-coop-info">
+            <div class="mob-coop-sponsor">Featured · Neumann</div>
+            <div class="mob-coop-name">U 87 Ai Studio Set</div>
+            <div class="mob-coop-price">$3,595</div>
+            <div class="mob-coop-btn">Shop Now →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── OUTBOARD ── -->
+    <div class="mob-accordion">
+      <button class="mob-accordion-btn" data-target="mob-acc-outboard">
+        Outboard
+        <svg class="mob-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mob-accordion-content" id="mob-acc-outboard">
+        <div class="mob-sub-links">
+          <a href="#" class="bold">All Outboard</a>
+          <a href="#">Compressors</a>
+          <a href="#">Limiters</a>
+          <a href="#">Gates &amp; Expanders</a>
+          <a href="#">Parametric EQ</a>
+          <a href="#">Graphic EQ</a>
+          <a href="#">Reverb Units</a>
+          <a href="#">Tape Delays</a>
+          <a href="#">500 Series</a>
+          <a href="#" class="mob-sub-view-all">All Outboard →</a>
+        </div>
+        <a href="#" class="mob-coop-card">
+          <div class="mob-coop-img">
+            <svg width="36" height="28" viewBox="0 0 90 60" fill="none">
+              <rect x="2" y="8" width="86" height="44" rx="4" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="none"/>
+              <circle cx="18" cy="30" r="8" stroke="rgba(192,57,43,0.6)" fill="none" stroke-width="1.5"/>
+              <circle cx="40" cy="30" r="8" stroke="rgba(255,255,255,0.25)" fill="none" stroke-width="1.5"/>
+              <rect x="56" y="22" width="5" height="16" rx="1" fill="rgba(192,57,43,0.4)"/>
+              <rect x="65" y="24" width="5" height="12" rx="1" fill="rgba(192,57,43,0.3)"/>
+              <rect x="74" y="20" width="5" height="20" rx="1" fill="rgba(192,57,43,0.5)"/>
+            </svg>
+          </div>
+          <div class="mob-coop-info">
+            <div class="mob-coop-sponsor">Featured · Universal Audio</div>
+            <div class="mob-coop-name">1176LN Classic Limiting Amplifier</div>
+            <div class="mob-coop-price">$999</div>
+            <div class="mob-coop-btn">Shop Now →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── CONSOLES ── -->
+    <div class="mob-accordion">
+      <button class="mob-accordion-btn" data-target="mob-acc-consoles">
+        Consoles
+        <svg class="mob-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mob-accordion-content" id="mob-acc-consoles">
+        <div class="mob-sub-links">
+          <a href="#" class="bold">All Consoles</a>
+          <a href="#">Analog Mixing Consoles</a>
+          <a href="#">Recording Consoles</a>
+          <a href="#">Broadcast Consoles</a>
+          <a href="#">Small Format Mixers</a>
+          <a href="#">Summing Mixers</a>
+          <a href="#">Monitor Controllers</a>
+          <a href="#" class="mob-sub-view-all">All Consoles →</a>
+        </div>
+        <a href="#" class="mob-coop-card">
+          <div class="mob-coop-img">
+            <svg width="40" height="28" viewBox="0 0 90 56" fill="none">
+              <rect x="2" y="4" width="86" height="48" rx="3" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
+              <rect x="8" y="10" width="4" height="36" rx="1" fill="rgba(255,255,255,0.06)"/>
+              <rect x="16" y="10" width="4" height="36" rx="1" fill="rgba(255,255,255,0.06)"/>
+              <rect x="24" y="10" width="4" height="36" rx="1" fill="rgba(255,255,255,0.06)"/>
+              <rect x="32" y="10" width="4" height="36" rx="1" fill="rgba(255,255,255,0.06)"/>
+              <rect x="62" y="10" width="20" height="14" rx="2" stroke="rgba(192,57,43,0.5)" fill="none" stroke-width="1"/>
+              <circle cx="72" cy="40" r="8" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="mob-coop-info">
+            <div class="mob-coop-sponsor">Featured · SSL</div>
+            <div class="mob-coop-name">AWS 948 Hybrid Console</div>
+            <div class="mob-coop-price">$34,500</div>
+            <div class="mob-coop-btn">Shop Now →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── VINTAGE (amber accent) ── -->
+    <div class="mob-accordion">
+      <button class="mob-accordion-btn vintage-btn" data-target="mob-acc-vintage">
+        <span>Vintage and Used<svg class="mob-nav-plus" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 1v8M1 5h8"/></svg></span>
+        <svg class="mob-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mob-accordion-content" id="mob-acc-vintage">
+        <div class="mob-sub-links">
+          <a href="#" class="bold" style="color:var(--amber)">All Vintage</a>
+          <a href="#">Vintage Microphones</a>
+          <a href="#">Vintage Preamps</a>
+          <a href="#">Vintage Compressors</a>
+          <a href="#">Vintage Consoles</a>
+          <a href="#">Just Landed</a>
+          <a href="#" class="mob-sub-view-all" style="color:var(--amber)">Shop All Vintage →</a>
+        </div>
+        <a href="#" class="mob-coop-card vintage-card" style="background:linear-gradient(135deg,#1C1A10,#2A2412)">
+          <div class="mob-coop-img">
+            <svg width="24" height="46" viewBox="0 0 60 110" fill="none">
+              <rect x="15" y="2" width="30" height="70" rx="15" stroke="rgba(212,134,10,0.5)" stroke-width="1.5" fill="none"/>
+              <rect x="20" y="8" width="20" height="58" rx="10" fill="rgba(212,134,10,0.06)"/>
+              <circle cx="30" cy="37" r="9" fill="rgba(212,134,10,0.45)"/>
+              <line x1="30" y1="72" x2="30" y2="88" stroke="rgba(212,134,10,0.3)" stroke-width="1.5"/>
+              <ellipse cx="30" cy="91" rx="16" ry="4" stroke="rgba(212,134,10,0.2)" fill="none" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="mob-coop-info">
+            <div class="mob-coop-sponsor" style="color:rgba(212,134,10,0.45)">Just Landed · Vintage</div>
+            <div class="mob-coop-name">Neumann U47 · c.1958</div>
+            <div class="mob-coop-price" style="color:rgba(212,134,10,0.65)">1 Available · $28,500</div>
+            <div class="mob-coop-btn" style="background:var(--amber)">View Now →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── STUDIO DESIGN ── -->
+    <div class="mob-accordion">
+      <button class="mob-accordion-btn" data-target="mob-acc-studio">
+        Studio Design
+        <svg class="mob-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mob-accordion-content" id="mob-acc-studio">
+        <div class="mob-sub-links">
+          <a href="#" class="bold">Studio Design Services</a>
+          <a href="#">Acoustic Treatment</a>
+          <a href="#">Studio Furniture</a>
+          <a href="#">Monitoring Systems</a>
+          <a href="#">System Integration</a>
+          <a href="#">Room Planning Consultation</a>
+          <a href="#" class="mob-sub-view-all">Explore Services →</a>
+        </div>
+        <a href="#" class="mob-coop-card" style="background:linear-gradient(135deg,#0E1218,#1A2030)">
+          <div class="mob-coop-img">
+            <svg width="40" height="28" viewBox="0 0 80 52" fill="none">
+              <rect x="2" y="2" width="76" height="48" rx="3" stroke="rgba(59,130,246,0.3)" stroke-width="1" fill="none"/>
+              <rect x="8" y="8" width="28" height="36" rx="2" stroke="rgba(59,130,246,0.25)" fill="rgba(59,130,246,0.05)"/>
+              <rect x="44" y="8" width="28" height="36" rx="2" stroke="rgba(255,255,255,0.1)" fill="rgba(255,255,255,0.03)"/>
+            </svg>
+          </div>
+          <div class="mob-coop-info">
+            <div class="mob-coop-sponsor">VK Services</div>
+            <div class="mob-coop-name">Full Studio Design &amp; Build</div>
+            <div class="mob-coop-price">Free Consultation</div>
+            <div class="mob-coop-btn" style="background:rgba(59,130,246,0.8)">Get Started →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── MONITORING ── -->
+    <div class="mob-accordion">
+      <button class="mob-accordion-btn" data-target="mob-acc-monitoring">
+        Monitoring
+        <svg class="mob-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mob-accordion-content" id="mob-acc-monitoring">
+        <div class="mob-sub-links">
+          <a href="#" class="bold">All Studio Monitors</a>
+          <a href="#">Nearfield Monitors</a>
+          <a href="#">Midfield Monitors</a>
+          <a href="#">Mastering Monitors</a>
+          <a href="#">Reference Headphones</a>
+          <a href="#">Studio Subwoofers</a>
+          <a href="#" class="mob-sub-view-all">All Monitoring →</a>
+        </div>
+        <a href="#" class="mob-coop-card">
+          <div class="mob-coop-img">
+            <svg width="28" height="36" viewBox="0 0 60 80" fill="none">
+              <rect x="5" y="2" width="50" height="76" rx="5" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
+              <circle cx="30" cy="28" r="14" stroke="rgba(255,255,255,0.2)" fill="none" stroke-width="1"/>
+              <circle cx="30" cy="28" r="6" fill="rgba(192,57,43,0.4)"/>
+              <circle cx="30" cy="62" r="6" stroke="rgba(255,255,255,0.15)" fill="none" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="mob-coop-info">
+            <div class="mob-coop-sponsor">Featured · Genelec</div>
+            <div class="mob-coop-name">8341A Smart Active Monitor</div>
+            <div class="mob-coop-price">$2,199 each</div>
+            <div class="mob-coop-btn">Shop Now →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── LEARN ── -->
+    <div class="mob-accordion">
+      <button class="mob-accordion-btn" data-target="mob-acc-learn">
+        Learn
+        <svg class="mob-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mob-accordion-content" id="mob-acc-learn">
+        <div class="mob-sub-links">
+          <a href="#" class="bold">Make Your Mark</a>
+          <a href="#">PLAYBACK Magazine</a>
+          <a href="#">Blog &amp; Buying Guides</a>
+          <a href="#">Studio Installations</a>
+          <a href="#">Gear Restoration</a>
+          <a href="#">Sell or Trade</a>
+          <a href="#">About Vintage King</a>
+          <a href="#">0% Financing</a>
+          <a href="#">Section 179 Tax Savings</a>
+          <a href="#" class="mob-sub-view-all">Explore Learn →</a>
+        </div>
+        <a href="#" class="mob-coop-card" style="background:linear-gradient(135deg,#F7F5F2,#EDEDEA)">
+          <div class="mob-coop-img" style="display:flex;align-items:center;justify-content:center;background:rgba(26,26,24,0.04)">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--vk-red)" stroke-width="1.5"><polygon points="8 5 8 19 19 12 8 5"/></svg>
+          </div>
+          <div class="mob-coop-info">
+            <div class="mob-coop-sponsor">Make Your Mark · Ep. 04</div>
+            <div class="mob-coop-name" style="color:var(--near-black)">&quot;The Neve 8078 — why nothing comes close&quot;</div>
+            <div class="mob-coop-price" style="font-size:12px;color:var(--mid-grey)">12 min · Watch now</div>
+            <div class="mob-coop-btn">Watch →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Deals plain link -->
+    <a href="#" class="mob-plain-link">Deals 🔥</a>
+
+    <!-- Make Your Mark strip -->
+    <div class="mob-mym-strip">
+      <div class="mob-mym-strip-label">Make Your Mark</div>
+      <div class="mob-mym-scroll">
+        <a href="#" class="mob-mym-card">
+          <div class="mob-mym-thumb">
+            <div class="mob-mym-play">
+              <svg width="10" height="12" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <span class="mob-mym-duration">8 min</span>
+          </div>
+          <div class="mob-mym-meta">
+            <div class="mob-mym-meta-label">Make Your Mark</div>
+            <div class="mob-mym-meta-title">"How I track vocals at Capitol Studios"</div>
+          </div>
+        </a>
+        <a href="#" class="mob-mym-card">
+          <div class="mob-mym-thumb" style="background:#1a1a15">
+            <div class="mob-mym-play">
+              <svg width="10" height="12" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <span class="mob-mym-duration">12 min</span>
+          </div>
+          <div class="mob-mym-meta">
+            <div class="mob-mym-meta-label">Make Your Mark</div>
+            <div class="mob-mym-meta-title">"Mixing on a vintage Neve 8078 with Chris Lord-Alge"</div>
+          </div>
+        </a>
+        <a href="#" class="mob-mym-card">
+          <div class="mob-mym-thumb" style="background:#181018">
+            <div class="mob-mym-play">
+              <svg width="10" height="12" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <span class="mob-mym-duration">16 min</span>
+          </div>
+          <div class="mob-mym-meta">
+            <div class="mob-mym-meta-label">Make Your Mark</div>
+            <div class="mob-mym-meta-title">"Mixing in an untreated room with Joe Chiccarelli"</div>
+          </div>
+        </a>
+        <a href="#" class="mob-mym-card">
+          <div class="mob-mym-thumb" style="background:#0f1518">
+            <div class="mob-mym-play">
+              <svg width="10" height="12" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <span class="mob-mym-duration">22 min</span>
+          </div>
+          <div class="mob-mym-meta">
+            <div class="mob-mym-meta-label">Make Your Mark</div>
+            <div class="mob-mym-meta-title">"Mastering for streaming with Bob Ludwig"</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Utility links -->
+    <div class="mob-util">
+      <a href="#">Sign In</a>
+      <a href="#">My Account</a>
+      <a href="#">Order Status</a>
+      <a href="#">0% Financing</a>
+      <a href="#">Section 179 Tax</a>
+      <a href="#">Locations</a>
+      <a href="#">📞 888.653.1184</a>
+      <a href="#">Mon–Sat 9:30–9PM ET</a>
+    </div>
+
+  </div><!-- /mob-body -->
+
+  <!-- Sticky bottom bar -->
+  <div class="mob-sticky-bar">
+    <a href="#" class="mob-sticky-expert">
+      <div class="pulse-dot"></div>
+      <div class="mob-sticky-expert-text">
+        <div class="mob-sticky-expert-title">Ask</div>
+        <div class="mob-sticky-expert-sub">Call · Chat · Email · We’re here to help</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="mob-sticky-meta">
+      <div class="mob-sticky-meta-item">🚚 Free shipping $99+</div>
+      <div class="mob-sticky-meta-sep"></div>
+      <div class="mob-sticky-meta-item">💳 0% financing</div>
+      <div class="mob-sticky-meta-sep"></div>
+      <div class="mob-sticky-meta-item"><a href="#">Sign In</a></div>
+    </div>
+  </div>
+
+</div><!-- /mobile-nav -->
+
+<!-- ══ DEMO STAGE ══ -->
+<div class="demo-stage">
+  <h1 class="demo-title">Mega-menu lab · GitHub v2_67</h1>
+  <p class="demo-sub"><strong>Primary nav</strong> matches live-style order: Microphones → Outboard → Consoles → <strong>Vintage and Used</strong> (+) → Studio Design → Monitoring → <strong>Learn</strong> → Deals. Utility row is white between promo topbar and logo row. Roboto lockup + search placeholder aligned to reference. <strong>PLP demos:</strong> <a href="VK-Microphones-CategoryDemo-v3-hybrid.html" style="color:var(--vk-red)">v3</a> · <a href="VK-Microphones-CategoryDemo-v4-refined.html" style="color:var(--vk-red)">v4 refined</a> · <a href="VK-Microphones-CategoryDemo-v2.html" style="color:var(--vk-red)">v2</a> · <a href="VK-Microphones-CategoryDemo-v1.html" style="color:var(--vk-red)">v1</a> · <a href="../VK-Prototype-Index-from-GitHub.html" style="color:var(--vk-red)">Index</a></p>
+  <div class="demo-instructions">
+    <div class="demo-pill"><span>Microphones</span> — Neumann co-op + 3 tiles</div>
+    <div class="demo-pill"><span>Outboard</span> — UA 1176 featured</div>
+    <div class="demo-pill"><span>Consoles</span> — EMI exclusive</div>
+    <div class="demo-pill"><span>Vintage +</span> — amber theme, U47 just landed</div>
+    <div class="demo-pill"><span>Studio Design</span> — services + integration</div>
+    <div class="demo-pill"><span>Monitoring</span> — Genelec best seller</div>
+    <div class="demo-pill"><span>Learn</span> — three columns + light rail</div>
+  </div>
+  <div class="demo-grid">
+    <div class="demo-card"><div class="demo-card-title">Zone 1 — Right Panel (Tier 1)</div><div class="demo-card-desc">Co-op feature: brand pays for dark panel placement. Single product, single message. Rotates per category.</div></div>
+    <div class="demo-card"><div class="demo-card-title">Zone 2 — Bottom strip</div><div class="demo-card-desc">Light trust row per GitHub v2_67.</div></div>
+    <div class="demo-card"><div class="demo-card-title">Zone 3 — itiles</div><div class="demo-card-desc">Recommendation: <strong>photo + short type</strong> (not text-only)—proves the product. Default <strong>two</strong> slots so the rail stays the hero; add a third only on wide breakpoints or rotating promos. Declutter: one label line + name + price/stock, single CTA.</div></div>
+    <div class="demo-card"><div class="demo-card-title">Ask</div><div class="demo-card-desc">Live Chat, Callback, Video Chat (hover menu). Editorial and services surface via utility row, category megas, and future PLP (phase 2).</div></div>
+    <div class="demo-card"><div class="demo-card-title">Make Your Mark</div><div class="demo-card-desc">Video teaser contextual to each category. New customer funnel + brand credibility signal. Sweetwater has no equivalent.</div></div>
+    <div class="demo-card"><div class="demo-card-title">Expert CTA</div><div class="demo-card-desc">Green pulse dot. Always live. VK's biggest weapon over Sweetwater — surfaced at the exact browse moment.</div></div>
+    <div class="demo-card"><div class="demo-card-title">Vintage panel</div><div class="demo-card-desc">Amber theme. "Just Landed" single piece. Scarcity + authenticity. Sweetwater cannot compete here.</div></div>
+    <div class="demo-card" style="grid-column:1/-1"><div class="demo-card-title">GitHub demo hub</div><div class="demo-card-desc">Merge <code>Vintage-King-Cursor-Lab/VK-Prototype-Index-from-GitHub.html</code> into repo <code>VK-Prototype-Index.html</code> (adds 4th card → <code>VintageKing-MegaMenu-CursorLab-v2.html</code>). Commit this mega file to the same repo root as the other static demos.</div></div>
+  </div>
+</div>
+
+<div class="version-badge">v2.9 · 6 presets incl. 3× text</div>
+
+<script>
+  const LOOK_BLURB = {
+    1: { title: '1 · Standard', text: 'Rail + <strong>two</strong> itiles (thumb + type). Default for most categories.' },
+    6: { title: '2 · Text', text: '<strong>Two</strong> text-only itiles—same as Standard rail, picks without photos (SEO / fast choosers).' },
+    7: { title: '3 · Two photos', text: '<strong>Both</strong> itiles as large photo cards + overlay copy—when two hero shots beat micro-thumbs.' },
+    8: { title: '4 · Hero + text', text: '<strong>One</strong> large photo itile + <strong>one</strong> text-only itile—your preferred split between story and SKU.' },
+    9: { title: '5 · Three tiles', text: '<strong>Three</strong> itiles + taxonomy (rail unchanged). Use when you want compare-three merchandising; thumbs tighten so three fit in the capped mega.' },
+    10: { title: '6 · 3 × text', text: '<strong>Three</strong> text-only picks—like <strong>2 · Text</strong> but full compare-three without images; tighter padding so three fit cleanly.' }
+  };
+  const MEGA_HEIGHT_NOTE = '<p class="proto-tax"><strong>Mega height (all tabs):</strong> Hard cap <code>min(68vh, 560px)</code>, grid row <code>minmax(0, 1fr)</code> so taxonomy columns <strong>scroll</strong> inside the panel; rail + itiles stay anchored—fixes Vintage (and any dense mega) dropping below the fold.</p>';
+
+  function updateProtoNotes(lookKey) {
+    const pane = document.getElementById('proto-notes');
+    const p = LOOK_BLURB[lookKey];
+    if (pane && p) {
+      pane.innerHTML = '<h2>' + p.title + '</h2><p>' + p.text + '</p>' + MEGA_HEIGHT_NOTE;
+    }
+  }
+
+  function applyLook(n) {
+    document.body.className = 'vk-mega-v2 vk-look-' + n;
+    updateProtoNotes(n);
+    document.querySelectorAll('.proto-tab[data-look]').forEach(btn => {
+      const on = btn.getAttribute('data-look') === String(n);
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    if (typeof updateMenuPositions === 'function') updateMenuPositions();
+  }
+
+  document.querySelectorAll('.proto-tab[data-look]').forEach(btn => {
+    btn.addEventListener('click', () => applyLook(btn.getAttribute('data-look')));
+  });
+  applyLook('1');
+
+  let closeTimer = null;
+
+  function updateMenuPositions() {
+    const nav = document.querySelector('.site-nav');
+    if (!nav) return;
+    const bottom = nav.getBoundingClientRect().bottom;
+    document.querySelectorAll('.mega').forEach(m => {
+      m.style.top = bottom + 'px';
+    });
+  }
+
+  updateMenuPositions();
+  window.addEventListener('scroll', updateMenuPositions);
+  window.addEventListener('resize', updateMenuPositions);
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    if (!item.querySelector('.mega')) return;
+
+    item.addEventListener('mouseenter', () => {
+      clearTimeout(closeTimer);
+      updateMenuPositions();
+      document.querySelectorAll('.nav-item.open').forEach(o => {
+        if (o !== item) o.classList.remove('open');
+      });
+      item.classList.add('open');
+    });
+
+    item.addEventListener('mouseleave', () => {
+      closeTimer = setTimeout(() => item.classList.remove('open'), 280);
+    });
+
+    const mega = item.querySelector('.mega');
+    if (mega) {
+      mega.addEventListener('mouseenter', () => clearTimeout(closeTimer));
+      mega.addEventListener('mouseleave', () => {
+        closeTimer = setTimeout(() => item.classList.remove('open'), 280);
+      });
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nav-item')) {
+      document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
+    }
+  });
+
+  /* ── MOBILE NAV v4.0 ── */
+  (function () {
+    const openBtn   = document.getElementById('mob-open-btn');
+    const closeBtn  = document.getElementById('mob-close-btn');
+    const overlay   = document.getElementById('mob-overlay');
+    const nav       = document.getElementById('mob-nav');
+
+    function openMob() {
+      document.body.classList.add('mob-open');
+      overlay.classList.add('open');
+      nav.classList.add('open');
+      nav.focus();
+    }
+
+    function closeMob() {
+      document.body.classList.remove('mob-open');
+      overlay.classList.remove('open');
+      nav.classList.remove('open');
+    }
+
+    openBtn.addEventListener('click', openMob);
+    closeBtn.addEventListener('click', closeMob);
+    overlay.addEventListener('click', closeMob);
+
+    // Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) closeMob();
+    });
+
+    // Accordion
+    document.querySelectorAll('.mob-accordion-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const accordion = btn.closest('.mob-accordion');
+        const isOpen = accordion.classList.contains('open');
+
+        // Close all others
+        document.querySelectorAll('.mob-accordion.open').forEach(a => {
+          if (a !== accordion) a.classList.remove('open');
+        });
+
+        accordion.classList.toggle('open', !isOpen);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

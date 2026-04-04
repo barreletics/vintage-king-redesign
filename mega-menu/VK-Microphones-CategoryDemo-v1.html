@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage King — Microphones PLP · full facets · Cursor Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vk-red: #C0392B;
+    --near-black: #1A1A18;
+    --charcoal: #2C2C2A;
+    --warm-white: #FDFCFB;
+    --off-white: #F7F5F2;
+    --pale-grey: #EDEDEA;
+    --light-grey: #D8D6D2;
+    --mid-grey: #6B6B68;
+    --sidebar-w: 272px;
+    --drawer-w: min(340px, 92vw);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--warm-white); color: var(--near-black); -webkit-font-smoothing: antialiased; }
+
+  .lab-bar {
+    display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+    padding: 10px 24px; background: var(--near-black); color: rgba(255,255,255,0.75);
+    font-size: 12px;
+  }
+  .lab-bar a { color: #fff; text-decoration: none; font-weight: 500; }
+  .lab-bar a:hover { color: var(--vk-red); }
+  .lab-bar span { color: rgba(255,255,255,0.45); }
+
+  .page-breadcrumb {
+    max-width: 1400px; margin: 0 auto; padding: 18px 24px 0;
+    font-size: 12px; color: var(--mid-grey); display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .page-breadcrumb a { color: var(--mid-grey); text-decoration: none; }
+  .page-breadcrumb a:hover { color: var(--vk-red); }
+
+  .plp-hero {
+    max-width: 1400px; margin: 0 auto; padding: 20px 24px 8px;
+  }
+  .plp-hero h1 {
+    font-family: 'Playfair Display', Georgia, serif; font-size: clamp(28px, 4vw, 38px);
+    font-weight: 500; margin-bottom: 6px;
+  }
+  .plp-hero-meta { font-size: 13px; color: var(--mid-grey); }
+  .plp-hero-note {
+    margin-top: 14px; font-size: 12px; color: var(--mid-grey); line-height: 1.55;
+    max-width: 800px; padding: 12px 14px; background: var(--off-white); border-left: 3px solid var(--vk-red); border-radius: 0 3px 3px 0;
+  }
+
+  /* Sibling collections — lateral nav */
+  .subcat-pills {
+    border-top: 1px solid var(--pale-grey);
+    border-bottom: 1px solid var(--pale-grey);
+    background: var(--off-white);
+  }
+  .subcat-pills-inner {
+    max-width: 1400px; margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; gap: 8px;
+    overflow-x: auto; scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .subcat-pills-inner::-webkit-scrollbar { height: 6px; }
+  .subcat-pills-inner::-webkit-scrollbar-thumb { background: var(--light-grey); border-radius: 3px; }
+  .subcat-pill {
+    flex-shrink: 0; font-size: 12.5px; font-weight: 500; color: var(--charcoal);
+    padding: 8px 16px; border: 1px solid var(--light-grey); border-radius: 22px;
+    background: var(--warm-white); text-decoration: none; white-space: nowrap; transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .subcat-pill:hover { border-color: var(--charcoal); color: var(--near-black); }
+  .subcat-pill.active { background: var(--near-black); color: #fff; border-color: var(--near-black); }
+
+  /* Matches reference wireframe category strip: Filter + chips + sort (file opened read-only in Strategy folder — not edited) */
+  .quick-filter-bar {
+    background: var(--off-white);
+    border-bottom: 1px solid var(--light-grey);
+  }
+  .quick-filter-inner {
+    max-width: 1400px; margin: 0 auto; padding: 10px 24px;
+    display: flex; align-items: center; gap: 0; flex-wrap: nowrap;
+    min-height: 52px;
+  }
+  .quick-filter-scroll {
+    display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;
+    overflow-x: auto; scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to right, #000 92%, transparent);
+  }
+  .qf-label {
+    flex-shrink: 0; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--mid-grey); font-weight: 600; margin-right: 16px;
+  }
+  .qf-chip {
+    flex-shrink: 0; font-family: inherit; font-size: 12px; color: var(--charcoal);
+    padding: 6px 14px; border: 1px solid var(--light-grey); border-radius: 20px;
+    cursor: pointer; white-space: nowrap; transition: all 0.15s; background: var(--warm-white);
+  }
+  .qf-chip:hover, .qf-chip.is-active {
+    border-color: var(--near-black); background: var(--near-black); color: #fff;
+  }
+  .qf-chip.is-primary {
+    border-color: var(--vk-red); background: var(--vk-red); color: #fff;
+  }
+  .qf-see-all {
+    flex-shrink: 0; margin-left: 8px; font-family: inherit; font-size: 12px; font-weight: 600;
+    color: var(--vk-red); background: none; border: none; cursor: pointer; text-decoration: underline;
+    text-underline-offset: 3px; padding: 6px 4px;
+  }
+  .qf-see-all:hover { color: var(--near-black); }
+  .qf-sort {
+    flex-shrink: 0; margin-left: 16px; display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--mid-grey);
+  }
+  .qf-sort select {
+    font-family: inherit; font-size: 12px; padding: 6px 10px; border: 1px solid var(--light-grey);
+    border-radius: 3px; background: var(--warm-white); color: var(--charcoal); cursor: pointer; max-width: 160px;
+  }
+
+  .plp-layout {
+    max-width: 1400px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    gap: 0 28px;
+    padding: 0 24px 64px;
+    align-items: start;
+  }
+
+  .plp-sidebar {
+    position: sticky; top: 0;
+    padding: 20px 0 24px;
+    max-height: 100vh; overflow-y: auto;
+    border-right: 1px solid var(--pale-grey);
+    padding-right: 16px;
+  }
+  .plp-sidebar:focus { outline: 2px solid var(--vk-red); outline-offset: 4px; }
+
+  .plf-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--mid-grey); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+
+  .plf-group {
+    margin-bottom: 4px; border-bottom: 1px solid var(--pale-grey);
+  }
+  .plf-group:last-child { border-bottom: none; }
+
+  .plf-group > summary {
+    list-style: none; cursor: pointer; font-size: 10px; font-weight: 600; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--mid-grey); padding: 14px 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .plf-group > summary::-webkit-details-marker { display: none; }
+  .plf-group > summary::after {
+    content: ''; width: 7px; height: 7px; border-right: 1.5px solid var(--mid-grey); border-bottom: 1.5px solid var(--mid-grey);
+    transform: rotate(45deg); transition: transform 0.2s; flex-shrink: 0; margin-left: 8px;
+  }
+  .plf-group[open] > summary::after { transform: rotate(-135deg); }
+
+  .plf-body { padding-bottom: 14px; }
+  .plf-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .plf-chip {
+    font-size: 11.5px; color: var(--charcoal); padding: 5px 10px;
+    border: 1px solid var(--light-grey); border-radius: 18px; background: var(--warm-white);
+    cursor: pointer; transition: all 0.12s;
+  }
+  .plf-chip:hover { border-color: var(--charcoal); }
+  .plf-chip.on { background: var(--near-black); color: #fff; border-color: var(--near-black); }
+
+  .plf-search {
+    width: 100%; font-family: inherit; font-size: 12px; padding: 8px 10px; margin-bottom: 10px;
+    border: 1px solid var(--light-grey); border-radius: 3px; background: var(--warm-white); color: var(--charcoal);
+  }
+  .plf-search::placeholder { color: var(--mid-grey); }
+
+  .plf-checkbox-list { display: flex; flex-direction: column; gap: 4px; max-height: 200px; overflow-y: auto; }
+  .plf-check-row {
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--charcoal); cursor: pointer; padding: 3px 0;
+  }
+  .plf-check-row input { accent-color: var(--vk-red); width: 14px; height: 14px; flex-shrink: 0; }
+
+  .plf-hint { font-size: 11px; color: var(--mid-grey); margin-top: 8px; line-height: 1.4; }
+
+  .plf-range {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+  }
+  .plf-range input {
+    font-family: inherit; font-size: 12px; padding: 6px 8px; border: 1px solid var(--light-grey); border-radius: 3px;
+  }
+
+  .plf-link {
+    display: block; font-size: 12px; color: var(--charcoal); text-decoration: none; padding: 4px 0;
+  }
+  .plf-link:hover { color: var(--vk-red); }
+
+  .plf-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .plf-clear {
+    font-family: inherit; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 8px 12px; border: 1px solid var(--charcoal); background: transparent; color: var(--charcoal); cursor: pointer; border-radius: 3px;
+  }
+  .plf-clear:hover { background: var(--off-white); }
+
+  .plp-main { padding: 24px 0; min-width: 0; }
+
+  .plp-toolbar {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-bottom: 20px;
+  }
+  .plp-count { font-size: 13px; color: var(--mid-grey); flex: 1; min-width: 120px; }
+
+  .active-filters {
+    display: none; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 18px;
+    padding: 12px 14px; background: var(--off-white); border: 1px solid var(--pale-grey); border-radius: 4px;
+  }
+  .active-filters.has-items { display: flex; }
+  .af-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--mid-grey); width: 100%; margin-bottom: 2px;
+  }
+  @media (min-width: 600px) {
+    .af-title { width: auto; margin-bottom: 0; margin-right: 8px; }
+  }
+  .af-pill {
+    font-family: inherit; font-size: 11px; color: var(--charcoal);
+    padding: 5px 11px; border: 1px solid var(--light-grey); border-radius: 16px;
+    background: var(--warm-white); cursor: pointer; transition: border-color 0.12s, color 0.12s;
+  }
+  .af-pill:hover { border-color: var(--vk-red); color: var(--vk-red); }
+  .af-clear {
+    font-family: inherit; font-size: 11px; font-weight: 600; background: none; border: none;
+    color: var(--vk-red); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; margin-left: auto;
+  }
+  .af-clear:hover { color: var(--near-black); }
+
+  .plp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 28px 20px;
+  }
+  .pcard { text-decoration: none; color: inherit; cursor: pointer; }
+  .pcard-ph {
+    aspect-ratio: 1; background: var(--off-white); border-radius: 4px; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--mid-grey); border: 1px solid var(--pale-grey);
+  }
+  .pcard-ph.dk { background: #2C2C2A; color: rgba(255,255,255,0.35); }
+  .pcard-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; line-height: 1.3; }
+  .pcard-price { font-size: 13px; color: var(--mid-grey); }
+
+  .drawer-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(26,26,24,0.4); z-index: 400;
+  }
+  .drawer-backdrop.open { display: block; }
+
+  .plf-close {
+    display: none; margin-left: auto; background: none; border: none; font-size: 22px; line-height: 1;
+    cursor: pointer; color: var(--mid-grey); padding: 4px;
+  }
+
+  .filter-fab {
+    display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 300; font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 14px 28px; border: none; border-radius: 24px;
+    background: var(--vk-red); color: #fff; cursor: pointer; box-shadow: 0 8px 24px rgba(192,57,43,0.35);
+  }
+  .filter-fab:hover { filter: brightness(1.05); }
+
+  @media (max-width: 900px) {
+    .quick-filter-inner { flex-wrap: wrap; padding-left: 16px; padding-right: 16px; }
+    .qf-sort { width: 100%; margin-left: 0; margin-top: 8px; justify-content: flex-end; }
+    .plp-layout { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; }
+    .plp-sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0; width: var(--drawer-w);
+      max-height: none; z-index: 410; background: var(--warm-white);
+      border-right: 1px solid var(--light-grey); box-shadow: 8px 0 32px rgba(0,0,0,0.12);
+      padding: 20px 18px; transform: translateX(-100%); transition: transform 0.28s ease;
+    }
+    .plp-sidebar.open { transform: translateX(0); }
+    .plf-close { display: block; }
+    .filter-fab { display: block; }
+    .page-breadcrumb, .plp-hero, .subcat-pills-inner { padding-left: 16px; padding-right: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lab-bar">
+  <a href="../VK-Prototype-Index-from-GitHub.html">Index</a>
+  <span>|</span>
+  <a href="VintageKing-MegaMenu-CursorLab-v2.html">Mega menu</a>
+  <span>|</span>
+  <a href="VK-Microphones-CategoryDemo-v3-hybrid.html">PLP v3 hybrid</a>
+  <span>|</span>
+  <a href="VK-Microphones-CategoryDemo-v2.html">PLP v2</a>
+  <span>|</span>
+  <span>PLP v1 (this page)</span>
+</div>
+
+<nav class="page-breadcrumb" aria-label="Breadcrumb">
+  <a href="#">Home</a>
+  <span aria-hidden="true">›</span>
+  <span>Microphones</span>
+</nav>
+
+<header class="plp-hero">
+  <h1>Microphones</h1>
+  <p class="plp-hero-meta">Lab stand-in: 2,400+ SKUs when every facet fires — new, used, B-stock &amp; vintage listings</p>
+  <p class="plp-hero-note">Static demo: quick strip + facet drawer. Mega menu stays a separate file.</p>
+</header>
+
+<nav class="subcat-pills" aria-label="Microphone subcategories">
+  <div class="subcat-pills-inner">
+    <a href="#" class="subcat-pill active">All microphones</a>
+    <a href="#" class="subcat-pill">Large diaphragm condenser</a>
+    <a href="#" class="subcat-pill">Small diaphragm condenser</a>
+    <a href="#" class="subcat-pill">Dynamic</a>
+    <a href="#" class="subcat-pill">Ribbon</a>
+    <a href="#" class="subcat-pill">Tube</a>
+    <a href="#" class="subcat-pill">USB / digital</a>
+    <a href="#" class="subcat-pill">Lavalier &amp; headset</a>
+    <a href="#" class="subcat-pill">Shotgun &amp; broadcast</a>
+    <a href="#" class="subcat-pill">Stereo &amp; matched pairs</a>
+    <a href="#" class="subcat-pill">Boundary &amp; installed</a>
+    <a href="#" class="subcat-pill">Vintage &amp; collectible</a>
+    <a href="#" class="subcat-pill">Parts &amp; upgrades</a>
+  </div>
+</nav>
+
+<div class="quick-filter-bar" aria-label="Quick filters">
+  <div class="quick-filter-inner">
+    <div class="quick-filter-scroll">
+      <span class="qf-label">Filter</span>
+      <button type="button" class="qf-chip is-primary" data-qf>All</button>
+      <button type="button" class="qf-chip" data-qf>Condenser</button>
+      <button type="button" class="qf-chip" data-qf>Dynamic</button>
+      <button type="button" class="qf-chip" data-qf>Ribbon</button>
+      <button type="button" class="qf-chip" data-qf>Tube</button>
+      <button type="button" class="qf-chip" data-qf>New</button>
+      <button type="button" class="qf-chip" data-qf>Used</button>
+      <button type="button" class="qf-chip" data-qf>Open box</button>
+      <button type="button" class="qf-chip" data-qf>Under $1,000</button>
+      <button type="button" class="qf-chip" data-qf>$1,000 – $5,000</button>
+      <button type="button" class="qf-see-all" id="qf-see-all">See all filters →</button>
+    </div>
+    <div class="qf-sort">
+      <label for="sort">Sort</label>
+      <select id="sort">
+        <option>Most popular</option>
+        <option>Featured</option>
+        <option>Price: Low to high</option>
+        <option>Price: High to low</option>
+        <option>Newest</option>
+        <option>Best selling</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+
+<div class="plp-layout">
+  <aside class="plp-sidebar" id="sidebar" aria-label="All filters" tabindex="-1">
+    <div class="plf-title">
+      All filters
+      <button type="button" class="plf-close" id="drawer-close" aria-label="Close filters">×</button>
+    </div>
+    <div class="plf-actions">
+      <button type="button" class="plf-clear" id="plf-clear-demo">Clear demo selection</button>
+    </div>
+
+    <details class="plf-group" open>
+      <summary>Brand</summary>
+      <div class="plf-body">
+        <input type="search" class="plf-search" placeholder="Search brands…" aria-label="Search brands">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">Neumann</button>
+          <button type="button" class="plf-chip">Shure</button>
+          <button type="button" class="plf-chip on">AKG</button>
+          <button type="button" class="plf-chip">Sennheiser</button>
+          <button type="button" class="plf-chip">Telefunken</button>
+          <button type="button" class="plf-chip">Sony</button>
+          <button type="button" class="plf-chip">Audio-Technica</button>
+          <button type="button" class="plf-chip">Blue / Baltic</button>
+          <button type="button" class="plf-chip">Warm Audio</button>
+          <button type="button" class="plf-chip">Mojave</button>
+          <button type="button" class="plf-chip">Royer</button>
+          <button type="button" class="plf-chip">Coles</button>
+          <button type="button" class="plf-chip">Electro-Voice</button>
+          <button type="button" class="plf-chip">DPA</button>
+          <button type="button" class="plf-chip">Schoeps</button>
+          <button type="button" class="plf-chip">Manley</button>
+          <button type="button" class="plf-chip">Chandler</button>
+          <button type="button" class="plf-chip">Universal Audio</button>
+          <button type="button" class="plf-chip">Lewitt</button>
+          <button type="button" class="plf-chip">Earthworks</button>
+          <button type="button" class="plf-chip">Peluso</button>
+          <button type="button" class="plf-chip">Bock / Edge</button>
+        </div>
+        <p class="plf-hint">Production: long-tail brands collapse into search + “show more”; counts per value come from the index.</p>
+      </div>
+    </details>
+
+    <details class="plf-group" open>
+      <summary>Price</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">Under $200</button>
+          <button type="button" class="plf-chip">$200 – $500</button>
+          <button type="button" class="plf-chip">$500 – $1,000</button>
+          <button type="button" class="plf-chip on">$1,000 – $2,500</button>
+          <button type="button" class="plf-chip">$2,500 – $5,000</button>
+          <button type="button" class="plf-chip">$5,000 – $10,000</button>
+          <button type="button" class="plf-chip">$10,000+</button>
+        </div>
+        <div class="plf-range">
+          <input type="text" inputmode="numeric" placeholder="Min $" aria-label="Minimum price">
+          <input type="text" inputmode="numeric" placeholder="Max $" aria-label="Maximum price">
+        </div>
+        <p class="plf-hint">Wireframe shows a single “Under $1,000” chip; full PLP adds tiers + custom bounds for high-SKU categories.</p>
+      </div>
+    </details>
+
+    <details class="plf-group" open>
+      <summary>Condition &amp; listing</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox" checked> New</label>
+          <label class="plf-check-row"><input type="checkbox"> Used — Mint</label>
+          <label class="plf-check-row"><input type="checkbox"> Used — Excellent</label>
+          <label class="plf-check-row"><input type="checkbox"> Used — Good</label>
+          <label class="plf-check-row"><input type="checkbox"> Open box</label>
+          <label class="plf-check-row"><input type="checkbox"> B-stock</label>
+          <label class="plf-check-row"><input type="checkbox"> Vintage / consignment</label>
+          <label class="plf-check-row"><input type="checkbox"> Factory refurbished</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group" open>
+      <summary>Availability &amp; fulfillment</summary>
+      <div class="plf-body">
+        <label class="plf-check-row"><input type="checkbox"> In stock only</label>
+        <label class="plf-check-row"><input type="checkbox"> Ships same day</label>
+        <label class="plf-check-row"><input type="checkbox"> Free shipping</label>
+        <label class="plf-check-row"><input type="checkbox"> Pickup (Detroit HQ)</label>
+        <a href="#" class="plf-link" style="margin-top:6px">Financing eligible</a>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Polar pattern</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">Cardioid</button>
+          <button type="button" class="plf-chip">Supercardioid</button>
+          <button type="button" class="plf-chip">Hypercardioid</button>
+          <button type="button" class="plf-chip">Omnidirectional</button>
+          <button type="button" class="plf-chip">Bidirectional / Figure-8</button>
+          <button type="button" class="plf-chip">Multi-pattern</button>
+          <button type="button" class="plf-chip">Shotgun / lobar</button>
+          <button type="button" class="plf-chip">Variable / continuous</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Connectivity &amp; digital</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">XLR (analog)</button>
+          <button type="button" class="plf-chip">USB-C</button>
+          <button type="button" class="plf-chip">USB-A</button>
+          <button type="button" class="plf-chip">Wireless handheld</button>
+          <button type="button" class="plf-chip">Wireless bodypack</button>
+          <button type="button" class="plf-chip">Lightning (legacy)</button>
+          <button type="button" class="plf-chip">Digital AES / network-ready</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Capsule &amp; circuit topology</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">Large diaphragm</button>
+          <button type="button" class="plf-chip">Small diaphragm</button>
+          <button type="button" class="plf-chip">Dynamic moving-coil</button>
+          <button type="button" class="plf-chip">Ribbon (active)</button>
+          <button type="button" class="plf-chip">Ribbon (passive)</button>
+          <button type="button" class="plf-chip">Tube output</button>
+          <button type="button" class="plf-chip">Solid-state FET</button>
+          <button type="button" class="plf-chip">Modeling / plugin-native</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Form factor &amp; mounting</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">Handheld</button>
+          <button type="button" class="plf-chip">Pencil / side-address</button>
+          <button type="button" class="plf-chip">Shotgun (interference tube)</button>
+          <button type="button" class="plf-chip">Lavalier / clip-on</button>
+          <button type="button" class="plf-chip">Headset</button>
+          <button type="button" class="plf-chip">Desktop / vocal booth</button>
+          <button type="button" class="plf-chip">Boundary / PZM</button>
+          <button type="button" class="plf-chip">Hanging / choir</button>
+          <button type="button" class="plf-chip">Stereo bar / MS pair</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Application</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Vocals</label>
+          <label class="plf-check-row"><input type="checkbox"> Voiceover / broadcast</label>
+          <label class="plf-check-row"><input type="checkbox"> Podcast / stream</label>
+          <label class="plf-check-row"><input type="checkbox"> Acoustic instruments</label>
+          <label class="plf-check-row"><input type="checkbox"> Drum overheads &amp; room</label>
+          <label class="plf-check-row"><input type="checkbox"> Guitar cabinets</label>
+          <label class="plf-check-row"><input type="checkbox"> Brass &amp; woodwinds</label>
+          <label class="plf-check-row"><input type="checkbox"> Choir &amp; ensemble</label>
+          <label class="plf-check-row"><input type="checkbox"> Field / ENG</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Power &amp; phantom</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">48V phantom</button>
+          <button type="button" class="plf-chip">12V / T-power (legacy)</button>
+          <button type="button" class="plf-chip">Tube PSU included</button>
+          <button type="button" class="plf-chip">Battery powered</button>
+          <button type="button" class="plf-chip">USB bus power</button>
+          <button type="button" class="plf-chip">Passive (no power)</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Onboard controls</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">Pad (switch)</button>
+          <button type="button" class="plf-chip">High-pass filter</button>
+          <button type="button" class="plf-chip">Pattern control</button>
+          <button type="button" class="plf-chip">Gain / trim</button>
+          <button type="button" class="plf-chip">Mute</button>
+          <button type="button" class="plf-chip">Headphone monitor (USB)</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Included accessories</summary>
+      <div class="plf-body">
+        <div class="plf-checkbox-list">
+          <label class="plf-check-row"><input type="checkbox"> Shock mount</label>
+          <label class="plf-check-row"><input type="checkbox"> Pop filter / windscreen</label>
+          <label class="plf-check-row"><input type="checkbox"> Hard case / pouch</label>
+          <label class="plf-check-row"><input type="checkbox"> Stereo mounting bar</label>
+          <label class="plf-check-row"><input type="checkbox"> Thread adapters</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Color &amp; finish</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">Black</button>
+          <button type="button" class="plf-chip">Silver / nickel</button>
+          <button type="button" class="plf-chip">White</button>
+          <button type="button" class="plf-chip">Custom / limited</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="plf-group">
+      <summary>Deals</summary>
+      <div class="plf-body">
+        <div class="plf-pills">
+          <button type="button" class="plf-chip">On sale</button>
+          <button type="button" class="plf-chip">Clearance</button>
+          <button type="button" class="plf-chip">Bundle value</button>
+        </div>
+      </div>
+    </details>
+  </aside>
+
+  <main class="plp-main">
+    <div class="plp-toolbar">
+      <p class="plp-count">Showing <strong>156</strong> matches <span style="color:var(--mid-grey);font-weight:400">(demo)</span></p>
+    </div>
+    <div class="active-filters" id="active-filters" aria-live="polite">
+      <span class="af-title">Active filters</span>
+      <div id="af-pills" style="display:contents"></div>
+      <button type="button" class="af-clear" id="af-clear-all">Clear all</button>
+    </div>
+    <div class="plp-grid" aria-label="Products">
+      <a href="#" class="pcard"><div class="pcard-ph dk">Image</div><div class="pcard-name">Example condenser · Mk II</div><div class="pcard-price">$2,195</div></a>
+      <a href="#" class="pcard"><div class="pcard-ph">Image</div><div class="pcard-name">Large diaphragm reference</div><div class="pcard-price">$899</div></a>
+      <a href="#" class="pcard"><div class="pcard-ph dk">Image</div><div class="pcard-name">Dynamic broadcast</div><div class="pcard-price">$449</div></a>
+      <a href="#" class="pcard"><div class="pcard-ph">Image</div><div class="pcard-name">Stereo matched pair</div><div class="pcard-price">$3,595</div></a>
+      <a href="#" class="pcard"><div class="pcard-ph dk">Image</div><div class="pcard-name">Vintage tube restoration</div><div class="pcard-price">$14,500</div></a>
+      <a href="#" class="pcard"><div class="pcard-ph">Image</div><div class="pcard-name">USB / podcast</div><div class="pcard-price">$129</div></a>
+    </div>
+  </main>
+</div>
+
+<button type="button" class="filter-fab" id="filter-fab">Filters</button>
+
+<script>
+(function () {
+  function qs(id) { return document.getElementById(id); }
+  const sidebar = qs('sidebar');
+  const back = qs('drawer-backdrop');
+  const fab = qs('filter-fab');
+  const closeBtn = qs('drawer-close');
+  const activeWrap = qs('active-filters');
+  const afPills = qs('af-pills');
+  const qfButtons = document.querySelectorAll('.qf-chip[data-qf]');
+
+  function collectActive() {
+    const items = [];
+    document.querySelectorAll('.plf-chip.on').forEach(function (c) {
+      items.push({ type: 'chip', label: c.textContent.trim() });
+    });
+    document.querySelectorAll('.plf-check-row input:checked').forEach(function (input) {
+      var row = input.closest('.plf-check-row');
+      var label = row ? row.textContent.replace(/\s+/g, ' ').trim() : '';
+      if (label) items.push({ type: 'check', label: label });
+    });
+    qfButtons.forEach(function (b) {
+      var t = b.textContent.trim();
+      if (b.classList.contains('is-active') && t !== 'All') {
+        items.push({ type: 'quick', label: t });
+      }
+    });
+    return items;
+  }
+
+  function removeOne(item) {
+    if (item.type === 'chip') {
+      document.querySelectorAll('.plf-chip.on').forEach(function (c) {
+        if (c.textContent.trim() === item.label) c.classList.remove('on');
+      });
+    } else if (item.type === 'check') {
+      document.querySelectorAll('.plf-check-row').forEach(function (row) {
+        var txt = row.textContent.replace(/\s+/g, ' ').trim();
+        if (txt === item.label) {
+          var input = row.querySelector('input');
+          if (input) input.checked = false;
+        }
+      });
+    } else if (item.type === 'quick') {
+      qfButtons.forEach(function (b) {
+        b.classList.remove('is-primary', 'is-active');
+      });
+      qfButtons.forEach(function (b) {
+        if (b.textContent.trim() === 'All') {
+          b.classList.add('is-primary', 'is-active');
+        }
+      });
+    }
+    syncActiveFilters();
+  }
+
+  function clearAllFacets() {
+    document.querySelectorAll('.plf-chip.on').forEach(function (c) { c.classList.remove('on'); });
+    document.querySelectorAll('.plf-check-row input').forEach(function (i) { i.checked = false; });
+    qfButtons.forEach(function (b) { b.classList.remove('is-primary', 'is-active'); });
+    qfButtons.forEach(function (b) {
+      if (b.textContent.trim() === 'All') b.classList.add('is-primary', 'is-active');
+    });
+    syncActiveFilters();
+  }
+
+  function syncActiveFilters() {
+    var items = collectActive();
+    afPills.innerHTML = '';
+    if (items.length === 0) {
+      activeWrap.classList.remove('has-items');
+      return;
+    }
+    activeWrap.classList.add('has-items');
+    items.forEach(function (item) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'af-pill';
+      btn.setAttribute('aria-label', 'Remove filter ' + item.label);
+      btn.textContent = item.label + ' \u00D7';
+      btn.addEventListener('click', function () { removeOne(item); });
+      afPills.appendChild(btn);
+    });
+  }
+
+  function openDrawer() {
+    sidebar.classList.add('open');
+    back.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    sidebar.focus();
+  }
+  function closeDrawer() {
+    sidebar.classList.remove('open');
+    back.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  fab.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  back.addEventListener('click', closeDrawer);
+
+  const seeAll = qs('qf-see-all');
+  seeAll.addEventListener('click', function () {
+    if (window.matchMedia('(max-width: 900px)').matches) {
+      openDrawer();
+    } else {
+      closeDrawer();
+      sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(function () { sidebar.focus(); }, 400);
+    }
+  });
+
+  document.querySelectorAll('.plf-chip').forEach(function (el) {
+    el.addEventListener('click', function () {
+      this.classList.toggle('on');
+      syncActiveFilters();
+    });
+  });
+
+  sidebar.addEventListener('change', function (e) {
+    if (e.target.matches('.plf-check-row input')) syncActiveFilters();
+  });
+
+  qfButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      qfButtons.forEach(function (b) {
+        b.classList.remove('is-primary', 'is-active');
+      });
+      this.classList.add('is-active');
+      if (this.textContent.trim() === 'All') {
+        this.classList.add('is-primary');
+      }
+      syncActiveFilters();
+    });
+  });
+
+  qs('af-clear-all').addEventListener('click', clearAllFacets);
+
+  qs('plf-clear-demo').addEventListener('click', clearAllFacets);
+
+  syncActiveFilters();
+})();
+</script>
+</body>
+</html>

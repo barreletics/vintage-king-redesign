@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VK Copy, Typography &amp; Badge Spec — Vintage King prototype</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vk-red: #C0392B;
+    --near-black: #1A1A18;
+    --charcoal: #2C2C2A;
+    --mid-grey: #6B6B68;
+    --amber: #D4860A;
+    --warm-white: #FDFCFB;
+    --off-white: #F7F5F2;
+    --pale: #EDEDEA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Roboto', system-ui, sans-serif;
+    background: #F5F0E8;
+    color: var(--near-black);
+    line-height: 1.6;
+    padding: 32px 24px 48px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  .back {
+    font-size: 13px; margin-bottom: 24px;
+  }
+  .back a { color: var(--vk-red); font-weight: 600; text-decoration: none; }
+  .back a:hover { text-decoration: underline; }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px; font-weight: 500; margin-bottom: 8px; line-height: 1.2;
+  }
+  .meta { font-size: 12px; color: var(--mid-grey); margin-bottom: 28px; }
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18px; font-weight: 500; margin: 32px 0 12px;
+    color: var(--near-black);
+  }
+  p, li { font-size: 14px; color: var(--charcoal); margin-bottom: 12px; }
+  ul { margin: 0 0 16px 1.2rem; }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    background: var(--warm-white); border: 1px solid var(--pale); margin-bottom: 20px;
+  }
+  th, td { border: 1px solid var(--pale); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--off-white); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid-grey); }
+  code { font-size: 12px; background: var(--off-white); padding: 2px 6px; border-radius: 3px; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; align-items: center; }
+  .sample {
+    display: inline-block; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 500; padding: 3px 7px; border-radius: 2px; border: 1px solid;
+  }
+  .sample-new { color: var(--vk-red); border-color: var(--vk-red); }
+  .sample-used { color: var(--amber); border-color: var(--amber); }
+  .sample-vintage { color: #7c5c20; border-color: #9a7340; }
+  .sample-demo { color: var(--mid-grey); border-color: var(--mid-grey); }
+  .sample-open { color: var(--charcoal); border-color: var(--charcoal); }
+  hr { border: none; border-top: 1px solid var(--pale); margin: 28px 0; }
+  .note {
+    font-size: 12px; color: var(--mid-grey);
+    padding: 12px 14px; background: var(--off-white); border-left: 3px solid var(--vk-red);
+    border-radius: 0 4px 4px 0; margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="back"><a href="VK-Prototype-Index.html">&larr; Back to prototype dashboard</a></p>
+
+  <h1>VK Prototype Copy, Typography &amp; Badge Spec</h1>
+  <p class="meta">Official reference · Aligned with <code>mega-menu/VK-Microphones-CategoryDemo-v4-refined.html</code> · April 2026</p>
+
+  <p>This is the <strong>browser-readable</strong> version of the guide (fonts, bold vs not, caps, colors, PLP badges). Editors: the same content lives in <code>VK-Prototype-Copy-Typography-Badge-Spec.md</code> for version control and diffs.</p>
+
+  <div class="note"><strong>Not the mega menu lab.</strong> Navigation layout experiments live on the dashboard under &ldquo;Mega menus + layout models.&rdquo; This page is only type, copy rules, and product badges.</div>
+
+  <h2>Font stacks</h2>
+  <table>
+    <thead><tr><th>Role</th><th>Family</th><th>Weights</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>UI / body</strong></td><td>Roboto, system-ui</td><td>400–700</td><td>Nav, filters, chips, forms, buyer card titles, price numbers.</td></tr>
+      <tr><td><strong>Display</strong></td><td>Playfair Display, Georgia</td><td>400, 500</td><td>Category H1, PLP product names, some editorial heads.</td></tr>
+    </tbody>
+  </table>
+  <p>Load from Google Fonts with <code>display=swap</code>; preconnect <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>. Brief FOUT is normal.</p>
+
+  <h2>When to use bold</h2>
+  <table>
+    <thead><tr><th>Use bold</th><th>Do not bold</th></tr></thead>
+    <tbody>
+      <tr><td><code>&lt;strong&gt;</code> for rare emphasis in long copy (e.g. <strong>All filters</strong>).</td><td>Whole sentences or SEO stuffing.</td></tr>
+      <tr><td>Checked filter row: weight 600 + red.</td><td>Unchecked rows: 400.</td></tr>
+      <tr><td>Current price: 500.</td><td>&ldquo;Was&rdquo; price: 400, strikethrough.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>ALL CAPS</h2>
+  <p>Only for <strong>labels</strong> (eyebrows, drawer <code>&lt;summary&gt;</code>, quick row labels, badge text). Product titles stay Title Case. Badges are always uppercase in the UI.</p>
+
+  <h2>Color tokens</h2>
+  <table>
+    <thead><tr><th>Token</th><th>Hex</th><th>Usage</th></tr></thead>
+    <tbody>
+      <tr><td>VK red</td><td><code>#C0392B</code></td><td>CTA, links, <strong>New</strong> badge, focus.</td></tr>
+      <tr><td>Near black</td><td><code>#1A1A18</code></td><td>Primary text.</td></tr>
+      <tr><td>Charcoal</td><td><code>#2C2C2A</code></td><td>Secondary body; <strong>Open box</strong> badge.</td></tr>
+      <tr><td>Mid grey</td><td><code>#6B6B68</code></td><td>Meta; <strong>Demo</strong> badge.</td></tr>
+      <tr><td>Amber</td><td><code>#D4860A</code></td><td><strong>Used</strong> badge.</td></tr>
+      <tr><td>Vintage brown</td><td><code>#7c5c20</code> / <code>#9a7340</code></td><td><strong>Vintage</strong> badge text / border.</td></tr>
+    </tbody>
+  </table>
+  <p>Neutrals: <code>#FDFCFB</code> warm white, <code>#F7F5F2</code> off-white, <code>#EDEDEA</code> pale grey, <code>#D8D6D2</code> light grey.</p>
+
+  <h2>PLP condition badges (samples)</h2>
+  <p>9px, uppercase, ~0.14em tracking, 500 weight, 1px border, 2px radius.</p>
+  <div class="badge-row">
+    <span class="sample sample-new">New</span>
+    <span class="sample sample-used">Used — Excellent</span>
+    <span class="sample sample-vintage">Vintage</span>
+    <span class="sample sample-demo">Demo</span>
+    <span class="sample sample-open">Open box</span>
+  </div>
+  <table>
+    <thead><tr><th>Badge</th><th>CSS class (v4)</th><th>Color</th></tr></thead>
+    <tbody>
+      <tr><td>New</td><td><code>.pcard-badge</code></td><td>VK red</td></tr>
+      <tr><td>Used</td><td><code>.pcard-badge--used</code></td><td>Amber</td></tr>
+      <tr><td>Vintage</td><td><code>.pcard-badge--vintage</code></td><td>Brown / tan border</td></tr>
+      <tr><td>Demo</td><td><code>.pcard-badge--demo</code></td><td>Mid grey</td></tr>
+      <tr><td>Open box</td><td><code>.pcard-badge--open</code></td><td>Charcoal</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Tile CTA</h2>
+  <p><strong>Details →</strong> (or View product) · 11px, semibold, small caps, red · entire card is one link.</p>
+
+  <h2>Filter drawer</h2>
+  <p>Group titles: uppercase micro-label, red in v4. Visible checkboxes, accent VK red. Selected row: red + 600.</p>
+
+  <hr>
+  <p class="meta">Update this HTML and the <code>.md</code> together when production tokens change.</p>
+</div>
+</body>
+</html>
