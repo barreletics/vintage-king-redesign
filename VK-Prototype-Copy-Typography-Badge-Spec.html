@@ -62,6 +62,15 @@
   .sample-vintage { color: #7c5c20; border-color: #9a7340; }
   .sample-demo { color: var(--mid-grey); border-color: var(--mid-grey); }
   .sample-open { color: var(--charcoal); border-color: var(--charcoal); }
+  /* Filled pills — match VintageKing-Redesign-v2_67 .grid-badge */
+  .sample-grid {
+    display: inline-block; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 2px;
+    border: none; letter-spacing: normal; text-transform: none;
+  }
+  .sample-grid-new { background: var(--near-black); color: #fff; }
+  .sample-grid-used { background: #F5E6C8; color: var(--amber); }
+  .sample-grid-sale { background: #fde8e6; color: var(--vk-red); }
+  .sample-grid-openbox { background: #EFF6FF; color: #2563EB; }
   hr { border: none; border-top: 1px solid var(--pale); margin: 28px 0; }
   .note {
     font-size: 12px; color: var(--mid-grey);
@@ -75,11 +84,11 @@
   <p class="back"><a href="VK-Prototype-Index.html">&larr; Back to prototype dashboard</a></p>
 
   <h1>VK Prototype Copy, Typography &amp; Badge Spec</h1>
-  <p class="meta">Official reference · Aligned with <code>mega-menu/VK-Microphones-CategoryDemo-v4-refined.html</code> · April 2026</p>
+  <p class="meta"><strong>What to call it:</strong> <em>VK Prototype Copy, Typography &amp; Badge Spec</em> (short: <strong>type &amp; badge spec</strong>). Browser file: this page · April 2026</p>
 
-  <p>This is the <strong>browser-readable</strong> version of the guide (fonts, bold vs not, caps, colors, PLP badges). Editors: the same content lives in <code>VK-Prototype-Copy-Typography-Badge-Spec.md</code> for version control and diffs.</p>
+  <p>This is the <strong>browser-readable</strong> spec (fonts, bold, caps, colors, badges). Markdown twin: <code>VK-Prototype-Copy-Typography-Badge-Spec.md</code>.</p>
 
-  <div class="note"><strong>Not the mega menu lab.</strong> Navigation layout experiments live on the dashboard under &ldquo;Mega menus + layout models.&rdquo; This page is only type, copy rules, and product badges.</div>
+  <div class="note"><strong>Two badge looks.</strong> The <strong>10-page desktop prototype</strong> uses <strong>filled</strong> grid pills (<code>.grid-badge</code> in <code>VintageKing-Redesign-v2_67-Mar2026.html</code>). The <strong>mic category lab</strong> uses <strong>outline</strong> tags (<code>.pcard-badge</code> in <code>VK-Microphones-CategoryDemo-v4-refined.html</code>). Both are correct for their file—do not mix them on the same tile without a decision.</div>
 
   <h2>Font stacks</h2>
   <table>
@@ -118,8 +127,26 @@
   </table>
   <p>Neutrals: <code>#FDFCFB</code> warm white, <code>#F7F5F2</code> off-white, <code>#EDEDEA</code> pale grey, <code>#D8D6D2</code> light grey.</p>
 
-  <h2>PLP condition badges (samples)</h2>
-  <p>9px, uppercase, ~0.14em tracking, 500 weight, 1px border, 2px radius.</p>
+  <h2>Desktop prototype — grid badges (filled)</h2>
+  <p>From <code>VintageKing-Redesign-v2_67-Mar2026.html</code> · <code>.grid-badge</code> · 11px · weight 600 · padding <code>4px 10px</code>.</p>
+  <div class="badge-row">
+    <span class="sample-grid sample-grid-new">New</span>
+    <span class="sample-grid sample-grid-used">Used</span>
+    <span class="sample-grid sample-grid-sale">Sale</span>
+    <span class="sample-grid sample-grid-openbox">Open Box</span>
+  </div>
+  <table>
+    <thead><tr><th>Badge</th><th>Class</th><th>Style</th></tr></thead>
+    <tbody>
+      <tr><td>New</td><td><code>.grid-badge.new</code></td><td>Bg <code>#1A1A18</code>, text white</td></tr>
+      <tr><td>Used</td><td><code>.grid-badge.used</code></td><td>Bg <code>#F5E6C8</code> (amber-bg), text <code>#D4860A</code></td></tr>
+      <tr><td>Sale</td><td><code>.grid-badge.sale</code></td><td>Bg <code>#fde8e6</code>, text VK red</td></tr>
+      <tr><td>Open box</td><td><code>.grid-badge.openbox</code></td><td>Bg <code>#EFF6FF</code>, text <code>#2563EB</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Mic category PLP — condition tags (outline)</h2>
+  <p>From <code>mega-menu/VK-Microphones-CategoryDemo-v4-refined.html</code> · <code>.pcard-badge</code> · 9px · uppercase · ~0.14em tracking · 500 · 1px border · 2px radius.</p>
   <div class="badge-row">
     <span class="sample sample-new">New</span>
     <span class="sample sample-used">Used — Excellent</span>
@@ -130,11 +157,11 @@
   <table>
     <thead><tr><th>Badge</th><th>CSS class (v4)</th><th>Color</th></tr></thead>
     <tbody>
-      <tr><td>New</td><td><code>.pcard-badge</code></td><td>VK red</td></tr>
-      <tr><td>Used</td><td><code>.pcard-badge--used</code></td><td>Amber</td></tr>
+      <tr><td>New</td><td><code>.pcard-badge</code></td><td>VK red text + border</td></tr>
+      <tr><td>Used</td><td><code>.pcard-badge--used</code></td><td>Amber text + border</td></tr>
       <tr><td>Vintage</td><td><code>.pcard-badge--vintage</code></td><td>Brown / tan border</td></tr>
-      <tr><td>Demo</td><td><code>.pcard-badge--demo</code></td><td>Mid grey</td></tr>
-      <tr><td>Open box</td><td><code>.pcard-badge--open</code></td><td>Charcoal</td></tr>
+      <tr><td>Demo</td><td><code>.pcard-badge--demo</code></td><td>Mid grey text + border</td></tr>
+      <tr><td>Open box</td><td><code>.pcard-badge--open</code></td><td>Charcoal text + border</td></tr>
     </tbody>
   </table>
 

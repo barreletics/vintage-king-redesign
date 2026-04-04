@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage King — Redesign Prototype</title>
 <link rel="canonical" href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html">
-<meta name="description" content="Vintage King redesign hub: desktop &amp; mobile demos, Cursor Mega Menu lab, fonts/tag guide, Microphones v4. Internal review, April 2026.">
+<meta name="description" content="Vintage King Cursor Lab demo hub: full site, mobile, latest mic category page, Cursor Mega Menu, type &amp; badge spec. Internal review, April 2026.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -151,7 +151,6 @@ body {
 .live-banner .live-line { font-size: 14px; color: #1A1A18; margin-bottom: 6px; }
 .live-banner .live-link { font-size: 15px; margin-bottom: 12px; }
 .live-banner .live-hint { font-size: 13px; color: #6B6B68; line-height: 1.5; }
-.live-banner .live-update { font-size: 12px; color: #6B6B68; line-height: 1.5; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(26,26,24,0.08); }
 .simple-map {
   max-width: 720px; width: 100%; margin: 0 auto 32px; padding: 16px 18px;
   background: #FDFCFB; border: 1px solid rgba(26,26,24,0.1); border-radius: 6px;
@@ -168,6 +167,16 @@ body {
 .simple-map a { color: #C0392B; font-weight: 600; text-decoration: none; }
 .simple-map a:hover { text-decoration: underline; }
 .simple-map tr:last-child th, .simple-map tr:last-child td { border-bottom: none; }
+.deck-head {
+  width: 100%; max-width: 1000px; margin: 40px auto 8px;
+  font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 400; color: #1A1A18;
+  text-align: center; line-height: 1.3;
+}
+.deck-head.top { margin-top: 12px; }
+.deck-sub {
+  width: 100%; max-width: 640px; margin: 0 auto 22px; font-size: 13px; color: #6B6B68;
+  text-align: center; line-height: 1.55;
+}
 </style>
 </head>
 <body>
@@ -190,22 +199,24 @@ body {
 <div class="live-banner" id="live-dashboard">
   <p class="live-line"><strong>One link for the team:</strong></p>
   <p class="live-link"><a href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html" target="_blank" rel="noopener noreferrer">Open the live dashboard</a></p>
-  <p class="live-hint">Scroll down. Click any card to open a demo.</p>
-  <p class="live-update">This web address does not change. New demos show up here after the updated HTML files are saved to the GitHub repo (same folder layout as this project).</p>
+  <p class="live-hint">Scroll down. Each card opens a different HTML demo in this folder.</p>
 </div>
 
 <div class="simple-map" id="whats-where">
-  <h2 class="simple-map-title">What is where</h2>
+  <h2 class="simple-map-title">Quick map</h2>
   <table>
-    <tr><th>You want&hellip;</th><th>Open this (below)</th></tr>
-    <tr><td>The bookmark everyone shares</td><td><a href="#live-dashboard">Open the live dashboard</a> (box above)</td></tr>
-    <tr><td>Cursor-built top nav &amp; mega dropdowns</td><td><a href="#card-cursor-mega-menu">Cursor Mega Menu</a> — not the mic shopping page</td></tr>
-    <tr><td>Fonts &amp; New / Used / Demo tag colors</td><td><a href="#card-fonts-guide">Fonts &amp; product tags</a></td></tr>
-    <tr><td>Microphones category (filters + grid)</td><td><a href="#card-mic-v4">Mic shopping page v4</a></td></tr>
-    <tr><td>Full multi-page desktop prototype</td><td><a href="#card-desktop">Full Prototype</a></td></tr>
-    <tr><td>Mobile simulator</td><td><a href="#card-mobile">Mobile Simulator</a></td></tr>
+    <tr><th>What you need</th><th>Which demo</th></tr>
+    <tr><td>The whole redesigned site (home + inside pages)</td><td><a href="#card-desktop">Full site prototype</a></td></tr>
+    <tr><td>How it looks on a phone</td><td><a href="#card-mobile">Mobile</a></td></tr>
+    <tr><td>Microphones: filters + product list (our newest version)</td><td><a href="#card-mic-latest">Microphones (latest)</a></td></tr>
+    <tr><td>Top menu / big dropdowns only (Cursor build)</td><td><a href="#card-cursor-mega-menu">Cursor Mega Menu</a></td></tr>
+    <tr><td>Fonts and tag colors (what to call it: type &amp; badge spec)</td><td><a href="#card-type-spec">Type &amp; badge spec</a></td></tr>
+    <tr><td>Older microphone demos (side-by-side only)</td><td><a href="#older-mics">Earlier mic drafts</a></td></tr>
   </table>
 </div>
+
+<h2 class="deck-head top" id="start-here">Start here</h2>
+<p class="deck-sub">Newest work first. Use these for reviews and stakeholder walkthroughs.</p>
 
 <div class="cards">
 
@@ -219,10 +230,10 @@ body {
         <rect x="25" y="21" width="18" height="6" rx="1"/>
       </svg>
     </div>
-    <div class="card-label">Desktop</div>
-    <div class="card-title">Full Prototype</div>
-    <div class="card-desc">10-page desktop prototype — Homepage, Category, Product, FAQ, Demo Deals, Sell or Trade, Studio Installations, Tech Shop, Financing, Open Box.</div>
-    <div class="card-cta">View Desktop &rarr;</div>
+    <div class="card-label">Main demo</div>
+    <div class="card-title">Full site prototype</div>
+    <div class="card-desc">The big one: <strong>home</strong> plus nine more pages (category, product, FAQ, deals, trade, studio, tech shop, financing, open box). This is the core redesign walkthrough.</div>
+    <div class="card-cta">Open full site &rarr;</div>
   </a>
 
   <a class="card" id="card-mobile" href="VintageKing-MobileSimulator-v1_7-Mar2026.html">
@@ -234,10 +245,24 @@ body {
         <circle cx="10" cy="29.5" r="1" fill="#D8D6D2"/>
       </svg>
     </div>
-    <div class="card-label">Mobile</div>
-    <div class="card-title">Mobile Simulator</div>
-    <div class="card-desc">Mobile-first view of the prototype — responsive layouts, touch-optimised navigation, and mobile UX patterns.</div>
-    <div class="card-cta">View Mobile &rarr;</div>
+    <div class="card-label">Same site, narrow screen</div>
+    <div class="card-title">Mobile</div>
+    <div class="card-desc">Phone-style frame so people can see <strong>touch</strong> layout and mobile nav without guessing from desktop.</div>
+    <div class="card-cta">Open mobile &rarr;</div>
+  </a>
+
+  <a class="card" id="card-mic-latest" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">
+    <div class="card-icon">
+      <svg width="48" height="32" viewBox="0 0 48 32" fill="none" stroke="#D8D6D2" stroke-width="1.2">
+        <rect x="1" y="1" width="46" height="30" rx="2"/>
+        <line x1="1" y1="7" x2="47" y2="7"/>
+        <rect x="5" y="11" width="18" height="11" rx="1"/><rect x="26" y="11" width="17" height="11" rx="1"/>
+      </svg>
+    </div>
+    <div class="card-label">Latest</div>
+    <div class="card-title">Microphones (shopping page)</div>
+    <div class="card-desc">A <strong>category-style page</strong>: filters, product grid, New/Used/Demo tags. Mic category is the example; same pattern can apply to other categories later.</div>
+    <div class="card-cta">Open latest mic page &rarr;</div>
   </a>
 
   <a class="card" id="card-cursor-mega-menu" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">
@@ -249,13 +274,13 @@ body {
         <rect x="26" y="11" width="18" height="18" rx="1"/>
       </svg>
     </div>
-    <div class="card-label">Cursor lab</div>
+    <div class="card-label">Navigation only</div>
     <div class="card-title">Cursor Mega Menu</div>
-    <div class="card-desc">Only the <strong>bar across the top</strong>. Hover or click a topic to open the big menu panels (categories, promos). Built in Cursor — <strong>not</strong> the microphone shopping page.</div>
+    <div class="card-desc">Only the <strong>top navigation</strong> and the big dropdown panels. Good for reviewing IA and layout. <strong>Not</strong> the mic product list above.</div>
     <div class="card-cta">Open Cursor Mega Menu &rarr;</div>
   </a>
 
-  <a class="card" id="card-fonts-guide" href="VK-Prototype-Copy-Typography-Badge-Spec.html">
+  <a class="card" id="card-type-spec" href="VK-Prototype-Copy-Typography-Badge-Spec.html">
     <div class="card-icon">
       <svg width="48" height="32" viewBox="0 0 48 32" fill="none" stroke="#D8D6D2" stroke-width="1.2">
         <rect x="1" y="1" width="46" height="30" rx="2"/>
@@ -266,25 +291,18 @@ body {
         <rect x="23" y="22" width="20" height="6" rx="1"/>
       </svg>
     </div>
-    <div class="card-label">Cheatsheet</div>
-    <div class="card-title">Fonts &amp; product tags</div>
-    <div class="card-desc">Which font goes where. What color is <strong>New</strong> vs <strong>Used</strong> vs <strong>Demo</strong>. One page. Click the card.</div>
-    <div class="card-cta">Open guide &rarr;</div>
+    <div class="card-label">Reference</div>
+    <div class="card-title">Type &amp; badge spec</div>
+    <div class="card-desc">Official name: <strong>VK Prototype Copy, Typography &amp; Badge Spec</strong>. Fonts, bold/caps rules, and <strong>two badge styles</strong> (full site vs mic list). Share this link with design/dev.</div>
+    <div class="card-cta">Open spec &rarr;</div>
   </a>
 
-  <a class="card" id="card-mic-v4" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">
-    <div class="card-icon">
-      <svg width="48" height="32" viewBox="0 0 48 32" fill="none" stroke="#D8D6D2" stroke-width="1.2">
-        <rect x="1" y="1" width="46" height="30" rx="2"/>
-        <line x1="1" y1="7" x2="47" y2="7"/>
-        <rect x="5" y="11" width="18" height="11" rx="1"/><rect x="26" y="11" width="17" height="11" rx="1"/>
-      </svg>
-    </div>
-    <div class="card-label">Microphones (best one)</div>
-    <div class="card-title">Mic shopping page v4</div>
-    <div class="card-desc">The <strong>category page</strong> with filters, product grid, and badges. This is the one we like best right now.</div>
-    <div class="card-cta">Open v4 refined &rarr;</div>
-  </a>
+</div>
+
+<h2 class="deck-head" id="older-mics">Earlier microphone page drafts</h2>
+<p class="deck-sub">Older Cursor builds—open only to compare how filters and layout evolved. For real reviews, use <strong>Microphones (shopping page)</strong> above.</p>
+
+<div class="cards">
 
   <a class="card" href="mega-menu/VK-Microphones-CategoryDemo-v3-hybrid.html">
     <div class="card-icon">
@@ -295,10 +313,10 @@ body {
         <rect x="28" y="11" width="16" height="14" rx="1"/>
       </svg>
     </div>
-    <div class="card-label">Older mic page</div>
-    <div class="card-title">Microphones v3</div>
-    <div class="card-desc">Older version of the mic page. Only open if you want to compare.</div>
-    <div class="card-cta">View v3 hybrid &rarr;</div>
+    <div class="card-label">Earlier draft</div>
+    <div class="card-title">Microphones &middot; previous (v3)</div>
+    <div class="card-desc">Comparison only.</div>
+    <div class="card-cta">Open v3 &rarr;</div>
   </a>
 
   <a class="card" href="mega-menu/VK-Microphones-CategoryDemo-v2.html">
@@ -310,10 +328,10 @@ body {
         <rect x="16" y="11" width="28" height="16" rx="1"/>
       </svg>
     </div>
-    <div class="card-label">Older mic page</div>
-    <div class="card-title">Microphones v2</div>
-    <div class="card-desc">Older version. Compare only.</div>
-    <div class="card-cta">View v2 &rarr;</div>
+    <div class="card-label">Earlier draft</div>
+    <div class="card-title">Microphones &middot; previous (v2)</div>
+    <div class="card-desc">Comparison only.</div>
+    <div class="card-cta">Open v2 &rarr;</div>
   </a>
 
   <a class="card" href="mega-menu/VK-Microphones-CategoryDemo-v1.html">
@@ -329,10 +347,10 @@ body {
         <line x1="5" y1="21" x2="13" y2="21"/>
       </svg>
     </div>
-    <div class="card-label">Older mic page</div>
-    <div class="card-title">Microphones v1</div>
-    <div class="card-desc">Oldest version. Compare only.</div>
-    <div class="card-cta">View v1 &rarr;</div>
+    <div class="card-label">Earlier draft</div>
+    <div class="card-title">Microphones &middot; previous (v1)</div>
+    <div class="card-desc">Comparison only.</div>
+    <div class="card-cta">Open v1 &rarr;</div>
   </a>
 
 </div>
