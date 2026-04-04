@@ -3,44 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vintage King - Redesign prototype hub</title>
+<title>Vintage King — Prototype hub</title>
 <link rel="canonical" href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html">
-<meta name="description" content="Vintage King Cursor Lab: newest full site, mega menu, and mic filters demos (priority). Mobile and type spec below. April 2026.">
+<meta name="description" content="Vintage King redesign prototypes: landing pages, filters demo, typography spec. Internal hub.">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="max-age=0, must-revalidate">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   background: #F5F0E8;
   color: #1A1A18;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 40px;
+  padding: 40px 24px 56px;
+  line-height: 1.5;
+}
+.hub-wrap {
+  max-width: 620px;
+  margin: 0 auto;
 }
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
-.logo-mark {
-  width: 36px;
-  height: 36px;
-}
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
+.logo-mark { width: 36px; height: 36px; flex-shrink: 0; }
 .logo-name {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -48,267 +40,150 @@ body {
 }
 .logo-tagline {
   font-size: 10px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #6B6B68;
-  margin-top: 4px;
+  margin-top: 2px;
 }
-.eyebrow {
+.hub-kicker {
   font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #6B6B68;
-  margin-bottom: 48px;
-  font-weight: 500;
-}
-.cards {
-  display: flex;
-  gap: 24px;
-  align-items: stretch;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 1000px;
-  width: 100%;
-}
-.card {
-  flex: 1;
-  min-width: 260px;
-  max-width: 300px;
-  background: #FDFCFB;
-  border: 1px solid rgba(26,26,24,0.1);
-  padding: 36px 32px;
-  text-decoration: none;
-  color: inherit;
-  transition: box-shadow 0.2s, transform 0.2s;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.card:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
-  transform: translateY(-2px);
-}
-.card-label {
-  font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: #6B6B68;
+  font-weight: 500;
+  margin: 20px 0 28px;
+}
+.hub-bookmark {
+  font-size: 14px;
+  color: #2C2C2A;
+  padding: 14px 16px;
+  background: #FDFCFB;
+  border: 1px solid rgba(26,26,24,0.12);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.hub-bookmark a {
   color: #C0392B;
   font-weight: 600;
+  text-decoration: none;
+  word-break: break-all;
 }
-.card-title {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 18px;
+.hub-bookmark a:hover { text-decoration: underline; }
+.hub-section {
+  margin-top: 36px;
+}
+.hub-section:first-of-type { margin-top: 28px; }
+.hub-section h2 {
+  font-size: 17px;
   font-weight: 600;
   color: #1A1A18;
-  line-height: 1.25;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
 }
-.card-desc {
-  font-size: 13px;
+.hub-section p, .hub-section .hub-lead {
+  font-size: 14px;
   color: #6B6B68;
   line-height: 1.6;
-  flex: 1;
+  margin-bottom: 14px;
 }
-.card-cta {
-  font-size: 12px;
+.hub-section p strong { color: #2C2C2A; }
+.hub-tile {
+  display: block;
+  padding: 14px 16px;
+  background: #FDFCFB;
+  border: 1px solid rgba(26,26,24,0.12);
+  border-radius: 6px;
+  text-decoration: none;
+  color: #1A1A18;
   font-weight: 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: #C0392B;
-  margin-top: 8px;
+  font-size: 15px;
+  transition: box-shadow 0.2s, border-color 0.2s;
 }
-.card-icon {
-  width: 100%;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #F7F5F2;
-  margin-bottom: 4px;
+.hub-tile:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border-color: rgba(26,26,24,0.18);
+}
+.hub-tile--priority {
+  border-color: rgba(192, 57, 43, 0.42);
+  background: #fff;
+  box-shadow: 0 2px 14px rgba(192, 57, 43, 0.07);
+}
+.hub-tile--priority:hover {
+  box-shadow: 0 8px 24px rgba(192, 57, 43, 0.12);
+}
+.hub-tile .hub-tile-meta {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6B6B68;
+  margin-top: 6px;
+  line-height: 1.45;
 }
 .footer-note {
   margin-top: 48px;
   font-size: 12px;
   color: #6B6B68;
-  letter-spacing: 0.04em;
-}
-.footer-hosted {
-  margin-top: 20px;
-  font-size: 12px;
-  color: #6B6B68;
-  line-height: 1.5;
-  max-width: 640px;
-  text-align: center;
-}
-.footer-hosted a { color: #C0392B; font-weight: 600; word-break: break-all; }
-.footer-hosted a:hover { text-decoration: underline; }
-.live-banner {
-  max-width: 720px; margin: 0 auto 28px; padding: 14px 18px;
-  background: #FDFCFB; border: 1px solid rgba(26,26,24,0.12); border-radius: 6px;
-  font-size: 13px; line-height: 1.55; color: #2C2C2A; text-align: left;
-}
-.live-banner strong { color: #1A1A18; }
-.live-banner a { color: #C0392B; font-weight: 600; text-decoration: none; word-break: break-all; }
-.live-banner a:hover { text-decoration: underline; }
-.live-banner .live-line { font-size: 14px; color: #1A1A18; margin-bottom: 6px; }
-.live-banner .live-link { font-size: 15px; margin-bottom: 12px; }
-.live-banner .live-hint { font-size: 13px; color: #6B6B68; line-height: 1.5; }
-.priority-banner {
-  max-width: 720px; margin: 0 auto 24px; padding: 18px 20px;
-  background: linear-gradient(145deg, #EEF4FF 0%, #DFE9FA 100%);
-  border: 1px solid rgba(37, 99, 235, 0.35); border-radius: 8px;
-  font-size: 14px; line-height: 1.6; color: #1e293b;
-}
-.priority-banner .priority-kicker {
-  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: #2563EB; font-weight: 700; margin-bottom: 10px;
-}
-.priority-banner strong { color: #1d4ed8; }
-.card--priority {
-  background: linear-gradient(180deg, #f5f9ff 0%, #e8f0fc 100%);
-  border: 1px solid rgba(37, 99, 235, 0.38);
-  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.07);
-}
-.card--priority:hover {
-  box-shadow: 0 10px 32px rgba(37, 99, 235, 0.14);
-}
-.card--priority .card-label { color: #2563EB; }
-.card--priority .card-cta { color: #1d4ed8; }
-.card--priority .card-icon { background: rgba(255,255,255,0.75); }
-.card--priority .card-desc { color: #475569; }
-.deck-head {
-  width: 100%; max-width: 1000px; margin: 44px auto 8px;
-  font-family: 'DM Sans', sans-serif; font-size: 17px; font-weight: 600; color: #1A1A18;
-  text-align: center; line-height: 1.3;
-}
-.deck-head.secondary {
-  margin-top: 52px; font-size: 17px; color: #4B5563;
-}
-.deck-sub {
-  width: 100%; max-width: 640px; margin: 0 auto 22px; font-size: 13px; color: #6B6B68;
-  text-align: center; line-height: 1.55;
 }
 </style>
 </head>
 <body>
 
-<div class="logo">
-  <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="18" cy="18" r="17" stroke="#C0392B" stroke-width="1.5"/>
-    <rect x="14" y="8" width="8" height="14" rx="4" stroke="#1A1A18" stroke-width="1.2"/>
-    <line x1="18" y1="22" x2="18" y2="28" stroke="#1A1A18" stroke-width="1.2"/>
-    <line x1="13" y1="28" x2="23" y2="28" stroke="#1A1A18" stroke-width="1.2"/>
-  </svg>
-  <div class="logo-text">
-    <span class="logo-name">Vintage King</span>
-    <span class="logo-tagline">New, used, vintage, pro audio</span>
+<div class="hub-wrap">
+
+  <div class="logo">
+    <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="18" cy="18" r="17" stroke="#C0392B" stroke-width="1.5"/>
+      <rect x="14" y="8" width="8" height="14" rx="4" stroke="#1A1A18" stroke-width="1.2"/>
+      <line x1="18" y1="22" x2="18" y2="28" stroke="#1A1A18" stroke-width="1.2"/>
+      <line x1="13" y1="28" x2="23" y2="28" stroke="#1A1A18" stroke-width="1.2"/>
+    </svg>
+    <div>
+      <div class="logo-name">Vintage King</div>
+      <div class="logo-tagline">Prototype hub · Cursor Lab</div>
+    </div>
   </div>
-</div>
 
-<div class="eyebrow">Vintage King Cursor Lab, demo hub, April 2026</div>
+  <p class="hub-kicker">Internal review · April 2026</p>
 
-<div class="live-banner" id="live-dashboard">
-  <p class="live-line"><strong>One link for the team:</strong></p>
-  <p class="live-link"><a href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html" target="_blank" rel="noopener noreferrer">Bookmark this dashboard</a></p>
-  <p class="live-hint">Blue cards: review first. Tan cards: extra links.</p>
-</div>
+  <div class="hub-bookmark">
+    <strong style="color:#1A1A18">Team link:</strong>
+    <a href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html" target="_blank" rel="noopener noreferrer">barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html</a>
+  </div>
 
-<div class="priority-banner">
-  <p class="priority-kicker">Hypercritical: review first</p>
-  <p>These three demos are the <strong>most recent Cursor Lab work</strong>: the <strong>full multi-page site</strong> (every main template), the <strong>updated mega menu</strong> (top nav and flyouts only), and the <strong>updated category and filters</strong> flow (Microphones as the working example). Older mic-page versions are <strong>not on this page</strong>. They stay as links <strong>inside</strong> that mic demo if you need them.</p>
-</div>
+  <section class="hub-section" aria-labelledby="heading-landing">
+    <h2 id="heading-landing">Homepage and landing pages</h2>
+    <p class="hub-lead">One long prototype stitches together the main templates: home, category, product, editorial or FAQ-style pages, and core commercial flows (deals, trade-in, financing, and similar). Scroll top to bottom to walk the set.</p>
+    <a class="hub-tile" id="card-desktop" href="VintageKing-Redesign-v2_67-Mar2026.html">Open full site prototype <span class="hub-tile-meta">VintageKing-Redesign v2.67 — all primary landings in one file</span></a>
+  </section>
 
-<h2 class="deck-head" style="margin-top:8px">Newest demos</h2>
+  <section class="hub-section" aria-labelledby="heading-filters">
+    <h2 id="heading-filters">Filters and category shopping</h2>
+    <p class="hub-lead"><strong>Start here for the newest pattern.</strong> Open the <strong>Microphones</strong> demo. Under the hero you will see <strong>two light rows</strong>: the first is <strong>collection pills</strong> (Condenser, Dynamic, and the rest). The second is <strong>Quick refinements</strong> (price, condition, and shortcuts). That top stack is the fast filter strip.</p>
+    <p class="hub-lead" style="margin-bottom:14px">To open the <strong>full filter drawer</strong>, use <strong>See more</strong> — the <strong>red pill</strong> on the first row — or <strong>All filters</strong> on the second row. Either one slides in the sheet with every facet. Older mic drafts (v1 to v3) are linked from the black lab bar on that page.</p>
+    <a class="hub-tile hub-tile--priority" id="card-mic-latest" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open Microphones PLP (filters) <span class="hub-tile-meta">PLP v4 refined — pills, quick refinements, drawer, grid</span></a>
+  </section>
 
-<div class="cards">
+  <section class="hub-section" aria-labelledby="heading-nav">
+    <h2 id="heading-nav">Top navigation only</h2>
+    <p class="hub-lead">Mega menu and flyouts only. Use this when you are reviewing IA and header behavior, not the product list or filters above.</p>
+    <a class="hub-tile" id="card-cursor-mega-menu" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu <span class="hub-tile-meta">Header and dropdown panels</span></a>
+  </section>
 
-  <a class="card card--priority" id="card-desktop" href="VintageKing-Redesign-v2_67-Mar2026.html">
-    <div class="card-icon">
-      <svg width="48" height="32" viewBox="0 0 48 32" fill="none" stroke="#93c5fd" stroke-width="1.2">
-        <rect x="1" y="1" width="46" height="30" rx="2"/>
-        <line x1="1" y1="7" x2="47" y2="7"/>
-        <rect x="5" y="11" width="16" height="16" rx="1"/>
-        <rect x="25" y="11" width="18" height="7" rx="1"/>
-        <rect x="25" y="21" width="18" height="6" rx="1"/>
-      </svg>
-    </div>
-    <div class="card-label">Full site</div>
-    <div class="card-title">All pages prototype</div>
-    <div class="card-desc"><strong>Every major page type</strong> in one file: category, product, FAQ, deals, trade-in, studio, tech shop, financing, open box. Use when you need the full site story.</div>
-    <div class="card-cta">Open full site &rarr;</div>
-  </a>
+  <section class="hub-section" aria-labelledby="heading-type">
+    <h2 id="heading-type">Typography, copy, and badges</h2>
+    <p class="hub-lead">Reference for type roles, emphasis, and badge styles across prototypes.</p>
+    <a class="hub-tile" id="card-type-spec" href="VK-Prototype-Copy-Typography-Badge-Spec.html">Open type and badge spec</a>
+  </section>
 
-  <a class="card card--priority" id="card-cursor-mega-menu" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">
-    <div class="card-icon">
-      <svg width="48" height="32" viewBox="0 0 48 32" fill="none" stroke="#93c5fd" stroke-width="1.2">
-        <rect x="1" y="1" width="46" height="30" rx="2"/>
-        <line x1="1" y1="7" x2="47" y2="7"/>
-        <line x1="8" y1="11" x2="20" y2="11"/><line x1="8" y1="14" x2="18" y2="14"/><line x1="8" y1="17" x2="22" y2="17"/>
-        <rect x="26" y="11" width="18" height="18" rx="1"/>
-      </svg>
-    </div>
-    <div class="card-label">Updated mega menu</div>
-    <div class="card-title">Top nav and dropdowns</div>
-    <div class="card-desc"><strong>Only the header</strong>: main topics and big panels. Stress-test IA and layout here. <strong>Not</strong> the product grid or filters (next card).</div>
-    <div class="card-cta">Open mega menu &rarr;</div>
-  </a>
+  <section class="hub-section" aria-labelledby="heading-mobile">
+    <h2 id="heading-mobile">Mobile</h2>
+    <p class="hub-lead">Phone-width pass of the big prototype. Secondary to desktop patterns for now.</p>
+    <a class="hub-tile" id="card-mobile" href="VintageKing-MobileSimulator-v1_7-Mar2026.html">Open mobile simulator</a>
+  </section>
 
-  <a class="card card--priority" id="card-mic-latest" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">
-    <div class="card-icon">
-      <svg width="48" height="32" viewBox="0 0 48 32" fill="none" stroke="#93c5fd" stroke-width="1.2">
-        <rect x="1" y="1" width="46" height="30" rx="2"/>
-        <line x1="1" y1="7" x2="47" y2="7"/>
-        <rect x="5" y="11" width="18" height="11" rx="1"/><rect x="26" y="11" width="17" height="11" rx="1"/>
-      </svg>
-    </div>
-    <div class="card-label">Updated filters</div>
-    <div class="card-title">Category page and filters</div>
-    <div class="card-desc"><strong>Shopping list pattern</strong>: refine products, drawer filters, grid, condition tags. <strong>Microphones</strong> is the sample. Older drafts (v1 to v3) link from that page.</div>
-    <div class="card-cta">Open mic category demo &rarr;</div>
-  </a>
+  <p class="footer-note">Internal only. Vintage King Audio, 2026.</p>
 
 </div>
-
-<h2 class="deck-head secondary">Also on this hub</h2>
-<p class="deck-sub">Supporting material. Mobile comes later. Spec is for design and development alignment.</p>
-
-<div class="cards">
-
-  <a class="card" id="card-mobile" href="VintageKing-MobileSimulator-v1_7-Mar2026.html">
-    <div class="card-icon">
-      <svg width="20" height="32" viewBox="0 0 20 32" fill="none" stroke="#D8D6D2" stroke-width="1.2">
-        <rect x="1" y="1" width="18" height="30" rx="3"/>
-        <line x1="1" y1="5" x2="19" y2="5"/>
-        <line x1="1" y1="27" x2="19" y2="27"/>
-        <circle cx="10" cy="29.5" r="1" fill="#D8D6D2"/>
-      </svg>
-    </div>
-    <div class="card-label">Later focus</div>
-    <div class="card-title">Mobile simulator</div>
-    <div class="card-desc">Phone-width preview of the big prototype. Use when you&rsquo;re ready to prioritize <strong>mobile layout</strong>; the blue cards above are the current focus.</div>
-    <div class="card-cta">Open mobile &rarr;</div>
-  </a>
-
-  <a class="card" id="card-type-spec" href="VK-Prototype-Copy-Typography-Badge-Spec.html">
-    <div class="card-icon">
-      <svg width="48" height="32" viewBox="0 0 48 32" fill="none" stroke="#D8D6D2" stroke-width="1.2">
-        <rect x="1" y="1" width="46" height="30" rx="2"/>
-        <line x1="6" y1="9" x2="42" y2="9"/>
-        <line x1="6" y1="14" x2="36" y2="14"/>
-        <line x1="6" y1="19" x2="32" y2="19"/>
-        <rect x="6" y="22" width="14" height="6" rx="1"/>
-        <rect x="23" y="22" width="20" height="6" rx="1"/>
-      </svg>
-    </div>
-    <div class="card-label">Reference</div>
-    <div class="card-title">Type and badge spec</div>
-    <div class="card-desc"><strong>VK Prototype Copy, Typography and Badge Spec</strong>. Fonts, emphasis rules, badge colors for full site and mic list.</div>
-    <div class="card-cta">Open spec &rarr;</div>
-  </a>
-
-</div>
-
-<div class="footer-hosted"><a href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html" target="_blank" rel="noopener noreferrer">Live site link again</a></div>
-<div class="footer-note">Internal review only. Vintage King Audio, 2026.</div>
 
 </body>
 </html>
