@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vintage King — Demos</title>
+<title>Vintage King — Demo dashboard</title>
 <link rel="canonical" href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="max-age=0, must-revalidate">
@@ -11,69 +11,145 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: system-ui, -apple-system, sans-serif;
-  background: #f2efea;
+  background: #e8e4dc;
   color: #1a1a18;
-  padding: 32px 20px 48px;
-  line-height: 1.4;
+  padding: 28px 18px 40px;
+  line-height: 1.45;
 }
-.wrap { max-width: 28rem; margin: 0 auto; }
+.wrap { max-width: 34rem; margin: 0 auto; }
 h1 {
-  font-size: 1.125rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.sub { font-size: 0.8125rem; color: #6b6b68; margin-bottom: 28px; }
-ul { list-style: none; }
-li { margin-bottom: 18px; }
-a {
   font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.lead { font-size: 0.875rem; color: #6b6b68; margin-bottom: 22px; }
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b8b87;
+  margin-bottom: 12px;
+}
+.card {
+  background: #fff;
+  border: 1px solid rgba(26,26,24,0.08);
+  border-radius: 8px;
+  padding: 18px 18px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 12px rgba(26,26,24,0.04);
+}
+.card h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.card .tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c0392b;
+  margin-bottom: 6px;
+  display: block;
+}
+.card ul {
+  margin: 10px 0 14px;
+  padding-left: 1.1rem;
+  font-size: 0.875rem;
+  color: #4a4a47;
+}
+.card li { margin-bottom: 6px; }
+.card .cta {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: #c0392b;
+  padding: 10px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.card .cta:hover { filter: brightness(1.05); }
+.card .cta--dark {
+  background: #1a1a18;
+}
+.note {
+  font-size: 0.8125rem;
+  color: #6b6b68;
+  margin-top: 12px;
+  line-height: 1.45;
+}
+.more { margin-top: 22px; }
+.more h3 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8b8b87;
+  margin-bottom: 10px;
+}
+.more a {
+  display: block;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #c0392b;
   text-decoration: none;
+  margin-bottom: 8px;
 }
-a:hover { text-decoration: underline; }
-.hint {
-  display: block;
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: #6b6b68;
-  margin-top: 4px;
-  line-height: 1.35;
-}
-hr {
-  border: none;
-  border-top: 1px solid #d8d6d2;
-  margin: 26px 0 22px;
-}
-.more { font-size: 0.75rem; color: #8b8b87; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
-footer { margin-top: 32px; font-size: 0.75rem; color: #8b8b87; }
+.more a:hover { text-decoration: underline; }
+footer { margin-top: 28px; font-size: 0.75rem; color: #8b8b87; }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <h1>Vintage King demos</h1>
-  <p class="sub">Internal links. Not the store.</p>
+  <h1>Vintage King — demos</h1>
+  <p class="lead">Internal dashboard. Not the live store.</p>
 
-  <ul>
-    <li>
-      <a id="card-mic-latest" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Microphones — filters</a>
-      <span class="hint">Red See more or All filters opens the drawer.</span>
-    </li>
-    <li>
-      <a id="card-cursor-mega-menu" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Mega menu</a>
-    </li>
-  </ul>
+  <p class="section-label">Newest — open each link</p>
 
-  <hr>
-  <p class="more">More</p>
-  <ul>
-    <li><a id="card-desktop" href="VintageKing-Redesign-v2_67-Mar2026.html">Full site (v2.67)</a></li>
-    <li><a id="card-type-spec" href="VK-Prototype-Copy-Typography-Badge-Spec.html">Typography and badges</a></li>
-    <li><a id="card-mobile" href="VintageKing-MobileSimulator-v1_7-Mar2026.html">Mobile</a></li>
-  </ul>
+  <article class="card">
+    <span class="tag">Category · filters v4 (final)</span>
+    <h2 id="card-mic-latest">Microphones PLP</h2>
+    <ul>
+      <li>Category hero and intro</li>
+      <li>First row: collection pills (Condenser, Dynamic, …) and red <strong>See more</strong> (opens full filter drawer)</li>
+      <li>Second row: quick refinements; <strong>All filters</strong> also opens the drawer</li>
+      <li>Product grid with condition badges</li>
+      <li>Guides strip under the filters</li>
+    </ul>
+    <a class="cta" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open filters v4</a>
+    <p class="note">Click through on that page — the pattern is easier in the browser than on this list.</p>
+  </article>
+
+  <article class="card">
+    <span class="tag">Navigation · mega menu</span>
+    <h2 id="card-cursor-mega-menu">Mega menu lab</h2>
+    <ul>
+      <li><strong>Two bars above the storefront:</strong> slim demo strip (dashboard + jump to filters v4), then the <strong>Presets</strong> row</li>
+      <li>Click each <strong>Preset</strong> tab to see flyout layout variations (standard, text-heavy, photo tiles, etc.)</li>
+      <li>Full primary nav and category megas match the v2.67 direction</li>
+    </ul>
+    <a class="cta cta--dark" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu</a>
+    <p class="note">The demo bar on that file only links here and to filters v4 so reviewers are not lost in old PLP drafts.</p>
+  </article>
+
+  <article class="card">
+    <span class="tag">Full site scroll</span>
+    <h2 id="card-desktop">All landing pages (v2.67)</h2>
+    <p class="note" style="margin-top:0">You will see <strong>two lines of navigation at the top</strong> on this prototype — promo / utility and then the main category bar — before you scroll into each template.</p>
+    <a class="cta cta--dark" href="VintageKing-Redesign-v2_67-Mar2026.html" style="margin-top:12px">Open full site</a>
+  </article>
+
+  <div class="more">
+    <h3>Also</h3>
+    <a id="card-type-spec" href="VK-Prototype-Copy-Typography-Badge-Spec.html">Typography and badges</a>
+    <a id="card-mobile" href="VintageKing-MobileSimulator-v1_7-Mar2026.html">Mobile simulator</a>
+  </div>
 
   <footer>Vintage King · 2026</footer>
 </div>
