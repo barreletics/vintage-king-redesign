@@ -24,15 +24,29 @@ h1 {
   text-transform: uppercase;
   margin-bottom: 6px;
 }
-.lead { font-size: 0.875rem; color: #6b6b68; margin-bottom: 22px; }
-.section-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #8b8b87;
-  margin-bottom: 12px;
+.lead { font-size: 0.875rem; color: #6b6b68; margin-bottom: 16px; }
+.pick {
+  background: linear-gradient(180deg, #e8f1ff 0%, #dbe8fd 100%);
+  border: 1px solid #93b4e8;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 0.875rem;
+  color: #1e3a5f;
+  line-height: 1.5;
 }
+.pick-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1d4ed8;
+  margin-bottom: 8px;
+}
+.pick p { margin-bottom: 8px; }
+.pick p:last-child { margin-bottom: 0; }
+.pick strong { color: #152a47; }
+
 .card {
   background: #fff;
   border: 1px solid rgba(26,26,24,0.08);
@@ -52,17 +66,17 @@ h1 {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #c0392b;
+  color: #6b6b68;
   margin-bottom: 6px;
   display: block;
 }
 .card ul {
-  margin: 10px 0 14px;
+  margin: 8px 0 12px;
   padding-left: 1.1rem;
   font-size: 0.875rem;
   color: #4a4a47;
 }
-.card li { margin-bottom: 6px; }
+.card li { margin-bottom: 5px; }
 .card .cta {
   display: inline-block;
   font-size: 0.875rem;
@@ -77,10 +91,15 @@ h1 {
 .card .cta--dark {
   background: #1a1a18;
 }
+.duo-rule {
+  border: none;
+  border-top: 1px solid #e5e2dc;
+  margin: 18px 0;
+}
 .note {
   font-size: 0.8125rem;
   color: #6b6b68;
-  margin-top: 12px;
+  margin-top: 10px;
   line-height: 1.45;
 }
 .more { margin-top: 22px; }
@@ -108,40 +127,43 @@ footer { margin-top: 28px; font-size: 0.75rem; color: #8b8b87; }
 
 <div class="wrap">
   <h1>Vintage King — demos</h1>
-  <p class="lead">Internal dashboard. Not the live store.</p>
+  <p class="lead">Short links for reviewers — not the real store.</p>
 
-  <p class="section-label">Newest — open each link</p>
-
-  <article class="card">
-    <span class="tag">Category · filters v4 (final)</span>
-    <h2 id="card-mic-latest">Microphones PLP</h2>
-    <ul>
-      <li>Category hero and intro</li>
-      <li>First row: collection pills (Condenser, Dynamic, …) and red <strong>See more</strong> (opens full filter drawer)</li>
-      <li>Second row: quick refinements; <strong>All filters</strong> also opens the drawer</li>
-      <li>Product grid with condition badges</li>
-      <li>Guides strip under the filters</li>
-    </ul>
-    <a class="cta" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open filters v4</a>
-    <p class="note">Click through on that page — the pattern is easier in the browser than on this list.</p>
-  </article>
+  <div class="pick">
+    <p class="pick-kicker">Start here — pick one</p>
+    <p>There are <strong>two separate demos</strong> below in one box. You only need <strong>one open at a time</strong>; switch when you want the other.</p>
+    <p><strong>Mega menu</strong> is the top of the site: logo, search, and the big dropdowns when you hover categories. On that page, the <strong>second row is Presets</strong> — each tab is a different layout option for those dropdowns (more photos, more text, and so on).</p>
+    <p><strong>Category filters</strong> is the shopping view: Microphones with the two filter rows, the slide-out panel for every filter, and the product grid.</p>
+  </div>
 
   <article class="card">
-    <span class="tag">Navigation · mega menu</span>
-    <h2 id="card-cursor-mega-menu">Mega menu lab</h2>
+    <span class="tag">Demo 1 of 2</span>
+    <h2 id="card-cursor-mega-menu">Mega menu</h2>
     <ul>
-      <li><strong>Two bars above the storefront:</strong> slim demo strip (dashboard + jump to filters v4), then the <strong>Presets</strong> row</li>
-      <li>Click each <strong>Preset</strong> tab to see flyout layout variations (standard, text-heavy, photo tiles, etc.)</li>
-      <li>Full primary nav and category megas match the v2.67 direction</li>
+      <li>Open this when you want to judge navigation and flyouts</li>
+      <li>Use the <strong>Preset</strong> tabs on that page to flip between layout versions</li>
+      <li>Black bar at the top jumps back here or to the filter page</li>
     </ul>
     <a class="cta cta--dark" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu</a>
-    <p class="note">The demo bar on that file only links here and to filters v4 so reviewers are not lost in old PLP drafts.</p>
+
+    <hr class="duo-rule">
+
+    <span class="tag">Demo 2 of 2</span>
+    <h2 id="card-mic-latest">Category filters (Microphones v4)</h2>
+    <ul>
+      <li>Open this when you want to judge filters and the product list</li>
+      <li>Row under the hero: collection shortcuts; red <strong>See more</strong> opens all filters</li>
+      <li>Next row: quick refinements; <strong>All filters</strong> does the same</li>
+      <li>Scroll for grid, badges, and the guides strip</li>
+    </ul>
+    <a class="cta" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open filters v4</a>
+    <p class="note">Browsing the real page is clearer than reading bullets — click both links when you have a minute.</p>
   </article>
 
   <article class="card">
-    <span class="tag">Full site scroll</span>
-    <h2 id="card-desktop">All landing pages (v2.67)</h2>
-    <p class="note" style="margin-top:0">You will see <strong>two lines of navigation at the top</strong> on this prototype — promo / utility and then the main category bar — before you scroll into each template.</p>
+    <span class="tag">Long scroll of all page types</span>
+    <h2 id="card-desktop">Full site prototype (v2.67)</h2>
+    <p class="note" style="margin-top:0">One long file that stitches many templates together. At the top you will see <strong>two nav rows</strong> — a thin promo / utility strip, then the main category bar — the way a finished site often stacks them.</p>
     <a class="cta cta--dark" href="VintageKing-Redesign-v2_67-Mar2026.html" style="margin-top:12px">Open full site</a>
   </article>
 
