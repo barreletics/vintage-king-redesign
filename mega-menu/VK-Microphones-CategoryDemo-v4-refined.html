@@ -216,21 +216,24 @@
   .subcat-pill {
     flex-shrink: 0; font-size: 12px; font-weight: 500; color: var(--charcoal);
     padding: 8px 14px; border-radius: 999px;
-    border: 1px solid var(--light-grey);
-    background: var(--off-white);
+    border: 1px solid #c5c3be;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(26, 26, 24, 0.06);
     text-decoration: none; white-space: nowrap;
-    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
   }
   .subcat-pill:hover {
     color: var(--near-black);
-    border-color: var(--mid-grey);
-    background: var(--warm-white);
+    border-color: #9c9a94;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(26, 26, 24, 0.08);
   }
   .subcat-pill.active {
     color: #fff;
     font-weight: 600;
     background: var(--near-black);
     border-color: var(--near-black);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   }
   .subcat-pill:focus-visible,
   .quick-filter-bar .qf-chip:focus-visible {
