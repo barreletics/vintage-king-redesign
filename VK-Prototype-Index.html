@@ -20,11 +20,11 @@ body {
 h1 {
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 6px;
 }
-.lead { font-size: 0.875rem; color: #6b6b68; margin-bottom: 16px; }
+.lead { font-size: 0.875rem; color: #6b6b68; margin-bottom: 14px; }
 .pick {
   background: linear-gradient(180deg, #e8f1ff 0%, #dbe8fd 100%);
   border: 1px solid #93b4e8;
@@ -67,42 +67,34 @@ h1 {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #6b6b68;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   display: block;
 }
 .card ul {
-  margin: 8px 0 12px;
+  margin: 0 0 14px;
   padding-left: 1.1rem;
   font-size: 0.875rem;
   color: #4a4a47;
 }
-.card li { margin-bottom: 5px; }
-.card .cta {
+.card li { margin-bottom: 6px; }
+.cta {
   display: inline-block;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: #fff;
-  background: #c0392b;
-  padding: 10px 16px;
-  border-radius: 5px;
+  background: #1a1a18;
+  padding: 12px 18px;
+  border-radius: 6px;
   text-decoration: none;
 }
-.card .cta:hover { filter: brightness(1.05); }
-.card .cta--dark {
-  background: #1a1a18;
-}
-.duo-rule {
-  border: none;
-  border-top: 1px solid #e5e2dc;
-  margin: 18px 0;
-}
+.cta:hover { filter: brightness(1.06); }
 .note {
   font-size: 0.8125rem;
   color: #6b6b68;
-  margin-top: 10px;
+  margin-top: 12px;
   line-height: 1.45;
 }
-.more { margin-top: 22px; }
+.more { margin-top: 20px; }
 .more h3 {
   font-size: 0.7rem;
   font-weight: 700;
@@ -127,44 +119,31 @@ footer { margin-top: 28px; font-size: 0.75rem; color: #8b8b87; }
 
 <div class="wrap">
   <h1>Vintage King — demos</h1>
-  <p class="lead">Short links for reviewers — not the real store.</p>
+  <p class="lead">Reviewer links only — not the live store.</p>
 
   <div class="pick">
-    <p class="pick-kicker">Start here — pick one</p>
-    <p>There are <strong>two separate demos</strong> below in one box. You only need <strong>one open at a time</strong>; switch when you want the other.</p>
-    <p><strong>Mega menu</strong> is the top of the site: logo, search, and the big dropdowns when you hover categories. On that page, the <strong>second row is Presets</strong> — each tab is a different layout option for those dropdowns (more photos, more text, and so on).</p>
-    <p><strong>Category filters</strong> is the shopping view: Microphones with the two filter rows, the slide-out panel for every filter, and the product grid.</p>
+    <p class="pick-kicker">One place to start</p>
+    <p>Open <strong>Mega menu hub</strong> below. That file is the <strong>single reviewer hub</strong>: the thin black bar on that page switches between this dashboard, the <strong>Microphones PLP</strong> that demonstrates category <strong>filters</strong> (drawer, grid — v4 final only), and a sample <strong>product</strong> section inside the long v2.67 file.</p>
+    <p>On the same hub page, the <strong>second row is Presets 1–6</strong> — each tab is a different mega-menu layout. No old PLP drafts are linked there.</p>
   </div>
 
   <article class="card">
-    <span class="tag">Demo 1 of 2</span>
-    <h2 id="card-cursor-mega-menu">Mega menu</h2>
+    <span class="tag">Main entry</span>
+    <h2 id="card-cursor-mega-menu">Mega menu hub</h2>
     <ul>
-      <li>Open this when you want to judge navigation and flyouts</li>
-      <li>Use the <strong>Preset</strong> tabs on that page to flip between layout versions</li>
-      <li>Black bar at the top jumps back here or to the filter page</li>
+      <li>Hover the real category nav and flyouts</li>
+      <li>Click <strong>Preset 1–6</strong> to compare mega layouts</li>
+      <li>Use the black bar to open the <strong>Microphones PLP (filter demo)</strong> or <strong>Product page</strong> sample</li>
     </ul>
-    <a class="cta cta--dark" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu</a>
-
-    <hr class="duo-rule">
-
-    <span class="tag">Demo 2 of 2</span>
-    <h2 id="card-mic-latest">Category filters (Microphones v4)</h2>
-    <ul>
-      <li>Open this when you want to judge filters and the product list</li>
-      <li>Row under the hero: collection shortcuts; red <strong>See more</strong> opens all filters</li>
-      <li>Next row: quick refinements; <strong>All filters</strong> does the same</li>
-      <li>Scroll for grid, badges, and the guides strip</li>
-    </ul>
-    <a class="cta" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open filters v4</a>
-    <p class="note">Browsing the real page is clearer than reading bullets — click both links when you have a minute.</p>
+    <a class="cta" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu hub</a>
+    <p class="note">If you only need the filter page: black bar → Microphones PLP. That page is the microphones category list with two filter rows and the drawer — not a shortened “Microphones” label without context.</p>
   </article>
 
   <article class="card">
-    <span class="tag">Long scroll of all page types</span>
-    <h2 id="card-desktop">Full site prototype (v2.67)</h2>
-    <p class="note" style="margin-top:0">One long file that stitches many templates together. At the top you will see <strong>two nav rows</strong> — a thin promo / utility strip, then the main category bar — the way a finished site often stacks them.</p>
-    <a class="cta cta--dark" href="VintageKing-Redesign-v2_67-Mar2026.html" style="margin-top:12px">Open full site</a>
+    <span class="tag">Optional</span>
+    <h2 id="card-desktop">Full site in one scroll (v2.67)</h2>
+    <p class="note" style="margin-top:0">Long file with many templates. Starts with two stacked nav rows (promo strip, then categories). The hub links you straight to the product section when you pick Product page.</p>
+    <a class="cta" href="VintageKing-Redesign-v2_67-Mar2026.html" style="margin-top:12px;background:#2c2c2a">Open full site file</a>
   </article>
 
   <div class="more">

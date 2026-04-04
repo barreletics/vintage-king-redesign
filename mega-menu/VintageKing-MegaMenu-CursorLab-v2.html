@@ -934,23 +934,25 @@
 </head>
 <body class="vk-mega-v2 vk-look-1">
 
-<nav class="demo-hub-bar" aria-label="Demo navigation">
+<nav class="demo-hub-bar" aria-label="Reviewer hub">
   <a href="../VK-Prototype-Index.html">Dashboard</a>
   <span class="dh-sep">|</span>
-  <span class="dh-here">Mega menu (this page)</span>
+  <span class="dh-here">Mega menu</span>
   <span class="dh-sep">|</span>
-  <a href="VK-Microphones-CategoryDemo-v4-refined.html">Filters v4 (final)</a>
+  <a href="VK-Microphones-CategoryDemo-v4-refined.html">Microphones PLP (filters)</a>
+  <span class="dh-sep">|</span>
+  <a href="../VintageKing-Redesign-v2_67-Mar2026.html#product">Product page</a>
 </nav>
 
-<div class="proto-switcher" role="tablist" aria-label="Live itile presets (fold-safe mega; wide rail / thumb size = CMS per category)">
+<div class="proto-switcher" role="tablist" aria-label="Mega layout presets — six versions">
   <span class="proto-switcher-label">Presets</span>
   <div class="proto-tabs">
-    <button type="button" class="proto-tab active" role="tab" aria-selected="true" data-look="1">1 · Standard</button>
-    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="6">2 · Text</button>
-    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="7">3 · Two photos</button>
-    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="8">4 · Hero + text</button>
-    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="9">5 · Three tiles</button>
-    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="10">6 · 3 × text</button>
+    <button type="button" class="proto-tab active" role="tab" aria-selected="true" data-look="1" title="Standard: rail + two itiles with thumbs">Preset 1</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="6" title="Two text-only itiles">Preset 2</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="7" title="Two large photo cards">Preset 3</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="8" title="One hero photo + one text itile">Preset 4</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="9" title="Three itiles in the mega">Preset 5</button>
+    <button type="button" class="proto-tab" role="tab" aria-selected="false" data-look="10" title="Three text-only itiles">Preset 6</button>
   </div>
 </div>
 
@@ -2074,7 +2076,7 @@
 <!-- ══ DEMO STAGE ══ -->
 <div class="demo-stage">
   <h1 class="demo-title">Mega-menu lab · GitHub v2_67</h1>
-  <p class="demo-sub"><strong>Primary nav</strong> matches live-style order: Microphones → Outboard → Consoles → <strong>Vintage and Used</strong> (+) → Studio Design → Monitoring → <strong>Learn</strong> → Deals. Utility row is white between promo topbar and logo row. Use <strong>Presets</strong> above to preview flyout variations. Category filters prototype: <a href="VK-Microphones-CategoryDemo-v4-refined.html" style="color:var(--vk-red)">v4 final</a> · <a href="../VK-Prototype-Index.html" style="color:var(--vk-red)">Dashboard</a></p>
+  <p class="demo-sub"><strong>This page is the hub.</strong> Black bar: Dashboard · mega (here) · <strong>Microphones PLP</strong> (filter demonstration, v4 final) · <strong>Product page</strong> (sample PDP in v2.67). Second row: <strong>Preset 1–6</strong> = mega layout versions. Primary nav order: Microphones → Outboard → Consoles → <strong>Vintage and Used</strong> (+) → Studio Design → Monitoring → <strong>Learn</strong> → Deals.</p>
   <div class="demo-instructions">
     <div class="demo-pill"><span>Microphones</span> — Neumann co-op + 3 tiles</div>
     <div class="demo-pill"><span>Outboard</span> — UA 1176 featured</div>
@@ -2092,7 +2094,7 @@
     <div class="demo-card"><div class="demo-card-title">Make Your Mark</div><div class="demo-card-desc">Video teaser contextual to each category. New customer funnel + brand credibility signal. Sweetwater has no equivalent.</div></div>
     <div class="demo-card"><div class="demo-card-title">Expert CTA</div><div class="demo-card-desc">Green pulse dot. Always live. VK's biggest weapon over Sweetwater — surfaced at the exact browse moment.</div></div>
     <div class="demo-card"><div class="demo-card-title">Vintage panel</div><div class="demo-card-desc">Amber theme. "Just Landed" single piece. Scarcity + authenticity. Sweetwater cannot compete here.</div></div>
-    <div class="demo-card" style="grid-column:1/-1"><div class="demo-card-title">Where to go next</div><div class="demo-card-desc">Top black bar: <strong>Dashboard</strong> (link list), <strong>Filters v4</strong> (Microphones PLP with drawer). This page: switch <strong>Preset</strong> tabs to compare mega layouts.</div></div>
+    <div class="demo-card" style="grid-column:1/-1"><div class="demo-card-title">Reviewer path</div><div class="demo-card-desc">Black bar switches demos. This page: hover categories, then use <strong>Preset 1–6</strong>. For filters only, open <strong>Microphones PLP</strong>. For a PDP sample, open <strong>Product page</strong>.</div></div>
   </div>
 </div>
 
@@ -2100,12 +2102,12 @@
 
 <script>
   const LOOK_BLURB = {
-    1: { title: '1 · Standard', text: 'Rail + <strong>two</strong> itiles (thumb + type). Default for most categories.' },
-    6: { title: '2 · Text', text: '<strong>Two</strong> text-only itiles—same as Standard rail, picks without photos (SEO / fast choosers).' },
-    7: { title: '3 · Two photos', text: '<strong>Both</strong> itiles as large photo cards + overlay copy—when two hero shots beat micro-thumbs.' },
-    8: { title: '4 · Hero + text', text: '<strong>One</strong> large photo itile + <strong>one</strong> text-only itile—your preferred split between story and SKU.' },
-    9: { title: '5 · Three tiles', text: '<strong>Three</strong> itiles + taxonomy (rail unchanged). Use when you want compare-three merchandising; thumbs tighten so three fit in the capped mega.' },
-    10: { title: '6 · 3 × text', text: '<strong>Three</strong> text-only picks—like <strong>2 · Text</strong> but full compare-three without images; tighter padding so three fit cleanly.' }
+    1: { title: 'Preset 1 · Standard', text: 'Rail + <strong>two</strong> itiles (thumb + type). Default for most categories.' },
+    6: { title: 'Preset 2 · Text', text: '<strong>Two</strong> text-only itiles—same rail, picks without photos.' },
+    7: { title: 'Preset 3 · Two photos', text: '<strong>Both</strong> itiles as large photo cards + overlay copy.' },
+    8: { title: 'Preset 4 · Hero + text', text: '<strong>One</strong> large photo itile + <strong>one</strong> text-only itile.' },
+    9: { title: 'Preset 5 · Three tiles', text: '<strong>Three</strong> itiles + taxonomy (rail unchanged).' },
+    10: { title: 'Preset 6 · Three text', text: '<strong>Three</strong> text-only picks in the mega.' }
   };
   const MEGA_HEIGHT_NOTE = '<p class="proto-tax"><strong>Mega height (all tabs):</strong> Hard cap <code>min(68vh, 560px)</code>, grid row <code>minmax(0, 1fr)</code> so taxonomy columns <strong>scroll</strong> inside the panel; rail + itiles stay anchored—fixes Vintage (and any dense mega) dropping below the fold.</p>';
 
