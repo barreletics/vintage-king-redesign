@@ -45,23 +45,34 @@
   }
 
   .buyer-cards-wrap {
-    background: var(--pale-grey); border-bottom: 1px solid var(--light-grey);
-    border-top: 2px solid var(--light-grey); margin-top: 2px;
+    background: linear-gradient(180deg, var(--charcoal) 0%, #252523 100%);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid var(--near-black);
+    margin-top: 0;
+  }
+  .buyer-band-kicker {
+    grid-column: 1 / -1;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.42); margin: 0 0 2px;
+    padding-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,0.1);
   }
   .buyer-cards-inner {
-    max-width: 1400px; margin: 0 auto; padding: 22px 24px 22px;
-    display: grid; grid-template-columns: 1fr; gap: 14px;
+    max-width: 1400px; margin: 0 auto; padding: 28px 24px 32px;
+    display: grid; grid-template-columns: 1fr; gap: 16px;
   }
   @media (min-width: 768px) {
-    .buyer-cards-inner { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .buyer-cards-inner { grid-template-columns: 1fr 1fr; gap: 22px; row-gap: 22px; padding: 32px 24px 36px; }
+    .buyer-band-kicker { margin-bottom: 6px; padding-bottom: 14px; }
   }
   .buyer-card {
     background: var(--warm-white);
-    border: 1px solid var(--light-grey);
-    border-radius: 6px;
-    padding: 18px 20px;
-    box-shadow: 0 2px 8px rgba(26,26,24,0.06);
-    border-top: 2px solid var(--pale-grey);
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 8px;
+    padding: 22px 22px 20px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.65) inset,
+      0 14px 40px rgba(0,0,0,0.22),
+      0 2px 8px rgba(0,0,0,0.08);
   }
   .buyer-card-eyebrow {
     font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
@@ -189,15 +200,17 @@
   .subcat-pills-inner::-webkit-scrollbar { height: 4px; }
   .subcat-pills-inner::-webkit-scrollbar-thumb { background: var(--light-grey); border-radius: 2px; }
   .subcat-open-filters {
-    flex-shrink: 0; font-family: inherit; font-size: 13px; font-weight: 700;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    color: var(--vk-red); background: none; border: none; cursor: pointer;
-    text-decoration: underline; text-underline-offset: 3px;
-    padding: 8px 4px 8px 10px; white-space: nowrap;
+    flex-shrink: 0; font-family: inherit; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: #fff; background: var(--vk-red); border: 1px solid rgba(192, 57, 43, 0.95);
+    border-radius: 999px; cursor: pointer;
+    padding: 9px 18px; white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(192, 57, 43, 0.28);
+    margin-left: 4px;
   }
-  .subcat-open-filters:hover { color: var(--near-black); }
+  .subcat-open-filters:hover { filter: brightness(1.06); color: #fff; }
   .subcat-open-filters:focus-visible {
-    outline: 2px solid var(--vk-red); outline-offset: 3px; border-radius: 2px;
+    outline: 2px solid var(--vk-red); outline-offset: 3px;
   }
   .subcat-pill {
     flex-shrink: 0; font-size: 12.5px; font-weight: 500; color: var(--mid-grey);
@@ -590,6 +603,7 @@
 
 <div class="buyer-cards-wrap" aria-label="Guides and advice">
   <div class="buyer-cards-inner">
+    <p class="buyer-band-kicker">Guides and advice</p>
     <div class="buyer-card">
       <div class="buyer-card-eyebrow">Buying guide</div>
       <h3>Choose the right microphone</h3>
