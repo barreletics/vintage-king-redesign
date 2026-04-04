@@ -32,13 +32,28 @@
   .lab-bar a:hover { color: var(--vk-red); }
   .lab-bar span { color: rgba(255,255,255,0.45); }
 
-  .buyer-cards-wrap { background: var(--pale-grey); border-bottom: 1px solid var(--light-grey); }
+  .plp-page-context {
+    max-width: 1400px; margin: 0 auto; padding: 11px 24px 12px;
+    font-size: 14px; font-weight: 600; color: var(--near-black);
+    border-bottom: 1px solid var(--pale-grey); background: var(--warm-white);
+  }
+  .plp-page-context .plp-page-context-sub {
+    display: block; margin-top: 4px; font-size: 12px; font-weight: 400; color: var(--mid-grey);
+  }
+  @media (min-width: 600px) {
+    .plp-page-context .plp-page-context-sub { display: inline; margin-top: 0; margin-left: 10px; }
+  }
+
+  .buyer-cards-wrap {
+    background: var(--pale-grey); border-bottom: 1px solid var(--light-grey);
+    border-top: 2px solid var(--light-grey); margin-top: 2px;
+  }
   .buyer-cards-inner {
-    max-width: 1400px; margin: 0 auto; padding: 16px 24px;
-    display: grid; grid-template-columns: 1fr; gap: 12px;
+    max-width: 1400px; margin: 0 auto; padding: 22px 24px 22px;
+    display: grid; grid-template-columns: 1fr; gap: 14px;
   }
   @media (min-width: 768px) {
-    .buyer-cards-inner { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .buyer-cards-inner { grid-template-columns: 1fr 1fr; gap: 20px; }
   }
   .buyer-card {
     background: var(--warm-white);
@@ -174,11 +189,13 @@
   .subcat-pills-inner::-webkit-scrollbar { height: 4px; }
   .subcat-pills-inner::-webkit-scrollbar-thumb { background: var(--light-grey); border-radius: 2px; }
   .subcat-open-filters {
-    flex-shrink: 0; font-family: inherit; font-size: 12px; font-weight: 600;
-    color: var(--near-black); background: var(--warm-white); border: 1px solid var(--light-grey);
-    border-radius: 22px; cursor: pointer; padding: 8px 16px; white-space: nowrap;
+    flex-shrink: 0; font-family: inherit; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--near-black); background: var(--warm-white); border: 1.5px solid var(--charcoal);
+    border-radius: 22px; cursor: pointer; padding: 9px 18px; white-space: nowrap;
+    box-shadow: 0 1px 0 rgba(26,26,24,0.06);
   }
-  .subcat-open-filters:hover { border-color: var(--charcoal); color: var(--vk-red); }
+  .subcat-open-filters:hover { border-color: var(--vk-red); color: var(--vk-red); }
   .subcat-pill {
     flex-shrink: 0; font-size: 12.5px; font-weight: 500; color: var(--charcoal);
     padding: 8px 10px 8px 0; border: none; border-radius: 0;
@@ -192,13 +209,13 @@
   }
 
   .quick-filter-bar {
-    background: var(--off-white);
-    border-bottom: 1px solid var(--light-grey);
+    background: #e3dfd6;
+    border-bottom: 1px solid #cbc7be;
   }
   .quick-filter-bar .qf-chip {
-    padding: 4px 2px; margin-right: 12px; border: none; border-radius: 0;
-    background: none; color: var(--charcoal); text-decoration: none;
-    font-family: inherit; font-size: 12px; font-weight: 500;
+    padding: 6px 4px; margin-right: 14px; border: none; border-radius: 0;
+    background: none; color: var(--near-black); text-decoration: none;
+    font-family: inherit; font-size: 13px; font-weight: 500;
   }
   .quick-filter-bar .qf-chip:hover { color: var(--vk-red); }
   .quick-filter-bar .qf-chip.is-active {
@@ -206,7 +223,7 @@
     text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px;
   }
   .quick-filter-inner {
-    max-width: 1400px; margin: 0 auto; padding: 10px 24px;
+    max-width: 1400px; margin: 0 auto; padding: 12px 24px;
     display: flex; align-items: center; gap: 12px; flex-wrap: nowrap;
   }
   .quick-filter-chips-wrap {
@@ -222,19 +239,19 @@
   .quick-filter-chips::-webkit-scrollbar { height: 4px; }
   .quick-filter-chips::-webkit-scrollbar-thumb { background: var(--light-grey); border-radius: 2px; }
   .qf-label {
-    flex-shrink: 0; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--mid-grey); font-weight: 600; margin-right: 10px;
+    flex-shrink: 0; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--charcoal); font-weight: 700; margin-right: 12px;
   }
   .qf-chip { flex-shrink: 0; cursor: pointer; white-space: nowrap; }
   .qf-see-all {
-    flex-shrink: 0; font-family: inherit; font-size: 12px; font-weight: 600;
+    flex-shrink: 0; font-family: inherit; font-size: 13px; font-weight: 700;
     color: var(--vk-red); background: none; border: none; cursor: pointer; text-decoration: underline;
-    text-underline-offset: 3px; padding: 6px 4px; white-space: nowrap;
+    text-underline-offset: 3px; padding: 6px 6px; white-space: nowrap;
   }
   .qf-see-all:hover { color: var(--near-black); }
   .qf-sort {
     flex-shrink: 0; margin-left: auto; display: flex; align-items: center; gap: 8px;
-    font-size: 12px; color: var(--mid-grey);
+    font-size: 13px; font-weight: 500; color: var(--charcoal);
   }
   .qf-sort select {
     font-family: inherit; font-size: 12px; padding: 6px 10px; border: 1px solid var(--light-grey);
@@ -466,14 +483,14 @@
     .qf-sort { flex: 1 1 100%; width: 100%; margin-left: 0; justify-content: flex-end; }
     .plp-layout { padding-left: 16px; padding-right: 16px; }
     .filter-fab { display: block; }
-    .page-breadcrumb, .plp-hero, .subcat-pills-inner, .buyer-cards-inner, .plp-bottom-seo { padding-left: 16px; padding-right: 16px; }
+    .page-breadcrumb, .plp-page-context, .plp-hero, .subcat-pills-inner, .buyer-cards-inner, .plp-bottom-seo { padding-left: 16px; padding-right: 16px; }
   }
 </style>
 </head>
 <body>
 
 <div class="lab-bar">
-  <a href="../VK-Prototype-Index-from-GitHub.html">Index</a>
+  <a href="../VK-Prototype-Index.html">Index</a>
   <span>|</span>
   <a href="VintageKing-MegaMenu-CursorLab-v2.html">Mega menu</a>
   <span>|</span>
@@ -484,6 +501,11 @@
   <a href="VK-Microphones-CategoryDemo-v2.html">PLP v2</a>
   <span>|</span>
   <a href="VK-Microphones-CategoryDemo-v1.html">PLP v1</a>
+</div>
+
+<div class="plp-page-context">
+  Microphones
+  <span class="plp-page-context-sub">Category listing with filters (prototype)</span>
 </div>
 
 <nav class="page-breadcrumb" aria-label="Breadcrumb">
@@ -521,8 +543,8 @@
     <a href="#" class="subcat-pill">Ribbon</a>
     <a href="#" class="subcat-pill">Tube</a>
     <a href="#" class="subcat-pill">USB / digital</a>
-    <a href="#" class="subcat-pill">Lavalier &amp; headset</a>
-    <a href="#" class="subcat-pill">Vintage &amp; collectible</a>
+    <a href="#" class="subcat-pill">Lavalier and headset</a>
+    <a href="#" class="subcat-pill">Vintage and collectible</a>
     <button type="button" class="subcat-open-filters" id="subcat-open-filters">See more</button>
   </div>
 </nav>
