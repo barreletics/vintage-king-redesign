@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vintage King — Prototype hub</title>
 <link rel="canonical" href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html">
-<meta name="description" content="Vintage King redesign prototypes: landing pages, filters demo, typography spec. Internal hub.">
+<meta name="description" content="Vintage King redesign prototypes: filters, mega menu, full site, type spec.">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="max-age=0, must-revalidate">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,50 +17,47 @@ body {
   background: #F5F0E8;
   color: #1A1A18;
   min-height: 100vh;
-  padding: 40px 24px 56px;
-  line-height: 1.5;
+  padding: 32px 22px 48px;
+  line-height: 1.45;
 }
-.hub-wrap {
-  max-width: 620px;
-  margin: 0 auto;
-}
+.hub-wrap { max-width: 520px; margin: 0 auto; }
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
+  gap: 10px;
+  margin-bottom: 4px;
 }
-.logo-mark { width: 36px; height: 36px; flex-shrink: 0; }
+.logo-mark { width: 32px; height: 32px; flex-shrink: 0; }
 .logo-name {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #1A1A18;
 }
 .logo-tagline {
   font-size: 10px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #6B6B68;
   margin-top: 2px;
 }
 .hub-kicker {
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #6B6B68;
   font-weight: 500;
-  margin: 20px 0 28px;
+  margin: 14px 0 16px;
 }
 .hub-bookmark {
-  font-size: 14px;
+  font-size: 13px;
   color: #2C2C2A;
-  padding: 14px 16px;
+  padding: 10px 12px;
   background: #FDFCFB;
-  border: 1px solid rgba(26,26,24,0.12);
-  border-radius: 6px;
-  margin-bottom: 8px;
+  border: 1px solid rgba(26,26,24,0.1);
+  border-radius: 5px;
+  margin-bottom: 6px;
 }
 .hub-bookmark a {
   color: #C0392B;
@@ -69,59 +66,74 @@ body {
   word-break: break-all;
 }
 .hub-bookmark a:hover { text-decoration: underline; }
-.hub-section {
-  margin-top: 36px;
-}
-.hub-section:first-of-type { margin-top: 28px; }
+.hub-section { margin-top: 28px; }
+.hub-section:first-of-type { margin-top: 22px; }
 .hub-section h2 {
-  font-size: 17px;
-  font-weight: 600;
-  color: #1A1A18;
-  margin-bottom: 10px;
-  letter-spacing: -0.02em;
-}
-.hub-section p, .hub-section .hub-lead {
-  font-size: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #6B6B68;
-  line-height: 1.6;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
-.hub-section p strong { color: #2C2C2A; }
+.hub-section--newest h2 { color: #1A1A18; }
+.hub-lead {
+  font-size: 13px;
+  color: #6B6B68;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+.hub-lead strong { color: #2C2C2A; }
 .hub-tile {
   display: block;
-  padding: 14px 16px;
+  padding: 12px 14px;
   background: #FDFCFB;
-  border: 1px solid rgba(26,26,24,0.12);
-  border-radius: 6px;
+  border: 1px solid rgba(26,26,24,0.1);
+  border-radius: 5px;
   text-decoration: none;
   color: #1A1A18;
   font-weight: 600;
-  font-size: 15px;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  font-size: 14px;
+  transition: box-shadow 0.15s, border-color 0.15s;
 }
+.hub-tile + .hub-tile { margin-top: 10px; }
 .hub-tile:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  border-color: rgba(26,26,24,0.18);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  border-color: rgba(26,26,24,0.16);
 }
 .hub-tile--priority {
-  border-color: rgba(192, 57, 43, 0.42);
+  border-color: rgba(192, 57, 43, 0.38);
   background: #fff;
-  box-shadow: 0 2px 14px rgba(192, 57, 43, 0.07);
-}
-.hub-tile--priority:hover {
-  box-shadow: 0 8px 24px rgba(192, 57, 43, 0.12);
 }
 .hub-tile .hub-tile-meta {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6B6B68;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.hub-minilist {
+  list-style: none;
+  font-size: 14px;
+}
+.hub-minilist li { margin-bottom: 8px; }
+.hub-minilist a {
+  color: #C0392B;
+  font-weight: 600;
+  text-decoration: none;
+}
+.hub-minilist a:hover { text-decoration: underline; }
+.hub-minilist span {
   display: block;
   font-size: 12px;
   font-weight: 500;
   color: #6B6B68;
-  margin-top: 6px;
-  line-height: 1.45;
+  margin-top: 2px;
 }
 .footer-note {
-  margin-top: 48px;
-  font-size: 12px;
+  margin-top: 36px;
+  font-size: 11px;
   color: #6B6B68;
 }
 </style>
@@ -139,49 +151,38 @@ body {
     </svg>
     <div>
       <div class="logo-name">Vintage King</div>
-      <div class="logo-tagline">Prototype hub · Cursor Lab</div>
+      <div class="logo-tagline">Prototype hub</div>
     </div>
   </div>
 
-  <p class="hub-kicker">Internal review · April 2026</p>
+  <p class="hub-kicker">Internal · April 2026</p>
 
   <div class="hub-bookmark">
-    <strong style="color:#1A1A18">Team link:</strong>
-    <a href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html" target="_blank" rel="noopener noreferrer">barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html</a>
+    <a href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html" target="_blank" rel="noopener noreferrer">Bookmark: barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html</a>
   </div>
 
+  <section class="hub-section hub-section--newest" aria-labelledby="heading-new">
+    <h2 id="heading-new">Newest</h2>
+    <p class="hub-lead">Microphones PLP: two rows under the hero (collection pills, then quick refinements). <strong>See more</strong> (red pill) or <strong>All filters</strong> opens the drawer. Older mic links live in the black lab bar on that page.</p>
+    <a class="hub-tile hub-tile--priority" id="card-mic-latest" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Microphones — filters and grid <span class="hub-tile-meta">PLP v4 refined</span></a>
+    <a class="hub-tile" id="card-cursor-mega-menu" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Mega menu <span class="hub-tile-meta">Header and flyouts only</span></a>
+  </section>
+
   <section class="hub-section" aria-labelledby="heading-landing">
-    <h2 id="heading-landing">Homepage and landing pages</h2>
-    <p class="hub-lead">One long prototype stitches together the main templates: home, category, product, editorial or FAQ-style pages, and core commercial flows (deals, trade-in, financing, and similar). Scroll top to bottom to walk the set.</p>
-    <a class="hub-tile" id="card-desktop" href="VintageKing-Redesign-v2_67-Mar2026.html">Open full site prototype <span class="hub-tile-meta">VintageKing-Redesign v2.67 — all primary landings in one file</span></a>
+    <h2 id="heading-landing">Full site</h2>
+    <p class="hub-lead">One file, main templates end to end (home, category, product, content, checkout-adjacent flows).</p>
+    <a class="hub-tile" id="card-desktop" href="VintageKing-Redesign-v2_67-Mar2026.html">All landing pages <span class="hub-tile-meta">VintageKing-Redesign v2.67</span></a>
   </section>
 
-  <section class="hub-section" aria-labelledby="heading-filters">
-    <h2 id="heading-filters">Filters and category shopping</h2>
-    <p class="hub-lead"><strong>Start here for the newest pattern.</strong> Open the <strong>Microphones</strong> demo. Under the hero you will see <strong>two light rows</strong>: the first is <strong>collection pills</strong> (Condenser, Dynamic, and the rest). The second is <strong>Quick refinements</strong> (price, condition, and shortcuts). That top stack is the fast filter strip.</p>
-    <p class="hub-lead" style="margin-bottom:14px">To open the <strong>full filter drawer</strong>, use <strong>See more</strong> — the <strong>red pill</strong> on the first row — or <strong>All filters</strong> on the second row. Either one slides in the sheet with every facet. Older mic drafts (v1 to v3) are linked from the black lab bar on that page.</p>
-    <a class="hub-tile hub-tile--priority" id="card-mic-latest" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open Microphones PLP (filters) <span class="hub-tile-meta">PLP v4 refined — pills, quick refinements, drawer, grid</span></a>
+  <section class="hub-section" aria-labelledby="heading-ref">
+    <h2 id="heading-ref">Also</h2>
+    <ul class="hub-minilist">
+      <li><a id="card-type-spec" href="VK-Prototype-Copy-Typography-Badge-Spec.html">Typography and badge spec</a></li>
+      <li><a id="card-mobile" href="VintageKing-MobileSimulator-v1_7-Mar2026.html">Mobile simulator</a><span>Secondary for now</span></li>
+    </ul>
   </section>
 
-  <section class="hub-section" aria-labelledby="heading-nav">
-    <h2 id="heading-nav">Top navigation only</h2>
-    <p class="hub-lead">Mega menu and flyouts only. Use this when you are reviewing IA and header behavior, not the product list or filters above.</p>
-    <a class="hub-tile" id="card-cursor-mega-menu" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu <span class="hub-tile-meta">Header and dropdown panels</span></a>
-  </section>
-
-  <section class="hub-section" aria-labelledby="heading-type">
-    <h2 id="heading-type">Typography, copy, and badges</h2>
-    <p class="hub-lead">Reference for type roles, emphasis, and badge styles across prototypes.</p>
-    <a class="hub-tile" id="card-type-spec" href="VK-Prototype-Copy-Typography-Badge-Spec.html">Open type and badge spec</a>
-  </section>
-
-  <section class="hub-section" aria-labelledby="heading-mobile">
-    <h2 id="heading-mobile">Mobile</h2>
-    <p class="hub-lead">Phone-width pass of the big prototype. Secondary to desktop patterns for now.</p>
-    <a class="hub-tile" id="card-mobile" href="VintageKing-MobileSimulator-v1_7-Mar2026.html">Open mobile simulator</a>
-  </section>
-
-  <p class="footer-note">Internal only. Vintage King Audio, 2026.</p>
+  <p class="footer-note">Vintage King Audio, 2026 · internal only</p>
 
 </div>
 
