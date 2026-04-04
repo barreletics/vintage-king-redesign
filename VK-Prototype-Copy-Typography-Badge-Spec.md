@@ -1,6 +1,6 @@
 # Vintage King prototype — copy, typography & condition-badge spec
 
-**Official name:** VK Prototype Copy, Typography & Badge Spec (say **“type & badge spec”** in meetings).  
+**Official name:** VK Prototype Copy, Typography and Badge Spec (say **“type and badge spec”** in meetings). Do not use an ampersand in stakeholder-facing copy.  
 **Browser:** `VK-Prototype-Copy-Typography-Badge-Spec.html` · **Last aligned:** April 2026  
 
 This spec covers **type**, **bold/caps**, **tokens**, and **product badges**. There are **two badge treatments** in play:
