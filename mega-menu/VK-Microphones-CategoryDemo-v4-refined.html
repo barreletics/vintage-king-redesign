@@ -270,6 +270,55 @@
     background: #fff;
     box-shadow: 0 1px 3px rgba(26, 26, 24, 0.08);
   }
+  .quick-filter-bar.qf-mode-inline .qf-chip {
+    padding: 5px 8px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    box-shadow: none;
+  }
+  .quick-filter-bar.qf-mode-inline .qf-chip:hover {
+    border-bottom-color: var(--pale-grey);
+    background: transparent;
+  }
+  .quick-filter-bar.qf-mode-inline .qf-chip.is-active {
+    border-bottom-color: var(--near-black);
+    box-shadow: none;
+  }
+  .qf-style-toggle {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-left: 8px;
+    padding-left: 12px;
+    border-left: 1px solid var(--pale-grey);
+  }
+  .qf-style-hint {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+  }
+  .qf-style {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border: 1px solid var(--light-grey);
+    border-radius: 4px;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    cursor: pointer;
+  }
+  .qf-style.on {
+    background: var(--near-black);
+    color: #fff;
+    border-color: var(--near-black);
+  }
   .quick-filter-inner {
     max-width: 1400px; margin: 0 auto; padding: 15px 24px 16px;
     display: flex; align-items: center; gap: 12px; flex-wrap: nowrap;
@@ -527,7 +576,8 @@
 
   @media (max-width: 900px) {
     .quick-filter-inner { padding-left: 16px; padding-right: 16px; flex-wrap: wrap; }
-    .quick-filter-chips-wrap { flex: 1 1 100%; min-width: 0; }
+    .quick-filter-chips-wrap { flex: 1 1 100%; min-width: 0; flex-wrap: wrap; row-gap: 8px; }
+    .qf-style-toggle { margin-left: 0; padding-left: 0; border-left: none; }
     .qf-sort { flex: 1 1 100%; width: 100%; margin-left: 0; justify-content: flex-end; }
     .plp-layout { padding-left: 16px; padding-right: 16px; }
     .filter-fab { display: block; }
@@ -540,7 +590,7 @@
 <div class="lab-bar">
   <a href="../VK-Prototype-Index.html">Dashboard</a>
   <span>|</span>
-  <a href="VintageKing-MegaMenu-CursorLab-v2.html">Mega menu hub</a>
+  <a href="VintageKing-MegaMenu-CursorLab-v2.html">Mega menu</a>
   <span>|</span>
   <span>Microphones PLP (filters)</span>
   <span>|</span>
@@ -593,7 +643,7 @@
   </div>
 </nav>
 
-<div class="quick-filter-bar" aria-label="Quick refinements">
+<div class="quick-filter-bar" id="quick-filter-bar" aria-label="Quick refinements">
   <div class="quick-filter-inner">
     <div class="quick-filter-chips-wrap">
       <div class="quick-filter-chips">
@@ -606,6 +656,11 @@
         <button type="button" class="qf-chip" data-qf>Vintage</button>
         <button type="button" class="qf-chip" data-qf>On sale</button>
         <button type="button" class="qf-chip" data-qf>In stock only</button>
+      </div>
+      <div class="qf-style-toggle" role="group" aria-label="Second row style for demo">
+        <span class="qf-style-hint">Row 2</span>
+        <button type="button" class="qf-style on" id="qf-style-pills" aria-pressed="true">Pills</button>
+        <button type="button" class="qf-style" id="qf-style-inline" aria-pressed="false">Inline</button>
       </div>
       <button type="button" class="qf-see-all" id="qf-see-all">All filters</button>
     </div>
@@ -1280,6 +1335,22 @@
     });
   }
   plpRefresh();
+
+  (function qfRowStyleToggle() {
+    var bar = document.getElementById('quick-filter-bar');
+    var btnPills = document.getElementById('qf-style-pills');
+    var btnInline = document.getElementById('qf-style-inline');
+    if (!bar || !btnPills || !btnInline) return;
+    function setInline(on) {
+      bar.classList.toggle('qf-mode-inline', on);
+      btnPills.classList.toggle('on', !on);
+      btnInline.classList.toggle('on', on);
+      btnPills.setAttribute('aria-pressed', on ? 'false' : 'true');
+      btnInline.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    btnPills.addEventListener('click', function () { setInline(false); });
+    btnInline.addEventListener('click', function () { setInline(true); });
+  })();
 
   syncActiveFilters();
 })();
