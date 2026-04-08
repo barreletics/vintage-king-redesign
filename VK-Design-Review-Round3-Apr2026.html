@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>VK · Design Review — Round Three Response</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --red: #C0392B;
+    --near-black: #1A1A18;
+    --amber: #D4860A;
+    --amber-bg: #F5E6C8;
+    --warm-white: #FDFCFB;
+    --off-white: #F7F5F2;
+    --border: #E5E2DC;
+    --mid: #6B7280;
+    --blue: #2563EB;
+    --blue-bg: #EEF4FF;
+    --green: #16A34A;
+    --green-bg: #F0FDF4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--near-black);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  @media print {
+    body { font-size: 11px; }
+    .page-break { page-break-before: always; }
+  }
+
+  .site-header {
+    background: var(--near-black);
+    color: white;
+    padding: 18px 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    border-bottom: 3px solid var(--red);
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    color: white;
+  }
+  .site-header .meta { font-size: 11px; color: #999; letter-spacing: 1px; text-transform: uppercase; }
+  .site-header .badge {
+    margin-left: auto;
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .glossary-bar {
+    background: var(--near-black);
+    border-bottom: 1px solid #333;
+    padding: 10px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    align-items: center;
+  }
+  .glossary-bar .gl-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    white-space: nowrap;
+    margin-right: 4px;
+  }
+  .glossary-bar .gl-item {
+    font-size: 10px;
+    color: #CCCCCC;
+    white-space: nowrap;
+  }
+  .glossary-bar .gl-item strong { color: white; font-weight: 600; }
+
+  .wrapper { max-width: 1100px; margin: 0 auto; padding: 24px 28px 48px; }
+
+  .section-label {
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 6px; margin-top: 28px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; color: var(--near-black);
+    margin-bottom: 12px; padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  .status {
+    display: inline-block; font-size: 9px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 2px; white-space: nowrap; vertical-align: middle;
+  }
+  .status-integrating { background: var(--green-bg);  color: var(--green); border: 1px solid #86EFAC; }
+  .status-platform    { background: var(--blue-bg);   color: var(--blue);  border: 1px solid #BFDBFE; }
+  .status-not-rec     { background: #FEF2F2;           color: var(--red);   border: 1px solid #FECACA; }
+  .status-decided     { background: var(--green-bg);  color: var(--green); border: 1px solid #86EFAC; }
+  .status-aligned     { background: var(--blue-bg);   color: var(--blue);  border: 1px solid #BFDBFE; }
+  .status-open        { background: var(--amber-bg);   color: var(--amber); border: 1px solid #FDE68A; }
+
+  .voice-legend {
+    display: grid;
+    grid-template-columns: 1fr 130px 1fr;
+    margin-bottom: 10px;
+    padding: 0 2px;
+  }
+  .vl-feedback {
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--blue); display: flex; align-items: center; gap: 6px;
+  }
+  .vl-feedback::before {
+    content: ''; display: inline-block; width: 3px; height: 14px;
+    background: var(--blue); border-radius: 1px; flex-shrink: 0;
+  }
+  .vl-center {
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--mid); text-align: center; display: flex; align-items: center; justify-content: center;
+  }
+  .vl-response {
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--red); display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+  }
+  .vl-response::after {
+    content: ''; display: inline-block; width: 3px; height: 14px;
+    background: var(--red); border-radius: 1px; flex-shrink: 0;
+  }
+
+  .voice-row {
+    display: grid;
+    grid-template-columns: 1fr 130px 1fr;
+    margin-bottom: 8px;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .voice-card { padding: 12px 14px; }
+  .feedback-card {
+    background: var(--blue-bg);
+    border: 1px solid #BFDBFE;
+    border-right: none;
+    border-left: 3px solid var(--blue);
+  }
+  .response-card {
+    background: #FFF8F0;
+    border: 1px solid #F5CFA0;
+    border-left: none;
+    border-right: 3px solid var(--red);
+  }
+  .voice-card .vc-label {
+    font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;
+  }
+  .feedback-card .vc-label { color: var(--blue); }
+  .response-card .vc-label { color: var(--red); }
+  .voice-card .vc-text { font-size: 11.5px; color: #374151; line-height: 1.5; }
+
+  .update-note {
+    margin-top: 8px;
+    padding: 7px 9px;
+    background: var(--amber-bg);
+    border-left: 2px solid var(--amber);
+    font-size: 11px;
+    color: #6B4A0A;
+    font-style: italic;
+    line-height: 1.45;
+  }
+  .update-note strong {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--amber);
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .voice-center {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 7px;
+    background: var(--off-white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .voice-center .vc-topic {
+    font-size: 10.5px; font-weight: 600; color: var(--near-black); line-height: 1.3;
+  }
+
+  /* JOURNEY SECTION */
+  .journey-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4px;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .journey-stage {
+    padding: 16px 14px;
+    position: relative;
+  }
+  .journey-stage::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--mid);
+    font-size: 14px;
+    z-index: 2;
+  }
+  .journey-stage:last-child::after { display: none; }
+  .journey-stage.s1 { background: #F8F7FF; border: 1px solid #E0E0F0; }
+  .journey-stage.s2 { background: #EEF4FF; border: 1px solid #BFDBFE; border-left: none; }
+  .journey-stage.s3 { background: var(--amber-bg); border: 1px solid #F5CFA0; border-left: none; }
+  .journey-stage.s4 { background: #FFF3EE; border: 1px solid #FECACA; border-left: none; }
+  .journey-stage.s5 { background: var(--green-bg); border: 1px solid #86EFAC; border-left: none; }
+  .journey-stage .js-num {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .s1 .js-num { color: #6366F1; }
+  .s2 .js-num { color: var(--blue); }
+  .s3 .js-num { color: var(--amber); }
+  .s4 .js-num { color: var(--red); }
+  .s5 .js-num { color: var(--green); }
+  .journey-stage .js-title { font-weight: 600; font-size: 12px; margin-bottom: 5px; color: var(--near-black); }
+  .journey-stage .js-who { font-size: 10.5px; color: var(--mid); margin-bottom: 6px; font-style: italic; }
+  .journey-stage .js-hook { font-size: 11px; color: #374151; line-height: 1.45; }
+  .journey-stage .js-vk { font-size: 10px; color: var(--near-black); font-weight: 500; margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(0,0,0,0.08); }
+
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .q-card {
+    background: var(--amber-bg); border: 1px solid var(--amber);
+    border-radius: 3px; padding: 12px 14px;
+  }
+  .q-card .q-num {
+    font-size: 10px; font-weight: 600; color: var(--amber);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .q-card .q-text { font-weight: 500; font-size: 12.5px; margin-bottom: 6px; }
+  .q-card .q-aj   { font-size: 11.5px; color: #6B4A0A; font-style: italic; }
+
+  .feedback-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .feedback-table th {
+    background: var(--near-black); color: white;
+    text-align: left; padding: 7px 10px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+  }
+  .feedback-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .feedback-table tr:nth-child(even) td { background: var(--off-white); }
+  .feedback-table td.item       { font-weight: 500; color: var(--near-black); width: 22%; }
+  .feedback-table td.status-col { width: 12%; }
+  .feedback-table td.response   { color: #374151; }
+
+  .req-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .req-item {
+    display: flex; gap: 8px; align-items: flex-start;
+    font-size: 12px; padding: 7px 10px;
+    background: var(--blue-bg); border: 1px solid #BFDBFE; border-radius: 2px;
+  }
+  .req-item .req-tag {
+    font-size: 9px; font-weight: 700; color: var(--blue);
+    letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; padding-top: 1px;
+  }
+  .req-item.phase2 { background: var(--off-white); border-color: var(--border); }
+  .req-item.phase2 .req-tag { color: var(--mid); }
+
+  .talking-points { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .tp-card { background: var(--near-black); color: white; border-radius: 3px; padding: 14px 16px; }
+  .tp-card .tp-topic {
+    font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 6px;
+  }
+  .tp-card .tp-line { font-size: 12px; color: #D1D5DB; line-height: 1.6; }
+
+  .demo-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .demo-link {
+    background: var(--near-black); color: var(--amber-bg);
+    font-family: 'Courier New', monospace; font-size: 10px;
+    padding: 5px 10px; border-radius: 2px; text-decoration: none; border: 1px solid #444;
+  }
+  .demo-link:hover { border-color: var(--amber); }
+
+  .footnote {
+    font-size: 10px; color: var(--mid); margin-top: 32px;
+    padding-top: 12px; border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div>
+    <h1>VINTAGE KING — Design Review · Round Three Response</h1>
+    <div class="meta">April 2026 · Working Document · Barreletics</div>
+  </div>
+  <div class="badge">Round Three</div>
+</div>
+
+<div class="glossary-bar">
+  <span class="gl-label">Key Terms</span>
+  <span class="gl-item"><strong>OPO</strong> — On-Page Optimization (structured content on category pages that helps search engines classify pages as commercial/transactional)</span>
+  <span class="gl-item"><strong>AIO</strong> — AI Overview (Google's AI-generated answer blocks shown above search results)</span>
+  <span class="gl-item"><strong>GEO</strong> — Generative Engine Optimization (visibility in AI tools like ChatGPT, Perplexity, and Google AIO)</span>
+  <span class="gl-item"><strong>SME</strong> — Subject Matter Expert</span>
+  <span class="gl-item"><strong>CMS</strong> — Content Management System (the platform layer that generates and manages web pages dynamically from structured data — in Shopify this means pages built from taxonomy and templates, not manually coded)</span>
+  <span class="gl-item"><strong>PLP</strong> — Product Listing Page (a category page showing a grid of products)</span>
+  <span class="gl-item"><strong>PDP</strong> — Product Detail Page (an individual product page)</span>
+  <span class="gl-item"><strong>AOV</strong> — Average Order Value</span>
+  <span class="gl-item"><strong>Co-op</strong> — Brand-funded promotional placement in the mega menu</span>
+</div>
+
+<div class="wrapper">
+
+  <div class="section-label">Round Three — Key Topics</div>
+  <div class="section-title">VK Feedback and Design Rationale — Where Each Topic Landed</div>
+
+  <div class="voice-legend">
+    <div class="vl-feedback">VK Feedback</div>
+    <div class="vl-center">Outcome</div>
+    <div class="vl-response">Design Rationale</div>
+  </div>
+
+  <!-- NAV + SEO -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">"Navigation has zero influence on search ranking" is not supported by Google documentation. Internal linking is a key signal. Menus affect Google's understanding of site structure. Distinguish between "not a direct ranking switch" and "materially affects crawlability and internal-link signals."</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">Nav + SEO Framing</div>
+      <span class="status status-aligned">Aligned</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Initial response stated nav has zero influence — that line came from shorthand notes and should not have gone out as written.</div>
+      <div class="update-note"><strong>Updated after feedback</strong>Correct position: nav structure alone is not a direct ranking lever, but internal linking and crawlability absolutely matter. Goal is everything structured and crawlable — nav, internal links, and category relationships all working as one system.</div>
+    </div>
+  </div>
+
+  <!-- MEGA MENU COLUMNS -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">More columns in the mega menu is not automatically the enemy of good UX. The goal is columns outlined clearly and woven together well. Brands like Adorama use strong visuals to break up dense menus effectively. Conversion risk comes from poor grouping and scanability — not column count alone.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">Mega Menu Columns</div>
+      <span class="status status-decided">Decided</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Current column structure is the right balance and we are holding it. The combination of category columns, editorial Top Brands column, co-op spotlight panel, and itile rotation covers all bases — discovery, authority, commercial placement, and quick decision-making — without tipping into overload. The three layers work because each zone has a single job: columns get you to a category, brands signal VK's expertise and partnerships, itiles surface a specific product or moment. Nav stays at 6 parent categories. No additions.</div>
+    </div>
+  </div>
+
+  <!-- FILTER SYSTEM -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">Pills alone will not handle the filtering depth VK needs. 800+ custom categories, 100+ that matter. Do not lose the ability to offer high-level pre-filtered options plus a full "filter all" experience with advanced filters by brand, price, type, and condition.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">Filter System</div>
+      <span class="status status-aligned">Aligned</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Initial response proposed pills as the primary filter mechanism.</div>
+      <div class="update-note"><strong>Updated after taxonomy review</strong>After running the full taxonomy through the Microphones build it became clear pills alone can't carry the scale. Hybrid is correct: pills for quick entry, full facet filter panel underneath for depth. Both working together. Microphones PLP v4 shows this live. No left sidebar.</div>
+    </div>
+  </div>
+
+  <!-- AUDIENCE + PRICE POINTS -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">Be careful framing VK's audience as entry-level. Core customers are professional recording engineers, age 35–45, AOV $1K–$3K. Younger aspirational buyers (~AOV $500) are still technically sophisticated digital natives — not beginners. Both segments have high intent and technical knowledge.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">Audience + Entry Points</div>
+      <span class="status status-open">Open</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Audience definition corrected — neither segment is entry-level in the traditional sense. Both are technically sophisticated. The strategic opportunity is making aspiring buyers feel invited rather than intimidated, while not slowing down the pro. The category header space does this: one side a buyer guide for the pro who skips it, one side a warm entry point for someone earlier in their journey. "Building your first home studio." "First time buying a microphone." That's where the lifecycle relationship starts — and grows through the five stages shown above.</div>
+      <div class="update-note"><strong>Note</strong>"Under $500" pill example removed. All copy updated to reflect actual AOV architecture. The aspiration-to-expert journey is the design's north star, not a demographic concession.</div>
+    </div>
+  </div>
+
+  <!-- OPO STRATEGY -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">The OPO strategy is not "two short paragraphs." VK Marketing's full SME-driven framework: entry paragraph, AIO callouts, internal links, product cards, closing authority statement. Pages optimized this way moved from informational to commercial/transactional in SEMRush within six months.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">OPO Pre-Footer Strategy</div>
+      <span class="status status-aligned">Aligned</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Initial response described OPO as "two short editorial paragraphs" — that understated the actual strategy and was wrong.</div>
+      <div class="update-note"><strong>Updated after feedback</strong>Full SME-led framework is the right approach: entry paragraph + AIO callouts + internal links + product cards + closing authority statement. VK subject matter experts lead the voice and expertise. AI is used to systematically comb through existing content — surfacing SEO/GEO/AIO signals, identifying gaps, and ensuring consistency across priority categories at scale. SME authors, AI accelerates. Content rewritten, not migrated as-is. Priority category list still needed (see Q4).</div>
+    </div>
+  </div>
+
+  <!-- BRAND CALLOUTS -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">Brands in the nav are strategic — not a paid space. They reflect growth priorities, brand identity goals, and volume recovery targets. A brand can be in the nav for strategic reasons without being a co-op partner.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">Brand Callouts in Nav</div>
+      <span class="status status-aligned">Aligned</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Already the plan. Editorial Top Brands column in each dropdown — curated by VK for strategic reasons (growth targets, volume recovery, brand identity), not contingent on co-op agreements. Co-op spotlight panel is additive on top. Both coexist without one depending on the other. Vintage and Used dropdown also being updated with sub-category columns: Vintage Mics, Outboard, Consoles, By Era.</div>
+    </div>
+  </div>
+
+  <!-- ALL CATEGORIES CMS PAGE -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">All Categories CMS page must be dynamically generated — cannot be manually maintained at VK's catalog scale. It is a supporting internal-link asset, not the sole crawl solution. Google also relies on crawlable navigation, cross-page links, and category-to-subcategory linking.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">All Categories CMS Page</div>
+      <span class="status status-aligned">Aligned</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Initial response positioned the All Categories page as the primary crawl solution.</div>
+      <div class="update-note"><strong>Updated after feedback</strong>A CMS (Content Management System) page in this context means a page automatically generated by Shopify from the taxonomy — not manually coded, not manually updated. Every category VK carries appears as a linked index entry, kept current as the catalog changes. This page gives both users and search crawlers a complete, structured map of VK's inventory. It supports discovery alongside — not instead of — nav structure and internal linking.</div>
+    </div>
+  </div>
+
+  <!-- CO-OP TILES -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">Co-op tiles should use larger photos, full width. Editorial and high-quality content only. The design should reflect the premium nature of the brands in the co-op program.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">Co-op Tiles — itile System</div>
+      <span class="status status-open">Open</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">The mega menu has three co-op zones: Zone 1 is the right-panel Tier 1 spotlight (brand-funded, single product, single message, rotates per category). Zone 2 is the bottom trust strip. Zone 3 is the itile row — a flexible tile format with photo left, editorial copy right, hover zoom, and arrow indicator.<br><br>The itile system supports 3–4 rotating format options per category: photo-led (full bleed image, minimal text), text-led (dark background, copy-forward, no photo dependency), split editorial (image + headline + short descriptor), and spotlight (single product with pricing callout). This gives VK the flexibility to match the tile format to the brand and moment without rebuilding the zone. Open question for discussion: which format mix is right per category, and how often do tiles rotate.</div>
+    </div>
+  </div>
+
+  <!-- MIGRATION + INTEGRATIONS -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">Magento nested → Shopify flat taxonomy is a meaningful structural shift. Estimated 30–90 day SEO/GEO impact window. At least 100 categories matter. VK Integrations currently lives at integration.vintageking.com as a separate subdomain.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">Migration SEO Risk + Integrations Subdomain</div>
+      <span class="status status-decided">Decided</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Migration SEO risk acknowledged and factored into agency selection and launch timing. On the Integrations subdomain: integration.vintageking.com currently operates as a separate website from vintageking.com. Search engines treat them as two distinct properties — so backlinks, authority signals, and trust built up on one do not automatically benefit the other. This splits what should be a single, authoritative domain into two weaker ones. Consolidating VK Integrations into vintageking.com as a Studio Integrations hub page resolves this: all domain authority flows to one property, the customer journey stays unbroken, and the SEO signal for both the main site and the Integrations content strengthens. This is a meaningful improvement that costs nothing extra to execute during the migration. Plan: bring back to main site at or fast-follow after migration, rework and deduplicate content, host client stories on the blog with unique categories and tagging.</div>
+    </div>
+  </div>
+
+  <!-- STATS / BEFORE DURING AFTER -->
+  <div class="voice-row">
+    <div class="voice-card feedback-card">
+      <div class="vc-label">VK Feedback</div>
+      <div class="vc-text">The Gear section should include more people shots and remove the numerical stats. The stats feel cold and impersonal at a brand level.</div>
+    </div>
+    <div class="voice-center">
+      <div class="vc-topic">Stats — Before / During / After</div>
+      <span class="status status-decided">Decided</span>
+    </div>
+    <div class="voice-card response-card">
+      <div class="vc-label">Design Rationale</div>
+      <div class="vc-text">Position held and evolved into something better. The section is now a three-panel support journey anchored by "30+ Years in Pro Audio" — not a cold stat callout but a structured commitment: Before You Buy (Pre-Sale Support — consultants help spec the right gear), At Purchase (During Sale — financing, trade-ins, bundle pricing, same-day shipping), After Delivery (Post-Sale — in-house tech shop, warranty, team that picks up the phone). This directly addresses the confidence gap that stalls decisions at $1K–$15K price points. People shots belong on About Us where they have full context. VK Marketing will work on this section — baseline goal understood.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- CUSTOMER JOURNEY -->
+  <div class="section-label">The Design Philosophy</div>
+  <div class="section-title">The VK Customer Lifecycle — Every Entry Point Has a Path Forward</div>
+  <p style="font-size:12px; color:var(--mid); margin-bottom:14px; max-width:820px;">VK's design is built to invite every serious buyer in and grow them over time. The aspiring buyer who is getting serious today becomes the engineer who calls VK for a console in three years. Every decision in this redesign — the category header split, the buyer guide card, the Ask button, the Rare Gear section, the Studio Installations hub — maps to a specific moment in this journey. The goal is that no buyer at any stage feels intimidated or out of place. They feel invited, guided, and progressively pulled toward the next level.</p>
+
+  <div class="journey-grid">
+    <div class="journey-stage s2">
+      <div class="js-num">Entry</div>
+      <div class="js-title">Just Getting Serious</div>
+      <div class="js-who">AOV ~$500–$1K · Aspiring buyer</div>
+      <div class="js-hook">Technically sophisticated but still building their setup. Researches before buying. Knows what they want to achieve, not always which gear gets them there. Needs to feel invited, not filtered out.</div>
+      <div class="js-vk">VK touch: Warm entry points at top of category pages — "Building your first home studio." "First time buying a mic." PLAYBACK Magazine. Buyer guides. Ask button as first rep conversation.</div>
+    </div>
+    <div class="journey-stage s3">
+      <div class="js-num">Core</div>
+      <div class="js-title">The Working Professional</div>
+      <div class="js-who">AOV $1K–$3K · Primary audience</div>
+      <div class="js-hook">Recording engineer or serious hobbyist. Knows exactly what they want, shops on spec. Time is valuable. Needs fast paths, expert validation, and authority signals at the moment of decision.</div>
+      <div class="js-vk">VK touch: Mega menu straight to category, filter system, before/during/after stats section, sticky Add to Cart, instant Live Chat. Every second of friction costs a sale.</div>
+    </div>
+    <div class="journey-stage s4">
+      <div class="js-num">Growth</div>
+      <div class="js-title">The Committed Engineer</div>
+      <div class="js-who">AOV $4K–$15K · Recurring buyer</div>
+      <div class="js-hook">Buying consoles, outboard racks, monitoring systems. Has a rep relationship. Expects white-glove service, financing options, trade-in value, and fast access to rare and vintage gear.</div>
+      <div class="js-vk">VK touch: Rare Gear editorial, Vintage and Used dropdown (By Era), Sell or Trade, financing/Section 179, extended warranty, pre-order with deposit.</div>
+    </div>
+    <div class="journey-stage s5">
+      <div class="js-num">Partner</div>
+      <div class="js-title">The Studio Builder</div>
+      <div class="js-who">AOV $15K–$100K+ · Full installation</div>
+      <div class="js-hook">Building or renovating a professional studio. VK is the trusted partner for the full scope — design, procurement, installation, treatment. A single project can span months and define the relationship for years.</div>
+      <div class="js-vk">VK touch: Studio Installations hub, lightbox intake form, Studio Design dropdown, VK Integrations consolidated on-site. The destination — not the entry — of the VK relationship.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- OPEN QUESTIONS -->
+  <div class="section-label">Needs Resolution</div>
+  <div class="section-title">Open Questions for the Meeting</div>
+  <div class="q-grid">
+    <div class="q-card">
+      <div class="q-num">Q1 — Create Music</div>
+      <div class="q-text">What products and brands fall under this label? Is it an existing Magento category or new?</div>
+      <div class="q-aj">Recommended placement: within the existing Learn dropdown — not a 7th top-level nav slot. Product scope needed before finalizing. Part of the broader Magento → Shopify flat taxonomy rework.</div>
+    </div>
+    <div class="q-card">
+      <div class="q-num">Q2 — Museum / Hall of Fame</div>
+      <div class="q-text">What does this look like and does content already exist?</div>
+      <div class="q-aj">Strong idea — 30-year editorial archive of iconic gear VK has handled. Needs a home: Sell or Trade page, Learn section, or standalone destination?</div>
+    </div>
+    <div class="q-card">
+      <div class="q-num">Q3 — Saturday Top Bar Hours</div>
+      <div class="q-text">How is this currently managed in Magento — manual, scheduled, or feed-driven?</div>
+      <div class="q-aj">Agency needs this detail to scope the Shopify equivalent. Whoever manages it on the current site would know.</div>
+    </div>
+    <div class="q-card">
+      <div class="q-num">Q4 — OPO Priority Categories</div>
+      <div class="q-text">Which categories are highest priority for the SME rewrite pass?</div>
+      <div class="q-aj">Content rewritten per full VK SME strategy — not migrated as-is. AI used to comb and structure at scale. Location confirmed: below product grid, above footer.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- FEEDBACK LOG -->
+  <div class="section-label">Section 02 — Feedback Log</div>
+  <div class="section-title">Homepage</div>
+  <table class="feedback-table">
+    <thead>
+      <tr><th>Item</th><th>Status</th><th>Response / Note</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">Saturday dynamic phone hours topbar</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Agency needs Magento implementation detail before scoping. See Q3.</td>
+      </tr>
+      <tr>
+        <td class="item">Sandy bar — cart, account, search</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Cart icon with count badge, account icon, extended search bar — next iteration.</td>
+      </tr>
+      <tr>
+        <td class="item">Logo lockup — increase size</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Small size increase applied in next nav pass.</td>
+      </tr>
+      <tr>
+        <td class="item">Add "Create Music" to nav</td>
+        <td class="status-col"><span class="status status-open">Question</span></td>
+        <td class="response">See Q1. Recommended: Learn dropdown placement pending scope clarity.</td>
+      </tr>
+      <tr>
+        <td class="item">Extend search width</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Extended in next iteration.</td>
+      </tr>
+      <tr>
+        <td class="item">Ask button — hover dropdown</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">3 options: Live Chat, Callback, Video Chat. Not 5 — hesitation at high-intent moment. Tech Session + Contact live on CMS consultation page.</td>
+      </tr>
+      <tr>
+        <td class="item">Missing brand callouts in nav</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Editorial Top Brands column added — curated for strategic reasons, not co-op-contingent. Vintage and Used dropdown updated with sub-category columns (Vintage Mics, Outboard, Consoles, By Era).</td>
+      </tr>
+      <tr>
+        <td class="item">Monster menu — more columns</td>
+        <td class="status-col"><span class="status status-decided">Decided</span></td>
+        <td class="response">Current column structure confirmed as the right balance. Category columns + editorial Top Brands + co-op spotlight + itile rotation covers discovery, authority, and commercial placement without overload. Nav held at 6 parent categories.</td>
+      </tr>
+      <tr>
+        <td class="item">Co-op tiles — larger photo, full width</td>
+        <td class="status-col"><span class="status status-open">Open</span></td>
+        <td class="response">itile system supports 3–4 rotating formats per category (photo-led, text-led, split editorial, spotlight). Format mix and rotation frequency per category is an open discussion item.</td>
+      </tr>
+      <tr>
+        <td class="item">Monster menu — static height</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Fixed minimum height across all dropdowns. CSS change.</td>
+      </tr>
+      <tr>
+        <td class="item">Top featured block — randomizer</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Shopify metafield logic or sections-as-blocks. Agency scoped.</td>
+      </tr>
+      <tr>
+        <td class="item">Shop by Category — View All CMS page</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Launch requirement. Dynamically generated by Shopify from taxonomy — not manually maintained. Structured index of all VK categories for users and crawlers. Supports nav and internal linking, does not replace either.</td>
+      </tr>
+      <tr>
+        <td class="item">Recently Added → Trending Gear, split tabs</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Renamed Trending Gear. New / Used / Open Box tabs with individual view-all links per tab.</td>
+      </tr>
+      <tr>
+        <td class="item">Studio Installations — lightbox intake form</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Phase 1 lightbox from homepage. VK Integrations consolidated from subdomain into main site.</td>
+      </tr>
+      <tr>
+        <td class="item">PLAYBACK Magazine — stronger editorial tile</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Stronger tile + cleaner subscription CTA. Key touchpoint for Stage 2 buyers in the lifecycle journey.</td>
+      </tr>
+      <tr>
+        <td class="item">Gear section — more people shots, remove numbers</td>
+        <td class="status-col"><span class="status status-decided">Decided</span></td>
+        <td class="response">Redesigned as before/during/after sale journey: Pre-Sale Support, During Sale Support, Post-Sale Support — anchored by "30+ Years in Pro Audio." People shots belong on About Us. VK Marketing will work on this section.</td>
+      </tr>
+      <tr>
+        <td class="item">Make Your Mark — 2026 content</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Confirmed as featured video section — flexible for new 2026 content or existing showcase.</td>
+      </tr>
+      <tr>
+        <td class="item">Rare Gear — drop video + product tiles</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Editorial, studio-grade photography and video standard. High-end imagery only.</td>
+      </tr>
+      <tr>
+        <td class="item">Footer — social, email, hours, phone, language, security badges</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">All being added. Launch requirements.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title" style="margin-top:20px;">PLP — Product Listing Pages</div>
+  <table class="feedback-table">
+    <thead>
+      <tr><th>Item</th><th>Status</th><th>Response / Note</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">Header banner — buyer's guide</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Card at top of each priority category page. Split approach: one side buyer guide for the Stage 3 pro who skips it quickly, one side an aspirational entry point for Stage 1–2 buyers. "Building your first home studio." The experienced customer moves past it. The aspiring buyer starts a relationship.</td>
+      </tr>
+      <tr>
+        <td class="item">Filters — hamburger + pill chips</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Priority pills always visible (Condition, Brand, Price, In Stock Today). Pull-down filter panel expands full filter set inline. Pills alone insufficient at VK's catalog depth — hybrid confirmed after taxonomy review. Microphones PLP v4 shows this working. No left sidebar.</td>
+      </tr>
+      <tr>
+        <td class="item">OPO pre-footer text blocks</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Launch requirement. Rewritten per full VK SME strategy — entry paragraph + AIO callouts + internal links + product cards + closing authority statement. SME-led. AI used to surface and systematize content at scale. Not migrated as-is. See Q4 for priority category list.</td>
+      </tr>
+      <tr>
+        <td class="item">Hybrid PLP/PDP for ads + brand pages</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Co-op Tier 1 banner is the design foundation. Agency builds section template.</td>
+      </tr>
+      <tr>
+        <td class="item">Pagination — Load More</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Load More preferred. Static paginated URLs must exist alongside for crawler indexing.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title" style="margin-top:20px;">PDP — Product Detail Pages</div>
+  <table class="feedback-table">
+    <thead>
+      <tr><th>Item</th><th>Status</th><th>Response / Note</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">Featured image + gallery</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Larger primary image, thumbnail strip, zoom. Floating on light grey background.</td>
+      </tr>
+      <tr>
+        <td class="item">Short description above fold</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">2–3 line product summary between name and price block. Helps customer orient quickly + gives AI tools a clean entity description to index.</td>
+      </tr>
+      <tr>
+        <td class="item">Accessories — PDP, cart, checkout</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Migrate Magento accessory matrix to Shopify metafields. Launch item — direct revenue impact.</td>
+      </tr>
+      <tr>
+        <td class="item">Extended warranty section</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Below Add to Cart. Integration with VK warranty provider.</td>
+      </tr>
+      <tr>
+        <td class="item">Dynamic recommendations</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Shopify Search and Discovery or Rebuy/LimeSpot. Launch requirement.</td>
+      </tr>
+      <tr>
+        <td class="item">Content sections below fold</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Flexible section schema on PDP template. Agency builds. VK provides content per product. Reference: vintageking.com/telefunken-usa-u47 and antelope-audio-orion. Current prototype comp is incomplete — more PDP feedback incoming.</td>
+      </tr>
+      <tr>
+        <td class="item">Sticky Add to Cart</td>
+        <td class="status-col"><span class="status status-integrating">Integrating</span></td>
+        <td class="response">Fixed top of viewport on desktop scroll. Fixed bottom bar on mobile.</td>
+      </tr>
+      <tr>
+        <td class="item">Availability messaging — backorder, waitlist, back-in-stock date</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">All availability states designed. Requires NetSuite integration. If out of stock, show expected back-in-stock date.</td>
+      </tr>
+      <tr>
+        <td class="item">Preorder with deposit / waitlist</td>
+        <td class="status-col"><span class="status status-platform">Platform</span></td>
+        <td class="response">Deposit-based preorder for long lead-time items. Evaluate for specific launch products.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <div class="section-label">Section 03</div>
+  <div class="section-title">Platform Requirements — Agency Scope Summary</div>
+  <div style="font-size:11px; color:var(--mid); margin-bottom:10px;">Launch = required for go-live &nbsp;·&nbsp; Phase 2 = post-launch roadmap</div>
+  <div class="req-list">
+    <div class="req-item"><span class="req-tag">Launch</span><span>VK Integrations — consolidate subdomain into vintageking.com (utility bar + Studio Design dropdown) — resolves split domain authority</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>All Categories CMS page — dynamically generated by Shopify from taxonomy, linked from homepage View All</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>OPO pre-footer text blocks — SME-led rewrite, AI-assisted for scale, on all priority PLPs</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Pull-down filter panel + priority pill chips on all PLPs</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>NetSuite in-stock date API + notification triggers on PDP</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Accessories on PDP, cart drawer, and checkout (Magento matrix → Shopify metafields)</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Dynamic recommendations — Shopify Search and Discovery or Rebuy/LimeSpot</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Buyer's guide card at top of priority category pages</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Hybrid PLP/PDP template for brand and ad landing pages</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>PDP flexible content sections — below the fold (agency builds schema)</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Sticky Add to Cart — desktop top / mobile bottom bar</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>WeSupply self-serve returns — compare vs native Shopify, map offline orders</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>ShipHawk — shipping rules, freight, in-hand dates (uses existing NetSuite data)</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Homepage hero content randomizer — sections-as-blocks or metafield rotation</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Load More pagination on PLPs — static paginated URLs alongside for crawler indexing</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Saturday dynamic topbar — pending Magento implementation detail (see Q3)</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Availability messaging — all states, NetSuite integration, back-in-stock date display</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Extended warranty upsell on PDP</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Ask button — Live Chat, Callback, Video Chat (3-option hover dropdown)</span></div>
+    <div class="req-item"><span class="req-tag">Launch</span><span>Sell / Trade-In progressive experience — product search, condition selector, instant or emailed quote</span></div>
+    <div class="req-item phase2"><span class="req-tag">Phase 2</span><span>Bundle Builder — studio build configuration with accessory associations</span></div>
+    <div class="req-item phase2"><span class="req-tag">Phase 2</span><span>Compare Features Tool — side-by-side product comparison</span></div>
+    <div class="req-item phase2"><span class="req-tag">Phase 2</span><span>Preorder with deposit / waitlist for long lead-time items</span></div>
+    <div class="req-item phase2"><span class="req-tag">Phase 2</span><span>Agentic Chat — iAdvize model, requires clean product data first</span></div>
+  </div>
+
+  <hr>
+
+  <div class="section-label">Meeting Prep</div>
+  <div class="section-title">Key Points to Have Ready</div>
+  <div class="talking-points">
+    <div class="tp-card">
+      <div class="tp-topic">On the Customer Journey</div>
+      <div class="tp-line">Every design decision maps to the lifecycle — from aspiring buyer feeling invited, to pro moving fast, to high-value client expecting white-glove service, to studio partner. The entry point isn't the ceiling. It's the beginning of a relationship VK grows over years.</div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-topic">On Mega Menu — Decided</div>
+      <div class="tp-line">Current column structure is confirmed. Category columns + editorial Top Brands + co-op spotlight + itile rotation covers all bases without overload. Each zone has one job. Nav stays at 6 parent categories. This is not up for re-litigation.</div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-topic">On Filter System — Lead With the Demo</div>
+      <div class="tp-line">Pills alone can't handle 800+ categories. Microphones PLP v4 shows the hybrid working. Pills = quick entry. Full facet filter = depth. Both serving the same sophisticated customer at different moments in the decision.</div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-topic">On OPO — SME-Led, AI-Assisted</div>
+      <div class="tp-line">VK subject matter experts own the voice and expertise. AI combs through existing content to surface SEO/GEO/AIO signals, identify gaps, and ensure consistency at scale across priority categories. SME authors. AI accelerates. This is what moves pages from informational to commercial/transactional.</div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-topic">On Stats Section — Before / During / After</div>
+      <div class="tp-line">Not a cold stat block. A three-panel support commitment: Pre-Sale, During Sale, Post-Sale — anchored by 30+ years. Addresses the confidence gap that stalls decisions at $1K–$15K. Authority and support signals, not sentiment.</div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-topic">On VK Integrations Subdomain</div>
+      <div class="tp-line">Two separate domains = split authority. Search signals built on one don't help the other. Consolidating into vintageking.com fixes this at no extra cost during migration. Stronger domain, unbroken customer journey, cleaner SEO signal for both the main site and Integrations content.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section-label">Live Links</div>
+  <div class="section-title">Prototype Entry Points</div>
+  <div class="demo-links">
+    <a class="demo-link" href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html" target="_blank">Demo Hub (start here)</a>
+    <a class="demo-link" href="https://barreletics.github.io/vintage-king-redesign/mega-menu/VintageKing-MegaMenu-CursorLab-v2.html" target="_blank">Mega Menu Lab (Presets 1–6)</a>
+    <a class="demo-link" href="https://barreletics.github.io/vintage-king-redesign/mega-menu/VK-Microphones-CategoryDemo-v4-refined.html" target="_blank">Microphones PLP v4</a>
+    <a class="demo-link" href="https://barreletics.github.io/vintage-king-redesign/VintageKing-Redesign-v2_67-Mar2026.html" target="_blank">Full Redesign v2.67</a>
+    <a class="demo-link" href="https://vintageking.com/telefunken-usa-u47" target="_blank">VK Live — Telefunken U47 PDP</a>
+    <a class="demo-link" href="https://vintageking.com/antelope-audio-orion-studio-synergy-core-thunderbolt-usb-audio-interface" target="_blank">VK Live — Antelope Orion PDP</a>
+  </div>
+
+  <div class="footnote">
+    Vintage King Audio · Shopify Redesign · Round Three Response · April 2026 · Barreletics<br>
+    Source: VK Feedback Document + Design Response. Working document — subject to revision.
+  </div>
+
+</div>
+</body>
+</html>
