@@ -135,13 +135,33 @@ a{text-decoration:none;color:inherit;}
 .vk-drawer-util{display:flex;flex-direction:column;gap:0;border-top:1px solid #EEEDE9;padding:4px 0 8px;}
 .vk-drawer-util a{display:block;padding:9px 18px;font-size:12.5px;color:#9B9B98;}
 .vk-drawer-sticky{flex-shrink:0;border-top:1px solid var(--light-grey);background:var(--warm-white);}
-.vk-sticky-expert{display:flex;align-items:center;gap:9px;background:var(--vk-red);padding:13px 16px;cursor:pointer;text-decoration:none;}
+.vk-trust-strip{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #E2DDD8;background:#F5F4F1;}
+.vk-trust-item{display:flex;align-items:center;gap:7px;padding:9px 12px;border-right:1px solid #E2DDD8;}
+.vk-trust-item:nth-child(even){border-right:none;}
+.vk-trust-item:nth-child(3),.vk-trust-item:nth-child(4){border-top:1px solid #E2DDD8;}
+.vk-trust-icon{color:var(--vk-red);flex-shrink:0;}
+.vk-trust-text{font-size:9px;color:var(--charcoal);line-height:1.35;font-weight:500;}
+.vk-sticky-expert{display:flex;align-items:center;gap:9px;background:var(--vk-red);padding:13px 16px;cursor:pointer;text-decoration:none;border:none;width:100%;font-family:'DM Sans',sans-serif;}
 .vk-sticky-expert-text{flex:1;}
 .vk-sticky-expert-title{font-size:12.5px;font-weight:600;color:#fff;}
 .vk-sticky-expert-sub{font-size:9.5px;color:rgba(255,255,255,0.65);margin-top:1px;}
 .vk-sticky-meta{display:flex;align-items:center;justify-content:center;padding:8px 14px;gap:4px;}
 .vk-sticky-meta-item{display:flex;align-items:center;justify-content:center;gap:4px;font-size:10px;color:var(--mid-grey);white-space:nowrap;}
 .vk-sticky-meta-sep{width:1px;height:13px;background:var(--light-grey);flex-shrink:0;}
+/* Contact sheet */
+.vk-contact-sheet-backdrop{display:none;position:absolute;inset:0;background:rgba(26,26,24,0.5);z-index:400;opacity:0;transition:opacity 0.22s ease;}
+.vk-contact-sheet-backdrop.open{display:block;opacity:1;}
+.vk-contact-sheet{position:absolute;bottom:0;left:0;right:0;background:var(--warm-white);z-index:401;border-radius:12px 12px 0 0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);}
+.vk-contact-sheet.open{transform:translateY(0);}
+.vk-contact-sheet-handle{width:36px;height:4px;background:var(--light-grey);border-radius:2px;margin:10px auto 0;}
+.vk-contact-sheet-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:500;color:var(--near-black);padding:14px 18px 10px;border-bottom:1px solid var(--pale-grey);}
+.vk-contact-option{display:flex;align-items:center;gap:13px;padding:15px 18px;border-bottom:1px solid var(--pale-grey);cursor:pointer;text-decoration:none;}
+.vk-contact-option:last-child{border-bottom:none;}
+.vk-contact-opt-icon{width:36px;height:36px;border-radius:50%;background:var(--off-white);border:1px solid var(--pale-grey);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--vk-red);}
+.vk-contact-opt-title{font-size:13px;font-weight:600;color:var(--near-black);}
+.vk-contact-opt-sub{font-size:10.5px;color:var(--mid-grey);margin-top:1px;}
+.vk-contact-opt-arr{margin-left:auto;color:var(--light-grey);}
+.vk-contact-sheet-cancel{display:block;width:100%;padding:14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--mid-grey);background:none;border:none;border-top:1px solid var(--pale-grey);cursor:pointer;margin-top:2px;}
 
 /* HOMEPAGE */
 .vk-hero{background:var(--off-white);position:relative;overflow:hidden;cursor:pointer;border-bottom:1px solid var(--light-grey);}
@@ -212,19 +232,17 @@ a{text-decoration:none;color:inherit;}
 .vk-filter-chip{font-size:10.5px;color:var(--charcoal);padding:5px 11px;border:1px solid var(--light-grey);border-radius:20px;cursor:pointer;background:var(--warm-white);flex-shrink:0;}
 .vk-filter-chip.red{background:var(--vk-red);color:#fff;border-color:var(--vk-red);}
 .vk-plp-filters{border-bottom:1px solid var(--pale-grey);background:var(--warm-white);}
-.vk-plp-row1{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--pale-grey);flex-wrap:wrap;}
-.vk-plp-row2{padding:8px 14px 10px;}
-.vk-plp-row2-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.vk-plp-row1{display:flex;align-items:center;gap:6px;padding:9px 14px 8px;border-bottom:1px solid var(--pale-grey);overflow-x:auto;scrollbar-width:none;white-space:nowrap;flex-wrap:nowrap;}
+.vk-plp-row1::-webkit-scrollbar{display:none;}
+.vk-plp-row2{padding:2px 14px 4px;overflow-x:auto;scrollbar-width:none;}
+.vk-plp-row2::-webkit-scrollbar{display:none;}
 .vk-plp-label{font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey);}
 .vk-plp-scroll{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;padding-bottom:2px;}
 .vk-plp-scroll::-webkit-scrollbar{display:none;}
 .vk-plp-see-more{flex-shrink:0;font-size:10px;font-weight:700;color:var(--vk-red);background:none;border:none;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:4px 0;font-family:'DM Sans',sans-serif;}
-.vk-plp-mode{display:flex;align-items:center;gap:4px;}
-.vk-plp-mode-btn{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;padding:4px 8px;border:1px solid var(--light-grey);border-radius:3px;background:var(--warm-white);color:var(--charcoal);cursor:pointer;}
-.vk-plp-mode-btn.on{background:var(--near-black);color:#fff;border-color:var(--near-black);}
-.vk-plp-qf-wrap .vk-filter-chip{flex-shrink:0;}
-.vk-plp-qf-wrap.vk-plp-inline .vk-filter-chip{border-radius:0;border:none;border-bottom:2px solid transparent;background:transparent;padding:5px 8px;}
-.vk-plp-qf-wrap.vk-plp-inline .vk-filter-chip.red{border-bottom-color:var(--near-black);color:var(--near-black);font-weight:600;}
+.vk-plp-qf-wrap{display:flex;align-items:center;gap:0;white-space:nowrap;}
+.vk-plp-qf-wrap .vk-filter-chip{border-radius:0;border:none;border-bottom:2px solid transparent;background:transparent;padding:6px 9px;font-size:10.5px;}
+.vk-plp-qf-wrap .vk-filter-chip.red{border-bottom-color:var(--near-black);color:var(--near-black);font-weight:600;}
 .vk-plp-drawer-backdrop{display:none;position:absolute;inset:0;background:rgba(26,26,24,0.45);z-index:300;opacity:0;transition:opacity 0.25s ease;}
 .vk-plp-drawer-backdrop.open{display:block;opacity:1;}
 .vk-plp-drawer{position:absolute;top:0;right:0;bottom:0;width:min(92%,340px);background:var(--warm-white);z-index:301;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 24px rgba(0,0,0,0.15);}
@@ -237,8 +255,17 @@ a{text-decoration:none;color:inherit;}
 .vk-plp-dgroup summary{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--vk-red);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;}
 .vk-plp-dgroup summary::-webkit-details-marker{display:none;}
 .vk-plp-dgroup[open] summary{margin-bottom:8px;}
-.vk-plp-dpills{display:flex;flex-wrap:wrap;gap:5px;}
-.vk-plp-dpills span{font-size:10px;padding:5px 9px;border:1px solid var(--light-grey);border-radius:14px;cursor:pointer;}
+.vk-plp-cklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;}
+.vk-plp-cklist li{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid var(--pale-grey);cursor:pointer;}
+.vk-plp-cklist li:last-child{border-bottom:none;}
+.vk-plp-cklist li label{font-size:11px;color:var(--charcoal);flex:1;cursor:pointer;line-height:1.3;}
+.vk-plp-cklist li .ck-count{font-size:9.5px;color:var(--mid-grey);}
+.vk-plp-ck{width:16px;height:16px;flex-shrink:0;border:1.5px solid var(--light-grey);border-radius:3px;display:flex;align-items:center;justify-content:center;background:#fff;transition:background 0.15s,border-color 0.15s;}
+.vk-plp-ck.checked{background:var(--vk-red);border-color:var(--vk-red);}
+.vk-plp-ck.checked::after{content:'';display:block;width:9px;height:5px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px);}
+.vk-plp-drawer-footer{flex-shrink:0;display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--pale-grey);background:var(--warm-white);}
+.vk-plp-btn-apply{flex:1;background:var(--vk-red);color:#fff;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;padding:11px 0;cursor:pointer;letter-spacing:0.04em;}
+.vk-plp-btn-clear{flex-shrink:0;background:none;border:1.5px solid var(--light-grey);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--charcoal);padding:11px 14px;cursor:pointer;}
 .vk-coop-card{margin:12px 14px 10px;background:#1E1D1A;border-radius:4px;overflow:hidden;display:flex;align-items:center;cursor:pointer;position:relative;}
 .vk-coop-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(192,57,43,0.2) 0%,transparent 70%);pointer-events:none;}
 .vk-coop-img{width:60px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:10px 7px;}
@@ -247,10 +274,25 @@ a{text-decoration:none;color:inherit;}
 .vk-coop-name{font-family:'Playfair Display',serif;font-size:12.5px;color:#fff;line-height:1.25;margin-bottom:3px;}
 .vk-coop-price{font-size:10.5px;color:rgba(255,255,255,0.55);margin-bottom:6px;}
 .vk-coop-btn{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:var(--vk-red);border-radius:2px;padding:4px 8px;}
-.vk-buying-guide{margin:12px 14px;background:var(--off-white);border:1px solid var(--pale-grey);border-radius:3px;padding:12px;display:flex;gap:10px;align-items:center;}
-.vk-bg-title{font-size:11.5px;font-weight:700;color:var(--near-black);margin-bottom:2px;}
-.vk-bg-sub{font-size:10px;color:var(--mid-grey);line-height:1.4;}
-.vk-bg-link{font-size:9.5px;color:var(--vk-red);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-top:5px;}
+/* Buying guide — v1: dark editorial band */
+.vk-buying-guide-band{background:linear-gradient(180deg,var(--charcoal) 0%,#252523 100%);border-top:1px solid rgba(255,255,255,0.06);padding:14px 14px 16px;}
+.vk-bg-kicker{font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--vk-red);margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.vk-buying-guide{background:var(--warm-white);border:1px solid rgba(255,255,255,0.5);border-radius:5px;padding:14px 14px 13px;box-shadow:0 1px 0 rgba(255,255,255,0.6) inset,0 8px 24px rgba(0,0,0,0.22);}
+.vk-bg-eyebrow{font-size:8.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--vk-red);margin-bottom:7px;}
+.vk-bg-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--near-black);line-height:1.3;margin-bottom:7px;}
+.vk-bg-sub{font-size:10.5px;color:var(--charcoal);line-height:1.55;margin-bottom:10px;}
+.vk-bg-link{font-size:11px;font-weight:600;color:var(--vk-red);display:inline-flex;align-items:center;gap:5px;}
+/* Buying guide — v2: simple light card */
+.vk-buying-guide-simple{margin:12px 14px;background:#F5F2EE;border:1px solid var(--pale-grey);border-left:3px solid var(--vk-red);border-radius:3px;padding:12px 13px;}
+.vk-bg-simple-eyebrow{font-size:8px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--vk-red);margin-bottom:5px;}
+.vk-bg-simple-title{font-size:12px;font-weight:700;color:var(--near-black);margin-bottom:4px;line-height:1.3;}
+.vk-bg-simple-sub{font-size:10px;color:var(--mid-grey);line-height:1.5;margin-bottom:8px;}
+.vk-bg-simple-link{font-size:10px;font-weight:600;color:var(--vk-red);}
+/* variant toggle pill */
+.vk-bg-variant-toggle{display:flex;align-items:center;gap:0;margin:10px 14px 0;border:1px solid var(--light-grey);border-radius:3px;overflow:hidden;width:fit-content;}
+.vk-bg-vbtn{font-family:'DM Sans',sans-serif;font-size:8.5px;font-weight:600;padding:5px 10px;background:var(--warm-white);color:var(--mid-grey);border:none;cursor:pointer;letter-spacing:0.04em;}
+.vk-bg-vbtn.on{background:var(--near-black);color:#fff;}
+.vk-bg-v1{display:block;}.vk-bg-v2{display:none;}
 .vk-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 14px 20px;}
 .vk-gc{cursor:pointer;}
 .vk-gc-img{height:180px;background:#F0EDEA;border-radius:3px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;position:relative;overflow:hidden;}
@@ -406,6 +448,29 @@ a{text-decoration:none;color:inherit;}
         <!-- OVERLAY -->
         <div class="vk-overlay" id="vk-overlay" onclick="closeDrawer()"></div>
 
+        <!-- CONTACT SHEET -->
+        <div class="vk-contact-sheet-backdrop" id="vk-contact-sheet-backdrop" onclick="closeContactSheet()"></div>
+        <div class="vk-contact-sheet" id="vk-contact-sheet">
+          <div class="vk-contact-sheet-handle"></div>
+          <div class="vk-contact-sheet-title">How would you like to connect?</div>
+          <a href="tel:8886531184" class="vk-contact-option">
+            <div class="vk-contact-opt-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 11 19.79 19.79 0 0 1 .11 2.38 2 2 0 0 1 2.11.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.91a16 16 0 0 0 6.09 6.09l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg></div>
+            <div><div class="vk-contact-opt-title">Call Us</div><div class="vk-contact-opt-sub">888.653.1184 · Mon–Fri 9AM–8PM ET</div></div>
+            <svg class="vk-contact-opt-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+          <a href="#" class="vk-contact-option">
+            <div class="vk-contact-opt-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div><div class="vk-contact-opt-title">Live Chat</div><div class="vk-contact-opt-sub">Available now · Quickest response</div></div>
+            <svg class="vk-contact-opt-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+          <a href="#" class="vk-contact-option">
+            <div class="vk-contact-opt-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><div class="vk-contact-opt-title">Email</div><div class="vk-contact-opt-sub">Response within 1 business day</div></div>
+            <svg class="vk-contact-opt-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+          <button class="vk-contact-sheet-cancel" onclick="closeContactSheet()">Cancel</button>
+        </div>
+
         <!-- DRAWER -->
         <div class="vk-drawer" id="vk-drawer">
           <div class="vk-drawer-header">
@@ -513,7 +578,13 @@ a{text-decoration:none;color:inherit;}
 
           <!-- STICKY EXPERT -->
           <div class="vk-drawer-sticky">
-            <a href="#" class="vk-sticky-expert"><div class="pulse-dot"></div><div class="vk-sticky-expert-text"><div class="vk-sticky-expert-title">Ask an Expert</div><div class="vk-sticky-expert-sub">Live now · Free consultation</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <div class="vk-trust-strip">
+              <div class="vk-trust-item"><svg class="vk-trust-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span class="vk-trust-text">Free shipping over $49</span></div>
+              <div class="vk-trust-item"><svg class="vk-trust-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="vk-trust-text">Free 1-year warranty on used and vintage</span></div>
+              <div class="vk-trust-item"><svg class="vk-trust-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="vk-trust-text">0% financing available</span></div>
+              <div class="vk-trust-item"><svg class="vk-trust-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg><span class="vk-trust-text">In-house Tech Shop — inspected and tested</span></div>
+            </div>
+            <button type="button" class="vk-sticky-expert" onclick="openContactSheet()"><div class="pulse-dot"></div><div class="vk-sticky-expert-text"><div class="vk-sticky-expert-title">Ask an Expert</div><div class="vk-sticky-expert-sub">Live now · Free consultation</div></div><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
             <div class="vk-sticky-meta"><div class="vk-sticky-meta-item">📞 888.653.1184</div><div class="vk-sticky-meta-sep"></div><div class="vk-sticky-meta-item">Mon–Sat 9:30AM–9PM ET</div></div>
           </div>
         </div><!-- /drawer -->
@@ -732,29 +803,16 @@ a{text-decoration:none;color:inherit;}
             <div class="vk-cat-header"><h1>Microphones</h1><p>843 products</p></div>
             <div class="vk-coop-card"><div class="vk-coop-img"><svg width="22" height="42" viewBox="0 0 22 42" fill="none"><rect x="4" y="2" width="14" height="24" rx="7" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/><circle cx="11" cy="14" r="4" fill="rgba(192,57,43,0.5)"/><line x1="11" y1="26" x2="11" y2="34" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/><ellipse cx="11" cy="37" rx="7" ry="2.5" stroke="rgba(255,255,255,0.15)" fill="none"/></svg></div><div class="vk-coop-info"><div class="vk-coop-sponsor">Featured · Neumann</div><div class="vk-coop-name">U 87 Ai Studio Set</div><div class="vk-coop-price">$3,595 · In stock</div><div class="vk-coop-btn">Shop Now →</div></div></div>
             <div class="vk-plp-filters" id="vk-plp-filters">
-              <div class="vk-plp-row1">
-                <span class="vk-plp-label">Collections</span>
-                <div class="vk-plp-scroll" id="vk-plp-collections">
-                  <span class="vk-filter-chip red" onclick="setFilterRow(this,'vk-plp-collections')">All</span>
-                  <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Condenser</span>
-                  <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Dynamic</span>
-                  <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Ribbon</span>
-                  <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Tube</span>
-                  <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">USB / digital</span>
-                  <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Lavalier and headset</span>
-                  <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Vintage and collectible</span>
-                </div>
-                <button type="button" class="vk-plp-see-more" onclick="openPlpFilterDrawer()">See more</button>
+              <div class="vk-plp-row1" id="vk-plp-collections">
+                <span class="vk-filter-chip red" onclick="setFilterRow(this,'vk-plp-collections')">All</span>
+                <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Condenser</span>
+                <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Dynamic</span>
+                <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Ribbon</span>
+                <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-collections')">Tube</span>
+                <button type="button" class="vk-plp-see-more" onclick="openPlpFilterDrawer()">More filters</button>
               </div>
               <div class="vk-plp-row2" id="vk-plp-quick-row">
-                <div class="vk-plp-row2-head">
-                  <span class="vk-plp-label">Quick refinements</span>
-                  <div class="vk-plp-mode" role="group" aria-label="Pills or inline">
-                    <button type="button" class="vk-plp-mode-btn on" id="mob-qf-pills" onclick="setPlpQuickMode(false)">Pills</button>
-                    <button type="button" class="vk-plp-mode-btn" id="mob-qf-inline" onclick="setPlpQuickMode(true)">Inline</button>
-                  </div>
-                </div>
-                <div class="vk-plp-scroll vk-plp-qf-wrap" id="vk-plp-qf-inner">
+                <div class="vk-plp-qf-wrap" id="vk-plp-qf-inner">
                   <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-qf-inner')">Under $500</span>
                   <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-qf-inner')">Under $1,000</span>
                   <span class="vk-filter-chip" onclick="setFilterRow(this,'vk-plp-qf-inner')">New</span>
@@ -766,7 +824,29 @@ a{text-decoration:none;color:inherit;}
                 </div>
               </div>
             </div>
-            <div class="vk-buying-guide"><div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="1.5"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div><div><div class="vk-bg-title">Mic Buying Guide</div><div class="vk-bg-sub">Condenser vs dynamic, polar patterns, budget picks.</div><span class="vk-bg-link">Read the guide →</span></div></div>
+            <div class="vk-bg-variant-toggle">
+              <button class="vk-bg-vbtn on" onclick="setBgVariant(1,this)">v1 Editorial</button>
+              <button class="vk-bg-vbtn" onclick="setBgVariant(2,this)">v2 Simple</button>
+            </div>
+            <div class="vk-bg-v1">
+              <div class="vk-buying-guide-band">
+                <div class="vk-bg-kicker">Guides and advice</div>
+                <div class="vk-buying-guide">
+                  <div class="vk-bg-eyebrow">Buying guide</div>
+                  <div class="vk-bg-title">Choose the right microphone</div>
+                  <div class="vk-bg-sub">Condenser vs dynamic, large vs small diaphragm, polar patterns — straight criteria, no fluff.</div>
+                  <a href="#" class="vk-bg-link">Read the guide &rarr;</a>
+                </div>
+              </div>
+            </div>
+            <div class="vk-bg-v2">
+              <div class="vk-buying-guide-simple">
+                <div class="vk-bg-simple-eyebrow">Buying guide</div>
+                <div class="vk-bg-simple-title">Not sure which mic?</div>
+                <div class="vk-bg-simple-sub">Condenser vs dynamic, polar patterns, budget picks — quick criteria to narrow it down.</div>
+                <a href="#" class="vk-bg-simple-link">Read the guide &rarr;</a>
+              </div>
+            </div>
             <div class="vk-grid-2">
               <div class="vk-gc"><div class="vk-gc-img"><span class="vk-gc-badge new">New</span><svg width="26" height="48" viewBox="0 0 26 48" fill="none"><rect x="6" y="2" width="14" height="26" rx="7" stroke="rgba(44,44,42,0.25)" stroke-width="1.2" fill="none"/><circle cx="13" cy="15" r="4" fill="rgba(192,57,43,0.45)"/><line x1="13" y1="28" x2="13" y2="38" stroke="rgba(44,44,42,0.2)" stroke-width="1.2"/><ellipse cx="13" cy="41" rx="7" ry="2.5" stroke="rgba(44,44,42,0.15)" fill="none"/></svg></div><div class="vk-gc-name">U 87 Ai Studio Set</div><div class="vk-gc-brand">Neumann</div><div class="vk-gc-price">$3,595</div></div>
               <div class="vk-gc"><div class="vk-gc-img" style="background:#E8E4DE;"><span class="vk-gc-badge used">Used</span><svg width="26" height="48" viewBox="0 0 26 48" fill="none"><rect x="6" y="2" width="14" height="26" rx="7" stroke="#8C8C88" stroke-width="1.2" fill="none"/><circle cx="13" cy="15" r="4" fill="rgba(100,70,0,0.3)"/><line x1="13" y1="28" x2="13" y2="38" stroke="#8C8C88" stroke-width="1.2"/></svg></div><div class="vk-gc-name">C 414 XLS Condenser</div><div class="vk-gc-brand">AKG</div><div class="vk-gc-price">$699 <span class="was">$899</span></div></div>
@@ -857,6 +937,77 @@ a{text-decoration:none;color:inherit;}
             <footer class="vk-footer"><div class="vk-footer-name">VINTAGE KING</div><ul class="vk-footer-links"><li><a href="#">FAQ</a></li><li><a href="#">Shipping Policy</a></li><li><a href="#">888.653.1184</a></li></ul><div class="vk-footer-bottom">© 2026 Vintage King Audio, Inc.</div></footer>
           </div><!-- /pg-faq -->
 
+          <!-- PAGE: ABOUT -->
+          <div class="vk-page" id="pg-about">
+            <div style="background:linear-gradient(160deg,#2C2C2A 0%,#1A1A18 55%,#252320 100%);position:relative;overflow:hidden;padding:28px 16px 26px;">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 30%,rgba(192,57,43,0.2) 0%,transparent 60%);pointer-events:none;"></div>
+              <div style="position:relative;z-index:1;">
+                <div style="font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(192,57,43,0.85);margin-bottom:10px;">Company</div>
+                <h1 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:#fff;line-height:1.25;margin-bottom:10px;">Built for people who listen for a living.</h1>
+                <p style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.6;max-width:300px;">The pro audio dealer engineers and artists trust — with real consultants, an in-house tech shop, and the largest curated selection of new, used, and vintage gear anywhere.</p>
+              </div>
+            </div>
+            <div style="padding:20px 14px 0;">
+              <p style="font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--near-black);line-height:1.3;margin-bottom:12px;">Since 1993, we've helped studios and stages sound their best.</p>
+              <p style="font-size:11.5px;color:var(--charcoal);line-height:1.75;margin-bottom:8px;">What started as a passion for vintage microphones and outboard grew into a full-service partner for recording, broadcast, and live production. Today our team includes sales consultants who are engineers first, and a tech shop that inspects, tests, and stands behind every piece we sell.</p>
+              <p style="font-size:11.5px;color:var(--charcoal);line-height:1.75;">Whether you're building a room from scratch, upgrading a single channel, or hunting a rare piece of history — we pick up the phone, answer the email, and stay with you after the sale.</p>
+            </div>
+            <!-- Pillars -->
+            <div style="padding:20px 14px 0;display:flex;flex-direction:column;gap:10px;">
+              <div style="background:var(--warm-white);border:1px solid var(--pale-grey);border-radius:4px;padding:16px;">
+                <div style="font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--vk-red);margin-bottom:7px;">Expertise</div>
+                <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--near-black);margin-bottom:6px;line-height:1.3;">Consultants who speak your language</div>
+                <p style="font-size:10.5px;color:var(--mid-grey);line-height:1.65;">Our team includes working engineers and musicians. We help you spec the right chain — not just move boxes — from entry-level interfaces to flagship consoles.</p>
+              </div>
+              <div style="background:var(--warm-white);border:1px solid var(--pale-grey);border-radius:4px;padding:16px;">
+                <div style="font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--vk-red);margin-bottom:7px;">Confidence</div>
+                <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--near-black);margin-bottom:6px;line-height:1.3;">In-house Tech Shop</div>
+                <p style="font-size:10.5px;color:var(--mid-grey);line-height:1.65;">Used and vintage gear is inspected, tested, and graded by technicians in our own facility. New gear ships with manufacturer warranty; used and vintage includes our free 1-year warranty.</p>
+              </div>
+              <div style="background:var(--warm-white);border:1px solid var(--pale-grey);border-radius:4px;padding:16px;">
+                <div style="font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--vk-red);margin-bottom:7px;">Partnership</div>
+                <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--near-black);margin-bottom:6px;line-height:1.3;">Before, during and after the sale</div>
+                <p style="font-size:10.5px;color:var(--mid-grey);line-height:1.65;">Financing, trade-ins, studio design services, and support that doesn't disappear when your tracking number hits. We're here for the long session.</p>
+              </div>
+            </div>
+            <!-- Stats -->
+            <div style="margin:20px 14px 0;background:var(--off-white);border:1px solid var(--pale-grey);border-radius:4px;padding:18px 14px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div><div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:var(--vk-red);line-height:1;">30+</div><div style="font-size:8.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey);margin-top:6px;">Years in pro audio</div><div style="font-size:10px;color:var(--mid-grey);margin-top:3px;line-height:1.4;">Serving engineers and artists since 1993</div></div>
+              <div><div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:var(--vk-red);line-height:1;">70k+</div><div style="font-size:8.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey);margin-top:6px;">SKUs curated</div><div style="font-size:10px;color:var(--mid-grey);margin-top:3px;line-height:1.4;">New, used, open box and vintage</div></div>
+              <div><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--vk-red);line-height:1.1;">In-house</div><div style="font-size:8.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey);margin-top:6px;">Tech shop and warranty</div><div style="font-size:10px;color:var(--mid-grey);margin-top:3px;line-height:1.4;">Testing, repair and authentication</div></div>
+              <div><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--vk-red);line-height:1.1;">9–8 ET</div><div style="font-size:8.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey);margin-top:6px;">Talk to a human</div><div style="font-size:10px;color:var(--mid-grey);margin-top:3px;line-height:1.4;">Mon–Fri · Sat 10–6 ET</div></div>
+            </div>
+            <!-- What we do -->
+            <div style="padding:20px 14px 0;">
+              <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--near-black);margin-bottom:13px;">What we do</div>
+              <p style="font-size:11.5px;color:var(--charcoal);line-height:1.75;margin-bottom:6px;"><strong style="color:var(--near-black);">New gear</strong> — Authorized dealer pricing on microphones, outboard, consoles, monitors, and software from the brands you trust.</p>
+              <p style="font-size:11.5px;color:var(--charcoal);line-height:1.75;margin-bottom:6px;"><strong style="color:var(--near-black);">Used and vintage</strong> — Curated, graded inventory with honest photos and condition descriptions. Rare pieces authenticated by our techs.</p>
+              <p style="font-size:11.5px;color:var(--charcoal);line-height:1.75;margin-bottom:14px;"><strong style="color:var(--near-black);">Studio services</strong> — Design consultations, installations, and ongoing support for rooms of every size.</p>
+              <ul style="list-style:none;padding:0;margin:0;border-top:1px solid var(--pale-grey);">
+                <li style="font-size:11px;color:var(--charcoal);padding:9px 0;border-bottom:1px solid var(--pale-grey);display:flex;align-items:flex-start;gap:9px;"><span style="width:5px;height:5px;background:var(--vk-red);border-radius:50%;margin-top:5px;flex-shrink:0;display:block;"></span>0% financing and flexible payment options on qualifying purchases</li>
+                <li style="font-size:11px;color:var(--charcoal);padding:9px 0;border-bottom:1px solid var(--pale-grey);display:flex;align-items:flex-start;gap:9px;"><span style="width:5px;height:5px;background:var(--vk-red);border-radius:50%;margin-top:5px;flex-shrink:0;display:block;"></span>Trade-ins and competitive offers on used gear</li>
+                <li style="font-size:11px;color:var(--charcoal);padding:9px 0;border-bottom:1px solid var(--pale-grey);display:flex;align-items:flex-start;gap:9px;"><span style="width:5px;height:5px;background:var(--vk-red);border-radius:50%;margin-top:5px;flex-shrink:0;display:block;"></span>Same-day shipping on in-stock orders placed by 4PM ET</li>
+                <li style="font-size:11px;color:var(--charcoal);padding:9px 0;display:flex;align-items:flex-start;gap:9px;"><span style="width:5px;height:5px;background:var(--vk-red);border-radius:50%;margin-top:5px;flex-shrink:0;display:block;"></span>Free 1-year warranty on qualifying used and vintage from VK</li>
+              </ul>
+            </div>
+            <!-- Team -->
+            <div style="padding:20px 14px 0;">
+              <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--near-black);margin-bottom:5px;">Leadership and team</div>
+              <p style="font-size:10.5px;color:var(--mid-grey);line-height:1.55;margin-bottom:14px;">Replace placeholders with leadership photography and bios when ready for production.</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                <div style="text-align:center;"><div style="background:linear-gradient(145deg,#E8E4DE,#D0CCC4);border:1px solid var(--pale-grey);border-radius:3px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:7px;">Photo</div><div style="font-size:10px;font-weight:600;color:var(--near-black);">Leadership</div><div style="font-size:9px;color:var(--mid-grey);margin-top:2px;line-height:1.4;">Executive team</div></div>
+                <div style="text-align:center;"><div style="background:linear-gradient(145deg,#E8E4DE,#D0CCC4);border:1px solid var(--pale-grey);border-radius:3px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:7px;">Photo</div><div style="font-size:10px;font-weight:600;color:var(--near-black);">Sales</div><div style="font-size:9px;color:var(--mid-grey);margin-top:2px;line-height:1.4;">Engineers on the phones</div></div>
+                <div style="text-align:center;"><div style="background:linear-gradient(145deg,#E8E4DE,#D0CCC4);border:1px solid var(--pale-grey);border-radius:3px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:7px;">Photo</div><div style="font-size:10px;font-weight:600;color:var(--near-black);">Tech Shop</div><div style="font-size:9px;color:var(--mid-grey);margin-top:2px;line-height:1.4;">Inspection and repair</div></div>
+              </div>
+            </div>
+            <!-- Contact strip -->
+            <div class="vk-contact-strip" style="margin-top:20px;"><h2 class="vk-contact-title">Work with us</h2><p class="vk-contact-sub">Questions about a project, a piece of gear, or a career at Vintage King — we're here.</p><div class="vk-contact-cards">
+              <div class="vk-contact-card"><div class="vk-contact-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 11 19.79 19.79 0 0 1 .11 2.38 2 2 0 0 1 2.11.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.91a16 16 0 0 0 6.09 6.09l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg></div><div><div class="vk-contact-card-title">Call Us</div><div class="vk-contact-card-sub">Mon–Fri, 9AM–8PM ET</div><a href="tel:8886531184" class="vk-contact-action">888.653.1184</a></div></div>
+              <div class="vk-contact-card"><div class="vk-contact-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="vk-contact-card-title">Email</div><div class="vk-contact-card-sub">Sales and general inquiries</div><a href="#" class="vk-contact-action">Contact us →</a></div></div>
+            </div></div>
+            <footer class="vk-footer"><div class="vk-footer-name">VINTAGE KING</div><ul class="vk-footer-links"><li><a href="#">About VK</a></li><li><a href="#">Careers</a></li><li><a href="#">888.653.1184</a></li></ul><div class="vk-footer-bottom">© 2026 Vintage King Audio, Inc.</div></footer>
+          </div><!-- /pg-about -->
+
           <div class="vk-plp-drawer-backdrop" id="vk-plp-drawer-backdrop" onclick="closePlpFilterDrawer()"></div>
           <div class="vk-plp-drawer" id="vk-plp-drawer" role="dialog" aria-modal="true" aria-labelledby="plp-drawer-title">
             <div class="vk-plp-drawer-h">
@@ -865,29 +1016,78 @@ a{text-decoration:none;color:inherit;}
             </div>
             <div class="vk-plp-drawer-body">
               <details class="vk-plp-dgroup" open><summary>Collection / sub-type</summary>
-                <div class="vk-plp-dpills"><span>Large diaphragm condenser</span><span>Small diaphragm condenser</span><span>Shotgun & broadcast</span><span>Stereo & matched pairs</span><span>Boundary & installed</span><span>Parts & upgrades</span></div>
+                <ul class="vk-plp-cklist">
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Large diaphragm condenser</label><span class="ck-count">312</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Small diaphragm condenser</label><span class="ck-count">148</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Shotgun and broadcast</label><span class="ck-count">64</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Stereo and matched pairs</label><span class="ck-count">41</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Boundary and installed</label><span class="ck-count">29</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Parts and upgrades</label><span class="ck-count">18</span></li>
+                </ul>
               </details>
               <details class="vk-plp-dgroup" open><summary>Price</summary>
-                <div class="vk-plp-dpills"><span>Under $500</span><span>$500–$1,000</span><span>$1,000–$5,000</span><span>$5,000+</span></div>
+                <ul class="vk-plp-cklist">
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Under $500</label><span class="ck-count">203</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>$500 – $1,000</label><span class="ck-count">187</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>$1,000 – $5,000</label><span class="ck-count">311</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>$5,000 and up</label><span class="ck-count">142</span></li>
+                </ul>
               </details>
-              <details class="vk-plp-dgroup" open><summary>Condition & listing</summary>
-                <div class="vk-plp-dpills"><span>New</span><span>Used</span><span>Open box</span><span>Vintage</span></div>
+              <details class="vk-plp-dgroup" open><summary>Condition</summary>
+                <ul class="vk-plp-cklist">
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>New</label><span class="ck-count">541</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck checked"></div><label>Used</label><span class="ck-count">198</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Open box</label><span class="ck-count">67</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Vintage</label><span class="ck-count">37</span></li>
+                </ul>
               </details>
               <details class="vk-plp-dgroup"><summary>Brand</summary>
-                <div class="vk-plp-dpills"><span>Neumann</span><span>Telefunken</span><span>AKG</span><span>Shure</span><span>Royer Labs</span><span>Sennheiser</span><span>Warm Audio</span><span>Wunder Audio</span></div>
+                <ul class="vk-plp-cklist">
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Neumann</label><span class="ck-count">94</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Telefunken</label><span class="ck-count">61</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>AKG</label><span class="ck-count">58</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Shure</label><span class="ck-count">47</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Royer Labs</label><span class="ck-count">33</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Sennheiser</label><span class="ck-count">29</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Warm Audio</label><span class="ck-count">24</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Wunder Audio</label><span class="ck-count">11</span></li>
+                </ul>
               </details>
-              <details class="vk-plp-dgroup"><summary>Availability & fulfillment</summary>
-                <div class="vk-plp-dpills"><span>In stock only</span><span>Ships same day</span><span>Financing eligible</span></div>
+              <details class="vk-plp-dgroup"><summary>Availability</summary>
+                <ul class="vk-plp-cklist">
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>In stock only</label><span class="ck-count">602</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Ships same day</label><span class="ck-count">218</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Financing eligible</label><span class="ck-count">431</span></li>
+                </ul>
               </details>
               <details class="vk-plp-dgroup"><summary>Polar pattern</summary>
-                <div class="vk-plp-dpills"><span>Cardioid</span><span>Omnidirectional</span><span>Figure-8</span><span>Supercardioid</span><span>Multi-pattern</span></div>
+                <ul class="vk-plp-cklist">
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Cardioid</label><span class="ck-count">389</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Omnidirectional</label><span class="ck-count">112</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Figure-8</label><span class="ck-count">78</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Supercardioid</label><span class="ck-count">64</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Multi-pattern</label><span class="ck-count">200</span></li>
+                </ul>
               </details>
               <details class="vk-plp-dgroup"><summary>Application</summary>
-                <div class="vk-plp-dpills"><span>Vocals</span><span>Acoustic instruments</span><span>Drum overhead</span><span>Broadcast</span><span>Field recording</span></div>
+                <ul class="vk-plp-cklist">
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Vocals</label><span class="ck-count">421</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Acoustic instruments</label><span class="ck-count">298</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Drum overhead</label><span class="ck-count">156</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Broadcast</label><span class="ck-count">87</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Field recording</label><span class="ck-count">63</span></li>
+                </ul>
               </details>
               <details class="vk-plp-dgroup"><summary>Deals</summary>
-                <div class="vk-plp-dpills"><span>On sale</span><span>Open Box specials</span></div>
+                <ul class="vk-plp-cklist">
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>On sale</label><span class="ck-count">44</span></li>
+                  <li onclick="toggleCk(this)"><div class="vk-plp-ck"></div><label>Open Box specials</label><span class="ck-count">21</span></li>
+                </ul>
               </details>
+            </div>
+            <div class="vk-plp-drawer-footer">
+              <button type="button" class="vk-plp-btn-clear" onclick="clearDrawerFilters()">Clear all</button>
+              <button type="button" class="vk-plp-btn-apply" onclick="closePlpFilterDrawer()">Show 198 results</button>
             </div>
           </div>
 
@@ -946,27 +1146,32 @@ a{text-decoration:none;color:inherit;}
           <button id="pgbtn-category" onclick="setPage('pg-category','pgbtn-category')" style="width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;background:#fff;color:#9B9B98;border:1.5px solid #E8E6E3;border-radius:4px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;"><span style="font-size:10px;">02</span>Category — Microphones</button>
           <button id="pgbtn-product" onclick="setPage('pg-product','pgbtn-product')" style="width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;background:#fff;color:#9B9B98;border:1.5px solid #E8E6E3;border-radius:4px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;"><span style="font-size:10px;">03</span>Product — Neumann U 87</button>
           <button id="pgbtn-faq" onclick="setPage('pg-faq','pgbtn-faq')" style="width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;background:#fff;color:#9B9B98;border:1.5px solid #E8E6E3;border-radius:4px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;"><span style="font-size:10px;">04</span>FAQ &amp; Support</button>
+          <button id="pgbtn-about" onclick="setPage('pg-about','pgbtn-about')" style="width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;background:#fff;color:#9B9B98;border:1.5px solid #E8E6E3;border-radius:4px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;"><span style="font-size:10px;">05</span>About VK</button>
         </div>
       </div>
       <div style="padding:16px 20px;">
         <div style="font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#9B9B98;margin-bottom:8px;">What's on each page</div>
         <div id="pg-desc-home">
-          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Product-first hero (Neumann co-op) · Category grid · Recently Added · Editorial hero · EMI exclusive · Make Your Mark · Vintage block</div>
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Co-op hero · Category grid · The Short List (tabbed) · Editorial blocks · Vintage and Used section</div>
         </div>
         <div id="pg-desc-category" style="display:none;">
-          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Tier 1 co-op · <strong>Collections</strong> row + <strong>See more</strong> → full filter drawer · <strong>Quick refinements</strong> row with Pills/Inline toggle (matches desktop PLP) · grid · expert strip</div>
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;margin-bottom:8px;">Tier 1 co-op · 5-chip type row + inline refinements + full filter drawer (checkboxes) · Buying guide v1/v2 toggle · product grid · expert strip</div>
+          <div style="font-size:9.5px;color:#9B9B98;line-height:1.6;">Filter pattern follows Amazon / B&amp;H / Sweetwater mobile PLP — type chips on row 1, condition/price inline on row 2, full facets in drawer with counts.</div>
         </div>
         <div id="pg-desc-product" style="display:none;">
-          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Product image · 0% financing inline · Condition selector (New/Used/Good) · Add to Cart · Tabs · Sticky ATC bar</div>
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Product image · Financing inline · Condition selector · Add to Cart · Tabs (Description, Specs, Shipping, Financing) · Sticky ATC bar</div>
         </div>
         <div id="pg-desc-faq" style="display:none;">
-          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">4 FAQ sections · Accordion · Call/Email contact strip · 888.653.1184 wired</div>
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">4 accordion sections · Call / Email / Live Chat contact strip · 888.653.1184 wired</div>
+        </div>
+        <div id="pg-desc-about" style="display:none;">
+          <div style="font-size:11px;color:#6B6B68;line-height:1.7;">Dark hero · Intro · 3 pillar cards · 4 stats · What we do · Team placeholders · Contact strip · Matches desktop v2.67</div>
         </div>
       </div>
       <div style="padding:0 20px 20px;">
         <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:4px;padding:9px 11px;">
           <div style="font-size:9.5px;font-weight:700;color:#16A34A;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;">Mobile CSS · Live · v1.9</div>
-          <div style="font-size:10.5px;color:#374151;line-height:1.5;">All 4 pages responsive at 375px. Unified file — fully interactive.</div>
+          <div style="font-size:10.5px;color:#374151;line-height:1.5;">All 5 pages responsive at 375px. Unified file — fully interactive.</div>
         </div>
       </div>
     </div><!-- /panel-redesign -->
@@ -1017,18 +1222,18 @@ function setPage(pageId, btnId) {
   document.querySelectorAll('.vk-page').forEach(p => p.classList.remove('active'));
   const pg = document.getElementById(pageId);
   if (pg) { pg.classList.add('active'); pg.scrollTop = 0; }
-  const map = {'pgbtn-home':'pgbtn-home','pgbtn-category':'pgbtn-category','pgbtn-product':'pgbtn-product','pgbtn-faq':'pgbtn-faq'};
-  ['pgbtn-home','pgbtn-category','pgbtn-product','pgbtn-faq'].forEach(id => {
+  const map = {'pgbtn-home':'pgbtn-home','pgbtn-category':'pgbtn-category','pgbtn-product':'pgbtn-product','pgbtn-faq':'pgbtn-faq','pgbtn-about':'pgbtn-about'};
+  ['pgbtn-home','pgbtn-category','pgbtn-product','pgbtn-faq','pgbtn-about'].forEach(id => {
     const b = document.getElementById(id);
     if (!b) return;
     if (id === btnId) { b.style.background='#1A1A18'; b.style.color='#fff'; b.style.border='1.5px solid #1A1A18'; }
     else { b.style.background='#fff'; b.style.color='#9B9B98'; b.style.border='1.5px solid #E8E6E3'; }
   });
-  ['pg-desc-home','pg-desc-category','pg-desc-product','pg-desc-faq'].forEach(id => {
+  ['pg-desc-home','pg-desc-category','pg-desc-product','pg-desc-faq','pg-desc-about'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
-  const descMap = {'pgbtn-home':'pg-desc-home','pgbtn-category':'pg-desc-category','pgbtn-product':'pg-desc-product','pgbtn-faq':'pg-desc-faq'};
+  const descMap = {'pgbtn-home':'pg-desc-home','pgbtn-category':'pg-desc-category','pgbtn-product':'pg-desc-product','pgbtn-faq':'pg-desc-faq','pgbtn-about':'pg-desc-about'};
   const d = document.getElementById(descMap[btnId]);
   if (d) d.style.display = 'block';
 }
@@ -1141,14 +1346,19 @@ function closePlpFilterDrawer() {
   dr.classList.remove('open');
   setTimeout(function () { bd.style.display = 'none'; }, 280);
 }
-function setPlpQuickMode(inline) {
-  var wrap = document.getElementById('vk-plp-qf-inner');
-  var bp = document.getElementById('mob-qf-pills');
-  var bi = document.getElementById('mob-qf-inline');
-  if (!wrap) return;
-  wrap.classList.toggle('vk-plp-inline', !!inline);
-  if (bp) bp.classList.toggle('on', !inline);
-  if (bi) bi.classList.toggle('on', !!inline);
+function setBgVariant(v, btn) {
+  document.querySelector('.vk-bg-v1').style.display = v===1 ? 'block' : 'none';
+  document.querySelector('.vk-bg-v2').style.display = v===2 ? 'block' : 'none';
+  btn.closest('.vk-bg-variant-toggle').querySelectorAll('.vk-bg-vbtn').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+}
+function toggleCk(li) {
+  var ck = li.querySelector('.vk-plp-ck');
+  if (!ck) return;
+  ck.classList.toggle('checked');
+}
+function clearDrawerFilters() {
+  document.querySelectorAll('#vk-plp-drawer .vk-plp-ck.checked').forEach(function(c){ c.classList.remove('checked'); });
 }
 function toggleFaq(btn) {
   const answer = btn.nextElementSibling;
@@ -1166,6 +1376,21 @@ document.getElementById('vk-overlay').style.display = 'none';
   var plpBd = document.getElementById('vk-plp-drawer-backdrop');
   if (plpBd) plpBd.style.display = 'none';
 })();
+</script>
+
+<script>
+function openContactSheet() {
+  var bd = document.getElementById('vk-contact-sheet-backdrop');
+  var sh = document.getElementById('vk-contact-sheet');
+  bd.style.display = 'block';
+  requestAnimationFrame(function(){ bd.classList.add('open'); sh.classList.add('open'); });
+}
+function closeContactSheet() {
+  var bd = document.getElementById('vk-contact-sheet-backdrop');
+  var sh = document.getElementById('vk-contact-sheet');
+  bd.classList.remove('open'); sh.classList.remove('open');
+  setTimeout(function(){ bd.style.display = 'none'; }, 300);
+}
 </script>
 </body>
 </html>

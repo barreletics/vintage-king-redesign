@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vintage King — Redesign Prototype v2.66</title>
+<title>Vintage King — Redesign Prototype v2.67</title>
 <!-- 
   VINTAGE KING REDESIGN CONCEPT
   Version: 1.0
@@ -1582,6 +1582,208 @@
   .contact-card-sub { font-size: 12px; color: var(--mid-grey); line-height: 1.6; }
   .contact-card-action { font-size: 12px; color: var(--vk-red); text-decoration: none; margin-top: 8px; display: inline-block; }
 
+  /* ===== PAGE: ABOUT US ===== */
+  .about-body {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+  .about-intro-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    margin-bottom: 64px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--pale-grey);
+  }
+  .about-lead {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--near-black);
+    line-height: 1.25;
+    margin-bottom: 20px;
+  }
+  .about-prose {
+    font-size: 15px;
+    color: var(--charcoal);
+    line-height: 1.85;
+  }
+  .about-prose p + p { margin-top: 1em; }
+  .about-visual {
+    background: linear-gradient(160deg, #2C2C2A 0%, #1A1A18 55%, #252320 100%);
+    border-radius: 4px;
+    min-height: 280px;
+    display: flex;
+    align-items: flex-end;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 20%, rgba(192,57,43,0.18) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .about-visual-caption {
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+    max-width: 260px;
+  }
+  .about-section-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 24px;
+  }
+  .about-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+  .about-pillar {
+    background: var(--warm-white);
+    border: 1px solid var(--pale-grey);
+    border-radius: 4px;
+    padding: 28px 24px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .about-pillar:hover {
+    border-color: var(--light-grey);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.05);
+  }
+  .about-pillar-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--vk-red);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .about-pillar h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .about-pillar p {
+    font-size: 14px;
+    color: var(--mid-grey);
+    line-height: 1.75;
+  }
+  .about-stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    background: var(--off-white);
+    border: 1px solid var(--pale-grey);
+    border-radius: 4px;
+    padding: 36px 32px;
+    margin-bottom: 64px;
+  }
+  .about-stat-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--vk-red);
+    line-height: 1;
+  }
+  .about-stat-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  .about-stat-note {
+    font-size: 12px;
+    color: var(--mid-grey);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .about-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+    align-items: start;
+  }
+  .about-split h2 { margin-bottom: 16px; }
+  .about-list {
+    list-style: none;
+    margin-top: 16px;
+  }
+  .about-list li {
+    font-size: 14px;
+    color: var(--charcoal);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--pale-grey);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .about-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--vk-red);
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+  .about-team {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 48px;
+  }
+  .about-team-card { text-align: center; }
+  .about-team-ph {
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 200px;
+    margin: 0 auto 16px;
+    background: linear-gradient(145deg, #E8E4DE, #D0CCC4);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mid-grey);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid var(--pale-grey);
+  }
+  .about-team-name { font-size: 15px; font-weight: 600; color: var(--near-black); }
+  .about-team-role { font-size: 12px; color: var(--mid-grey); margin-top: 4px; line-height: 1.5; }
+  .about-team-note {
+    font-size: 12px;
+    color: var(--mid-grey);
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+  }
+  @media (max-width: 960px) {
+    .about-intro-grid { grid-template-columns: 1fr; }
+    .about-pillars { grid-template-columns: 1fr; }
+    .about-stat-row { grid-template-columns: repeat(2, 1fr); }
+    .about-split { grid-template-columns: 1fr; }
+    .about-team { grid-template-columns: 1fr; }
+  }
+
   /* FOOTER */
   .site-footer {
     background: #F0EDE8;
@@ -1734,6 +1936,8 @@
   <span class="vk-rr-here">Full redesign (v2.67)</span>
   <span class="vk-rr-sep">|</span>
   <a href="#product" title="Switches this file to the Product page template (same as gray row → Product)">PDP template</a>
+  <span class="vk-rr-sep">|</span>
+  <a href="#about">About Us</a>
 </nav>
 
 <!-- PAGE SWITCHER -->
@@ -1747,6 +1951,8 @@
   <button onclick="showPage('category', this)">Category</button>
   <button onclick="showPage('product', this)">Product</button>
   <button onclick="showPage('faq', this)">FAQ</button>
+  <button onclick="showPage('about', this)">About Us</button>
+  <button onclick="showPage('hof', this)">Hall of Fame</button>
   <button onclick="showPage('deals', this)">Demo Deals</button>
   <button onclick="showPage('sell', this)">Sell or Trade</button>
   <button onclick="showPage('studio', this)">Studio Installations</button>
@@ -2432,7 +2638,7 @@
 
       <!-- DEALS -->
       <li class="nav-item deals">
-        <a href="#" onclick="showPage('deals', document.querySelector('.page-switcher button:nth-child(5)'));return false;">Deals</a>
+        <a href="#" onclick="showPage('deals', document.querySelector('.page-switcher button:nth-child(6)'));return false;">Deals</a>
       </li>
 
     </ul>
@@ -2857,7 +3063,7 @@
               <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">Off retail</div>
             </div>
             <div style="width:1px;height:36px;background:rgba(255,255,255,0.12)"></div>
-            <a href="#" onclick="showPage('deals', document.querySelector('.page-switcher button:nth-child(5)'));return false;" style="display:inline-flex;align-items:center;gap:8px;background:var(--vk-red);color:#fff;font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:12px 24px;border-radius:3px;text-decoration:none;white-space:nowrap;transition:opacity 0.15s">Shop Demo Deals →</a>
+            <a href="#" onclick="showPage('deals', document.querySelector('.page-switcher button:nth-child(6)'));return false;" style="display:inline-flex;align-items:center;gap:8px;background:var(--vk-red);color:#fff;font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:12px 24px;border-radius:3px;text-decoration:none;white-space:nowrap;transition:opacity 0.15s">Shop Demo Deals →</a>
           </div>
         </div>
       </div>
@@ -3707,6 +3913,439 @@
 </div>
 
 <!-- ============================================================ -->
+<!-- PAGE: ABOUT US -->
+<!-- ============================================================ -->
+<div id="about" class="page">
+  <div id="nav-about"></div>
+
+  <div class="faq-hero">
+    <div class="faq-hero-eyebrow">Company</div>
+    <h1 class="faq-hero-title">Built for people who listen for a living.</h1>
+    <p class="faq-hero-sub">Vintage King is the pro audio dealer engineers and artists trust — with real consultants, an in-house tech shop, and the largest curated selection of new, used, and vintage gear anywhere.</p>
+  </div>
+
+  <div class="about-body">
+    <div class="about-intro-grid">
+      <div>
+        <p class="about-lead">Since 1993, we’ve helped studios and stages sound their best.</p>
+        <div class="about-prose">
+          <p>What started as a passion for vintage microphones and outboard grew into a full-service partner for recording, broadcast, and live production. Today our team includes sales consultants who are engineers first, and a tech shop that inspects, tests, and stands behind every piece we sell.</p>
+          <p>Whether you’re building a room from scratch, upgrading a single channel, or hunting a rare piece of history — we pick up the phone, answer the email, and stay with you after the sale.</p>
+        </div>
+      </div>
+      <div class="about-visual" role="img" aria-label="Pro audio environment — conceptual">
+        <div class="about-visual-caption">Consulting · Financing · Trade-ins · Same-day shipping on in-stock orders placed by 4PM ET</div>
+      </div>
+    </div>
+
+    <div class="about-pillars">
+      <div class="about-pillar">
+        <div class="about-pillar-eyebrow">Expertise</div>
+        <h3>Consultants who speak your language</h3>
+        <p>Our team includes working engineers and musicians. We help you spec the right chain — not just move boxes — from entry-level interfaces to flagship consoles.</p>
+      </div>
+      <div class="about-pillar">
+        <div class="about-pillar-eyebrow">Confidence</div>
+        <h3>In-house Tech Shop</h3>
+        <p>Used and vintage gear is inspected, tested, and graded by technicians in our own facility. New gear ships with manufacturer warranty; used and vintage includes our free 1-year warranty.</p>
+      </div>
+      <div class="about-pillar">
+        <div class="about-pillar-eyebrow">Partnership</div>
+        <h3>Before, during and after the sale</h3>
+        <p>Financing, trade-ins, studio design services, and support that doesn’t disappear when your tracking number hits. We’re here for the long session.</p>
+      </div>
+    </div>
+
+    <div class="about-stat-row">
+      <div>
+        <div class="about-stat-num">30+</div>
+        <div class="about-stat-label">Years in pro audio</div>
+        <div class="about-stat-note">Serving engineers and artists since 1993</div>
+      </div>
+      <div>
+        <div class="about-stat-num">70k+</div>
+        <div class="about-stat-label">SKUs curated</div>
+        <div class="about-stat-note">New, used, open box and vintage</div>
+      </div>
+      <div>
+        <div class="about-stat-num">In-house</div>
+        <div class="about-stat-label">Tech shop and warranty</div>
+        <div class="about-stat-note">Testing, repair and authentication</div>
+      </div>
+      <div>
+        <div class="about-stat-num">9–8 ET</div>
+        <div class="about-stat-label">Talk to a human</div>
+        <div class="about-stat-note">Mon–Fri · Sat 10–6 ET</div>
+      </div>
+    </div>
+
+    <h2 class="about-section-title">What we do</h2>
+    <div class="about-split">
+      <div>
+        <div class="about-prose">
+          <p><strong style="color:var(--near-black)">New gear</strong> — Authorized dealer pricing on microphones, outboard, consoles, monitors, and software from the brands you trust.</p>
+          <p style="margin-top:14px"><strong style="color:var(--near-black)">Used and vintage</strong> — Curated, graded inventory with honest photos and condition descriptions. Rare pieces authenticated by our techs.</p>
+          <p style="margin-top:14px"><strong style="color:var(--near-black)">Studio services</strong> — Design consultations, installations, and ongoing support for rooms of every size.</p>
+        </div>
+      </div>
+      <div>
+        <ul class="about-list">
+          <li>0% financing and flexible payment options on qualifying purchases</li>
+          <li>Trade-ins and competitive offers on used gear</li>
+          <li>Same-day shipping on in-stock orders placed by 4PM ET</li>
+          <li>Free 1-year warranty on qualifying used and vintage from VK</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="about-section-title">Leadership and team</h2>
+    <p class="about-team-note">Vintage King is a team of audio professionals. Replace placeholders with your leadership photography and bios when ready for production.</p>
+    <div class="about-team">
+      <div class="about-team-card">
+        <div class="about-team-ph">Photo</div>
+        <div class="about-team-name">Leadership</div>
+        <div class="about-team-role">Executive team — strategy and vision</div>
+      </div>
+      <div class="about-team-card">
+        <div class="about-team-ph">Photo</div>
+        <div class="about-team-name">Sales and consulting</div>
+        <div class="about-team-role">Engineers and musicians on the phones</div>
+      </div>
+      <div class="about-team-card">
+        <div class="about-team-ph">Photo</div>
+        <div class="about-team-name">Tech shop</div>
+        <div class="about-team-role">Inspection, repair and warranty</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-contact-strip">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px 28px">
+      <h2 style="font-family:var(--font-display);font-size:24px;color:var(--near-black);margin-bottom:4px">Work with us</h2>
+      <p style="font-size:14px;color:var(--mid-grey)">Questions about a project, a piece of gear, or a career at Vintage King — we’re here.</p>
+    </div>
+    <div class="faq-contact-inner">
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.61 4.83 2 2 0 0 1 3.58 2.63h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-title">Call Us</div>
+          <div class="contact-card-sub">Mon–Fri, 9AM–8PM ET</div>
+          <a href="tel:8886531184" class="contact-card-action">888.653.1184</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-title">Email</div>
+          <div class="contact-card-sub">Sales and general inquiries</div>
+          <a href="#" class="contact-card-action">Contact us →</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-title">Careers</div>
+          <div class="contact-card-sub">Join our team</div>
+          <a href="#" class="contact-card-action">View openings →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-about"></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: PRO AUDIO HALL OF FAME -->
+<!-- ============================================================ -->
+<div id="hof" class="page">
+  <div id="nav-hof"></div>
+
+  <!-- HERO -->
+  <div style="background:var(--near-black);padding:80px 40px 64px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(192,57,43,0.08) 0%,transparent 55%),url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1600&q=60') center/cover no-repeat;opacity:0.18;"></div>
+    <div style="position:relative;max-width:860px;margin:0 auto;text-align:center;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--vk-red);margin-bottom:16px;">Since 1993 · Pro Audio Heritage</div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(36px,5vw,64px);color:#fff;line-height:1.08;margin-bottom:20px;">Pro Audio<br>Hall of Fame</h1>
+      <p style="font-size:16px;color:rgba(255,255,255,0.62);max-width:560px;margin:0 auto 32px;line-height:1.6;">Instruments and tools that defined the sound of recorded music. Inducted by the Vintage King team — engineers, collectors, and lifelong gear obsessives.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;">
+        <div style="text-align:center;"><div style="font-family:var(--font-display);font-size:28px;color:#fff;font-weight:500;">3</div><div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Categories</div></div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.12);"></div>
+        <div style="text-align:center;"><div style="font-family:var(--font-display);font-size:28px;color:#fff;font-weight:500;">14</div><div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Inductees</div></div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.12);"></div>
+        <div style="text-align:center;"><div style="font-family:var(--font-display);font-size:28px;color:#fff;font-weight:500;">30+</div><div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Years curating</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY NAV ANCHORS -->
+  <div style="background:#fff;border-bottom:1px solid rgba(26,26,24,0.1);position:sticky;top:0;z-index:10;">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px;display:flex;gap:0;align-items:center;">
+      <a href="#hof-mics" style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(26,26,24,0.5);text-decoration:none;padding:14px 20px 12px;border-bottom:2px solid transparent;transition:all 0.15s;" onmouseover="this.style.color='var(--near-black)';this.style.borderBottomColor='var(--vk-red)'" onmouseout="this.style.color='rgba(26,26,24,0.5)';this.style.borderBottomColor='transparent'">Microphones</a>
+      <a href="#hof-outboard" style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(26,26,24,0.5);text-decoration:none;padding:14px 20px 12px;border-bottom:2px solid transparent;transition:all 0.15s;" onmouseover="this.style.color='var(--near-black)';this.style.borderBottomColor='var(--vk-red)'" onmouseout="this.style.color='rgba(26,26,24,0.5)';this.style.borderBottomColor='transparent'">Outboard</a>
+      <a href="#hof-consoles" style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(26,26,24,0.5);text-decoration:none;padding:14px 20px 12px;border-bottom:2px solid transparent;transition:all 0.15s;" onmouseover="this.style.color='var(--near-black)';this.style.borderBottomColor='var(--vk-red)'" onmouseout="this.style.color='rgba(26,26,24,0.5)';this.style.borderBottomColor='transparent'">Consoles</a>
+    </div>
+  </div>
+
+  <!-- PANORAMIC 4-CARD FEATURE STRIP -->
+  <div style="background:var(--near-black);padding:40px 40px 0;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;">Featured inductees — Class of 2024</div>
+      <!-- 4-card panoramic: one continuous image split across 4 panels -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;border-radius:4px;overflow:hidden;">
+        <div style="position:relative;height:240px;background:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=70') left/400% no-repeat;cursor:pointer;" onmouseover="this.style.filter='brightness(1.15)'" onmouseout="this.style.filter=''">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--vk-red);margin-bottom:4px;">Microphone</div>
+            <div style="font-family:var(--font-display);font-size:16px;color:#fff;line-height:1.2;">Neumann U 47</div>
+          </div>
+        </div>
+        <div style="position:relative;height:240px;background:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=70') 33%/400% no-repeat;cursor:pointer;" onmouseover="this.style.filter='brightness(1.15)'" onmouseout="this.style.filter=''">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--vk-red);margin-bottom:4px;">Outboard</div>
+            <div style="font-family:var(--font-display);font-size:16px;color:#fff;line-height:1.2;">UA 1176LN</div>
+          </div>
+        </div>
+        <div style="position:relative;height:240px;background:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=70') 66%/400% no-repeat;cursor:pointer;" onmouseover="this.style.filter='brightness(1.15)'" onmouseout="this.style.filter=''">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--vk-red);margin-bottom:4px;">Console</div>
+            <div style="font-family:var(--font-display);font-size:16px;color:#fff;line-height:1.2;">SSL 4000 Series</div>
+          </div>
+        </div>
+        <div style="position:relative;height:240px;background:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=70') right/400% no-repeat;cursor:pointer;" onmouseover="this.style.filter='brightness(1.15)'" onmouseout="this.style.filter=''">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--vk-red);margin-bottom:4px;">Outboard</div>
+            <div style="font-family:var(--font-display);font-size:16px;color:#fff;line-height:1.2;">Neve 1073</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANORAMIC 2-CARD FEATURE STRIP -->
+  <div style="background:var(--near-black);padding:3px 40px 40px;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:4px;overflow:hidden;">
+        <div style="position:relative;height:180px;background:url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1200&q=70') left/200% no-repeat;cursor:pointer;" onmouseover="this.style.filter='brightness(1.12)'" onmouseout="this.style.filter=''">
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.6) 0%,transparent 60%);"></div>
+          <div style="position:absolute;top:50%;left:24px;transform:translateY(-50%);">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Legend</div>
+            <div style="font-family:var(--font-display);font-size:22px;color:#fff;line-height:1.2;margin-bottom:10px;">Telefunken ELA M 251</div>
+            <a href="#" style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">View inductee →</a>
+          </div>
+        </div>
+        <div style="position:relative;height:180px;background:url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1200&q=70') right/200% no-repeat;cursor:pointer;" onmouseover="this.style.filter='brightness(1.12)'" onmouseout="this.style.filter=''">
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.6) 0%,transparent 60%);"></div>
+          <div style="position:absolute;top:50%;left:24px;transform:translateY(-50%);">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Legend</div>
+            <div style="font-family:var(--font-display);font-size:22px;color:#fff;line-height:1.2;margin-bottom:10px;">Neve 8078 Console</div>
+            <a href="#" style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">View inductee →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:64px 40px;">
+
+    <!-- MICROPHONES -->
+    <div id="hof-mics" style="margin-bottom:72px;">
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid rgba(26,26,24,0.08);">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--vk-red);background:#fde8e6;padding:4px 10px;border-radius:2px;">Category</div>
+        <h2 style="font-family:var(--font-display);font-size:28px;color:var(--near-black);">Microphones</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;">
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Neumann · 1960s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">Neumann U 47</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">The definitive large-diaphragm condenser. Sinatra, Presley, the Beatles — if it mattered, this mic was in the room.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"There is no substitute. Every serious collector wants one."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop U 47 →</a>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">AKG · 1950s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">AKG C 12</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">Nine patterns, remote capsule selection, and a sound that defined orchestral and vocal recording for decades.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"The C 12 has a presence that modern condensers still reach for."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop C 12 →</a>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Shure · 1940s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">Shure SM7B</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">From Thriller to podcasting empires. The SM7B quietly became the most recorded dynamic microphone of all time.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"You put it up, and everything just sounds right."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop SM7B →</a>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Telefunken · 1960s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">Telefunken ELA M 251</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">Arguably the most sought-after vintage microphone on Earth. Air, warmth, and presence that define the golden era of recording.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"When we get one in, it's gone within hours."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop ELA M 251 →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- OUTBOARD -->
+    <div id="hof-outboard" style="margin-bottom:72px;">
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid rgba(26,26,24,0.08);">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--vk-red);background:#fde8e6;padding:4px 10px;border-radius:2px;">Category</div>
+        <h2 style="font-family:var(--font-display);font-size:28px;color:var(--near-black);">Outboard</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;">
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Universal Audio · 1960s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">UA 1176LN</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">The fastest FET compressor ever made. On every hit record from the 1960s onward. The all-buttons-in mode alone earned its induction.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"It's not a question of whether you own one — it's a question of how many."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop 1176 →</a>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Teletronix / Universal Audio · 1960s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">LA-2A Leveler</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">Optical gain reduction with a character so musical it sounds like the compressor is playing the song with you.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"The LA-2A just breathes. Nothing else does what it does to vocals."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop LA-2A →</a>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Neve · 1970s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">Neve 1073 Preamp</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">Rupert Neve's masterwork. The transformer-coupled Class A circuit that defined the sound of classic rock, soul, and everything in between.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"Every studio wants a rack of these. You can hear why the moment you plug in."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop Neve 1073 →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONSOLES -->
+    <div id="hof-consoles" style="margin-bottom:72px;">
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid rgba(26,26,24,0.08);">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--vk-red);background:#fde8e6;padding:4px 10px;border-radius:2px;">Category</div>
+        <h2 style="font-family:var(--font-display);font-size:28px;color:var(--near-black);">Consoles</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;">
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">SSL · 1970s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">SSL 4000 Series</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">The console that ran the 1980s. Total recall, the G-Bus compressor, and a workflow that rewrote how commercial studios operated worldwide.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"If you heard radio in the 80s, you heard this desk."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop SSL →</a>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Neve · 1970s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">Neve 8078</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">The pinnacle of Rupert Neve's console work. An unmatched harmonic character that plugins have spent 30 years trying to replicate.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"Nothing disappears into a Neve like a vocal. It's not magic — it's physics done right."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop Neve 8078 →</a>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(26,26,24,0.08);border-radius:4px;overflow:hidden;background:#fff;">
+          <div style="background:var(--near-black);height:200px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Gear photo</div>
+            <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:var(--vk-red);color:#fff;padding:4px 8px;border-radius:2px;">Inducted</div>
+          </div>
+          <div style="padding:20px 20px 24px;">
+            <div style="font-size:10px;color:var(--mid-grey);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">API · 1970s</div>
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--near-black);margin-bottom:10px;">API 1604</h3>
+            <p style="font-size:13px;color:var(--mid-grey);line-height:1.6;margin-bottom:16px;">The Lunchbox concept started here. Punchy, discrete op-amp design that defined the sound of rock and R&amp;B recording in New York.</p>
+            <blockquote style="border-left:2px solid var(--vk-red);padding-left:12px;margin:0 0 16px;font-size:12px;color:rgba(26,26,24,0.55);font-style:italic;line-height:1.5;">"API is the sound of drums that knock. Full stop."</blockquote>
+            <a href="#" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vk-red);text-decoration:none;">Shop API →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NOMINATE STRIP -->
+    <div style="background:var(--near-black);border-radius:4px;padding:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--vk-red);margin-bottom:8px;">Your turn</div>
+        <h3 style="font-family:var(--font-display);font-size:22px;color:#fff;margin-bottom:8px;">Nominate the next inductee</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);max-width:480px;line-height:1.6;">Every year the VK team takes nominations from engineers, collectors, and customers. If a piece of gear changed recording, we want to hear about it.</p>
+      </div>
+      <a href="#" style="flex-shrink:0;display:inline-flex;align-items:center;gap:8px;background:var(--vk-red);color:#fff;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:14px 28px;border-radius:3px;text-decoration:none;white-space:nowrap;transition:opacity 0.15s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Submit a nomination →</a>
+    </div>
+
+  </div>
+
+  <div id="footer-hof"></div>
+</div>
+
+<!-- ============================================================ -->
 <!-- PAGE 5: DEMO DEALS PAGE -->
 <!-- ============================================================ -->
 <div id="deals" class="page">
@@ -3911,7 +4550,7 @@
       <div class="footer-col">
         <div class="footer-col-title">Company</div>
         <ul>
-          <li><a href="#">About VK</a></li>
+          <li><a href="#" onclick="showPage('about', document.querySelector('.page-switcher button:nth-child(5)'));return false;">About VK</a></li>
           <li><a href="#">Tech Shop</a></li>
           <li><a href="#">Studio Installations</a></li>
           <li><a href="#">PLAYBACK Magazine</a></li>
@@ -4516,7 +5155,7 @@
 <script>
   // Inject nav and footer into each page
   function injectShared() {
-    ['home','category','product','faq','deals','sell','studio','techshop','fin-page','openbox'].forEach(p => {
+    ['home','category','product','faq','about','hof','deals','sell','studio','techshop','fin-page','openbox'].forEach(p => {
       const navTarget = document.getElementById('nav-' + p);
       const footerTarget = document.getElementById('footer-' + p);
       if (navTarget) navTarget.innerHTML = document.getElementById('nav-template').innerHTML;
@@ -4553,7 +5192,7 @@
   }
 
   function goToDeals() {
-    const btn = document.querySelector('.page-switcher button:nth-child(5)');
+    const btn = document.querySelector('.page-switcher button:nth-child(6)');
     if (btn) showPage('deals', btn);
   }
 
@@ -4565,11 +5204,19 @@
     window.scrollTo(0, 0);
   }
 
-  (function syncHashToProductPage() {
+  (function syncHashToPages() {
     function apply() {
-      if (location.hash !== '#product') return;
-      var btn = document.querySelector('.page-switcher button:nth-child(3)');
-      if (btn) showPage('product', btn);
+      var h = location.hash;
+      if (h === '#product') {
+        var b = document.querySelector('.page-switcher button:nth-child(3)');
+        if (b) showPage('product', b);
+      } else if (h === '#about') {
+        var ba = document.querySelector('.page-switcher button:nth-child(5)');
+        if (ba) showPage('about', ba);
+      } else if (h === '#hof') {
+        var bh = document.querySelector('.page-switcher button:nth-child(6)');
+        if (bh) showPage('hof', bh);
+      }
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', apply);

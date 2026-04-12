@@ -123,7 +123,7 @@ Vintage King Audio (VK) website redesign and Shopify Plus migration prototype. A
                                                                                                   - - Deployment: Cursor AI → Shopify Plus (headed, NOT headless)
                                                                                                     - - Headless Shopify: avoid — breaks app integrations, adds SEO complexity
                                                                                                       - - 70,000 redirects: fully manageable in native headed Shopify
-                                                                                                        - - Horizon and Slab (Brickspace Lab) confirmed as non-headless GitHub/Cursor compatible themes
+                                                                                                        - - Base theme: Horizon (headed). Strategy: VK-Horizon-Handoff-SingleDoc-Mar2026.md · Claude Q&A: VK-Claude-Handoff-Reference-Mar2026.md · Theme vs leadership full review: VK-Theme-Headless-Leadership-Full-Review-Mar2026.md
                                                                                                          
                                                                                                           - ---
                                                                                                           
