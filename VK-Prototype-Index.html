@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vintage King — Demo dashboard</title>
+<title>Vintage King — Demo Dashboard</title>
 <link rel="canonical" href="https://barreletics.github.io/vintage-king-redesign/VK-Prototype-Index.html">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="max-age=0, must-revalidate">
@@ -13,122 +13,131 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
   background: #e8e4dc;
   color: #1a1a18;
-  padding: 28px 18px 40px;
+  padding: 32px 18px 48px;
   line-height: 1.45;
 }
-.wrap { max-width: 34rem; margin: 0 auto; }
+.wrap { max-width: 36rem; margin: 0 auto; }
 h1 {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
-.lead { font-size: 0.875rem; color: #6b6b68; margin-bottom: 14px; }
-.pick {
-  background: linear-gradient(180deg, #e8f1ff 0%, #dbe8fd 100%);
-  border: 1px solid #93b4e8;
-  border-radius: 8px;
-  padding: 14px 16px;
-  margin-bottom: 14px;
-  font-size: 0.875rem;
-  color: #1e3a5f;
-  line-height: 1.5;
-}
-.pick-kicker {
-  font-size: 0.72rem;
+.lead { font-size: 0.875rem; color: #6b6b68; margin-bottom: 24px; }
+
+.section-label {
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #1d4ed8;
-  margin-bottom: 8px;
+  color: #8b8b87;
+  margin: 28px 0 10px;
 }
-.pick p { margin-bottom: 8px; }
-.pick p:last-child { margin-bottom: 0; }
-.pick strong { color: #152a47; }
 
 .card {
   background: #fff;
   border: 1px solid rgba(26,26,24,0.08);
   border-radius: 8px;
   padding: 18px 18px 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 12px rgba(26,26,24,0.04);
-}
-.card h2 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(26,26,24,0.04);
 }
 .card .tag {
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #6b6b68;
-  margin-bottom: 8px;
+  color: #8b8b87;
+  margin-bottom: 6px;
   display: block;
 }
+.card h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.card p {
+  font-size: 0.8125rem;
+  color: #6b6b68;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
 .card ul {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   padding-left: 1.1rem;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: #4a4a47;
 }
-.card li { margin-bottom: 6px; }
+.card li { margin-bottom: 4px; }
 .cta {
   display: inline-block;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #fff;
   background: #1a1a18;
-  padding: 12px 18px;
+  padding: 10px 16px;
   border-radius: 6px;
   text-decoration: none;
+  margin-right: 8px;
+  margin-top: 4px;
 }
 .cta--red { background: #c0392b; }
-.cta:hover { filter: brightness(1.06); }
-.note {
-  font-size: 0.8125rem;
-  color: #6b6b68;
-  margin-top: 12px;
-  line-height: 1.45;
-}
-.more { margin-top: 20px; }
-.more h3 {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #8b8b87;
-  margin-bottom: 10px;
-}
-.more a {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
+.cta--dark { background: #2c2c2a; }
+.cta--ghost {
+  background: transparent;
   color: #c0392b;
-  text-decoration: none;
-  margin-bottom: 8px;
+  border: 1px solid rgba(192,57,43,0.3);
+  padding: 9px 15px;
 }
-.more a:hover { text-decoration: underline; }
-footer { margin-top: 28px; font-size: 0.75rem; color: #8b8b87; }
+.cta:hover { filter: brightness(1.08); }
+
+details {
+  background: rgba(26,26,24,0.04);
+  border: 1px solid rgba(26,26,24,0.08);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 24px;
+  font-size: 0.8125rem;
+  color: #4a4a47;
+  line-height: 1.55;
+}
+details summary {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b6b68;
+  cursor: pointer;
+  list-style: none;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: " ›"; }
+details[open] summary::after { content: " ↑"; }
+details > *:not(summary) { margin-top: 10px; }
+details p { margin-bottom: 6px; }
+details p:last-child { margin-bottom: 0; }
+details strong { color: #1a1a18; }
+
+footer { margin-top: 32px; font-size: 0.75rem; color: #8b8b87; }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <h1>Vintage King — demos</h1>
+  <h1>Vintage King — Demo Dashboard</h1>
   <p class="lead">Reviewer links only — not the live store.</p>
 
-  <div class="pick">
-    <p class="pick-kicker">Three ways in — same black bar on each prototype</p>
-    <p><strong>① New mega menu designs</strong> — focused header only: real category nav, search, hover flyouts. Second row: <strong>Preset 1–6</strong> to compare mega layouts. Not the new PLP filter pattern.</p>
-    <p><strong>② New filter &amp; category listing designs</strong> — Microphones as the sample PLP: filter drawer, two filter rows (row 2: <strong>Pills / Inline</strong> toggle), grid, badges. Landing-page chrome reviewers should study.</p>
-    <p><strong>③ Full redesign — all pages (v2.67)</strong> — one long file: homepage, category, product, FAQ, deals, etc. Megas there are the <strong>older</strong> treatment (before ①). The <strong>gray row</strong> under the black bar is the in-file page switcher (Homepage, Product, …). On v2.67 only, the black bar adds <strong>PDP template</strong> = same as choosing Product in that gray row.</p>
-    <p>The black bar uses the <strong>same four links</strong> on ① and ②; on ③ it adds <strong>PDP template</strong>. It does not link to old PLP drafts (v1–v3).</p>
-  </div>
+  <details>
+    <summary>How the prototypes connect — expand</summary>
+    <p><strong>① Mega menu</strong> — focused header only. Preset 1–6 compares mega layouts. Not the new PLP filter pattern.</p>
+    <p><strong>② Filter / listing</strong> — Microphones as sample PLP: filter drawer, Pills / Inline toggle, grid, badges.</p>
+    <p><strong>③ Full redesign (v2.67)</strong> — all pages in one file. Megas here are the older treatment (before ①). Gray row under black bar = in-file page switcher.</p>
+    <p>The black bar uses the <strong>same four links</strong> on ① and ②; on ③ it adds <strong>PDP template</strong>.</p>
+  </details>
+
+  <div class="section-label">Prototype demos</div>
 
   <article class="card">
     <span class="tag">Open ①</span>
@@ -136,14 +145,14 @@ footer { margin-top: 28px; font-size: 0.75rem; color: #8b8b87; }
     <ul>
       <li>Header + megas + <strong>Preset 1–6</strong></li>
     </ul>
-    <a class="cta" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open new mega menu</a>
+    <a class="cta" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu</a>
   </article>
 
   <article class="card">
     <span class="tag">Open ②</span>
-    <h2 id="card-mic-latest">New filter designs (Microphones)</h2>
+    <h2 id="card-mic-latest">New filter designs — Microphones</h2>
     <ul>
-      <li>PLP filter pattern — drawer, rows, grid</li>
+      <li>Filter drawer · Pills / Inline toggle · grid · badges</li>
     </ul>
     <a class="cta cta--red" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open filter / listing demo</a>
   </article>
@@ -151,16 +160,47 @@ footer { margin-top: 28px; font-size: 0.75rem; color: #8b8b87; }
   <article class="card">
     <span class="tag">Open ③</span>
     <h2 id="card-desktop">Full redesign — all pages</h2>
-    <p class="note" style="margin-top:0">v2.67 scroll file · older megas · in-file page tabs below the black bar</p>
-    <a class="cta" href="VintageKing-Redesign-v2_67-Mar2026.html" style="margin-top:12px;background:#2c2c2a">Open full redesign (top)</a>
-    <p class="note" style="margin-top:10px"><a href="VintageKing-Redesign-v2_67-Mar2026.html#product" style="color:#c0392b;font-weight:600">Open v2.67 → PDP template (#product) →</a></p>
+    <p>v2.67 · homepage, category, product, FAQ, deals, sell, studio, financing, open box</p>
+    <a class="cta cta--dark" href="VintageKing-Redesign-v2_67-Mar2026.html">Open full redesign</a>
+    <a class="cta cta--ghost" href="VintageKing-Redesign-v2_67-Mar2026.html#product">PDP template →</a>
   </article>
 
-  <div class="more">
-    <h3>Also</h3>
-    <a id="card-type-spec" href="VK-Prototype-Copy-Typography-Badge-Spec.html">Typography and badges</a>
-    <a id="card-mobile" href="VintageKing-MobileSimulator-v1_7-Mar2026.html">Mobile simulator</a>
-  </div>
+  <div class="section-label">Reference &amp; tools</div>
+
+  <article class="card">
+    <span class="tag">Secondary pages</span>
+    <h2 id="card-secondary-nav">Secondary Pages Navigator</h2>
+    <p>15 pages built · build queue · progress tracker · all secondary page links</p>
+    <a class="cta" href="https://barreletics.github.io/vk-secondary-pages/navigator.html" target="_blank" rel="noopener">Open navigator →</a>
+  </article>
+
+  <article class="card">
+    <span class="tag">Design system</span>
+    <h2 id="card-style-guide">VK Style Guide</h2>
+    <p>Color rules · typography scale · badge system · hero patterns · page type classification</p>
+    <a class="cta cta--red" href="https://barreletics.github.io/vk-secondary-pages/style-guide.html" target="_blank" rel="noopener">Open style guide →</a>
+  </article>
+
+  <article class="card">
+    <span class="tag">Device preview</span>
+    <h2 id="card-mobile">Mobile simulator v1.9</h2>
+    <p>Responsive preview across device sizes</p>
+    <a class="cta" href="VintageKing-MobileSimulator-v1_9-Apr2026.html">Open mobile simulator</a>
+  </article>
+
+  <article class="card">
+    <span class="tag">Strategy</span>
+    <h2 id="card-leadership-review">Leadership &amp; Horizon review</h2>
+    <p>Theme vs headless decision · agency brief · print / PDF ready</p>
+    <a class="cta" href="VK-Theme-Headless-Leadership-Review-Formatted.html">Open review doc</a>
+  </article>
+
+  <article class="card">
+    <span class="tag">Spec (legacy)</span>
+    <h2 id="card-type-spec">Typography &amp; badge spec</h2>
+    <p>Old type spec — superseded by Style Guide above</p>
+    <a class="cta cta--ghost" href="VK-Prototype-Copy-Typography-Badge-Spec.html">Open old spec</a>
+  </article>
 
   <footer>Vintage King · 2026</footer>
 </div>
