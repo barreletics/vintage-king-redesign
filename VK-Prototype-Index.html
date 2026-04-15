@@ -24,8 +24,6 @@ body {
   color: var(--near-black);
   line-height: 1.5;
 }
-
-/* ── HEADER ── */
 .vk-header {
   background: var(--warm-light);
   padding: 48px 40px 40px;
@@ -55,8 +53,6 @@ body {
   max-width: 520px;
   line-height: 1.6;
 }
-
-/* ── SECTIONS ── */
 .vk-section { padding: 48px 40px; }
 .vk-section-inner { max-width: 1160px; margin: 0 auto; }
 .vk-section-label {
@@ -68,8 +64,6 @@ body {
   margin-bottom: 20px;
 }
 .vk-section + .vk-section { border-top: 1px solid rgba(26,26,24,0.08); }
-
-/* ── GRID ── */
 .vk-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -79,10 +73,6 @@ body {
   border-radius: 4px;
   overflow: hidden;
 }
-.vk-grid-2 { grid-template-columns: repeat(2, 1fr); }
-.vk-grid-4 { grid-template-columns: repeat(4, 1fr); }
-
-/* ── CARD ── */
 .vk-card {
   background: #fff;
   padding: 28px 28px 24px;
@@ -124,7 +114,6 @@ body {
   border-radius: 2px;
   letter-spacing: 0.02em;
   align-self: flex-start;
-  margin-right: 8px;
 }
 .vk-cta--dark { background: var(--near-black); }
 .vk-cta--ghost {
@@ -135,8 +124,6 @@ body {
 }
 .vk-cta:hover { opacity: 0.88; }
 .vk-cta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
-
-/* ── HOW IT WORKS ── */
 details {
   background: rgba(26,26,24,0.03);
   border: 1px solid rgba(26,26,24,0.08);
@@ -163,7 +150,6 @@ details > *:not(summary) { margin-top: 10px; }
 details p { margin-bottom: 4px; }
 details p:last-child { margin-bottom: 0; }
 details strong { color: var(--near-black); }
-
 footer {
   background: var(--near-black);
   padding: 20px 40px;
@@ -176,7 +162,6 @@ footer span { color: rgba(255,255,255,0.15); }
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="vk-header">
   <div class="vk-header-inner">
     <div class="vk-eyebrow">Vintage King · Internal Review</div>
@@ -185,23 +170,20 @@ footer span { color: rgba(255,255,255,0.15); }
   </div>
 </header>
 
-<!-- PROTOTYPE DEMOS -->
 <section class="vk-section">
   <div class="vk-section-inner">
     <div class="vk-section-label">Prototype demos</div>
-
     <details>
       <summary>How the prototypes connect</summary>
       <p><strong>① Mega menu</strong> — focused header only. Preset 1–6 compares mega layouts. Not the new PLP filter pattern.</p>
       <p><strong>② Filter / listing</strong> — Microphones PLP: filter drawer, Pills / Inline toggle, grid, badges.</p>
       <p><strong>③ Full redesign (v2.67)</strong> — all pages in one scroll file. Megas here are the older treatment (before ①). Gray row under black bar = in-file page switcher.</p>
     </details>
-
     <div class="vk-grid">
       <div class="vk-card">
         <div class="vk-card-tag">Open ①</div>
         <h2>New mega menu designs</h2>
-        <p>Header + megas + Preset 1–6. Compare mega layouts side by side. Not the new PLP filter pattern.</p>
+        <p>Header + megas + Preset 1–6. Compare mega layouts side by side.</p>
         <div class="vk-cta-row">
           <a class="vk-cta vk-cta--dark" href="mega-menu/VintageKing-MegaMenu-CursorLab-v2.html">Open mega menu</a>
         </div>
@@ -209,7 +191,7 @@ footer span { color: rgba(255,255,255,0.15); }
       <div class="vk-card">
         <div class="vk-card-tag">Open ②</div>
         <h2>New filter designs — Microphones</h2>
-        <p>Filter drawer · Pills / Inline row toggle · product grid · badges. The new PLP pattern.</p>
+        <p>Filter drawer · Pills / Inline row toggle · product grid · badges.</p>
         <div class="vk-cta-row">
           <a class="vk-cta" href="mega-menu/VK-Microphones-CategoryDemo-v4-refined.html">Open filter demo</a>
         </div>
@@ -227,11 +209,10 @@ footer span { color: rgba(255,255,255,0.15); }
   </div>
 </section>
 
-<!-- REFERENCE & TOOLS -->
 <section class="vk-section" style="background:#fff">
   <div class="vk-section-inner">
     <div class="vk-section-label">Reference &amp; tools</div>
-    <div class="vk-grid vk-grid-2" style="margin-bottom:1px">
+    <div class="vk-grid">
       <div class="vk-card">
         <div class="vk-card-tag">Secondary pages</div>
         <h2>Secondary Pages Navigator</h2>
@@ -248,38 +229,12 @@ footer span { color: rgba(255,255,255,0.15); }
           <a class="vk-cta" href="https://barreletics.github.io/vk-secondary-pages/style-guide.html" target="_blank" rel="noopener">Open style guide →</a>
         </div>
       </div>
-    </div>
-    <div class="vk-grid vk-grid-4">
       <div class="vk-card">
         <div class="vk-card-tag">Device preview</div>
         <h2>Mobile simulator</h2>
         <p>v1.9 — responsive preview across device sizes.</p>
         <div class="vk-cta-row">
           <a class="vk-cta vk-cta--dark" href="VintageKing-MobileSimulator-v1_9-Apr2026.html">Open</a>
-        </div>
-      </div>
-      <div class="vk-card">
-        <div class="vk-card-tag">Strategy</div>
-        <h2>Leadership &amp; Horizon review</h2>
-        <p>Theme vs headless · agency brief · print ready.</p>
-        <div class="vk-cta-row">
-          <a class="vk-cta vk-cta--dark" href="VK-Theme-Headless-Leadership-Review-Formatted.html">Open</a>
-        </div>
-      </div>
-      <div class="vk-card">
-        <div class="vk-card-tag">Spec (legacy)</div>
-        <h2>Typography &amp; badge spec</h2>
-        <p>Old type spec — superseded by Style Guide.</p>
-        <div class="vk-cta-row">
-          <a class="vk-cta vk-cta--ghost" href="VK-Prototype-Copy-Typography-Badge-Spec.html">Open old spec</a>
-        </div>
-      </div>
-      <div class="vk-card">
-        <div class="vk-card-tag">Component library</div>
-        <h2>Section library</h2>
-        <p>All reusable CSS blocks + Horizon parallels.</p>
-        <div class="vk-cta-row">
-          <a class="vk-cta vk-cta--ghost" href="VK-SecondaryPages-Library.md" target="_blank">Open</a>
         </div>
       </div>
     </div>
