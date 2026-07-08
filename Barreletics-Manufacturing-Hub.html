@@ -85,7 +85,7 @@ tr:hover td{background:var(--surface2)}
 <div class="wrap">
 <header>
 <h1>Barreletics Manufacturing Hub</h1>
-<p class="sub">All planning, pantones, production, inventory, and app audit in one page. Four-source validated Jul 8, 2026.</p>
+<p class="sub">All planning, pantones, production, inventory, and app audit in one page. Orders API velocity (Jul 8, 2026).</p>
 </header>
 
 <div class="controls">
@@ -95,7 +95,7 @@ tr:hover td{background:var(--surface2)}
 <button class="pill" data-budget="500">500</button>
 </div></div>
 <div><div class="control-label">Velocity model</div><div class="pills" id="mode-pills">
-<button class="pill" data-mode="conservative">Conservative (raw CSV)</button>
+<button class="pill" data-mode="conservative">Conservative (raw orders)</button>
 <button class="pill active" data-mode="moderate">Moderate (+15%)</button>
 <button class="pill" data-mode="growth">Growth (+25%, app)</button>
 </div></div>
@@ -108,7 +108,6 @@ tr:hover td{background:var(--surface2)}
 <button class="tab-btn active" data-tab="start">Start Here</button>
 <button class="tab-btn" data-tab="plan">Production Plan</button>
 <button class="tab-btn" data-tab="pantone">Pantone and New Colors</button>
-<button class="tab-btn" data-tab="july2026">July 2026 Samples</button>
 <button class="tab-btn" data-tab="strategy">Color Strategy</button>
 <button class="tab-btn" data-tab="inventory">Inventory</button>
 <button class="tab-btn" data-tab="audit">App Audit</button>
@@ -117,14 +116,13 @@ tr:hover td{background:var(--surface2)}
 <div id="tab-start" class="tab-panel active"></div>
 <div id="tab-plan" class="tab-panel"></div>
 <div id="tab-pantone" class="tab-panel"></div>
-<div id="tab-july2026" class="tab-panel"></div>
 <div id="tab-strategy" class="tab-panel"></div>
 <div id="tab-inventory" class="tab-panel"></div>
 <div id="tab-audit" class="tab-panel"></div>
 </div>
 
 <script>
-const SKUS = [{"sku":"CS-MED-Black","style":"Closed Sole","size":"M","color":"Black","csvUnits100d":141,"csvVelocity":9.87,"appVelocity":12.38,"liveInventory":106,"canvasInventory":115,"delta2d":-9,"orders":137,"mcpUnits30d":81,"mcpVelocity":9.450000000000001},{"sku":"CS-MED-DR","style":"Closed Sole","size":"M","color":"Dusty Rose","csvUnits100d":74,"csvVelocity":5.18,"appVelocity":6.46,"liveInventory":16,"canvasInventory":19,"delta2d":-3,"orders":74,"mcpUnits30d":47,"mcpVelocity":5.483333333333333},{"sku":"CS-MED-DGY","style":"Closed Sole","size":"M","color":"DarkGrey","csvUnits100d":41,"csvVelocity":2.8699999999999997,"appVelocity":3.55,"liveInventory":78,"canvasInventory":80,"delta2d":-2,"orders":39,"mcpUnits30d":29,"mcpVelocity":3.3833333333333333},{"sku":"CS-MED-Y","style":"Closed Sole","size":"M","color":"Bright Yellow","csvUnits100d":72,"csvVelocity":5.04,"appVelocity":2.64,"liveInventory":29,"canvasInventory":30,"delta2d":-1,"orders":36,"mcpUnits30d":19,"mcpVelocity":2.216666666666667},{"sku":"CS-MED-TQ","style":"Closed Sole","size":"M","color":"Turquoise","csvUnits100d":29,"csvVelocity":2.03,"appVelocity":2.64,"liveInventory":75,"canvasInventory":76,"delta2d":-1,"orders":29,"mcpUnits30d":19,"mcpVelocity":2.216666666666667},{"sku":"CS-MED-PUR","style":"Closed Sole","size":"M","color":"Purple","csvUnits100d":28,"csvVelocity":1.96,"appVelocity":2.27,"liveInventory":26,"canvasInventory":30,"delta2d":-4,"orders":27,"mcpUnits30d":22,"mcpVelocity":2.566666666666667},{"sku":"CS-MED-DT","style":"Closed Sole","size":"M","color":"Deep Teal","csvUnits100d":18,"csvVelocity":1.26,"appVelocity":1.55,"liveInventory":57,"canvasInventory":58,"delta2d":-1,"orders":18,"mcpUnits30d":16,"mcpVelocity":1.8666666666666667},{"sku":"CS-MED-LGY","style":"Closed Sole","size":"M","color":"LightGrey","csvUnits100d":20,"csvVelocity":1.4,"appVelocity":1.09,"liveInventory":16,"canvasInventory":17,"delta2d":-1,"orders":19,"mcpUnits30d":11,"mcpVelocity":1.2833333333333334},{"sku":"CS-MED-Blue","style":"Closed Sole","size":"M","color":"Blue","csvUnits100d":7,"csvVelocity":0.49,"appVelocity":0.27,"liveInventory":0,"canvasInventory":0,"delta2d":0,"orders":7,"mcpUnits30d":6,"mcpVelocity":0.7000000000000001},{"sku":"CS-MED-White","style":"Closed Sole","size":"M","color":"White","csvUnits100d":1,"csvVelocity":0.06999999999999999,"appVelocity":0.18,"liveInventory":0,"canvasInventory":0,"delta2d":0,"orders":1,"mcpUnits30d":0,"mcpVelocity":0},{"sku":"CS-LG-Black","style":"Closed Sole","size":"L","color":"Black","csvUnits100d":123,"csvVelocity":8.61,"appVelocity":10.92,"liveInventory":194,"canvasInventory":203,"delta2d":-9,"orders":116,"mcpUnits30d":72,"mcpVelocity":8.4},{"sku":"CS-LG-DR","style":"Closed Sole","size":"L","color":"Dusty Rose","csvUnits100d":55,"csvVelocity":3.8499999999999996,"appVelocity":4.91,"liveInventory":29,"canvasInventory":32,"delta2d":-3,"orders":55,"mcpUnits30d":26,"mcpVelocity":3.033333333333333},{"sku":"CS-LG-DGY","style":"Closed Sole","size":"L","color":"DarkGrey","csvUnits100d":47,"csvVelocity":3.29,"appVelocity":4.19,"liveInventory":63,"canvasInventory":67,"delta2d":-4,"orders":45,"mcpUnits30d":24,"mcpVelocity":2.8000000000000003},{"sku":"CS-LG-PUR","style":"Closed Sole","size":"L","color":"Purple","csvUnits100d":31,"csvVelocity":2.17,"appVelocity":2.64,"liveInventory":15,"canvasInventory":19,"delta2d":-4,"orders":31,"mcpUnits30d":27,"mcpVelocity":3.15},{"sku":"CS-LG-DT","style":"Closed Sole","size":"L","color":"Deep Teal","csvUnits100d":26,"csvVelocity":1.8199999999999998,"appVelocity":2.18,"liveInventory":63,"canvasInventory":65,"delta2d":-2,"orders":25,"mcpUnits30d":25,"mcpVelocity":2.916666666666667},{"sku":"CS-LG-LGY","style":"Closed Sole","size":"L","color":"LightGrey","csvUnits100d":24,"csvVelocity":1.68,"appVelocity":1.82,"liveInventory":0,"canvasInventory":3,"delta2d":-3,"orders":23,"mcpUnits30d":15,"mcpVelocity":1.75},{"sku":"CS-LG-TQ","style":"Closed Sole","size":"L","color":"Turquoise","csvUnits100d":19,"csvVelocity":1.3299999999999998,"appVelocity":1.55,"liveInventory":78,"canvasInventory":82,"delta2d":-4,"orders":19,"mcpUnits30d":16,"mcpVelocity":1.8666666666666667},{"sku":"CS-LG-CS","style":"Closed Sole","size":"L","color":"Copper Swirl","csvUnits100d":15,"csvVelocity":1.05,"appVelocity":1.18,"liveInventory":14,"canvasInventory":16,"delta2d":-2,"orders":14,"mcpUnits30d":18,"mcpVelocity":2.1},{"sku":"CS-LG-Y","style":"Closed Sole","size":"L","color":"Bright Yellow","csvUnits100d":12,"csvVelocity":0.84,"appVelocity":1,"liveInventory":31,"canvasInventory":34,"delta2d":-3,"orders":12,"mcpUnits30d":12,"mcpVelocity":1.4000000000000001},{"sku":"CS-LG-Coral","style":"Closed Sole","size":"L","color":"Coral","csvUnits100d":1,"csvVelocity":0.06999999999999999,"appVelocity":0,"liveInventory":1,"canvasInventory":1,"delta2d":0,"orders":1,"mcpUnits30d":1,"mcpVelocity":0.11666666666666667},{"sku":"OS-MED-Black","style":"Open Sole","size":"M","color":"Black","csvUnits100d":45,"csvVelocity":3.15,"appVelocity":3.91,"liveInventory":42,"canvasInventory":51,"delta2d":-9,"orders":43,"mcpUnits30d":35,"mcpVelocity":4.083333333333333},{"sku":"OS-MED-White","style":"Open Sole","size":"M","color":"White","csvUnits100d":22,"csvVelocity":1.5399999999999998,"appVelocity":1.91,"liveInventory":22,"canvasInventory":24,"delta2d":-2,"orders":21,"mcpUnits30d":15,"mcpVelocity":1.75},{"sku":"OS-MED-LGY","style":"Open Sole","size":"M","color":"LightGrey","csvUnits100d":20,"csvVelocity":1.4,"appVelocity":1.73,"liveInventory":76,"canvasInventory":77,"delta2d":-1,"orders":19,"mcpUnits30d":13,"mcpVelocity":1.5166666666666666},{"sku":"OS-MED-DGY","style":"Open Sole","size":"M","color":"DarkGrey","csvUnits100d":19,"csvVelocity":1.3299999999999998,"appVelocity":1.55,"liveInventory":79,"canvasInventory":79,"delta2d":0,"orders":18,"mcpUnits30d":10,"mcpVelocity":1.1666666666666667},{"sku":"OS-MED-RG","style":"Open Sole","size":"M","color":"Rivian Green","csvUnits100d":19,"csvVelocity":1.3299999999999998,"appVelocity":1.46,"liveInventory":68,"canvasInventory":69,"delta2d":-1,"orders":19,"mcpUnits30d":10,"mcpVelocity":1.1666666666666667},{"sku":"OS-MED-Coral","style":"Open Sole","size":"M","color":"Coral","csvUnits100d":18,"csvVelocity":1.26,"appVelocity":1.64,"liveInventory":27,"canvasInventory":28,"delta2d":-1,"orders":18,"mcpUnits30d":11,"mcpVelocity":1.2833333333333334},{"sku":"OS-MED-Blue","style":"Open Sole","size":"M","color":"Blue","csvUnits100d":15,"csvVelocity":1.05,"appVelocity":1.27,"liveInventory":26,"canvasInventory":27,"delta2d":-1,"orders":14,"mcpUnits30d":11,"mcpVelocity":1.2833333333333334},{"sku":"OS-MED-Y","style":"Open Sole","size":"M","color":"Bright Yellow","csvUnits100d":43,"csvVelocity":3.01,"appVelocity":0.91,"liveInventory":13,"canvasInventory":15,"delta2d":-2,"orders":15,"mcpUnits30d":9,"mcpVelocity":1.05},{"sku":"OS-LG-Coral","style":"Open Sole","size":"L","color":"Coral","csvUnits100d":41,"csvVelocity":2.8699999999999997,"appVelocity":3.64,"liveInventory":1,"canvasInventory":4,"delta2d":-3,"orders":41,"mcpUnits30d":23,"mcpVelocity":2.6833333333333336},{"sku":"OS-LG-Black","style":"Open Sole","size":"L","color":"Black","csvUnits100d":41,"csvVelocity":2.8699999999999997,"appVelocity":3.18,"liveInventory":70,"canvasInventory":74,"delta2d":-4,"orders":40,"mcpUnits30d":29,"mcpVelocity":3.3833333333333333},{"sku":"OS-LG-White","style":"Open Sole","size":"L","color":"White","csvUnits100d":21,"csvVelocity":1.47,"appVelocity":1.73,"liveInventory":21,"canvasInventory":25,"delta2d":-4,"orders":21,"mcpUnits30d":14,"mcpVelocity":1.6333333333333333},{"sku":"OS-LG-Y","style":"Open Sole","size":"L","color":"Bright Yellow","csvUnits100d":70,"csvVelocity":4.8999999999999995,"appVelocity":1.73,"liveInventory":104,"canvasInventory":106,"delta2d":-2,"orders":24,"mcpUnits30d":11,"mcpVelocity":1.2833333333333334},{"sku":"OS-LG-Blue","style":"Open Sole","size":"L","color":"Blue","csvUnits100d":15,"csvVelocity":1.05,"appVelocity":1.27,"liveInventory":52,"canvasInventory":53,"delta2d":-1,"orders":15,"mcpUnits30d":9,"mcpVelocity":1.05},{"sku":"OS-LG-LGY","style":"Open Sole","size":"L","color":"LightGrey","csvUnits100d":16,"csvVelocity":1.1199999999999999,"appVelocity":1.27,"liveInventory":80,"canvasInventory":81,"delta2d":-1,"orders":16,"mcpUnits30d":9,"mcpVelocity":1.05},{"sku":"OS-LG-RG","style":"Open Sole","size":"L","color":"Rivian Green","csvUnits100d":16,"csvVelocity":1.1199999999999999,"appVelocity":1.18,"liveInventory":78,"canvasInventory":80,"delta2d":-2,"orders":16,"mcpUnits30d":13,"mcpVelocity":1.5166666666666666},{"sku":"OS-LG-DGY","style":"Open Sole","size":"L","color":"DarkGrey","csvUnits100d":8,"csvVelocity":0.5599999999999999,"appVelocity":0.82,"liveInventory":147,"canvasInventory":148,"delta2d":-1,"orders":7,"mcpUnits30d":6,"mcpVelocity":0.7000000000000001}];
+const SKUS = [{"sku":"CS-MED-Black","style":"Closed Sole","size":"M","color":"Black","csvUnits100d":141,"csvVelocity":9.87,"orderUnits100d":77,"orderVelocity":5.39,"orderCount":75,"csvDelta":-64,"appVelocity":12.38,"liveInventory":106,"canvasInventory":115,"delta2d":-9,"orders":137},{"sku":"CS-MED-DR","style":"Closed Sole","size":"M","color":"Dusty Rose","csvUnits100d":74,"csvVelocity":5.18,"orderUnits100d":46,"orderVelocity":3.22,"orderCount":46,"csvDelta":-28,"appVelocity":6.46,"liveInventory":16,"canvasInventory":19,"delta2d":-3,"orders":74},{"sku":"CS-MED-DGY","style":"Closed Sole","size":"M","color":"DarkGrey","csvUnits100d":41,"csvVelocity":2.87,"orderUnits100d":27,"orderVelocity":1.89,"orderCount":26,"csvDelta":-14,"appVelocity":3.55,"liveInventory":78,"canvasInventory":80,"delta2d":-2,"orders":39},{"sku":"CS-MED-Y","style":"Closed Sole","size":"M","color":"Bright Yellow","csvUnits100d":72,"csvVelocity":5.04,"orderUnits100d":16,"orderVelocity":1.12,"orderCount":16,"csvDelta":-56,"appVelocity":2.64,"liveInventory":29,"canvasInventory":30,"delta2d":-1,"orders":36},{"sku":"CS-MED-TQ","style":"Closed Sole","size":"M","color":"Turquoise","csvUnits100d":29,"csvVelocity":2.03,"orderUnits100d":18,"orderVelocity":1.26,"orderCount":18,"csvDelta":-11,"appVelocity":2.64,"liveInventory":75,"canvasInventory":76,"delta2d":-1,"orders":29},{"sku":"CS-MED-PUR","style":"Closed Sole","size":"M","color":"Purple","csvUnits100d":28,"csvVelocity":1.96,"orderUnits100d":19,"orderVelocity":1.33,"orderCount":19,"csvDelta":-9,"appVelocity":2.27,"liveInventory":26,"canvasInventory":30,"delta2d":-4,"orders":27},{"sku":"CS-MED-DT","style":"Closed Sole","size":"M","color":"Deep Teal","csvUnits100d":18,"csvVelocity":1.26,"orderUnits100d":14,"orderVelocity":0.98,"orderCount":14,"csvDelta":-4,"appVelocity":1.55,"liveInventory":57,"canvasInventory":58,"delta2d":-1,"orders":18},{"sku":"CS-MED-LGY","style":"Closed Sole","size":"M","color":"LightGrey","csvUnits100d":20,"csvVelocity":1.4,"orderUnits100d":8,"orderVelocity":0.56,"orderCount":8,"csvDelta":-12,"appVelocity":1.09,"liveInventory":16,"canvasInventory":17,"delta2d":-1,"orders":19},{"sku":"CS-MED-Blue","style":"Closed Sole","size":"M","color":"Blue","csvUnits100d":7,"csvVelocity":0.49,"orderUnits100d":0,"orderVelocity":0,"orderCount":0,"csvDelta":-7,"appVelocity":0.27,"liveInventory":0,"canvasInventory":0,"delta2d":0,"orders":7},{"sku":"CS-MED-White","style":"Closed Sole","size":"M","color":"White","csvUnits100d":1,"csvVelocity":0.07,"orderUnits100d":0,"orderVelocity":0,"orderCount":0,"csvDelta":-1,"appVelocity":0.18,"liveInventory":0,"canvasInventory":0,"delta2d":0,"orders":1},{"sku":"CS-LG-Black","style":"Closed Sole","size":"L","color":"Black","csvUnits100d":123,"csvVelocity":8.61,"orderUnits100d":70,"orderVelocity":4.9,"orderCount":66,"csvDelta":-53,"appVelocity":10.92,"liveInventory":194,"canvasInventory":203,"delta2d":-9,"orders":116},{"sku":"CS-LG-DR","style":"Closed Sole","size":"L","color":"Dusty Rose","csvUnits100d":55,"csvVelocity":3.85,"orderUnits100d":25,"orderVelocity":1.75,"orderCount":25,"csvDelta":-30,"appVelocity":4.91,"liveInventory":29,"canvasInventory":32,"delta2d":-3,"orders":55},{"sku":"CS-LG-DGY","style":"Closed Sole","size":"L","color":"DarkGrey","csvUnits100d":47,"csvVelocity":3.29,"orderUnits100d":22,"orderVelocity":1.54,"orderCount":22,"csvDelta":-25,"appVelocity":4.19,"liveInventory":63,"canvasInventory":67,"delta2d":-4,"orders":45},{"sku":"CS-LG-PUR","style":"Closed Sole","size":"L","color":"Purple","csvUnits100d":31,"csvVelocity":2.17,"orderUnits100d":26,"orderVelocity":1.82,"orderCount":26,"csvDelta":-5,"appVelocity":2.64,"liveInventory":15,"canvasInventory":19,"delta2d":-4,"orders":31},{"sku":"CS-LG-DT","style":"Closed Sole","size":"L","color":"Deep Teal","csvUnits100d":26,"csvVelocity":1.82,"orderUnits100d":24,"orderVelocity":1.68,"orderCount":23,"csvDelta":-2,"appVelocity":2.18,"liveInventory":63,"canvasInventory":65,"delta2d":-2,"orders":25},{"sku":"CS-LG-LGY","style":"Closed Sole","size":"L","color":"LightGrey","csvUnits100d":24,"csvVelocity":1.68,"orderUnits100d":13,"orderVelocity":0.91,"orderCount":13,"csvDelta":-11,"appVelocity":1.82,"liveInventory":0,"canvasInventory":3,"delta2d":-3,"orders":23},{"sku":"CS-LG-TQ","style":"Closed Sole","size":"L","color":"Turquoise","csvUnits100d":19,"csvVelocity":1.33,"orderUnits100d":15,"orderVelocity":1.05,"orderCount":15,"csvDelta":-4,"appVelocity":1.55,"liveInventory":78,"canvasInventory":82,"delta2d":-4,"orders":19},{"sku":"CS-LG-CS","style":"Closed Sole","size":"L","color":"Copper Swirl","csvUnits100d":15,"csvVelocity":1.05,"orderUnits100d":17,"orderVelocity":1.19,"orderCount":16,"csvDelta":2,"appVelocity":1.18,"liveInventory":14,"canvasInventory":16,"delta2d":-2,"orders":14},{"sku":"CS-LG-Y","style":"Closed Sole","size":"L","color":"Bright Yellow","csvUnits100d":12,"csvVelocity":0.84,"orderUnits100d":11,"orderVelocity":0.77,"orderCount":11,"csvDelta":-1,"appVelocity":1,"liveInventory":31,"canvasInventory":34,"delta2d":-3,"orders":12},{"sku":"CS-LG-Coral","style":"Closed Sole","size":"L","color":"Coral","csvUnits100d":1,"csvVelocity":0.07,"orderUnits100d":0,"orderVelocity":0,"orderCount":0,"csvDelta":-1,"appVelocity":0,"liveInventory":1,"canvasInventory":1,"delta2d":0,"orders":1},{"sku":"OS-MED-Black","style":"Open Sole","size":"M","color":"Black","csvUnits100d":45,"csvVelocity":3.15,"orderUnits100d":33,"orderVelocity":2.31,"orderCount":29,"csvDelta":-12,"appVelocity":3.91,"liveInventory":42,"canvasInventory":51,"delta2d":-9,"orders":43},{"sku":"OS-MED-White","style":"Open Sole","size":"M","color":"White","csvUnits100d":22,"csvVelocity":1.54,"orderUnits100d":13,"orderVelocity":0.91,"orderCount":13,"csvDelta":-9,"appVelocity":1.91,"liveInventory":22,"canvasInventory":24,"delta2d":-2,"orders":21},{"sku":"OS-MED-LGY","style":"Open Sole","size":"M","color":"LightGrey","csvUnits100d":20,"csvVelocity":1.4,"orderUnits100d":11,"orderVelocity":0.77,"orderCount":11,"csvDelta":-9,"appVelocity":1.73,"liveInventory":76,"canvasInventory":77,"delta2d":-1,"orders":19},{"sku":"OS-MED-DGY","style":"Open Sole","size":"M","color":"DarkGrey","csvUnits100d":19,"csvVelocity":1.33,"orderUnits100d":8,"orderVelocity":0.56,"orderCount":8,"csvDelta":-11,"appVelocity":1.55,"liveInventory":79,"canvasInventory":79,"delta2d":0,"orders":18},{"sku":"OS-MED-RG","style":"Open Sole","size":"M","color":"Rivian Green","csvUnits100d":19,"csvVelocity":1.33,"orderUnits100d":8,"orderVelocity":0.56,"orderCount":8,"csvDelta":-11,"appVelocity":1.46,"liveInventory":68,"canvasInventory":69,"delta2d":-1,"orders":19},{"sku":"OS-MED-Coral","style":"Open Sole","size":"M","color":"Coral","csvUnits100d":18,"csvVelocity":1.26,"orderUnits100d":10,"orderVelocity":0.7,"orderCount":10,"csvDelta":-8,"appVelocity":1.64,"liveInventory":27,"canvasInventory":28,"delta2d":-1,"orders":18},{"sku":"OS-MED-Blue","style":"Open Sole","size":"M","color":"Blue","csvUnits100d":15,"csvVelocity":1.05,"orderUnits100d":10,"orderVelocity":0.7,"orderCount":10,"csvDelta":-5,"appVelocity":1.27,"liveInventory":26,"canvasInventory":27,"delta2d":-1,"orders":14},{"sku":"OS-MED-Y","style":"Open Sole","size":"M","color":"Bright Yellow","csvUnits100d":43,"csvVelocity":3.01,"orderUnits100d":6,"orderVelocity":0.42,"orderCount":6,"csvDelta":-37,"appVelocity":0.91,"liveInventory":13,"canvasInventory":15,"delta2d":-2,"orders":15},{"sku":"OS-LG-Coral","style":"Open Sole","size":"L","color":"Coral","csvUnits100d":41,"csvVelocity":2.87,"orderUnits100d":23,"orderVelocity":1.61,"orderCount":23,"csvDelta":-18,"appVelocity":3.64,"liveInventory":1,"canvasInventory":4,"delta2d":-3,"orders":41},{"sku":"OS-LG-Black","style":"Open Sole","size":"L","color":"Black","csvUnits100d":41,"csvVelocity":2.87,"orderUnits100d":27,"orderVelocity":1.89,"orderCount":27,"csvDelta":-14,"appVelocity":3.18,"liveInventory":70,"canvasInventory":74,"delta2d":-4,"orders":40},{"sku":"OS-LG-White","style":"Open Sole","size":"L","color":"White","csvUnits100d":21,"csvVelocity":1.47,"orderUnits100d":13,"orderVelocity":0.91,"orderCount":12,"csvDelta":-8,"appVelocity":1.73,"liveInventory":21,"canvasInventory":25,"delta2d":-4,"orders":21},{"sku":"OS-LG-Y","style":"Open Sole","size":"L","color":"Bright Yellow","csvUnits100d":70,"csvVelocity":4.9,"orderUnits100d":10,"orderVelocity":0.7,"orderCount":9,"csvDelta":-60,"appVelocity":1.73,"liveInventory":104,"canvasInventory":106,"delta2d":-2,"orders":24},{"sku":"OS-LG-Blue","style":"Open Sole","size":"L","color":"Blue","csvUnits100d":15,"csvVelocity":1.05,"orderUnits100d":8,"orderVelocity":0.56,"orderCount":8,"csvDelta":-7,"appVelocity":1.27,"liveInventory":52,"canvasInventory":53,"delta2d":-1,"orders":15},{"sku":"OS-LG-LGY","style":"Open Sole","size":"L","color":"LightGrey","csvUnits100d":16,"csvVelocity":1.12,"orderUnits100d":8,"orderVelocity":0.56,"orderCount":8,"csvDelta":-8,"appVelocity":1.27,"liveInventory":80,"canvasInventory":81,"delta2d":-1,"orders":16},{"sku":"OS-LG-RG","style":"Open Sole","size":"L","color":"Rivian Green","csvUnits100d":16,"csvVelocity":1.12,"orderUnits100d":12,"orderVelocity":0.84,"orderCount":11,"csvDelta":-4,"appVelocity":1.18,"liveInventory":78,"canvasInventory":80,"delta2d":-2,"orders":16},{"sku":"OS-LG-DGY","style":"Open Sole","size":"L","color":"DarkGrey","csvUnits100d":8,"csvVelocity":0.56,"orderUnits100d":4,"orderVelocity":0.28,"orderCount":4,"csvDelta":-4,"appVelocity":0.82,"liveInventory":147,"canvasInventory":148,"delta2d":-1,"orders":7}];
 const WEEKS_100D = 14.285714285714286;
 const LEAD_TIME_WEEKS = 45/7;
 const SAFETY_WEEKS = 21/7;
@@ -133,31 +131,6 @@ const MFG_MOQ_DEFAULT = 50;
 const MFG_MOQ_EXCEPTION = 25;
 const LIMITED_EDITION_CS = ["Purple","Turquoise"];
 const PANTONE = "https://www.pantone.com/color-finder";
-
-const JULY_2026_SAMPLES = [
-  { group: "Lime", links: [{ label: "12-0741 TCX", href: "https://www.pantone.com/color-finder/12-0741-TCX" }] },
-  { group: "Orange options", links: [
-    { label: "18-1447 TCX", href: "https://www.pantone.com/color-finder/18-1447-TCX" },
-    { label: "17-1544 TCX", href: "https://www.pantone.com/color-finder/17-1544-TCX" }
-  ]},
-  { group: "Light Grey replacement", links: [{ label: "14-3905 TCX", href: "https://www.pantone.com/color-finder/14-3905-TCX" }] },
-  { group: "Nudes (Skin Perfect SP)", links: [
-    { label: "1Y10 SP", href: "https://www.pantone.com/color-finder/1Y10-SP" },
-    { label: "3R10 SP", href: "https://www.pantone.com/color-finder/3R10-SP" },
-    { label: "2R10 SP", href: "https://www.pantone.com/color-finder/2R10-SP" },
-    { label: "3R02 SP", href: "https://www.pantone.com/color-finder/3R02-SP" }
-  ]}
-];
-
-function renderJuly2026SamplesHtml() {
-  const groups = JULY_2026_SAMPLES.map(g =>
-    '<div class="card"><div class="card-head">' + esc(g.group) + '</div><div class="card-body"><div class="pantone-grid">' +
-    g.links.map(l => '<a class="pantone-link" href="' + l.href + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>').join("") +
-    '</div></div></div>'
-  ).join("");
-  return '<div class="card-grid">' + groups + '</div>' +
-    '<div class="callout warning"><div class="callout-title">Factory note — SP nudes</div>Nude samples use Pantone Skin Perfect (SP), not TCX textile. Factory may need TCX conversion for shoe dye — confirm before batching.</div>';
-}
 
 let budget = 450;
 let mode = "moderate";
@@ -187,12 +160,9 @@ function roundToMoq(qty, priority) {
 }
 
 function getVel(s) {
-  if (mode === "conservative") return s.csvVelocity;
+  if (mode === "conservative") return s.orderVelocity;
   if (mode === "growth") return s.appVelocity;
-  let vel = s.csvVelocity * 1.15;
-  const isBulk = s.color === "Bright Yellow" && s.csvUnits100d > s.orders * 1.5;
-  if (isBulk && mode !== "growth") vel = s.appVelocity > 0 ? s.appVelocity : vel;
-  return vel;
+  return s.orderVelocity * 1.15;
 }
 
 function buildPlan(skus, bud) {
@@ -204,11 +174,11 @@ function buildPlan(skus, bud) {
     const gap = Math.max(0, TARGET_WEEKS - currentWks);
     const unitsNeeded = Math.ceil(gap * vel);
     let priority, reason;
-    if (s.liveInventory <= 0 && s.csvUnits100d > 5) { priority = "critical"; reason = "Out of stock — losing sales"; }
+    if (s.liveInventory <= 0 && s.orderUnits100d > 5) { priority = "critical"; reason = "Out of stock — losing sales"; }
     else if (currentWks <= 3) { priority = "critical"; reason = "Only " + currentWks.toFixed(0) + " weeks left at current pace"; }
     else if (currentWks <= REORDER_POINT_WEEKS) { priority = "reorder"; reason = "Below reorder point (" + REORDER_POINT_WEEKS.toFixed(0) + " wks for lead + safety)"; }
-    else if (currentWks <= 13 && vel >= 1.5) { priority = "watch"; reason = "Moderate stock, decent velocity"; }
-    else if (s.style === "Closed Sole" && LIMITED_EDITION_CS.includes(s.color) && s.csvUnits100d >= 19) { priority = "watch"; reason = "Limited edition — " + s.csvUnits100d + " sold in 100 days (do not skip)"; }
+    else if (currentWks <= 13 && vel >= 1.0) { priority = "watch"; reason = "Moderate stock, decent velocity"; }
+    else if (s.style === "Closed Sole" && LIMITED_EDITION_CS.includes(s.color) && s.orderUnits100d >= 12) { priority = "watch"; reason = "Limited edition — " + s.orderUnits100d + " sold in 100d window (do not skip)"; }
     else return null;
     const score = vel * 12 + (priority === "critical" ? 80 : priority === "reorder" ? 50 : 20);
     return Object.assign({}, s, { pairsToMake: 0, unitsNeeded, priority, reason, score, velocityUsed: vel });
@@ -261,7 +231,7 @@ function render() {
   const csStock = SKUS.filter(s => s.style === "Closed Sole").reduce((s,d) => s + Math.max(0, d.liveInventory), 0);
   const osStock = SKUS.filter(s => s.style === "Open Sole").reduce((s,d) => s + Math.max(0, d.liveInventory), 0);
   const criticals = SKUS.filter(s => { const v = getVel(s); return s.liveInventory <= 0 || (v > 0 && s.liveInventory / v <= 3); });
-  const modeLabel = mode === "conservative" ? "raw CSV" : mode === "moderate" ? "+15% growth" : "+25% app";
+  const modeLabel = mode === "conservative" ? "raw orders" : mode === "moderate" ? "+15% growth" : "+25% app";
 
   document.getElementById("top-stats").innerHTML =
     '<div class="stat"><div class="stat-val">' + totalStock.toLocaleString() + '</div><div class="stat-label">Shopify stock (36 SKUs)</div></div>' +
@@ -273,7 +243,6 @@ function render() {
   renderStart(plan, totalStock, criticals.length, modeLabel);
   renderPlan(plan, modeLabel);
   renderPantone();
-  renderJuly2026();
   renderStrategy();
   renderInventory();
   renderAudit();
@@ -289,7 +258,7 @@ function renderStart(plan, totalStock, criticalCount, modeLabel) {
     const wks = vel > 0 ? (s.liveInventory / vel).toFixed(1) : "--";
     const inPlan = plan.find(p => p.sku === s.sku);
     const rowCls = (s.sku === "CS-LG-PUR" || (vel > 0 && s.liveInventory/vel <= 9.4)) ? "row-warning" : "row-info";
-    return '<tr class="' + rowCls + '"><td>' + esc(s.sku) + '</td><td class="center">' + s.size + '</td><td class="num">' + s.csvUnits100d + '</td><td class="num">' + s.liveInventory + '</td><td class="num">' + wks + '</td><td>' + (inPlan ? inPlan.priority : "—") + '</td><td class="num">' + (inPlan ? inPlan.pairsToMake : "—") + '</td></tr>';
+    return '<tr class="' + rowCls + '"><td>' + esc(s.sku) + '</td><td class="center">' + s.size + '</td><td class="num">' + s.orderUnits100d + '</td><td class="num">' + s.liveInventory + '</td><td class="num">' + wks + '</td><td>' + (inPlan ? inPlan.priority : "—") + '</td><td class="num">' + (inPlan ? inPlan.pairsToMake : "—") + '</td></tr>';
   }).join("");
 
   const pantoneQuick = [{"label":"Pantone Color Finder","href":"https://www.pantone.com/color-finder"},{"label":"Sunny Lime (12-0741 TCX)","href":"https://www.pantone.com/color-finder/12-0741-TCX"},{"label":"Paradise Pink (17-1755 TCX)","href":"https://www.pantone.com/color-finder/17-1755-TCX"},{"label":"Hot Pink (17-1937 TCX)","href":"https://www.pantone.com/color-finder/17-1937-TCX"},{"label":"Orange Peel (16-1359 TCX)","href":"https://www.pantone.com/color-finder/16-1359-TCX"},{"label":"Iris Orchid (17-3323 TCX)","href":"https://www.pantone.com/color-finder/17-3323-TCX"},{"label":"Electric Green (14-5721 TCX)","href":"https://www.pantone.com/color-finder/14-5721-TCX"},{"label":"Tan (16-1334 TCX)","href":"https://www.pantone.com/color-finder/16-1334-TCX"},{"label":"Orange Rust (18-1447 TCX)","href":"https://www.pantone.com/color-finder/18-1447-TCX"},{"label":"OS Coral — Living Coral (16-1546 TCX)","href":"https://www.pantone.com/color-finder/16-1546-TCX"},{"label":"CS Yellow — Blazing Yellow (12-0643 TCX)","href":"https://www.pantone.com/color-finder/12-0643-TCX"}].map(l => '<a class="pantone-link" href="' + l.href + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>').join("");
@@ -298,8 +267,8 @@ function renderStart(plan, totalStock, criticalCount, modeLabel) {
 <h2>Start Here</h2>
 <p class="sub">Gate question: which colorants are ready today? Use Production Plan tab for pair counts with Moderate (+15%) velocity.</p>
 <div class="callout warning"><div class="callout-title">Ask your factory first</div>Which colorants are fabricated and ready? That decides Phase B vs Phase C below. New colors need 50 pairs minimum per size (100 per color for M + L).</div>
+<div class="callout warning"><div class="callout-title">Velocity source: Shopify Orders API (reporting outage — no CSV export)</div>Shopify reporting export is unavailable. Velocity from paginated Orders API (564 orders, Mar 30 - Jul 8). Jul 2 CSV retained for cross-check only.</div>
 <div class="callout info"><div class="callout-title">BR Inventory Planner — stock only</div>Keep the app for stock levels and reorder alerts. Do not use it alone for how many pairs to make — use this page Production Plan tab with Moderate (+15%) velocity.</div>
-<div class="card" style="margin-top:16px;border-color:var(--accent)"><div class="card-head">July 2026 Samples <span class="badge success">Dye lab</span></div><div class="card-body"><p class="sub">New color samples for factory dye lab — click each swatch for exact Pantone page.</p>${renderJuly2026SamplesHtml()}</div></div>
 <h3>Pantone colors — click to open</h3>
 <div class="pantone-grid">${pantoneQuick}</div>
 <h3>Ask factory and Few People</h3>
@@ -316,11 +285,11 @@ ${ptPlan.length ? '<div class="callout success"><div class="callout-title">Purpl
 <h3>What to make this batch (~${budget} pairs)</h3>
 <div class="card-grid">
 <div class="card"><div class="card-head">Almost out <span class="badge warning">Urgent</span></div><div class="card-body"><ul class="plain">${["OS Coral — Large especially (1 unit left)","CS Dusty Rose — Medium and Large","CS Light Grey Large — only if Few People is not carrying it"].map((t,i) => '<li>' + (i+1) + '. ' + esc(t) + '</li>').join("")}</ul></div></div>
-<div class="card"><div class="card-head">Keep selling <span class="badge success">Core</span></div><div class="card-body"><ul class="plain">${["CS Black — Medium and Large","CS Bright Yellow — Medium and Large (Closed Sole only)"].map((t,i) => '<li>' + (i+1) + '. ' + esc(t) + '</li>').join("")}</ul></div></div>
+<div class="card"><div class="card-head">Keep selling <span class="badge success">Core</span></div><div class="card-body"><ul class="plain">${["CS Black — well stocked at order velocity (17+ weeks MED)","CS Bright Yellow — well stocked at order velocity (22+ weeks MED)"].map((t,i) => '<li>' + (i+1) + '. ' + esc(t) + '</li>').join("")}</ul></div></div>
 <div class="card"><div class="card-head">Do not skip <span class="badge info">Limited</span></div><div class="card-body"><ul class="plain">${["CS Purple — Medium and Large (28 / 31 sold in 100 days)","CS Turquoise — Medium and Large (29 / 19 sold in 100 days)","Deep Teal and Rivian Green — limited rotation where stock is thin"].map((t,i) => '<li>' + (i+1) + '. ' + esc(t) + '</li>').join("")}</ul></div></div>
 </div>
 <div class="card" style="margin-top:16px"><div class="card-head">Do not make this batch <span class="badge danger">OUT</span></div><div class="card-body"><ul class="plain">${["White (both styles)","CS Blue, CS Coral","OS Bright Yellow (117 pairs already in stock)","OS Blue and OS Black (warehouse ahead of Shopify)","Dark Grey (run down old stock)","New lime and new nudes — only when colorant is ready (50 min per size)"].map((t,i) => '<li>' + (i+1) + '. ' + esc(t) + '</li>').join("")}</ul></div></div>
-<div class="callout warning"><div class="callout-title">MOQ 50 pairs per style/size/color</div>Minimum 50 pairs per SKU. Full IN list at MOQ 50 = 805 pairs — rebalance to 400/450/500 budget.</div>
+<div class="callout warning"><div class="callout-title">MOQ 50 pairs per style/size/color</div>Minimum 50 pairs per SKU. Full IN list at MOQ 50 = 350 pairs — rebalance to 400/450/500 budget.</div>
 <div class="card"><div class="card-head">Pantone electric lime reference <span class="badge success">OS electric</span></div><div class="card-body"><p><a href="https://www.pantone.com/color-finder/12-0741-TCX" target="_blank" rel="noopener"><strong>Pantone 12-0741 TCX Sunny Lime</strong></a></p><p class="sub">Top Open Sole electric candidate — distinct from Coral and Closed Sole Yellow.</p></div></div>
 <h3>Open decisions</h3>
 <ul class="todos">${["CS Light Grey: pull Few People retailer sell-through data before reordering CS-LG-LGY","Confirm tan nude replaces CS Light Grey (not a second grey shade)","Select electric hue for Open Sole (second pop alongside Coral)","Plan OS Yellow sell-through: social/BOGO on OS-LG-Y without reordering manufacturing","Validate OS Blue and OS Black physical vs Shopify inventory delta","Schedule next limited-edition rotation (Purple, Turquoise, DR, Deep Teal, Rivian Green)"].map(t => '<li>' + esc(t) + '</li>').join("")}</ul>`;
@@ -344,7 +313,7 @@ function renderPlan(plan, modeLabel) {
   document.getElementById("tab-plan").innerHTML = `
 <h2>Production Recommendation (${budget} pairs, ${modeLabel})</h2>
 <p class="sub">Color exclusions applied (White, CS Coral, OS Yellow, Blue, OS Black, Dark Grey, OS Light Grey).</p>
-<div class="callout info"><div class="callout-title">Methodology</div>Target: 16 weeks of stock per SKU. Reorder point: ${REORDER_POINT_WEEKS.toFixed(0)} weeks (45-day lead + 21-day safety). Yellow/bulk anomaly SKUs use app velocity.</div>
+<div class="callout info"><div class="callout-title">Methodology</div>Target: 16 weeks of stock per SKU. Reorder point: ${REORDER_POINT_WEEKS.toFixed(0)} weeks (45-day lead + 21-day safety). Velocity source: Orders API (units ÷ 14.29 weeks). Moderate mode adds +15% growth buffer.</div>
 <h3>Allocation Summary</h3>
 <div class="split-viz"><div class="split-cs" style="width:${csPct}%">CS ${csTotal}</div><div class="split-os" style="width:${osPct}%">OS ${osTotal}</div></div>
 <p>Closed Sole: ${csTotal} pairs (${csPct}%) — target 60% · Open Sole: ${osTotal} pairs (${osPct}%) — target 40%</p>
@@ -366,23 +335,12 @@ function renderPantone() {
   document.getElementById("tab-pantone").innerHTML = `
 <h2>Pantone and New Colors</h2>
 <p class="sub">Closest Pantone Fashion, Home + Interiors (TCX) matches for factory dye specs. Hex values are digital approximations — always verify against a physical TCX swatch.</p>
-<h3>July 2026 Samples</h3>
-<p class="sub">Dye lab submissions Jul 2026 — grouped by category. See also the July 2026 Samples tab.</p>
-${renderJuly2026SamplesHtml()}
-<h3>Reference palette — click to open</h3>
 <div class="pantone-grid">${quick}</div>
 <div class="table-wrap"><table><thead><tr><th>Brand / market name</th><th>Pantone TCX</th><th>Name</th><th>Hex</th><th>Barreletics role</th><th>Source note</th></tr></thead><tbody>${refRows}</tbody></table></div>
 <div class="callout info"><div class="callout-title">What is Paradise Pink?</div>Paradise Pink is Alo Yoga's branded color name for their May 2026 collection — a marketing label, not a Barreletics sales signal. Pantone independently publishes 17-1755 TCX Paradise Pink, but Alo does not publish an official Pantone cross-reference.</div>
 <h3>Electric launch MOQ math</h3>
 <p>One new Open Sole electric color at launch = 50 pairs MED + 50 pairs LG = <strong>100 pairs minimum</strong> before any other sizes. At MOQ 50, pick one electric hue only.</p>
 <div class="callout success"><div class="callout-title">Lime vs Paradise Pink — recommendation at MOQ 50</div>Pick Electric Lime (12-0741 Sunny Lime) over Paradise Pink for the single OS electric launch. Lime is maximally distinct from OS Coral and CS Yellow; pink-adjacent electrics compete visually with Coral.</div>`;
-}
-
-function renderJuly2026() {
-  document.getElementById("tab-july2026").innerHTML = `
-<h2>July 2026 Samples</h2>
-<p class="sub">Dye lab color samples submitted Jul 2026. Click each link for the exact Pantone Color Finder page.</p>
-${renderJuly2026SamplesHtml()}`;
 }
 
 function statusBadge(s) {
@@ -395,7 +353,7 @@ function renderStrategy() {
     const tone = (r.cs === "Discontinued" || r.os === "Discontinued") ? "row-danger" : r.cs === "New" || r.os === "New" ? "row-info" : "";
     return '<tr class="' + tone + '"><td>' + esc(r.color) + '</td><td class="center">' + statusBadge(r.cs) + '</td><td class="center">' + statusBadge(r.os) + '</td><td>' + esc(r.notes) + '</td></tr>';
   }).join("");
-  const inRows = [{"sku":"OS-LG-Coral","style":"Open Sole","color":"Coral","pairs":55,"reason":"Critical — 1 unit, 1.1 wks at moderate velocity (MOQ 50+)"},{"sku":"OS-MED-Coral","style":"Open Sole","color":"Coral","pairs":50,"reason":"Support OS Coral anchor — rounded to MOQ 50"},{"sku":"CS-MED-DR","style":"Closed Sole","color":"Dusty Rose","pairs":50,"reason":"Critical — 16 units; rounded to MOQ 50"},{"sku":"CS-LG-DR","style":"Closed Sole","color":"Dusty Rose","pairs":50,"reason":"Reorder — 29 units; rounded to MOQ 50"},{"sku":"CS-LG-LGY","style":"Closed Sole","color":"Light Grey","pairs":50,"reason":"Critical — OOS (0 units); MOQ 50; pending Few People sell-through gate"},{"sku":"CS-MED-Black","style":"Closed Sole","color":"Black","pairs":50,"reason":"Core mover — rounded to MOQ 50"},{"sku":"CS-LG-Black","style":"Closed Sole","color":"Black","pairs":50,"reason":"Core mover — top CS SKU; MOQ 50"},{"sku":"CS-MED-Y","style":"Closed Sole","color":"Bright Yellow","pairs":50,"reason":"Confirmed keep — viral CS pop; MOQ 50"},{"sku":"CS-LG-Y","style":"Closed Sole","color":"Bright Yellow","pairs":50,"reason":"Modest LG demand; rounded to MOQ 50"},{"sku":"OS-MED-Black","style":"Open Sole","color":"Black","pairs":50,"reason":"OS allocation — rounded to MOQ 50"},{"sku":"OS-LG-Black","style":"Open Sole","color":"Black","pairs":50,"reason":"Minimal run — MOQ 50; deprioritized vs Coral"},{"sku":"CS-MED-PUR","style":"Closed Sole","color":"Purple","pairs":50,"reason":"Limited rotation — MOQ 50"},{"sku":"CS-LG-PUR","style":"Closed Sole","color":"Purple","pairs":50,"reason":"Limited rotation — MOQ 50"},{"sku":"CS-MED-TQ","style":"Closed Sole","color":"Turquoise","pairs":50,"reason":"Limited rotation — MOQ 50"},{"sku":"CS-LG-TQ","style":"Closed Sole","color":"Turquoise","pairs":50,"reason":"Limited rotation — MOQ 50"},{"sku":"OS-MED-RG","style":"Open Sole","color":"Rivian Green","pairs":50,"reason":"Limited OS rotation — MOQ 50"}].map(r => {
+  const inRows = [{"sku":"OS-LG-Coral","style":"Open Sole","color":"Coral","pairs":50,"reason":"Critical — 1 unit, 0.5 wks at order-based moderate velocity"},{"sku":"CS-MED-DR","style":"Closed Sole","color":"Dusty Rose","pairs":50,"reason":"Reorder — 16 units, 4.3 wks at order velocity"},{"sku":"CS-LG-LGY","style":"Closed Sole","color":"Light Grey","pairs":50,"reason":"Critical OOS — pending Few People gate"},{"sku":"CS-LG-PUR","style":"Closed Sole","color":"Purple","pairs":50,"reason":"Reorder — 15 units, 7.2 wks"},{"sku":"CS-MED-PUR","style":"Closed Sole","color":"Purple","pairs":50,"reason":"Limited rotation — 19 order units"},{"sku":"CS-MED-TQ","style":"Closed Sole","color":"Turquoise","pairs":50,"reason":"Limited rotation — 18 order units"},{"sku":"CS-LG-TQ","style":"Closed Sole","color":"Turquoise","pairs":50,"reason":"Limited rotation — 15 order units"}].map(r => {
     const cls = r.reason.startsWith("Critical") ? "row-danger" : r.reason.includes("Limited") ? "row-info" : "";
     return '<tr class="' + cls + '"><td>' + esc(r.sku) + '</td><td>' + esc(r.style) + '</td><td>' + esc(r.color) + '</td><td class="num">' + r.pairs + '</td><td>' + esc(r.reason) + '</td></tr>';
   }).join("");
@@ -406,7 +364,7 @@ function renderStrategy() {
 <h2>Color Strategy</h2>
 <p class="sub">Status key: Active = ongoing production | Run down = sell through | New = upcoming | Limited = rotation batch | Channel-only = retailer gate | Discontinued = do not reorder</p>
 <div class="table-wrap"><table><thead><tr><th>Color</th><th>Closed Sole</th><th>Open Sole</th><th>Notes</th></tr></thead><tbody>${matrixRows}</tbody></table></div>
-<div class="callout warning"><div class="callout-title">Manufacturing MOQ: 50 pairs per SKU</div>Full IN list at MOQ 50 = 805 pairs — exceeds 450 budget; rebalance priorities or increase batch size.</div>
+<div class="callout warning"><div class="callout-title">Manufacturing MOQ: 50 pairs per SKU</div>Full IN list at MOQ 50 = 350 pairs — exceeds 450 budget; rebalance priorities or increase batch size.</div>
 <h3>IN — produce this run</h3>
 <div class="table-wrap"><table><thead><tr><th>SKU</th><th>Style</th><th>Color</th><th class="num">Pairs</th><th>Rationale</th></tr></thead><tbody>${inRows}</tbody></table></div>
 <h3>OUT — do not produce</h3>
@@ -426,7 +384,7 @@ function renderInventory() {
     const wB = velB > 0 ? b.liveInventory / velB : 9999;
     return wA - wB;
   });
-  const yellowRows = [{"sku":"CS-MED-Y","style":"Closed Sole","size":"M","units":29,"appVel":2.64,"weeks":11.4,"flag":"Bulk inflated (CSV 2× orders)"},{"sku":"CS-LG-Y","style":"Closed Sole","size":"L","units":31,"appVel":1,"weeks":34,"flag":"Clean velocity"},{"sku":"OS-MED-Y","style":"Open Sole","size":"M","units":13,"appVel":0.91,"weeks":16.5,"flag":"Bulk inflated (CSV 2.9× orders)"},{"sku":"OS-LG-Y","style":"Open Sole","size":"L","units":104,"appVel":1.73,"weeks":61.3,"flag":"Bulk inflated; 151 wks at MCP vel"}].map(r => {
+  const yellowRows = [{"sku":"CS-MED-Y","style":"Closed Sole","size":"M","units":29,"appVel":2.64,"weeks":11.4,"flag":"Orders clean — CSV bulk inflated (72 vs 16)"},{"sku":"CS-LG-Y","style":"Closed Sole","size":"L","units":31,"appVel":1,"weeks":34,"flag":"Orders align with CSV"},{"sku":"OS-MED-Y","style":"Open Sole","size":"M","units":13,"appVel":0.91,"weeks":16.5,"flag":"Orders clean — CSV bulk inflated (43 vs 6)"},{"sku":"OS-LG-Y","style":"Open Sole","size":"L","units":104,"appVel":1.73,"weeks":61.3,"flag":"Orders clean — CSV bulk inflated; sell through only"}].map(r => {
     const cls = r.sku === "OS-LG-Y" ? "row-danger" : "";
     return '<tr class="' + cls + '"><td>' + esc(r.sku) + '</td><td>' + esc(r.style) + '</td><td class="center">' + r.size + '</td><td class="num">' + r.units + '</td><td class="num">' + r.appVel.toFixed(2) + '</td><td class="num">' + r.weeks.toFixed(1) + '</td><td>' + esc(r.flag) + '</td></tr>';
   }).join("");
@@ -435,7 +393,7 @@ function renderInventory() {
     const weeks = vel > 0 ? (s.liveInventory / vel).toFixed(0) : "--";
     let cls = "";
     if (vel > 0) { const w = s.liveInventory / vel; if (w <= 3) cls = "row-danger"; else if (w <= 9) cls = "row-warning"; else if (w <= 13) cls = "row-info"; }
-    return '<tr class="' + cls + '"><td>' + esc(s.sku) + '</td><td class="center">' + (s.style === "Closed Sole" ? "CS" : "OS") + '</td><td class="center">' + s.size + '</td><td>' + esc(s.color) + '</td><td class="num">' + (vel > 0 ? vel.toFixed(2) : "--") + '</td><td class="num">' + (s.mcpVelocity > 0 ? s.mcpVelocity.toFixed(2) : "--") + '</td><td class="num">' + Math.max(0,s.liveInventory) + '</td><td class="num">' + weeks + '</td><td class="num">' + (s.delta2d < 0 ? s.delta2d : "--") + '</td><td class="num">' + s.csvUnits100d + '</td></tr>';
+    return '<tr class="' + cls + '"><td>' + esc(s.sku) + '</td><td class="center">' + (s.style === "Closed Sole" ? "CS" : "OS") + '</td><td class="center">' + s.size + '</td><td>' + esc(s.color) + '</td><td class="num">' + (vel > 0 ? vel.toFixed(2) : "--") + '</td><td class="num">' + (s.orderVelocity > 0 ? s.orderVelocity.toFixed(2) : "--") + '</td><td class="num">' + Math.max(0,s.liveInventory) + '</td><td class="num">' + weeks + '</td><td class="num">' + (s.delta2d < 0 ? s.delta2d : "--") + '</td><td class="num">' + s.orderUnits100d + '</td><td class="num">' + (s.csvDelta !== 0 ? s.csvDelta : "0") + '</td></tr>';
   }).join("");
 
   document.getElementById("tab-inventory").innerHTML = `
@@ -471,14 +429,14 @@ function renderAudit() {
   const matchCount = normal.filter(c => Math.abs(c.diffPct) <= 35).length;
 
   const crossRows = SKUS.filter(s => s.csvVelocity > 0.3).sort((a,b) => b.csvVelocity - a.csvVelocity).map(s => {
-    const ratio = s.mcpVelocity / s.csvVelocity;
+    const ratio = s.csvVelocity > 0 ? s.orderVelocity / s.csvVelocity : 0;
     let verdict = "Validated";
-    if (s.color === "Bright Yellow" && s.csvUnits100d > s.orders * 1.5) verdict = "Bulk inflated";
-    else if (ratio < 0.6) verdict = "Below expected";
-    else if (ratio > 1.3) verdict = "Trending up";
+    if (s.color === "Bright Yellow" && s.csvUnits100d > s.orderUnits100d * 2) verdict = "CSV bulk inflated";
+    else if (ratio < 0.6) verdict = "Orders below CSV";
+    else if (ratio > 1.1) verdict = "Orders above CSV";
     let cls = ratio >= 0.7 && ratio <= 1.3 ? "row-success" : "row-warning";
     if (s.color === "Bright Yellow" && s.csvUnits100d > s.orders * 1.5) cls = "row-danger";
-    return '<tr class="' + cls + '"><td>' + esc(s.sku) + '</td><td class="center">' + s.size + '</td><td class="num">' + s.csvVelocity.toFixed(2) + '</td><td class="num">' + s.mcpVelocity.toFixed(2) + '</td><td class="num">' + s.appVelocity.toFixed(2) + '</td><td class="num">' + ratio.toFixed(2) + 'x</td><td>' + verdict + '</td></tr>';
+    return '<tr class="' + cls + '"><td>' + esc(s.sku) + '</td><td class="center">' + s.size + '</td><td class="num">' + s.orderVelocity.toFixed(2) + '</td><td class="num">' + s.csvVelocity.toFixed(2) + '</td><td class="num">' + s.appVelocity.toFixed(2) + '</td><td class="num">' + (s.csvVelocity > 0 ? ratio.toFixed(2) + 'x' : '--') + '</td><td class="num">' + s.csvDelta + '</td><td>' + verdict + '</td></tr>';
   }).join("");
 
   const normalRows = normal.sort((a,b) => b.csvVelocity - a.csvVelocity).map(c => {
