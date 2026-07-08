@@ -108,6 +108,7 @@ tr:hover td{background:var(--surface2)}
 <button class="tab-btn active" data-tab="start">Start Here</button>
 <button class="tab-btn" data-tab="plan">Production Plan</button>
 <button class="tab-btn" data-tab="pantone">Pantone and New Colors</button>
+<button class="tab-btn" data-tab="july2026">July 2026 Samples</button>
 <button class="tab-btn" data-tab="strategy">Color Strategy</button>
 <button class="tab-btn" data-tab="inventory">Inventory</button>
 <button class="tab-btn" data-tab="audit">App Audit</button>
@@ -116,6 +117,7 @@ tr:hover td{background:var(--surface2)}
 <div id="tab-start" class="tab-panel active"></div>
 <div id="tab-plan" class="tab-panel"></div>
 <div id="tab-pantone" class="tab-panel"></div>
+<div id="tab-july2026" class="tab-panel"></div>
 <div id="tab-strategy" class="tab-panel"></div>
 <div id="tab-inventory" class="tab-panel"></div>
 <div id="tab-audit" class="tab-panel"></div>
@@ -131,6 +133,31 @@ const MFG_MOQ_DEFAULT = 50;
 const MFG_MOQ_EXCEPTION = 25;
 const LIMITED_EDITION_CS = ["Purple","Turquoise"];
 const PANTONE = "https://www.pantone.com/color-finder";
+
+const JULY_2026_SAMPLES = [
+  { group: "Lime", links: [{ label: "12-0741 TCX", href: "https://www.pantone.com/color-finder/12-0741-TCX" }] },
+  { group: "Orange options", links: [
+    { label: "18-1447 TCX", href: "https://www.pantone.com/color-finder/18-1447-TCX" },
+    { label: "17-1544 TCX", href: "https://www.pantone.com/color-finder/17-1544-TCX" }
+  ]},
+  { group: "Light Grey replacement", links: [{ label: "14-3905 TCX", href: "https://www.pantone.com/color-finder/14-3905-TCX" }] },
+  { group: "Nudes (Skin Perfect SP)", links: [
+    { label: "1Y10 SP", href: "https://www.pantone.com/color-finder/1Y10-SP" },
+    { label: "3R10 SP", href: "https://www.pantone.com/color-finder/3R10-SP" },
+    { label: "2R10 SP", href: "https://www.pantone.com/color-finder/2R10-SP" },
+    { label: "3R02 SP", href: "https://www.pantone.com/color-finder/3R02-SP" }
+  ]}
+];
+
+function renderJuly2026SamplesHtml() {
+  const groups = JULY_2026_SAMPLES.map(g =>
+    '<div class="card"><div class="card-head">' + esc(g.group) + '</div><div class="card-body"><div class="pantone-grid">' +
+    g.links.map(l => '<a class="pantone-link" href="' + l.href + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>').join("") +
+    '</div></div></div>'
+  ).join("");
+  return '<div class="card-grid">' + groups + '</div>' +
+    '<div class="callout warning"><div class="callout-title">Factory note — SP nudes</div>Nude samples use Pantone Skin Perfect (SP), not TCX textile. Factory may need TCX conversion for shoe dye — confirm before batching.</div>';
+}
 
 let budget = 450;
 let mode = "moderate";
@@ -246,6 +273,7 @@ function render() {
   renderStart(plan, totalStock, criticals.length, modeLabel);
   renderPlan(plan, modeLabel);
   renderPantone();
+  renderJuly2026();
   renderStrategy();
   renderInventory();
   renderAudit();
@@ -271,6 +299,7 @@ function renderStart(plan, totalStock, criticalCount, modeLabel) {
 <p class="sub">Gate question: which colorants are ready today? Use Production Plan tab for pair counts with Moderate (+15%) velocity.</p>
 <div class="callout warning"><div class="callout-title">Ask your factory first</div>Which colorants are fabricated and ready? That decides Phase B vs Phase C below. New colors need 50 pairs minimum per size (100 per color for M + L).</div>
 <div class="callout info"><div class="callout-title">BR Inventory Planner — stock only</div>Keep the app for stock levels and reorder alerts. Do not use it alone for how many pairs to make — use this page Production Plan tab with Moderate (+15%) velocity.</div>
+<div class="card" style="margin-top:16px;border-color:var(--accent)"><div class="card-head">July 2026 Samples <span class="badge success">Dye lab</span></div><div class="card-body"><p class="sub">New color samples for factory dye lab — click each swatch for exact Pantone page.</p>${renderJuly2026SamplesHtml()}</div></div>
 <h3>Pantone colors — click to open</h3>
 <div class="pantone-grid">${pantoneQuick}</div>
 <h3>Ask factory and Few People</h3>
@@ -337,12 +366,23 @@ function renderPantone() {
   document.getElementById("tab-pantone").innerHTML = `
 <h2>Pantone and New Colors</h2>
 <p class="sub">Closest Pantone Fashion, Home + Interiors (TCX) matches for factory dye specs. Hex values are digital approximations — always verify against a physical TCX swatch.</p>
+<h3>July 2026 Samples</h3>
+<p class="sub">Dye lab submissions Jul 2026 — grouped by category. See also the July 2026 Samples tab.</p>
+${renderJuly2026SamplesHtml()}
+<h3>Reference palette — click to open</h3>
 <div class="pantone-grid">${quick}</div>
 <div class="table-wrap"><table><thead><tr><th>Brand / market name</th><th>Pantone TCX</th><th>Name</th><th>Hex</th><th>Barreletics role</th><th>Source note</th></tr></thead><tbody>${refRows}</tbody></table></div>
 <div class="callout info"><div class="callout-title">What is Paradise Pink?</div>Paradise Pink is Alo Yoga's branded color name for their May 2026 collection — a marketing label, not a Barreletics sales signal. Pantone independently publishes 17-1755 TCX Paradise Pink, but Alo does not publish an official Pantone cross-reference.</div>
 <h3>Electric launch MOQ math</h3>
 <p>One new Open Sole electric color at launch = 50 pairs MED + 50 pairs LG = <strong>100 pairs minimum</strong> before any other sizes. At MOQ 50, pick one electric hue only.</p>
 <div class="callout success"><div class="callout-title">Lime vs Paradise Pink — recommendation at MOQ 50</div>Pick Electric Lime (12-0741 Sunny Lime) over Paradise Pink for the single OS electric launch. Lime is maximally distinct from OS Coral and CS Yellow; pink-adjacent electrics compete visually with Coral.</div>`;
+}
+
+function renderJuly2026() {
+  document.getElementById("tab-july2026").innerHTML = `
+<h2>July 2026 Samples</h2>
+<p class="sub">Dye lab color samples submitted Jul 2026. Click each link for the exact Pantone Color Finder page.</p>
+${renderJuly2026SamplesHtml()}`;
 }
 
 function statusBadge(s) {
